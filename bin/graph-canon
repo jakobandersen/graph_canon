@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+# PYTHON_ARGCOMPLETE_OK
+import argparse, argcomplete
+import inspect
+import os
+import signal
+import subprocess
+import sys
+
+# from https://stackoverflow.com/questions/107705/disable-output-buffering
+class Unbuffered(object):
+   def __init__(self, stream):
+       self.stream = stream
+   def write(self, data):
+       self.stream.write(data)
+       self.stream.flush()
+   def writelines(self, datas):
+       self.stream.writelines(datas)
+       self.stream.flush()
+   def __getattr__(self, attr):
+       return getattr(self.stream, attr)
+sys.stdout = Unbuffered(sys.stdout)
+
+
+def main():
+	parser = argparse.ArgumentParser(description="Wrapper script for graph-canon.", add_help=False,
+		formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+	parser.add_argument("-h", "--help", action="store_true",
+		help="Show this help message and exit. Also invokes the executable with the arguments.")
+	parser.add_argument("--memcheck", action="store_true",
+		help="Run the program through Valgrind.")
+	parser.add_argument("--debug", action="store_true",
+		help="Run the program thorugh GDB (or if --memcheck then with vgdb in Valgrind).")
+	parser.add_argument("--profile", action="store_true",
+		help="Run the program thorugh Valgrind with callgrind.")
+	parser.add_argument("--mode", metavar="<mode>", choices=("test", "benchmark"), default="test",
+		help="The specific execution mode. This changes the executable, and thereby the corresponding options."
+			 " 'test': All canonicalisation results are compared for equality. Allows for debugging options."
+			 " 'benchmark': Minimal overhead, and no result checks.")
+	parser.add_argument("--frefine", metavar="<algorithm>", choices=("WL-1", "WL-1-1", "WL-1-2"), default="WL-1",
+		help="The degree-based refinement function."
+			 " 'WL-1': Weisfeiler-Leman algorithm, with 1 dimension. Initial version."
+			 " 'WL-1-1': Weisfeiler-Leman algorithm, with 1 dimension. Version 1."
+			 " 'WL-1-2': Weisfeiler-Leman algorithm, with 1 dimension. Version 2.")
+	parser.add_argument("--faut-pruner", metavar="<pruner>", choices=("none", "simple", "basic_old", "basic"), default="basic",
+		help="The automorphism pruning algorithm to use."
+			 " 'none': Do not prune using automorphisms."
+			 " 'simple': Prune using the subset of generators that fix the necessary elements."
+			 " 'basic': Prune using the subset of generators that fix the necessary elements.")
+	parser.add_argument("--faut-implicit",    action="store_true",  dest="faut_implicit", help="Use the implicit automorphisms visitor.")
+	parser.add_argument("--fno-aut-implicit", action="store_false", dest="faut_implicit", help="Do no use the implicit automorphisms visitor.")
+	parser.add_argument("--fpartial-leaf",    action="store_true",  dest="fpartial_leaf", help="Use the partial leaf certificate visitor (default).")
+	parser.add_argument("--fno-partial-leaf", action="store_false", dest="fpartial_leaf", help="Do not use the partial leaf certificate visitor.")
+	parser.add_argument("--ftrace",    action="store_true",  dest="ftrace", help="Use the trace visitor (default).")
+	parser.add_argument("--fno-trace", action="store_false", dest="ftrace", help="Do no use the trace visitor.")
+	parser.add_argument("--fquotient",    action="store_true",  dest="fquotient", help="Use the quoient graph visitor (default).")
+	parser.add_argument("--fno-quotient", action="store_false", dest="fquotient", help="Do no use the quotient graph visitor.")
+	parser.add_argument("--fdegree-1",    action="store_true",  dest="fdegree_1", help="Use special refinement for degree 1 vertices.")
+	parser.add_argument("--fno-degree-1", action="store_false", dest="fdegree_1", help="Do not use special refinement for degree 1 vertices.")
+	parser.set_defaults(fpartial_leaf=True, ftrace=True, fquotient=True, faut_implicit=True, fdegree_1=True)
+	parser.add_argument("--edge-labels", metavar="<edge label mode>",
+		help="See help output from executable, above.")
+	argcomplete.autocomplete(parser)
+	args, extra = parser.parse_known_args()
+	args.args = extra
+	if args.edge_labels:
+		args.args.append("--edge-labels")
+		args.args.append(args.edge_labels)
+		if args.edge_labels == "none":
+			args.edge_labels = "no-el"
+		else:
+			args.edge_labels = "el"
+	else:
+		args.edge_labels = "no-el"
+	if args.help:
+		args.args.append("-h")
+
+	preCommand = []
+	if args.memcheck:
+		preCommand.append("valgrind")
+		if args.debug:
+			preCommand.extend(["--vgdb=yes", "--vgdb-error=0"])
+		preCommand.extend(["--leak-check=full", "--track-origins=yes", "--num-callers=50"])
+	elif args.profile:
+		preCommand.extend(["valgrind", "--tool=callgrind", "--dump-instr=yes", "--collect-jumps=yes"])
+	elif args.debug:
+		preCommand.extend(["gdb", "--args"])
+	exe = "graph-canon-%s" % args.mode
+	postHeader = ""
+	postId = ""
+	opts = ['edge-labels', 'refine', 'aut-pruner', 'aut-implicit', 'partial-leaf', 'trace', 'quotient', 'degree-1']
+	for sText in opts:
+		if sText == 'edge-labels':
+			sArg = "edge_labels"
+		else:
+			sArg = "f%s" % sText.replace("-", "_")
+		sExe = sText
+		if sText == 'degree-1':
+			sExe = 'd1'
+		val = getattr(args, sArg)
+		if isinstance(val, bool):
+			if val:
+				exe += "_%s" % sExe
+		elif val != "none":
+			exe += "_%s" % val
+		postHeader += "\t%s" % str(sText)
+		postId += ("\t%-" + str(len(sText)) + "s") % str(val)
+	allArgs = preCommand + [exe] + args.args + ["--postHeader", postHeader, "--postId", postId]
+	try:
+		subprocess.check_call(allArgs, shell=False, stderr=subprocess.STDOUT)
+		if args.help:
+			parser.print_help()
+	except subprocess.CalledProcessError as e:
+		sys.exit(e.returncode)
+
+main()
