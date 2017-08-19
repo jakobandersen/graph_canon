@@ -30,7 +30,7 @@ LDFLAGS=${LDFLAGS:-""}
 LDLIBS=${LDLIBS:-""}
 LIBS=${LIBS:-""}
 orig_CPPFLAGS=$CPPFLAGS
-orig_CXXFLAGS=$CXXFLAGS
+orig_CXXFLAGS="$CXXFLAGS $AM_CXXFLAGS"
 orig_LDFLAGS=$LDFLAGS
 orig_LDLIBS=$LDLIBS
 orig_LIBS=$LIBS
@@ -181,7 +181,7 @@ restoreFlags
 if test "$with_perm_group" = "no"; then
 	AC_MSG_ERROR([You have to want the perm_group library. --with-perm_group=no is not an option.])
 else
-	AC_CHECK_HEADER([perm_group/config.hpp],
+	AC_CHECK_HEADER([perm_group/permutation/traits.hpp],
 		[],
 		[AC_MSG_NOTICE([perm_group not found.])
 		 printPaths
@@ -204,7 +204,6 @@ AC_SUBST([AM_LDLIBS])
 
 AC_CONFIG_FILES([
 	Makefile
-    doc/Makefile
 	include/Makefile
 	test/Makefile
 ])
