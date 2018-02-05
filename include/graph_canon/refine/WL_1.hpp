@@ -2,7 +2,8 @@
 #define GRAPH_CANON_REFINE_WL_1_HPP
 
 #include <graph_canon/sorting_utils.hpp>
-#include <graph_canon/visitor/compound.hpp>
+#include <graph_canon/visitor/visitor.hpp>
+#include <graph_canon/detail/fixed_vector.hpp>
 
 #include <boost/dynamic_bitset.hpp>
 
@@ -12,7 +13,15 @@
 
 namespace graph_canon {
 
+// rst: .. class:: refine_WL_1
+// rst:
+// rst:		The Weisfeiler-Leman refinement function of dimension 1.
+// rst:
+
 struct refine_WL_1 : null_visitor {
+	// rst:		.. var:: static constexpr std::size_t refine_new_cell_type = 50
+	// rst:
+	// rst:			The tag used for `refine_new_cell`.
 	static constexpr std::size_t refine_new_cell_type = 50;
 public:
 
@@ -47,6 +56,7 @@ public:
 		};
 
 		struct refinee_cell {
+			refinee_cell() = default;
 
 			refinee_cell(SizeType first, SizeType last) : first(first), last(last) { }
 		public:
@@ -58,7 +68,7 @@ public:
 		// The split positions collected at counting/sorting/scanning time.
 		std::vector<SizeType> refined_beginnings;
 		// The cells that contain neighbours of vertices in the refiner cell.
-		std::vector<refinee_cell> refinee_cells;
+		detail::fixed_vector<refinee_cell> refinee_cells;
 		// Group of various data.
 		std::vector<cell_data_> cell_data;
 		// Edge counters
@@ -67,7 +77,7 @@ public:
 
 	template<typename Config, typename TreeNode>
 	struct InstanceData {
-		using type = tagged_list<instance_data_t, instance_data<typename Config::SizeType> >;
+		using type = tagged_element<instance_data_t, instance_data<typename Config::SizeType> >;
 	};
 
 	template<typename State>
@@ -76,7 +86,7 @@ public:
 		auto &data = get(instance_data_t(), state.data);
 		data.refiner_cells.reserve(n);
 		data.refined_beginnings.reserve(n);
-		data.refinee_cells.reserve(n);
+		data.refinee_cells.reset(n);
 		data.cell_data.resize(n);
 		data.counters.resize(n);
 	}
@@ -139,7 +149,7 @@ private:
 		} else {
 			// Thm. 2-7 and Sec. 2-9 of PGI:
 			// just refine using the newly created individualized vertex
-			refiner_cells.push_back(node.get_parent()->child_refiner_cell);
+			refiner_cells.push_back(node.get_parent()->get_child_individualized_position());
 		}
 		// mark them
 		for(const auto refiner : refiner_cells)
@@ -219,31 +229,41 @@ private:
 		});
 
 		// let's analyse he refinees, maybe we should redo the edges and do some online partitioning
+		SizeType total_hit_count = 0;
+		SizeType zeroes_to_skip = 0;
 		bool redo_neighbours = false;
 		for(const auto &rp : refinee_cells) {
-			const auto max = data[rp.first].max;
-			const auto max_count = data[rp.first].max_count;
-			if(max_count == rp.last - rp.first) { // have all been hit the same?
-				data[rp.first].type = refinee_type::equal_hit;
+			auto &rp_data = data[rp.first];
+			const auto max = rp_data.max;
+			const auto max_count = rp_data.max_count;
+			const auto cell_size = rp.last - rp.first;
+			total_hit_count += rp_data.hit_count;
+			if(max_count == cell_size) { // have all been hit the same?
+				rp_data.type = refinee_type::equal_hit;
 			} else if(max == 1) {
-				data[rp.first].type = refinee_type::unique_partitioning;
-				data[rp.first].hit_count = 0;
+				zeroes_to_skip += cell_size - rp_data.non_zero_count;
+				rp_data.type = refinee_type::unique_partitioning;
+				rp_data.hit_count = 0; // this doubles as indicator for if a redo has been done
 				redo_neighbours = true;
 			} else {
-				const auto cell_size = rp.last - rp.first;
+				zeroes_to_skip += cell_size - rp_data.non_zero_count;
 				//				const auto non_zero = data[rp.first].non_zero_count;
 				// TODO: what should the heuristic be here?
 				// let's say if we have at most 75% non-zero, then do partition
-				if(data[rp.first].hit_count * 4 < 3 * cell_size) {
-					data[rp.first].type = refinee_type::duplicate_partitioning;
-					data[rp.first].hit_count = 0;
+				if(rp_data.hit_count * 4 < 3 * cell_size) {
+					rp_data.type = refinee_type::duplicate_partitioning;
+					rp_data.hit_count = 0; // this doubles as indicator for if a redo has been done
 					redo_neighbours = true;
 				} else {
-					data[rp.first].type = refinee_type::sort;
+					rp_data.type = refinee_type::sort;
 				}
 			}
 		}
-		if(redo_neighbours) {
+		//		std::cout << "Redo?" << std::endl;
+		//		std::cout << "total_hit_count: " << total_hit_count << std::endl;
+		//		std::cout << "zeroes_to_skip:  " << zeroes_to_skip << std::endl;
+		//		std::cout << "redo:            " << std::boolalpha << redo_neighbours << std::endl;
+		if(redo_neighbours && total_hit_count < zeroes_to_skip) {
 			redo_neighbours_from_cell(state, node, refiner_begin, refiner_end);
 		}
 
@@ -310,22 +330,21 @@ private:
 		auto &pi = node.pi;
 
 		const auto v = vertex(*(pi.begin() + refiner_begin), state.g);
-		for_each_neighbour(state, node, v, [&](const auto e_out, const auto v_pos, const auto cell, const auto cell_end) {
+		const auto *begin_inverse = pi.begin_inverse();
+		for_each_neighbour(state, node, v, [&](const auto e_out, const auto v_idx, const auto cell, const auto cell_end) {
 			auto &hit_count = cell_data[cell].hit_count;
 			const bool has_been_hit = hit_count != 0;
 			if(!has_been_hit) {
 				refinee_cells.emplace_back(cell, cell_end);
 			}
 			++hit_count;
+			const auto v_pos = begin_inverse[v_idx];
 			assert(v_pos >= cell);
 			assert(v_pos < cell_end);
 			assert(hit_count <= cell_end - cell);
 			const auto target_pos = cell_end - hit_count;
 			if(v_pos != target_pos) { // don't do identity swaps
-				const auto elem = pi.get(v_pos);
-						const auto target_elem = pi.get(target_pos);
-						pi.put_element_on_index(elem, target_pos);
-						pi.put_element_on_index(target_elem, v_pos);
+				pi.swap_elements(v_pos, target_pos);
 			}
 			sorter.add_edge_singleton_refiner(state, node, cell, cell_end, e_out, target_pos);
 		});
@@ -344,25 +363,24 @@ private:
 		const auto refiner_last = pi.begin() + refiner_end;
 		for(auto v_iter = pi.begin() + refiner_begin; v_iter != refiner_last; ++v_iter) {
 			const auto v = vertex(*v_iter, state.g);
-			for_each_neighbour(state, node, v, [&](const auto e_out, const auto v_pos, const auto cell, const auto cell_end) {
-				auto &hit_count = data[cell].hit_count;
+			for_each_neighbour(state, node, v, [&](const auto e_out, const auto v_idx, const auto cell, const auto cell_end) {
+				auto &cell_data = data[cell];
+				auto &hit_count = cell_data.hit_count;
 				const bool has_been_hit = hit_count != 0;
 				if(!has_been_hit) {
 					refinee_cells.emplace_back(cell, cell_end);
 				}
 				++hit_count;
-				const auto v_target = target(e_out, state.g);
-				const auto v_idx = state.idx[v_target];
 				auto &c = counters[v_idx];
 				if(c == 0) {
-					++data[cell].non_zero_count;
+					++cell_data.non_zero_count;
 				}
 				++c;
-				if(c == data[cell].max) {
-					++data[cell].max_count;
-				} else if(c > data[cell].max) {
-					data[cell].max = c;
-							data[cell].max_count = 1;
+				if(c == cell_data.max) {
+					++cell_data.max_count;
+				} else if(c > cell_data.max) {
+					cell_data.max = c;
+							cell_data.max_count = 1;
 				}
 				sorter.add_edge(state, node, cell, cell_end, e_out);
 			});
@@ -379,21 +397,20 @@ private:
 		const auto refiner_last = pi.begin() + refiner_end;
 		for(auto refiner_iter = pi.begin() + refiner_begin; refiner_iter != refiner_last; ++refiner_iter) {
 			const auto v = vertex(*refiner_iter, state.g);
-			for_each_neighbour(state, node, v, [&](const auto e_out, const auto v_pos, const auto cell, const auto cell_end) {
+			const auto *begin_inverse = pi.begin_inverse();
+			for_each_neighbour(state, node, v, [&](const auto e_out, const auto v_idx, const auto cell, const auto cell_end) {
 				auto &hit_count = data[cell].hit_count;
 				switch(data[cell].type) {
 				case refinee_type::unique_partitioning:
 				{
 					++hit_count;
+							const auto v_pos = begin_inverse[v_idx];
 							assert(v_pos >= cell);
 							assert(v_pos < cell_end);
 							assert(hit_count <= cell_end - cell);
 							const auto target_pos = cell_end - hit_count;
 					if(v_pos != target_pos) { // don't do identity swaps
-						const auto elem = pi.get(v_pos);
-								const auto target_elem = pi.get(target_pos);
-								pi.put_element_on_index(elem, target_pos);
-								pi.put_element_on_index(target_elem, v_pos);
+						pi.swap_elements(v_pos, target_pos);
 					}
 				}
 					break;
@@ -401,7 +418,8 @@ private:
 					break;
 				case refinee_type::duplicate_partitioning:
 				{
-					assert(v_pos >= cell);
+					const auto v_pos = begin_inverse[v_idx];
+							assert(v_pos >= cell);
 							assert(v_pos < cell_end);
 							assert(hit_count <= cell_end - cell);
 					if(v_pos >= cell_end - hit_count) {
@@ -411,10 +429,7 @@ private:
 								assert(hit_count <= cell_end - cell);
 								const auto target_pos = cell_end - hit_count;
 						if(v_pos != target_pos) { // don't do identity swaps
-							const auto elem = pi.get(v_pos);
-									const auto target_elem = pi.get(target_pos);
-									pi.put_element_on_index(elem, target_pos);
-									pi.put_element_on_index(target_elem, v_pos);
+							pi.swap_elements(v_pos, target_pos);
 						}
 					}
 				}
@@ -454,13 +469,36 @@ private:
 			const auto max = data[cell].max;
 			const auto max_count = data[cell].max_count;
 			assert(max > 0);
+			const auto do_general_sort = [&]() {
+				// the sorter must provide all the split positions,
+				// and set first_non_zero
+				sorter.template sort<ParallelEdges, Loops>(pi, cell, cell_end,
+						max, max_count,
+						data[cell].first_non_zero,
+						i_data.counters, refined_beginnings);
+			};
 			switch(data[cell].type) {
 			case refinee_type::unique_partitioning:
 			{
 				assert(max == 1);
 				const auto hit_count = data[cell].hit_count;
-				assert(hit_count > 0); // otherwise it wouldn't be a refinee
-				const auto cell_mid = cell_end - hit_count;
+				const auto cell_mid = [&]() -> SizeType {
+					if(hit_count == 0) { // we didn't do a redo, so do the partition now
+						const auto pi_begin = pi.begin();
+						const auto first = pi_begin + cell;
+						const auto last = pi_begin + cell_end;
+						const auto pred = [&counters = i_data.counters](const auto i){
+							return counters[i] == 0;
+						};
+						const auto swapper = [&](const auto aIter, const auto bIter) {
+							pi.swap_elements(aIter - pi_begin, bIter - pi_begin);
+						};
+						const auto mid = partition_range(first, last, pred, swapper);
+						return mid - pi_begin;
+					} else {
+						return cell_end - hit_count;
+					}
+				}();
 				assert(cell_mid != cell); // otherwise we would be equally hit
 				refined_beginnings.push_back(cell_mid);
 				data[cell].first_non_zero = cell_mid;
@@ -478,29 +516,27 @@ private:
 			{
 				// hit_count is not the real one, but indicates the split
 				const auto hit_count = data[cell].hit_count;
-				assert(hit_count > 0); // otherwise it wouldn't be a refinee
-				const auto cell_mid = cell_end - hit_count;
-				if(cell_mid != cell)
-					refined_beginnings.push_back(cell_mid);
-				data[cell].first_non_zero = cell_mid;
-				assert(max_count <= hit_count);
-				if(max_count == hit_count) {
-					sorter.template sort_duplicate_partitioned_equal_hit<ParallelEdges, Loops>(pi, cell, cell_mid, cell_end,
-							max, refined_beginnings);
+				if(hit_count == 0) { // we didn't do a redo
+					do_general_sort();
 				} else {
-					sorter.template sort_duplicate_partitioned<ParallelEdges, Loops>(pi, cell, cell_mid, cell_end,
-							max, max_count,
-							i_data.counters, refined_beginnings);
+					const auto cell_mid = cell_end - hit_count;
+					if(cell_mid != cell)
+						refined_beginnings.push_back(cell_mid);
+					data[cell].first_non_zero = cell_mid;
+					assert(max_count <= hit_count);
+					if(max_count == hit_count) {
+						sorter.template sort_duplicate_partitioned_equal_hit<ParallelEdges, Loops>(pi, cell, cell_mid, cell_end,
+								max, refined_beginnings);
+					} else {
+						sorter.template sort_duplicate_partitioned<ParallelEdges, Loops>(pi, cell, cell_mid, cell_end,
+								max, max_count,
+								i_data.counters, refined_beginnings);
+					}
 				}
 				break;
 			}
 			case refinee_type::sort:
-				// the sorter must provide all the split positions,
-				// and set first_non_zero
-				sorter.template sort<ParallelEdges, Loops>(pi, cell, cell_end,
-						max, max_count,
-						data[cell].first_non_zero,
-						i_data.counters, refined_beginnings);
+				do_general_sort();
 				break;
 			}
 		} // if is_refiner_singleton
@@ -599,13 +635,13 @@ public:
 			current_cell = current_cell_end;
 			for(; current_cell != refinee_end; current_cell = current_cell_end) {
 				current_cell_end = pi.get_cell_end(current_cell);
-				node.pi.set_element_to_cell(current_cell);
+				node.pi.set_cell_from_v_idx(current_cell);
 			}
-			for(auto c = rp.first; c != rp.last; c = node.pi.get_cell_end(c)) {
-				for(auto i = c; i != node.pi.get_cell_end(c); ++i) {
-					assert(node.pi.get_cell_from_element(i) == c);
-				}
-			}
+			//			for(auto c = rp.first; c != rp.last; c = node.pi.get_cell_end(c)) {
+			//				for(auto i = c; i != node.pi.get_cell_end(c); ++i) {
+			//					assert(node.pi.get_cell_from_element(i) == c);
+			//				}
+			//			}
 		}
 	}
 };

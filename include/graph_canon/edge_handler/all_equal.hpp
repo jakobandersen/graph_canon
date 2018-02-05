@@ -8,6 +8,12 @@
 
 namespace graph_canon {
 
+// rst: .. class:: template<typename SizeType> \
+// rst:            edge_handler_all_equal_impl
+// rst:
+// rst:		An `EdgeHandler` for edges without labels.
+// rst:
+
 template<typename SizeType>
 struct edge_handler_all_equal_impl {
 	static constexpr SizeType Max = 256;
@@ -57,24 +63,28 @@ private:
 		const auto last = pi.begin() + idx_last;
 		// use counting sort to sort for low max_count
 		if(max < Max) {
-			SizeType first_split;
-			sorter(first, last, [&counters](const SizeType i) {
-				return counters[i];
-			}, [&splits, idx_first, idx_last, &first_split](const auto &end) {
-				first_split = idx_first + end.front();
-				auto prev = 0;
-				const auto cell_size = idx_last - idx_first;
-				for(auto iter = end.begin(); *iter != cell_size; prev = *iter, ++iter) {
-					if(*iter == prev) {
-						continue;
+			const auto do_sort = [&](auto &sorter) {
+				SizeType first_split;
+				sorter(first, last, [&counters](const SizeType i) {
+					return counters[i];
+				}, [&splits, idx_first, idx_last, &first_split](const auto &end) {
+					first_split = idx_first + end.front();
+					auto prev = 0;
+					const auto cell_size = idx_last - idx_first;
+					for(auto iter = end.begin(); *iter != cell_size; prev = *iter, ++iter) {
+						if(*iter == prev) {
+							continue;
+						}
+						assert(*iter > prev);
+								splits.push_back(idx_first + *iter);
 					}
-					assert(*iter > prev);
-							splits.push_back(idx_first + *iter);
-				}
-			}, [&pi](auto iter, const auto value) {
-				pi.put_element_on_index(value, iter - pi.begin());
-			});
-			return first_split;
+				}, [&pi](auto iter, const auto value) {
+					pi.put_element_on_index(value, iter - pi.begin());
+				});
+				return first_split;
+			};
+			if(max < 4) return do_sort(sorter4);
+			else return do_sort(sorter);
 		}
 		// fallback, just sort
 		std::sort(first, last, [&counters](const auto a, const auto b) {
@@ -110,13 +120,20 @@ public:
 
 	void clear_cell_singleton_refiner_aborted(auto &state, auto &node, const SizeType cell, const SizeType cell_end) { }
 private:
+	counting_sorter<SizeType, 4> sorter4;
 	counting_sorter<SizeType, Max> sorter;
 public:
 
-	long long compare(auto &state, const auto e_left, const auto e_right) const {
+	template<typename State, typename Edge>
+	long long compare(State &state, const Edge &e_left, const Edge &e_right) const {
 		return 0;
 	}
 };
+
+// rst: .. class:: edge_handler_all_equal
+// rst:
+// rst:		An `EdgeHandlerCreator` for the `edge_handler_all_equal_impl` `EdgeHandler` class.
+// rst:
 
 struct edge_handler_all_equal {
 	template<typename SizeType>

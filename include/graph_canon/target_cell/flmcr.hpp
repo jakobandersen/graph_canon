@@ -1,7 +1,7 @@
 #ifndef GRAPH_CANON_TARGET_CELL_FLMCR_HPP
 #define GRAPH_CANON_TARGET_CELL_FLMCR_HPP
 
-#include <graph_canon/visitor/compound.hpp>
+#include <graph_canon/visitor/visitor.hpp>
 
 namespace graph_canon {
 
@@ -30,7 +30,7 @@ struct target_cell_flmcr : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct InstanceData {
-		using type = tagged_list<instance_data_t, instance_data<typename Config::SizeType> >;
+		using type = tagged_element<instance_data_t, instance_data<typename Config::SizeType> >;
 	};
 
 	void initialize(auto &state) {
@@ -64,8 +64,10 @@ private:
 		auto &data = i_data.data;
 		auto &cells = i_data.cells;
 		const SizeType v_idx = t.pi.get(cell);
+		const auto *begin_inverse = t.pi.begin_inverse();
 		detail::for_each_neighbour(state, t, vertex(v_idx, state.g),
-				[&](const auto e_out, const auto v_pos, const auto target_cell, const auto target_cell_end) {
+				[&](const auto e_out, const auto v_idx, const auto target_cell, const auto target_cell_end) {
+					const auto v_pos = begin_inverse[v_idx];
 					auto &count = data[v_pos].count;
 					auto &non_zero_count = data[target_cell].non_zero_count;
 					if(count == 0) {
@@ -80,7 +82,8 @@ private:
 
 		// cleanup
 		detail::for_each_neighbour(state, t, vertex(v_idx, state.g),
-				[&](const auto e_out, const auto v_pos, const auto target_cell, const auto target_cell_end) {
+				[&](const auto e_out, const auto v_idx, const auto target_cell, const auto target_cell_end) {
+					const auto v_pos = begin_inverse[v_idx];
 					auto &count = data[v_pos].count;
 					count = 0;
 				});

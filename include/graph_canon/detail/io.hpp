@@ -79,7 +79,7 @@ std::ostream &printTreeNode(std::ostream &s, const State &state, const typename 
 			if(i >= parent->children.size()) {
 				s << "x"; // if the parent has not had its children initialised yet
 			} else {
-				s << parent->pi.get(i + parent->child_refiner_cell);
+				s << parent->pi.get(i + parent->get_child_refiner_cell());
 			}
 			parent = n;
 		}
@@ -90,11 +90,11 @@ std::ostream &printTreeNode(std::ostream &s, const State &state, const typename 
 	if(explicitPartition) {
 		printPartition(s << " pi = ", state, node.pi);
 	}
-	if(node.pi.get_num_cells() != state.n && node.child_refiner_cell < state.n) {
-		s << ", tar = " << node.child_refiner_cell;
+	if(node.pi.get_num_cells() != state.n && node.get_child_refiner_cell() < state.n) {
+		s << ", tar = " << node.get_child_refiner_cell();
 		s << ", children =";
-		for(std::size_t i = node.child_refiner_cell; i < node.pi.get_cell_end(node.child_refiner_cell); i++) {
-			if(node.child_pruned[i - node.child_refiner_cell]) s << " x";
+		for(std::size_t i = node.get_child_refiner_cell(); i < node.pi.get_cell_end(node.get_child_refiner_cell()); i++) {
+			if(node.child_pruned[i - node.get_child_refiner_cell()]) s << " x";
 			else s << " " << node.pi.get(i);
 		}
 	}

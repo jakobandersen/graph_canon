@@ -34,11 +34,13 @@
 #include <graph_canon/edge_handler/all_equal.hpp> // default
 #include <graph_canon/visitor/compound.hpp>
 #include <graph_canon/refine/WL_1.hpp> // default
-#include <graph_canon/invariant/support.hpp> // currently always added
+#include <graph_canon/invariant/coordinator.hpp> // currently always added
 #include <graph_canon/detail/explicit_automorphism.hpp>
 #include <graph_canon/detail/partition.hpp>
 #include <graph_canon/detail/permuted_graph_view.hpp>
 #include <graph_canon/detail/tree_node.hpp>
+
+#include <perm_group/permutation/built_in.hpp>
 
 #include <boost/assert.hpp>
 #include <boost/concept/assert.hpp>
@@ -52,10 +54,15 @@
 #include <vector>
 
 namespace graph_canon {
-namespace detail {
 
-template<typename SizeType, typename EdgeHandlerCreator, bool ParallelEdges, bool Loops>
-struct canonicalizer;
+// rst: .. class:: template< \
+// rst:            typename SizeTypeT, bool ParallelEdgesV, bool LoopsV, \
+// rst:            typename GraphT, typename IndexMapT, \
+// rst:            typename EdgeHandlerT> \
+// rst:            config
+// rst:
+// rst:		A helper-class for holding type aliases.
+// rst:
 
 template<
 typename SizeTypeT, bool ParallelEdgesV, bool LoopsV,
@@ -63,30 +70,49 @@ typename GraphT, typename IndexMapT,
 typename EdgeHandlerT
 >
 struct config {
+	// rst:		.. type:: SizeType = SizeTypeT
+	// rst:
+	// rst:			The integer type used as element type in arrays.
 	using SizeType = SizeTypeT;
+	// rst:		.. var:: static constexpr bool ParallelEdges = ParallelEdgesV
+	// rst:
+	// rst:			Indicator for whether the graph can have parallel edges.
 	static constexpr bool ParallelEdges = ParallelEdgesV;
+	// rst:		.. var:: static constexpr bool Loops = LoopsV
+	// rst:
+	// rst:			Indicator for whether the graph can have loop edge.
 	static constexpr bool Loops = LoopsV;
+	// rst:		.. type:: Graph = GraphT
+	// rst:
+	// rst:			The graph type given as input.
 	using Graph = GraphT;
+	// rst:		.. type:: IndexMap = IndexMapT
+	// rst:
+	// rst:			The type of `boost::ReadablePropertyMap` that maps vertices to indices.
 	using IndexMap = IndexMapT;
+	// rst:		.. type:: EdgeHandler = EdgeHandlerT
+	// rst:
+	// rst:			The type of :concept:`EdgeHandler <graph_canon::EdgeHandler>` used.
 	using EdgeHandler = EdgeHandlerT;
 public:
-	using Permutation = std::vector<SizeType>;
-	using Partition = partition<SizeType>;
-
+	// rst:		.. type:: Partition = detail::partition<SizeType>
+	// rst:
+	// rst:			The type of ordered partition used.
+	using Partition = detail::partition<SizeType>;
+	// rst:		.. type:: Vertex = typename boost::graph_traits<Graph>::vertex_descriptor
 	using Vertex = typename boost::graph_traits<Graph>::vertex_descriptor;
+	// rst:		.. type:: Edge = typename boost::graph_traits<Graph>::edge_descriptor
 	using Edge = typename boost::graph_traits<Graph>::edge_descriptor;
 };
 
-//------------------------------------------------------------------------------
-// canon_state
-//------------------------------------------------------------------------------
+namespace detail {
 
 template<typename Visitor, typename Config>
 struct InstanceDataGenerator {
 
 	template<typename TreeNode>
 	struct apply {
-		using type = typename unwrap_visitor<Visitor>::type::template InstanceData<Config, TreeNode>::type;
+		using type = typename Visitor::template InstanceData<Config, TreeNode>::type;
 	};
 };
 
@@ -96,7 +122,7 @@ struct TreeNodeDataGenerator {
 	template<typename TreeNode>
 	struct apply {
 		// We want to give the tree nodes access to the state
-		using Data = typename unwrap_visitor<typename State::Visitor>::type::template TreeNodeData<Config, TreeNode>::type;
+		using Data = typename State::Vis::template TreeNodeData<Config, TreeNode>::type;
 
 		struct type {
 
@@ -119,27 +145,82 @@ struct TreeNodeDataGenerator {
 	};
 };
 
+} // namespace detail
+
+// rst: .. class:: template<typename ConfigT, typename VisitorT> \
+// rst:            canon_state
+// rst:
+// rst:		A class template representing he state of a canonicalization run.
+// rst:		A reference to an object of this class will be passed to almost all functions in plugins.
+// rst:		Note that the user is not supposed to instantiate an object of this class manually.
+// rst:
+
 template<typename ConfigT, typename VisitorT>
-struct canon_state {
+class canon_state {
+	using Self = canon_state<ConfigT, VisitorT>;
 	using Config = ConfigT;
-	using Visitor = VisitorT;
-	using Self = canon_state<Config, Visitor>;
+	canon_state(const canon_state&) = delete;
+	canon_state(canon_state&&) = delete;
+	canon_state &operator=(const canon_state&) = delete;
+	canon_state &operator=(canon_state&&) = delete;
+public:
+	// rst:		.. type:: Vis
+	// rst:
+	// rst:			The type of the complete `Visitor` type used.
+
+	using Vis = VisitorT;
+	// rst:		.. type:: SizeType
+	// rst:
+	// rst:			The integer type used as element type in various arrays.
 	using SizeType = typename Config::SizeType;
+	// rst:		.. type:: Graph
+	// rst:
+	// rst:			The type of the input graph.
 	using Graph = typename Config::Graph;
+	// rst:		.. type:: IndexMap
+	// rst:
+	// rst:			The `ReadablePropertyMap` given to map vertices to indices.
 	using IndexMap = typename Config::IndexMap;
-	using EdgeHandler = typename Config::EdgeHandler;
+	// rst:		.. type:: EHandler
+	// rst:
+	// rst:			The `EdgeHandler` type used.
+	using EHandler = typename Config::EdgeHandler;
+	// rst:		.. var:: static constexpr bool ParallelEdges
+	// rst:
+	// rst:			Configuration value for whether the given graph may have parallel edges or not.
 	static constexpr bool ParallelEdges = Config::ParallelEdges;
+	// rst:		.. var:: static constexpr bool Loops
+	// rst:
+	// rst:			Configuration value for whether the given graph may have loop edges or not.
 	static constexpr bool Loops = Config::Loops;
 
+	// rst:		.. type:: Partition
+	// rst:
+	// rst:			The type of `OrderedPartition` used in the algorithm.
 	using Partition = typename Config::Partition;
-	using Permutation = typename Config::Permutation;
-	using Vertex = typename Config::Vertex;
-	using Edge = typename Config::Edge;
+	// rst:		.. type:: Vertex = typename boost::graph_traits<Graph>::vertex_descriptor
+	using Vertex = typename boost::graph_traits<Graph>::vertex_descriptor;
+	// rst:		.. type:: Edge = typename boost::graph_traits<Graph>::edge_descriptor
+	using Edge = typename boost::graph_traits<Graph>::edge_descriptor;
+	// rst:		.. type:: Perm = std::vector<SizeType>
+	// rst:
+	// rst:			The type of `perm_group::Permutation` returned from the algorithm
+	using Perm = std::vector<SizeType>;
 public:
-	using TreeNode = tree_node<SizeType, TreeNodeDataGenerator<Self, Config> >;
+	// rst:		.. type:: TreeNode
+	// rst:
+	// rst:			The type used for instantiating tree nodes.
+	using TreeNode = detail::tree_node<SizeType, detail::TreeNodeDataGenerator<Self, Config> >;
+	// rst:		.. type:: OwnerPtr
+	// rst:
+	// rst:			A smart-pointer type that keeps a tree node alive (e.g., by reference counting).
 	using OwnerPtr = typename TreeNode::OwnerPtr;
-	using InstanceData = typename InstanceDataGenerator<Visitor, Config>::template apply<TreeNode>::type;
-	using PermutedGraph = permuted_graph_view<Config, TreeNode>;
+	// rst:		.. type:: InstanceData
+	// rst:
+	// rst:			Instance data defined, e.g., by visitors, is all stored in an object of this type
+	using InstanceData = typename detail::InstanceDataGenerator<Vis, Config>::template apply<TreeNode>::type;
+private:
+	using PermutedGraph = detail::permuted_graph_view<Config, TreeNode>;
 private:
 
 	template<typename VertexLess>
@@ -158,15 +239,13 @@ private:
 		}
 		pi.reset_inverse(0, n);
 		for(SizeType cell = 0; cell != n; cell = pi.get_cell_end(cell))
-			pi.set_element_to_cell(cell);
+			pi.set_cell_from_v_idx(cell);
 	}
 public:
 
 	template<typename VertexLess>
-	canon_state(const Graph &g, IndexMap idx, EdgeHandler &edge_handler, Visitor visitor, VertexLess vertex_less, Partition &&pi)
-	: g(g), n(num_vertices(g)), idx(idx), edge_handler(edge_handler), visitor(std::move(visitor)),
-	root(nullptr),
-	canon_leaf(nullptr), canon_permuted_graph(nullptr), extra_permuted_graph(nullptr) {
+	canon_state(const Graph &g, IndexMap idx, EHandler &edge_handler, Vis visitor, VertexLess vertex_less, Partition &&pi)
+	: g(g), n(num_vertices(g)), idx(idx), edge_handler(edge_handler), visitor(std::move(visitor)) {
 		this->edge_handler.initialize(*this);
 		this->visitor.initialize(*this);
 		// first let the user determine the order
@@ -190,23 +269,20 @@ public:
 		root = nullptr;
 	}
 
-	// returns false iff this leads to a worse leaf
+	//private:
 
 	bool make_equitable(TreeNode &node) {
+		// returns false iff this leads to a worse leaf
 		RefinementResult result;
-		//		std::cout << "make_equitable:" << std::endl;
 		do {
 			result = visitor.refine(*this, node);
-			//			std::cout << "make_equitable round: " << result << std::endl << std::endl;
 		} while(result == RefinementResult::Again);
-		//		std::cout << "make_equitable end: " << result << std::endl;
 		return result != RefinementResult::Abort;
 	}
 
-	Permutation get_canonical_permutation() {
-		//    assert(canon_leaf);
-		if(!canon_leaf) throw 1; //std::abort();
-		Permutation p(n);
+	Perm get_canonical_permutation() {
+		assert(canon_leaf);
+		Perm p(n);
 		std::copy(canon_leaf->pi.begin_inverse(), canon_leaf->pi.end_inverse(), p.begin());
 		return p;
 	}
@@ -214,35 +290,62 @@ public:
 	SizeType select_target_cell(TreeNode &t) {
 		return visitor.select_target_cell(*this, t);
 	}
+public:
 
-	void add_terminal(OwnerPtr node) {
+	// rst:		.. function:: void report_leaf(OwnerPtr node)
+	// rst:
+	// rst:			Submit a tree node as a valid leaf of the search tree.
+	// rst:
+	// rst:			Requires that the ordered partition represented by `node` is discrete,
+	// rst:			and that `report_leaf` has not been called before with this node.
+	// rst:
+	// rst:			Several `Visitor` methods may be called from this function:
+	// rst:
+	// rst:			- `Visitor::tree_leaf`, always called.
+	// rst:			- `Visitor::canon_new_best`, if this node will be the best candidate leaf afterwards.
+	// rst:			- `Visitor::automorphism_leaf`, if this node represents a canonical representation,
+	// rst:			  equal to the current best candidate.
+	// rst:			- `Visitor::canon_worse`, if this nodes represents a worse representation than the current best candidate.
+
+	void report_leaf(OwnerPtr node) {
 		assert(node != canon_leaf);
+		assert(node->pi.get_num_cells() == n);
 		visitor.tree_leaf(*this, *node);
+		if(!canon_leaf) { // canon_permuted_graph may still be valid if someone pruned our canon_leaf
+			canon_leaf = node;
+			visitor.canon_new_best(*this);
+			return;
+		}
+		if(!canon_permuted_graph) { // this is our second leaf, so not even the first permuted graph were created
+			assert(!extra_permuted_graph);
+			canon_permuted_graph = new PermutedGraph(*this, canon_leaf);
+			extra_permuted_graph = new PermutedGraph(*this, node);
+		} else if(canon_permuted_graph->get_node() != canon_leaf) {
+			// at least two leaves were discovered, canon_leaf was pruned, at least two leaves were discovered
+			canon_permuted_graph->repermute(*this, canon_leaf);
+		}
 		if(extra_permuted_graph) {
 			extra_permuted_graph->repermute(*this, node);
 		} else {
 			extra_permuted_graph = new PermutedGraph(*this, node);
 		}
-		if(!canon_leaf) { // canon_permuted_graph may still be valid if someone pruned our canon_leaf
-			canon_leaf = node;
+		auto cmp = PermutedGraph::compare(*this, *extra_permuted_graph, *canon_permuted_graph);
+		if(cmp < 0) {
 			std::swap(canon_permuted_graph, extra_permuted_graph);
+			canon_leaf = node;
 			visitor.canon_new_best(*this);
+		} else if(cmp == 0) {
+			detail::explicit_automorphism<Self> aut(*this, *node);
+			visitor.automorphism_leaf(*this, *node, aut);
 		} else {
-			assert(extra_permuted_graph);
-			assert(canon_permuted_graph);
-			auto cmp = PermutedGraph::compare(*this, *extra_permuted_graph, *canon_permuted_graph);
-			if(cmp < 0) {
-				std::swap(canon_permuted_graph, extra_permuted_graph);
-				canon_leaf = node;
-				visitor.canon_new_best(*this);
-			} else if(cmp == 0) {
-				explicit_automorphism<Self> aut(*this, *node);
-				visitor.automorphism_leaf(*this, *node, aut);
-			} else {
-				visitor.canon_worse(*this, *node);
-			}
+			visitor.canon_worse(*this, *node);
 		}
 	}
+
+	// rst:		.. function:: void prune_canon_leaf()
+	// rst:
+	// rst:			Prune the current best candidate.
+	// rst:			Requires that at least one leaf will be added with `repoort_leaf` later.
 
 	void prune_canon_leaf() {
 		if(!canon_leaf) return;
@@ -250,35 +353,85 @@ public:
 		canon_leaf = nullptr;
 	}
 
+	// rst:		.. function:: TreeNode *get_canon_leaf() const
+	// rst:
+	// rst:			:returns: a pointer to the tree node representing the current best candidate.
+
 	TreeNode *get_canon_leaf() const {
 		return canon_leaf.get();
 	}
 public:
+	// rst:		.. var:: const Graph &g
+	// rst:
+	// rst:			The input graph.
 	const Graph &g;
-	SizeType n; // num_vertices(g)
-	IndexMap idx;
+	// rst:		.. var:: const SizeType n = num_vertices(g)
+	const SizeType n;
+	// rst:		.. var:: const IndexMap idx
+	// rst:
+	// rst:			The given `ReadablePropertyMap` that maps vertices to indices.
+	const IndexMap idx;
+	// rst:		.. var:: InstanceData data
+	// rst:
+	// rst:			The aggregated data structure holding all instance data.
+	// rst:			Use `get(my_tag(), data)` to access your data, tagged with some tag `my_tag`.
 	InstanceData data; // should be the last calculated data to be deleted
-	EdgeHandler &edge_handler; // stored in the canonicalisation object, to reuse it
-	Visitor visitor;
-	OwnerPtr root;
+	// rst:		.. var:: EHandler &edge_handler
+	// rst:
+	// rst:			A reference to the `EdgeHandler` used for this run.
+	EHandler &edge_handler; // stored in the canonicalisation object, to reuse it
+	// rst:		.. var:: Vis visitor
+	// rst:
+	// rst:			The complete `Visitor` used.
+	Vis visitor;
+	// rst:		.. var:: OwnerPtr root
+	// rst:
+	// rst:			A pointer to the root of the search tree.
+	OwnerPtr root = nullptr;
 private:
-	OwnerPtr canon_leaf; // best graph of all the best_by_invariant
-	PermutedGraph *canon_permuted_graph, *extra_permuted_graph; // has owner pointers to their leaves
+	OwnerPtr canon_leaf = nullptr; // best graph of all the best_by_invariant
+	PermutedGraph *canon_permuted_graph = nullptr, *extra_permuted_graph = nullptr; // has owner pointers to their leaves
 };
 
-} // namespace detail
+// rst: .. class:: template<typename SizeType, typename EdgeHandlerCreatorT, bool ParallelEdges, bool Loops> \
+// rst:            canonicalizer
+// rst:
+// rst:		A reusable function object for canonicalizing graphs.
+// rst:
+// rst:		Requires `SizeType` to be an integer type and `EdgeHandlerCreatorT` to be an `EdgeHandlerCreator`.
+// rst:
 
-template<typename SizeType, typename EdgeHandlerCreator, bool ParallelEdges, bool Loops>
+template<typename SizeType, typename EdgeHandlerCreatorT, bool ParallelEdges, bool Loops>
 struct canonicalizer {
 	BOOST_STATIC_ASSERT_MSG(boost::is_integral<SizeType>::value, "SizeType must be integral.");
-	using EdgeHandler = typename EdgeHandlerCreator::template type<SizeType>;
+	// rst:		.. type:: EdgeHandler = typename EdgeHandlerCreatorT::template type<SizeType>
+	using EdgeHandler = typename EdgeHandlerCreatorT::template type<SizeType>;
 public:
 
-	canonicalizer(EdgeHandlerCreator edge_handler_creator)
+	// rst:		.. function:: canonicalizer(EdgeHandlerCreatorT edge_handler_creator)
+
+	canonicalizer(EdgeHandlerCreatorT edge_handler_creator)
 	: edge_handler(edge_handler_creator.template make<SizeType>()) { }
 
-	template<typename Graph, typename IndexMap, typename VertexLess, typename Visitor>
-	auto operator()(const Graph &g, IndexMap idx, VertexLess vertex_less, Visitor visitor) {
+	// rst:		.. function:: template<typename Graph, typename IndexMap, typename VertexLess, typename Vis> \
+	// rst:		              auto operator()(const Graph &g, IndexMap idx, VertexLess vertex_less, Vis visitor)
+	// rst:
+	// rst:			Compute a permutation that permutes the indices of the vertices of `g` into their canonical indices.
+	// rst:
+	// rst:			Requires:
+	// rst:
+	// rst:			- `IndexMap` must be a `ReadablePropertyMap` that maps the vertices of `g` into contiguous indices starting from 0.
+	// rst:			- `VertexLess` must be a less-than predicate on the vertices of `g` that induces a strict weak ordering.
+	// rst:			  The resulting canonical vertex order respects the ordering induced by `vertex_less`.
+	// rst:			- `Vis` must be a `Visitor` type.
+	// rst:
+	// rst:			:returns: A `std::pair<std::vector<SizeType>, Data>` where `first` is the permutation,
+	// rst:				and `second` is the auxiliary visitor data of an unspecified type `Data`.
+	// rst:				See each visitor for what data they may return and what is tagged with.
+	// rst:				Use `get(the_tag(), res.second)` to access the data tagged with `the_tag` from the return value `res`.
+
+	template<typename Graph, typename IndexMap, typename VertexLess, typename Vis>
+	auto operator()(const Graph &g, IndexMap idx, VertexLess vertex_less, Vis visitor) {
 		// static checks
 		BOOST_CONCEPT_ASSERT((boost::ReadablePropertyMapConcept<IndexMap, typename boost::graph_traits<Graph>::vertex_descriptor>));
 		using IndexMapValue = typename boost::property_traits<IndexMap>::value_type;
@@ -286,28 +439,26 @@ public:
 		// only undirected graphs for now
 		BOOST_STATIC_ASSERT((boost::is_convertible<typename boost::graph_traits<Graph>::directed_category, boost::undirected_tag>::value));
 		// don't have duplicate visitors
-		auto visitor_with_inv = make_visitor(invariant_support(), visitor);
+		auto visitor_with_inv = make_visitor(invariant_coordinator(), visitor);
 		using VisitorWithInv = decltype(visitor_with_inv);
 		using DuplicateVisitor = detail::check_visitor_duplication<VisitorWithInv>;
 		static_assert(std::is_same<DuplicateVisitor, void>::value, "Visitors must be unique.");
 		// there must be a target cell selector, and only one
 		static_assert(VisitorWithInv::can_select_target_cell::value, "The visitor must be able to select target cells.");
-		using TargetCellSelectors = typename detail::meta_copy_if<VisitorWithInv, detail::pred_target_cell>::type;
-		static_assert(detail::meta_size<TargetCellSelectors>::value == 1, "There can be only one target cell selector.");
+		using TargetCellSelectors = meta::copy_if<VisitorWithInv, detail::pred_target_cell>;
+		static_assert(meta::size<TargetCellSelectors>::value == 1, "There can be only one target cell selector.");
 		// there must be a tree explorer, and only one
 		static_assert(VisitorWithInv::can_explore_tree::value, "The visitor must be able to explore the search tree.");
-		using TreeTraversers = typename detail::meta_copy_if<VisitorWithInv, detail::pred_tree_traversal>::type;
-		static_assert(detail::meta_size<TreeTraversers>::value == 1, "There can be only one tree traverser.");
+		using TreeTraversers = meta::copy_if<VisitorWithInv, detail::pred_tree_traversal>;
+		static_assert(meta::size<TreeTraversers>::value == 1, "There can be only one tree traverser.");
 		// dynamic checks
 		BOOST_ASSERT_MSG(num_vertices(g) <= std::numeric_limits<SizeType>::max(), "SizeType is too narrow for this graph.");
 		BOOST_ASSERT_MSG(num_edges(g) <= std::numeric_limits<SizeType>::max(), "SizeType is too narrow for this graph.");
 
 
-		using Config = detail::config<SizeType, ParallelEdges, Loops, Graph, IndexMap, EdgeHandler>;
-		using Permutation = typename Config::Permutation;
+		using Config = config<SizeType, ParallelEdges, Loops, Graph, IndexMap, EdgeHandler>;
 		using Partition = typename Config::Partition;
 
-		if(num_vertices(g) == 0) return Permutation();
 		// Create initial partition
 		Partition pi(num_vertices(g));
 		const auto vs = vertices(g);
@@ -317,36 +468,32 @@ public:
 		}
 
 		// Create and explore tree
-		detail::canon_state<Config, VisitorWithInv>
+		canon_state<Config, VisitorWithInv>
 				state(g, idx, edge_handler, visitor_with_inv, vertex_less, std::move(pi));
 		visitor_with_inv.explore_tree(state);
-		return state.get_canonical_permutation();
+		return std::make_pair(state.get_canonical_permutation(), visitor_with_inv.extract_result(state));
 	}
 private:
 	EdgeHandler edge_handler;
 };
 
+// rst: .. function:: template<typename SizeType, bool ParallelEdges, bool Loops, typename Graph, typename IndexMap, \
+// rst:               typename VertexLess, typename EdgeHandlerCreatorT, typename Visitor> \
+// rst:               auto canonicalize(const Graph &graph, IndexMap idx, VertexLess vertex_less, EdgeHandlerCreatorT edge_handler_creator, Visitor visitor)
+// rst:
+// rst:		A shorhand function for canonicalization.
+// rst:		The `SizeType`, `ParallelEdges`, and `Loops` must be specified explicitly while remaining template parameters can be deduced.
+// rst:
+// rst:		See :expr:`canonicalizer::operator()`.
+
 template<
 typename SizeType, bool ParallelEdges, bool Loops,
 typename Graph, typename IndexMap,
-typename VertexLess, typename EdgeHandler,
+typename VertexLess, typename EdgeHandlerCreatorT,
 typename Visitor
 >
-std::vector<SizeType>
-canonicalization(const Graph &graph, IndexMap idx, VertexLess vertex_less, EdgeHandler edge_handler, Visitor visitor) {
-	return canonicalizer<SizeType, EdgeHandler, ParallelEdges, Loops>(edge_handler) (graph, idx, vertex_less, visitor);
-}
-
-// - Use graph_traits<Graph>::vertices_size_type as SizeType
-// - Use default build-in index map
-// - Assume all vertices are equivalent
-// - Assume all edges are equivalent
-
-template<typename Graph, bool ParallelEdges, bool Loops>
-std::vector<typename boost::graph_traits<Graph>::vertices_size_type>
-canonicalization(const Graph &graph) {
-	using SizeType = typename boost::graph_traits<Graph>::vertices_size_type;
-	return canonicalization<SizeType, ParallelEdges, Loops>(graph, get(boost::vertex_index_t(), graph), always_false(), edge_handler_all_equal(), make_visitor());
+auto canonicalize(const Graph &graph, IndexMap idx, VertexLess vertex_less, EdgeHandlerCreatorT edge_handler_creator, Visitor visitor) {
+	return canonicalizer<SizeType, EdgeHandlerCreatorT, ParallelEdges, Loops>(edge_handler_creator) (graph, idx, vertex_less, visitor);
 }
 
 } // namespace graph_canon

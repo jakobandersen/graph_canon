@@ -10,9 +10,10 @@
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>..</sourceRootElem>
-                <sourceRootElem>..</sourceRootElem>
-                <sourceRootElem>..</sourceRootElem>
+                <sourceRootElem>../include/graph_canon</sourceRootElem>
+                <sourceRootElem>../src</sourceRootElem>
+                <sourceRootElem>../test</sourceRootElem>
+                <sourceRootElem>../examples</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

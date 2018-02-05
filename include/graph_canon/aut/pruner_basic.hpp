@@ -14,21 +14,50 @@
 
 namespace graph_canon {
 
+// rst: .. class:: aut_pruner_basic : aut_pruner_base<aut_pruner_basic>
+// rst:
+// rst:		A `Visitor` for pruning the search tree based on automorphisms reported by other visitors.
+// rst:		Stabilizers are computed conservatively by plain filtering of the generators.
+// rst:
+
 struct aut_pruner_basic : aut_pruner_base<aut_pruner_basic> {
 	using Base = aut_pruner_base<aut_pruner_basic>;
 public: // for aut_pruner_base
+	// rst:		.. type:: template<typename SizeType> \
+	// rst:		          BasePerm = std::vector<SizeType>
 	template<typename SizeType>
 	using BasePerm = std::vector<SizeType>;
+	// rst:		.. type:: template<typename SizeType> \
+	// rst:		          Perm = wrapped_perm<BasePerm<SizeType> >
+	// rst:
+	// rst:			The type used internally to store automorphisms.
 	template<typename SizeType>
 	using Perm = wrapped_perm<BasePerm<SizeType> >;
 public:
+	// rst:		.. type:: template<typename SizeType> \
+	// rst:		          Alloc = perm_group::raw_ptr_allocator<Perm<SizeType> >
 	template<typename SizeType>
 	using Alloc = perm_group::raw_ptr_allocator<Perm<SizeType> >;
+	// rst:		.. type:: template<typename SizeType> \
+	// rst:		          BaseGroup = perm_group::generated_group<Perm<SizeType>, Alloc<SizeType> >
+	// rst:
+	// rst:			The automorphism group implementation used.
 	template<typename SizeType>
 	using BaseGroup = perm_group::generated_group<Perm<SizeType>, Alloc<SizeType> >;
+	// rst:		.. type:: template<typename SizeType> \
+	// rst:		          Stab = perm_group::basic_updatable_stabilizer<BaseGroup<SizeType> >
+	// rst:
+	// rst:			The stabilizer implementation used.
 	template<typename SizeType>
 	using Stab = perm_group::basic_updatable_stabilizer<BaseGroup<SizeType> >;
 public:
+
+	// rst:		.. type:: result_t
+	// rst:
+	// rst:			The tag type used to store the automorphism group in the result.
+	// rst:			The result type is `std::unique_ptr<BaseGroup<SizeType> >`.
+	struct result_t {
+	};
 
 	struct instance_data_t {
 	};
@@ -42,7 +71,8 @@ public:
 	template<typename Config, typename TreeNode>
 	struct InstanceData {
 		using base_type = typename Base::InstanceData<Config, TreeNode>::type;
-		using type = tagged_list<instance_data_t, instance_data<typename Config::SizeType>, base_type>;
+		using this_type = tagged_element<instance_data_t, instance_data<typename Config::SizeType> >;
+		using type = typename tagged_list_concat<this_type, base_type>::type;
 	};
 
 	struct tree_data_t {
@@ -56,7 +86,8 @@ public:
 	template<typename Config, typename TreeNode>
 	struct TreeNodeData {
 		using base_type = typename Base::TreeNodeData<Config, TreeNode>::type;
-		using type = tagged_list<tree_data_t, tree_data<typename Config::SizeType>, base_type>;
+		using this_type = tagged_element<tree_data_t, tree_data<typename Config::SizeType> >;
+		using type = typename tagged_list_concat<this_type, base_type>::type;
 	};
 public:
 
@@ -65,6 +96,14 @@ public:
 		using SizeType = typename State::SizeType;
 		assert(!get(instance_data_t(), s.data).g);
 		get(instance_data_t(), s.data).g.reset(new BaseGroup<SizeType>(s.n));
+	}
+
+	template<typename State>
+	auto extract_result(State &s) {
+		using SizeType = typename State::SizeType;
+		using Result = std::unique_ptr<BaseGroup<SizeType> >;
+		auto &data = get(instance_data_t(), s.data);
+		return tagged_element<result_t, Result>{std::move(data.g)};
 	}
 public: // for aut_pruner_base
 
@@ -110,7 +149,7 @@ public: // for aut_pruner_base
 			return make_aut_range(first, last);
 		}
 		if(!t_data.stab) {
-			const auto new_v_idx_to_fix = t.pi.get(t.get_parent()->child_refiner_cell);
+			const auto new_v_idx_to_fix = t.pi.get(t.get_parent()->get_child_individualized_position());
 			if(t.get_parent()->get_parent()) {
 				const auto &parentData = get(tree_data_t(), t.get_parent()->data);
 				t_data.stab.reset(new Stab<SizeType>(new_v_idx_to_fix, *parentData.stab));

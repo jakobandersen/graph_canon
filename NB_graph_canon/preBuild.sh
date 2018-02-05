@@ -7,4 +7,4 @@ export CXXFLAGS=-ftemplate-backtrace-limit=0
 ../configure \
 	--prefix=$(pwd)/stage \
 	--with-boost=$HOME/programs \
-	--with-perm_group=$HOME/stuff/code/perm_group
+	--with-perm_group=$HOME/stuff/code/perm_group/build/stage

@@ -1,12 +1,19 @@
 #ifndef GRAPH_CANON_INVARIANT_CELL_SPLIT_HPP
 #define GRAPH_CANON_INVARIANT_CELL_SPLIT_HPP
 
-#include <graph_canon/invariant/support.hpp>
+#include <graph_canon/invariant/coordinator.hpp>
 
 #include <cassert>
 #include <vector>
 
 namespace graph_canon {
+
+// rst: .. class:: invariant_cell_split
+// rst:
+// rst:		An implementation of the node invariant consisting of the sequence of cell splits performed in each tree node.
+// rst:		It uses the `refine_new_cell` event to collect data.
+// rst:
+// rst:		Requires a `invariant_coordinator` as visitor, ordered before this visitor.
 
 struct invariant_cell_split : null_visitor {
 
@@ -19,7 +26,7 @@ struct invariant_cell_split : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct TreeNodeData {
-		using type = tagged_list<tree_data_t, tree_data>;
+		using type = tagged_element<tree_data_t, tree_data>;
 	};
 
 	struct instance_data_t {
@@ -34,7 +41,7 @@ struct invariant_cell_split : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct InstanceData {
-		using type = tagged_list<instance_data_t, instance_data<typename Config::SizeType> >;
+		using type = tagged_element<instance_data_t, instance_data<typename Config::SizeType> >;
 	};
 private:
 
@@ -47,7 +54,7 @@ public:
 	void initialize(auto &state) {
 		auto &i_data = get(instance_data_t(), state.data);
 		i_data.trace.resize(state.n);
-		i_data.visitor_type = invariant_support::init_visitor(state);
+		i_data.visitor_type = invariant_coordinator::init_visitor(state);
 	}
 
 	bool tree_create_node_begin(auto &state, auto &t) {
@@ -56,7 +63,7 @@ public:
 		// and fix book keeping
 		if(t.get_parent()) {
 			t_data.end_index = get(tree_data_t(), t.get_parent()->data).end_index;
-			const auto ind_cell = t.get_parent()->child_refiner_cell + 1;
+			const auto ind_cell = t.get_parent()->get_child_individualized_position();
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 			std::cout << "TraceCS   ctree, end_index=" << t_data.end_index << ", ind_cell=" << ind_cell << std::endl;
 #endif
@@ -75,7 +82,7 @@ public:
 		return add_trace(state, t, cell);
 	}
 
-	void trace_better(auto &state, auto &t) {
+	void invariant_better(auto &state, auto &t) {
 		auto &i_data = get_data(state);
 		auto &t_data = get(tree_data_t(), t.data);
 		// shorten the trace
@@ -108,7 +115,7 @@ private:
 		std::cout << "TraceCS   add, end_index=" << t_data.end_index << ", i_end=" << i_data.trace_end << ", cell=" << cell << std::endl;
 #endif
 		assert(i_data.trace_end >= t_data.end_index);
-		const auto continue_ = invariant_support::add_trace_element(state, t, i_data.visitor_type);
+		const auto continue_ = invariant_coordinator::add_invariant_element(state, t, i_data.visitor_type);
 		if(!continue_) return false;
 		const auto elem = cell;
 		if(i_data.trace_end == t_data.end_index) {
@@ -118,7 +125,7 @@ private:
 		const auto old_elem = i_data.trace[t_data.end_index];
 		if(elem < old_elem) {
 			// we are better
-			invariant_support::better_trace(state, t);
+			invariant_coordinator::better_invariant(state, t);
 			extend_trace(state, t, elem);
 			return true;
 		} else if(elem == old_elem) {
@@ -130,7 +137,7 @@ private:
 			return true;
 		} else {
 			// we are worse
-			invariant_support::worse_trace(state, t);
+			invariant_coordinator::worse_invariant(state, t);
 			return false;
 		}
 	}

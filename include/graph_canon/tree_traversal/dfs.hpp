@@ -1,9 +1,13 @@
 #ifndef GRAPH_CANON_TREE_TRAVERSAL_DFS_HPP
 #define GRAPH_CANON_TREE_TRAVERSAL_DFS_HPP
 
-#include <graph_canon/visitor/compound.hpp>
+#include <graph_canon/visitor/visitor.hpp>
 
 namespace graph_canon {
+
+// rst: .. class:: traversal_dfs
+// rst:
+// rst:		Tree traversal visitor for depth-first traversal.
 
 struct traversal_dfs : null_visitor {
 	using can_explore_tree = std::true_type;
@@ -46,13 +50,13 @@ struct traversal_dfs : null_visitor {
 			if(next_child_index < parent->children.size()) {
 				// we still have children to explore
 				work_stack.emplace_back(parent, next_child_index + 1);
-				typename TreeNode::OwnerPtr child = parent->create_child(next_child_index + parent->child_refiner_cell, state);
+				typename TreeNode::OwnerPtr child = parent->create_child(next_child_index + parent->get_child_refiner_cell(), state);
 				// if the child got pruned already, don't add it
 				if(child) work_stack.emplace_back(child, 0);
 			} else if(next_child_index == 0) {
 				// this is actually a leaf node
 				assert(parent->pi.get_num_cells() == state.n);
-				state.add_terminal(parent);
+				state.report_leaf(parent);
 			}
 		}
 	}

@@ -191,7 +191,7 @@ struct dynamic_target_cell_selector : graph_canon::null_visitor {
 		using FL = typename graph_canon::target_cell_fl::InstanceData<Config, TreeNode>::type;
 		using FLI = typename graph_canon::target_cell_flmcr::InstanceData<Config, TreeNode>::type;
 		using FLM = typename graph_canon::target_cell_flm::InstanceData<Config, TreeNode>::type;
-		using type = typename graph_canon::tagged_list_concat_many<F, FL, FLI, FLM>::type;
+		using type = typename graph_canon::tagged_list_concat<F, FL, FLI, FLM>::type;
 	};
 public:
 
@@ -234,7 +234,7 @@ struct dynamic_tree_traversal : graph_canon::null_visitor {
 		using DFS = typename graph_canon::traversal_dfs::InstanceData<Config, TreeNode>::type;
 		using BFSExp = typename graph_canon::traversal_bfs_exp::InstanceData<Config, TreeNode>::type;
 		using BFSExpM = typename graph_canon::traversal_bfs_exp_m::InstanceData<Config, TreeNode>::type;
-		using type = typename graph_canon::tagged_list_concat_many<DFS, BFSExp, BFSExpM>::type;
+		using type = typename graph_canon::tagged_list_concat<DFS, BFSExp, BFSExpM>::type;
 	};
 
 	template<typename Config, typename TreeNode>
@@ -242,7 +242,7 @@ struct dynamic_tree_traversal : graph_canon::null_visitor {
 		using DFS = typename graph_canon::traversal_dfs::TreeNodeData<Config, TreeNode>::type;
 		using BFSExp = typename graph_canon::traversal_bfs_exp::TreeNodeData<Config, TreeNode>::type;
 		using BFSExpM = typename graph_canon::traversal_bfs_exp_m::TreeNodeData<Config, TreeNode>::type;
-		using type = typename graph_canon::tagged_list_concat_many<DFS, BFSExp, BFSExpM>::type;
+		using type = typename graph_canon::tagged_list_concat<DFS, BFSExp, BFSExpM>::type;
 	};
 public:
 
@@ -339,8 +339,8 @@ auto canonicalize_call_alg(const Options &options, Graph &g, VertexLess vLess, E
 
 template<typename Graph, typename VertexLess, typename EdgeHandler, typename Visitor>
 auto canonicalize_refine(const Options &options, Graph &g, VertexLess vLess, EdgeHandler edgeHandler, Visitor visitor) {
-	graph_canon::GRAPH_CANON_CAT(refine_, GRAPH_CANON_REFINE) refine;
-	return canonicalize_call_alg(options, g, vLess, edgeHandler, graph_canon::make_visitor(refine, visitor));
+	return canonicalize_call_alg(options, g, vLess, edgeHandler,
+			graph_canon::make_visitor(graph_canon::GRAPH_CANON_CAT(refine_, GRAPH_CANON_REFINE)(), visitor));
 }
 
 template<typename Graph, typename VertexLess, typename EdgeHandler, typename Visitor>
@@ -358,8 +358,8 @@ auto canonicalize_switch_target_cell_selector(const Options &options, Graph &g, 
 template<typename Graph, typename VertexLess, typename EdgeHandler, typename Visitor>
 auto canonicalize_switch_degree_1(const Options &options, Graph &g, VertexLess vLess, EdgeHandler edgeHandler, Visitor visitor) {
 #ifdef GRAPH_CANON_DEGREE_1
-	graph_canon::refine_degree_1 degree_1;
-	return canonicalize_switch_target_cell_selector(options, g, vLess, edgeHandler, graph_canon::make_visitor(boost::ref(degree_1), visitor));
+	return canonicalize_switch_target_cell_selector(options, g, vLess, edgeHandler,
+			graph_canon::make_visitor(graph_canon::refine_degree_1(), visitor));
 #else
 	return canonicalize_switch_target_cell_selector(options, g, vLess, edgeHandler, visitor);
 #endif
@@ -368,8 +368,8 @@ auto canonicalize_switch_degree_1(const Options &options, Graph &g, VertexLess v
 template<typename Graph, typename VertexLess, typename EdgeHandler, typename Visitor>
 auto canonicalize_switch_aut_implicit(const Options &options, Graph &g, VertexLess vLess, EdgeHandler edgeHandler, Visitor visitor) {
 #ifdef GRAPH_CANON_AUT_IMPLICIT
-	graph_canon::aut_implicit_size_2 implicit_automorphisms;
-	return canonicalize_switch_degree_1(options, g, vLess, edgeHandler, graph_canon::make_visitor(boost::ref(implicit_automorphisms), visitor));
+	return canonicalize_switch_degree_1(options, g, vLess, edgeHandler,
+			graph_canon::make_visitor(graph_canon::aut_implicit_size_2(), visitor));
 #else
 	return canonicalize_switch_degree_1(options, g, vLess, edgeHandler, visitor);
 #endif
@@ -378,8 +378,8 @@ auto canonicalize_switch_aut_implicit(const Options &options, Graph &g, VertexLe
 template<typename Graph, typename VertexLess, typename EdgeHandler, typename Visitor>
 auto canonicalize_switch_aut_pruner(const Options &options, Graph &g, VertexLess vLess, EdgeHandler edgeHandler, Visitor visitor) {
 #ifdef GRAPH_CANON_AUT_PRUNER
-	graph_canon::GRAPH_CANON_CAT(aut_pruner_, GRAPH_CANON_AUT_PRUNER) pruner;
-	return canonicalize_switch_aut_implicit(options, g, vLess, edgeHandler, graph_canon::make_visitor(pruner, visitor));
+	return canonicalize_switch_aut_implicit(options, g, vLess, edgeHandler,
+			graph_canon::make_visitor(graph_canon::GRAPH_CANON_CAT(aut_pruner_, GRAPH_CANON_AUT_PRUNER)(), visitor));
 #else
 	return canonicalize_switch_aut_implicit(options, g, vLess, edgeHandler, visitor);
 #endif
@@ -553,44 +553,141 @@ void loadAndExecute(Options &options, Executor executor) {
 	}
 }
 
+// rst: .. cpp:namespace:: graph_canon
+// rst:
+// rst: .. _graph-canon:
+// rst:
+// rst: ``graph-canon``
+// rst: ########################################################################
+// rst:
+// rst: .. program:: graph-canon
+// rst:
+// rst:	The ``graph_canon`` program performs canonicalization of (a permutation of) a given input graph.
+// rst: It contains many different configurations of the graph canonicalization algorithm that can be selected through switches.
+// rst: The program additional has two distinct modes:
+// rst:
+// rst: .. option:: --mode <mode>
+// rst:
+// rst:		- ``test`` (default): All canonicalization results are compared for equality. Allows for outputting additional information from the algorithm execution.
+// rst:		- ``benchmark``: Minimal overhead mode, with no result checks and limited information gathering.
+// rst:
+// rst: The program really consists of many executables (all on the form ``graph-canon-*``), each with different algorithm configurations.
+// rst: The main executable, ``graph-canon``, is a wrapper script that invokes the correct executable depending on the given arguments.
+// rst: This wrapper script is a Python program, which supports `argcomplete <https://pypi.python.org/pypi/argcomplete>`__.
+// rst:
+
 template<typename Executor, typename Options>
 int common_main(int argc, char **argv, Options &options, po::options_description &modeOptionsDesc, const std::string &modeDesc) {
 	po::options_description generalOptionDesc("General Options"), optionDesc(modeDesc + "\n\nOptions");
 	generalOptionDesc.add_options()
+			// rst: General Options
+			// rst: ----------------------------------------------------------------------
+			// rst:
+			// rst: .. option:: -h, --help
+			// rst:
+			// rst:		Print help message. Note, part of the message changes depending on which :option:`--mode` has been given.
 			("help,h", "Print help message.")
+			// rst: .. option:: --id <string>
+			// rst:
+			// rst:		The id to print in the beginning of every output line. It defaults to either 'default', 'stdin', or the filename given with :option:`-f`.
 			("id", po::value<std::string>(&options.id), "The id to print in the beginning of every output line. "
-			"It defaults to either 'default', 'stdin', or the given filename.")
+			"It defaults to either 'default', 'stdin', or the filename given with -f.")
+			// rst: .. option:: --postId <string>
+			// rst:
+			// rst:		The id to print in the end of every data output line. It defaults to the empty string.
 			("postId", po::value<std::string>(&options.postId), "The id to print in the end of every data output line. "
 			"It defaults to the empty string.")
+			// rst: .. option:: --postHeader <string>
+			// rst:
+			// rst:		The id to print in the end of every header output line. It defaults to the empty string.
 			("postHeader", po::value<std::string>(&options.postHeader), "The id to print in the end of every header output line. "
 			"It defaults to the empty string.")
+			// rst: .. option:: -s <seed>, --seed <seed>
+			// rst:
+			// rst:		Seed for random number generator. The default value is :cpp:expr:`static_cast<std::size_t>(std::time(0))`.
 			("seed,s", po::value<std::size_t>(&options.seed)->default_value(static_cast<std::size_t> (std::time(0))),
 			"Seed for random number generator. The default value is 'static_cast<std::size_t> (std::time(0))'.")
+			// rst: .. option:: -p <num>, --permutations <num>
+			// rst:
+			// rst:		Number of random permutations to try. For test mode an additional run is performed in the beginning with the original vertex order.
+			// rst:		Default is 5.
 			("permutations,p", po::value<std::size_t>(&options.rounds)->default_value(5), "Number of random permutations to try.")
+			// rst:
+			// rst: Graph Loading Options
+			// rst: ----------------------------------------------------------------------
+			// rst:
+			// rst: .. option:: -f <filename>, --dimacs <filname>
+			// rst:
+			// rst:		File with graph in DIMACS format (see :cpp:func:`read_dimacs_graph`). Use '-' to read from stdin.
+			// rst:		If not used, a default graph is used.
 			("dimacs,f", po::value<std::string>(&options.dimacs), "File with graph in DIMACS format. Use '-' to read from stdin.")
+			// rst: .. option:: --vertex-labels <mode>
+			// rst:
+			// rst:		- ``none`` (default): vertices are unlabelled.
+			// rst:		- ``uniform``: vertices are labelled with a uniformly random number in the range 0 to :option:`--vertex-label-max` (excluding).
 			("vertex-labels", po::value<LabelMode>(&options.vLabelMode)->default_value(LabelMode::None),
 			"  'none': vertices are unlabelled.\n"
 			"  'uniform': vertices are labelled with a uniformly random number in [0, vertex-label-max[.")
+			// rst: .. option:: --vertex-label-max
+			// rst:
+			// rst:		See :option:`--vertex-labels`.  Default is 5.
 			("vertex-label-max", po::value<std::size_t>(&options.vLabelMax)->default_value(5))
+			// rst: .. option:: --edge-labels <mode>
+			// rst:
+			// rst:		- ``none`` (default): edges are unlabelled.
+			// rst:		- ``uniform``: edges are labelled with a uniformly random number in the range 0 to :option:`--edge-label-max` (excluding).
 			("edge-labels", po::value<LabelMode>(&options.eLabelMode)->default_value(LabelMode::None),
 			"  'none': edges are unlabelled.\n"
 			"  'uniform': edges are labelled with a uniformly random number in [0, edge-label-max[.")
+			// rst: .. option:: --edge-label-max
+			// rst:
+			// rst:		See :option:`--edge-labels`. Default is 5.
 			("edge-label-max", po::value<std::size_t>(&options.eLabelMax)->default_value(5))
+			// rst: .. option:: -d, --directed
+			// rst:
+			// rst:		Interpret the graph as a directed graph.
 			("directed,d", "Interpret the graph as a directed graph.")
+			// rst: .. option:: --parallel-edges
+			// rst:
+			// rst:		Allow parallel edges, otherwise they are ignored.
 			("parallel-edges", "Allow parallel edges, otherwise they are ignored.")
+			// rst: .. option:: --loops
+			// rst:
+			// rst:		Allow loop edges, otherwise they are ignored.
 			("loops", "Allow loop edges, otherwise they are ignored.")
+			// rst:
+			// rst: Algorithm Configuration Options
+			// rst: ----------------------------------------------------------------------
+			// rst:
+			// rst: .. option:: --ftarget-cell <alg>
+			// rst:
+			// rst:		The algorithm for selecting target cells:
+			// rst:
 			("ftarget-cell", po::value<TargetCellSelector>(&options.targetCellSelector)->default_value(TargetCellSelector::FLM),
 			"The algorithm for selecting target cells.\n"
+			// rst:		- ``f``: select the first non-trivial cell.
 			" 'f': select the first non-trivial cell.\n"
+			// rst:		- ``fl``: select the first of the largest cell.
 			" 'fl': select the first of the largest cell.\n"
+			// rst:		- ``flm`` (default):  select the first of the largest cell of those with maximum non-uniformly joined degree.
 			" 'flm': select the first of the largest cell of those with maximum non-uniformly joined degree.\n"
-			" 'flmcr': select the first of the largest cell of those with maximum non-uniformly joined degree, subject to non-uniform component recursion."
 			)
+			// rst: .. option:: --ftree-traversal <alg>
+			// rst:
+			// rst:		The algorithm for exploring the search tree:
+			// rst:
 			("ftree-traversal", po::value<TreeTraversal>(&options.treeTraversal)->default_value(TreeTraversal::BFSExp),
 			"The algorithm for exploring the search tree.\n"
-			" 'dfs': Depth-first traversal.\n"
-			" 'bfs-exp': Breadth-first traversal with 1 experimental path per tree vertex.\n"
-			" 'bfs-exp-m': Breadth-first traversal with 1 experimental path per tree vertex.< Limited by memory specified by -m.")
+			// rst:		- ``dfs``: depth-first traversal.
+			" 'dfs': depth-first traversal.\n"
+			// rst:		- ``bfs-exp`` (default): breadth-first traversal with 1 experimental path per tree vertex.
+			" 'bfs-exp': breadth-first traversal with 1 experimental path per tree vertex.\n"
+			// rst:		- ``bfs-exp-m``: breadth-first traversal with 1 experimental path per tree vertex, limited by memory specified by :option:`-m`.
+			" 'bfs-exp-m': breadth-first traversal with 1 experimental path per tree vertex, limited by memory specified by -m.")
+			// rst: .. option:: -m <MB>, --memory <MB>
+			// rst:
+			// rst:		Memory limit (in MB) before the tree traversal ``bfs-exp-m`` switches to DFS mode.
+			// rst:		Default is 4 GB.
 			("m,memory", po::value<std::size_t>(&options.max_mem)->default_value(4 * 1024),
 			"Memory limit (MB) before the tree traversal bfs-exp-m switches to DFS mode.");
 	optionDesc.add(generalOptionDesc).add(modeOptionsDesc);
@@ -615,5 +712,56 @@ int common_main(int argc, char **argv, Options &options, po::options_description
 	loadAndExecute(options, Executor());
 	return 0;
 }
+
+// rst: .. option:: --frefine <alg>
+// rst:
+// rst:		The degree-based refinement function to use:
+// rst:
+// rst:		- ``WL-1`` (default): Weisfeiler-Leman algorithm, with 1 dimension.
+// rst:
+// rst: .. option:: --faut-pruner <alg>
+// rst:
+// rst:		The automorphism pruning algorithm to use:
+// rst:
+// rst:		- ``none``: Do not prune using automorphisms.
+// rst:		- ``basic`` (default): Prune using the subset of generators that fix the necessary elements.
+// rst:
+// rst: .. option:: --faut-implicit, --fno-aut-implicit
+// rst:
+// rst:		Enable or disable the implicit automorphisms visitor. Enabled as default.
+// rst:
+// rst:	.. option:: --fpartial-leaf, --fno-partial-leaf
+// rst:
+// rst:		Enable or disable the partial leaf certificate visitor. Enabled as default.
+// rst:
+// rst:	.. option:: --ftrace, --fno-trace
+// rst:
+// rst:		Enable or disable the trace visitor. Enabled as default.
+// rst:
+// rst: .. option:: --fquotient, --fno-quotient
+// rst:
+// rst:		Enable or disable the quotient graph visitor. Enabled as default.
+// rst:
+// rst: .. option:: --fdegree-1, --fno-degree-1
+// rst:
+// rst:		Enable or disable the visitor for fast handling of degree-1 vertices. Enabled as default.
+// rst:
+// rst:
+// rst: Program Execution Options
+// rst: ----------------------------------------------------------------------
+// rst:
+// rst: .. option:: --memcheck
+// rst:
+// rst:		Run the program through Valgrind.
+// rst:
+// rst:	.. option:: --debug
+// rst:
+// rst:		Run the program through GDB (or if :option:`--memcheck` then with vgdb in Valgrind).
+// rst:
+// rst:	.. option:: --profile
+// rst:
+// rst:		Run the program through Valgrind with callgrind.
+// rst:
+
 
 #endif /* GRAPH_CANON_TEST_GRAPH_CANON_UTIL_HPP */

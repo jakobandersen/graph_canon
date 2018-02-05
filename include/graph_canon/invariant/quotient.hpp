@@ -1,12 +1,19 @@
 #ifndef GRAPH_CANON_INVARIANT_QUOTIENT_HPP
 #define GRAPH_CANON_INVARIANT_QUOTIENT_HPP
 
-#include <graph_canon/invariant/support.hpp>
+#include <graph_canon/invariant/coordinator.hpp>
 
 #include <cassert>
 #include <vector>
 
 namespace graph_canon {
+
+// rst: .. class:: invariant_quotient
+// rst:
+// rst:		An implementation of a node invariant consisting of elements from the quotient graph of each partition.
+// rst:		It uses the `refine_quotient_edge` event to collect data.
+// rst:
+// rst:		Requires a `invariant_coordinator` as visitor, ordered before this visitor.
 
 struct invariant_quotient : null_visitor {
 
@@ -19,7 +26,7 @@ struct invariant_quotient : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct TreeNodeData {
-		using type = tagged_list<tree_data_t, tree_data>;
+		using type = tagged_element<tree_data_t, tree_data>;
 	};
 
 	struct element {
@@ -49,7 +56,7 @@ struct invariant_quotient : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct InstanceData {
-		using type = tagged_list<instance_data_t, instance_data>;
+		using type = tagged_element<instance_data_t, instance_data>;
 	};
 private:
 
@@ -61,7 +68,7 @@ public:
 	void initialize(auto &state) {
 		auto &i_data = get(instance_data_t(), state.data);
 		i_data.trace.resize(state.n);
-		i_data.visitor_type = invariant_support::init_visitor(state);
+		i_data.visitor_type = invariant_coordinator::init_visitor(state);
 	}
 
 	bool tree_create_node_begin(auto &state, auto &t) {
@@ -95,7 +102,7 @@ public:
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 		std::cout << "TraceQ    add, e_end=" << t_data.end_index << ", i_end=" << i_data.trace[t.level].size() << ", elem=(" << refiner << ", " << refinee << ", " << count << ")" << std::endl;
 #endif
-		const auto continue_ = invariant_support::add_trace_element(state, t, i_data.visitor_type);
+		const auto continue_ = invariant_coordinator::add_invariant_element(state, t, i_data.visitor_type);
 		if(!continue_) return false;
 		const auto elem = element{refiner, refinee, count};
 		assert(i_data.trace[t.level].size() >= t_data.end_index);
@@ -106,7 +113,7 @@ public:
 		const auto old_elem = i_data.trace[t.level][t_data.end_index];
 		if(elem < old_elem) {
 			// we are better
-			invariant_support::better_trace(state, t);
+			invariant_coordinator::better_invariant(state, t);
 			extend_trace(state, t, elem);
 			return true;
 		} else if(elem == old_elem) {
@@ -118,12 +125,12 @@ public:
 			return true;
 		} else {
 			// we are worse
-			invariant_support::worse_trace(state, t);
+			invariant_coordinator::worse_invariant(state, t);
 			return false;
 		}
 	}
 
-	void trace_better(auto &state, auto &t) {
+	void invariant_better(auto &state, auto &t) {
 		auto &i_data = get_data(state);
 		auto &t_data = get(tree_data_t(), t.data);
 		assert(t.level != 0);

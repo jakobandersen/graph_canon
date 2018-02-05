@@ -19,26 +19,26 @@ struct permuted_graph_view {
 
 	struct Adj {
 		Vertex v;
-		std::size_t out_degree;
+		SizeType out_degree;
 		Edge *out_edges;
 	};
 
 	template<typename State>
 	struct edge_less {
 
-		edge_less(const State &state, const partition<SizeType> &pi) : state(state), pi(pi) { }
+		edge_less(const State &state, const partition<SizeType> &pi) : state(state), begin_inverse(pi.begin_inverse()) { }
 
 		bool operator()(const Edge &lhs, const Edge &rhs) const {
 			const Graph &g = state.g;
 			const IndexMap &idx = state.idx;
-			if(pi.get_inverse(idx[target(lhs, g)])
-					!= pi.get_inverse(idx[target(rhs, g)]))
-				return pi.get_inverse(idx[target(lhs, g)]) < pi.get_inverse(idx[target(rhs, g)]);
+			if(begin_inverse[idx[target(lhs, g)]]
+					!= begin_inverse[idx[target(rhs, g)]])
+				return begin_inverse[idx[target(lhs, g)]] < begin_inverse[idx[target(rhs, g)]];
 			return state.edge_handler.compare(state, lhs, rhs) < 0;
 		}
 	private:
 		const State &state;
-		const partition<SizeType> &pi;
+		const SizeType *begin_inverse;
 	};
 
 	template<typename State>
@@ -59,13 +59,13 @@ struct permuted_graph_view {
 			repr[v_idx].v = v;
 			const auto d = repr[v_idx].out_degree = out_degree(v, g);
 			Edge *edges = repr[v_idx].out_edges = new Edge[d];
-			std::size_t i = 0;
+			SizeType i = 0;
 
 			const auto oes = out_edges(v, g);
 			for(auto e_iter = oes.first; e_iter != oes.second; ++e_iter) {
 				const auto e_out = *e_iter;
 				edges[i] = e_out;
-				i++;
+				++i;
 			}
 			std::sort(edges, edges + d, less);
 		}
@@ -79,7 +79,7 @@ struct permuted_graph_view {
 		edge_less<State> less(state, pi_new);
 		// copy each element of repr to extra_repr using the new index
 		// also sort all the out_edges again
-		for(std::size_t v_id_old = 0; v_id_old < n; v_id_old++) {
+		for(SizeType v_id_old = 0; v_id_old < n; v_id_old++) {
 			const auto v_id = pi.get(v_id_old);
 			const auto v_id_new = pi_new.get_inverse(v_id);
 			extra_repr[v_id_new] = repr[v_id_old];
@@ -93,7 +93,7 @@ struct permuted_graph_view {
 
 	~permuted_graph_view() {
 		if(repr) {
-			for(std::size_t i = 0; i < n; i++)
+			for(SizeType i = 0; i < n; i++)
 				delete [] repr[i].out_edges;
 		}
 		delete [] repr;
@@ -107,7 +107,7 @@ struct permuted_graph_view {
 		const Graph &g = state.g;
 		const IndexMap &idx = state.idx;
 		assert(g1.n == g2.n);
-		for(std::size_t v_idx = 0; v_idx < g1.n; v_idx++) {
+		for(SizeType v_idx = 0; v_idx < g1.n; ++v_idx) {
 			const Adj &adj1 = g1.repr[v_idx];
 			const Adj &adj2 = g2.repr[v_idx];
 			if(adj1.out_degree != adj2.out_degree) {
@@ -115,7 +115,7 @@ struct permuted_graph_view {
 			}
 			const Edge *edges1 = adj1.out_edges;
 			const Edge *edges2 = adj2.out_edges;
-			for(std::size_t e_id = 0; e_id < adj1.out_degree; e_id++) {
+			for(SizeType e_id = 0; e_id < adj1.out_degree; e_id++) {
 				const Edge e1 = edges1[e_id];
 				const Edge e2 = edges2[e_id];
 				const Vertex v1 = target(e1, g);
@@ -130,9 +130,13 @@ struct permuted_graph_view {
 		}
 		return 0;
 	}
+
+	typename TreeNode::OwnerPtr get_node() const {
+		return leaf_node;
+	}
 private:
 	typename TreeNode::OwnerPtr leaf_node;
-	std::size_t n;
+	SizeType n;
 	Adj *repr;
 	Adj *extra_repr;
 };

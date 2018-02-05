@@ -1,7 +1,7 @@
 #ifndef GRAPH_CANON_REFINE_DEGREE_1_HPP
 #define GRAPH_CANON_REFINE_DEGREE_1_HPP
 
-#include <graph_canon/visitor/compound.hpp>
+#include <graph_canon/visitor/visitor.hpp>
 
 #include <cassert>
 #include <utility>
@@ -9,17 +9,22 @@
 
 namespace graph_canon {
 
-// This visitor relies on
-// - the vertex_less predicate to be correct,
-// - the edge_compare function to be correct, and
-// - the vertices to be ordered by degree in ascending order.
-
-// Cells consisting entirely of degree 1 vertices, where all vertices have the
-// same neighbour, with the same type of edge, will be split into trivial cells.
-// Either Never or Unchanged will be returned.
+// rst: .. class:: refine_degree_1
+// rst:
+// rst:		Refine multiple degree 1-vertices connected to the same vertex.
+// rst:
+// rst:
+// rst:		Cells consisting entirely of degree 1 vertices, where all vertices have the
+// rst:		same neighbour, with the same type of edge, will be split into trivial cells.
+// rst:		Either Never or Unchanged will be returned and the appropriate automorphisms are reported.
+// rst:
 
 struct refine_degree_1 : null_visitor {
+	// rst:		.. var:: static const std::size_t split_type_cell = 2
+	// rst:
 	static const std::size_t split_type_cell = 2; // these are good, right? so set it low
+	// rst:		.. var:: static const std::size_t aut_tag_swap = 100
+	// rst:		.. var:: static const std::size_t aut_tag_cycle = 101
 	static const std::size_t aut_tag_swap = 100;
 	static const std::size_t aut_tag_cycle = 101;
 

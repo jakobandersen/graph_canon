@@ -1,7 +1,9 @@
 #ifndef GRAPH_CANON_AUT_IMPLICIT_SIZE_2_HPP
 #define GRAPH_CANON_AUT_IMPLICIT_SIZE_2_HPP
 
-#include <graph_canon/visitor/compound.hpp>
+#include <graph_canon/visitor/visitor.hpp>
+
+#include <perm_group/permutation/traits.hpp>
 
 #include <cassert>
 
@@ -15,8 +17,16 @@
 
 namespace graph_canon {
 
+// rst: .. class:: aut_implicit_size_2
+// rst:
+// rst:		This `Visitor` finds implicit automorphisms from ordered partitions where all cells have size 1 or 2.
+// rst:
+
 struct aut_implicit_size_2 : null_visitor {
-	static const std::size_t tag = 200;
+	// rst:		.. var:: static constexpr std::size_t tag = 200
+	// rst:
+	// rst:			The tag used for reporting automorphisms found by this visitor.
+	static constexpr std::size_t tag = 200;
 
 	struct instance_data_t {
 	};
@@ -28,7 +38,7 @@ struct aut_implicit_size_2 : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct InstanceData {
-		using type = tagged_list<instance_data_t, instance_data<typename Config::SizeType> >;
+		using type = tagged_element<instance_data_t, instance_data<typename Config::SizeType> >;
 	};
 
 	struct tree_data_t {
@@ -40,7 +50,7 @@ struct aut_implicit_size_2 : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct TreeNodeData {
-		using type = tagged_list<tree_data_t, tree_data>;
+		using type = tagged_element<tree_data_t, tree_data>;
 	};
 
 	template<typename State>
@@ -63,7 +73,7 @@ struct aut_implicit_size_2 : null_visitor {
 		const auto &t_parent_data = get(tree_data_t(), t.get_parent()->data);
 		t_data.fits = t_parent_data.fits;
 		if(!t_data.fits) return true;
-		const std::size_t parentTargetCell = parent->child_refiner_cell;
+		const std::size_t parentTargetCell = parent->get_child_refiner_cell();
 		assert(parent->pi.get_cell_end(parentTargetCell) == parentTargetCell + 2);
 		assert(t.pi.get_cell_end(parentTargetCell) == parentTargetCell + 1);
 		const std::size_t first = t.pi.get(parentTargetCell);

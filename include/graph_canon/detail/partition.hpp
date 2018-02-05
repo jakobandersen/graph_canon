@@ -22,14 +22,14 @@ struct partition {
 
 	partition(SizeType n) // create unit partition
 	: n(n), elements(new SizeType[n]), inverse(new SizeType[n]),
-	next_cell_begin(new SizeType[n]), element_to_cell(new SizeType[n]), num_cells(1) {
+	next_cell_begin(new SizeType[n]), cell_from_v_idx(new SizeType[n]), num_cells(1) {
 #ifdef BOOST_GRAPH_CANON_CHECK_PARTITION
 		assert(n > 0);
 #endif
 		for(SizeType i = 0; i < n; i++)
 			put_element_on_index(i, i);
 		std::fill(next_cell_begin.get(), next_cell_begin.get() + n, 0);
-		std::fill(element_to_cell.get(), element_to_cell.get() + n, 0);
+		std::fill(cell_from_v_idx.get(), cell_from_v_idx.get() + n, 0);
 		next_cell_begin[0] = n;
 	}
 
@@ -38,11 +38,11 @@ struct partition {
 
 	partition(const partition &other)
 	: n(other.n), elements(new SizeType[n]), inverse(new SizeType[n]),
-	next_cell_begin(new SizeType[n]), element_to_cell(new SizeType[n]), num_cells(other.num_cells) {
+	next_cell_begin(new SizeType[n]), cell_from_v_idx(new SizeType[n]), num_cells(other.num_cells) {
 		std::copy(other.elements.get(), other.elements.get() + n, elements.get());
 		std::copy(other.inverse.get(), other.inverse.get() + n, inverse.get());
 		std::copy(other.next_cell_begin.get(), other.next_cell_begin.get() + n, next_cell_begin.get());
-		std::copy(other.element_to_cell.get(), other.element_to_cell.get() + n, element_to_cell.get());
+		std::copy(other.cell_from_v_idx.get(), other.cell_from_v_idx.get() + n, cell_from_v_idx.get());
 	}
 
 	SizeType *begin() {
@@ -85,7 +85,32 @@ public: // the inverse is generally not valid during refinement
 		for(SizeType i = begin; i != end; ++i, ++iter)
 			inverse[*iter] = i;
 	}
+public: // v_idx_to_cell
+
+	const SizeType *begin_cell_from_v_idx() const {
+		return cell_from_v_idx.get();
+	}
+
+	SizeType get_cell_from_v_idx(SizeType idx) const {
+		return cell_from_v_idx[idx];
+	}
+
+	void set_cell_from_v_idx(SizeType cell) {
+		const auto cell_end = get_cell_end(cell);
+		assert(cell_end != 0);
+		for(SizeType i = cell; i != cell_end; ++i)
+			cell_from_v_idx[elements[i]] = cell;
+	}
 public:
+
+	void swap_elements(SizeType a, SizeType b) {
+		SizeType aElem = elements[a];
+		SizeType bElem = elements[b];
+		elements[a] = bElem;
+		elements[b] = aElem;
+		inverse[aElem] = b;
+		inverse[bElem] = a;
+	}
 	// it only updates elements and the index map, the user must take care that no duplicates are introduced
 	// during the use of the partition
 
@@ -111,13 +136,11 @@ public:
 	SizeType get_cell_size(SizeType cell_begin) const {
 		return get_cell_end(cell_begin) - cell_begin;
 	}
-public:
-
-	void define_cell(SizeType cell_begin, SizeType cell_end) {
-		// TODO: get rid of this, and use the new proxy thingy instead
-		if(next_cell_begin[cell_begin] == 0) ++num_cells;
-		next_cell_begin[cell_begin] = cell_end;
+	
+	const SizeType *begin_cell_end() const {
+		return next_cell_begin.get();
 	}
+public:
 
 	class cell_splitter {
 		friend class partition;
@@ -151,17 +174,6 @@ public:
 	cell_splitter split_cell(SizeType cell_begin) {
 		return cell_splitter(*this, cell_begin, get_cell_end(cell_begin));
 	}
-
-	SizeType get_cell_from_element(SizeType pos) const {
-		return element_to_cell[pos];
-	}
-
-	void set_element_to_cell(SizeType cell) {
-		const auto cell_end = get_cell_end(cell);
-		assert(cell_end != 0);
-		for(SizeType i = cell; i != cell_end; ++i)
-			element_to_cell[i] = cell;
-	}
 public:
 
 	void sanityCheck() const {
@@ -185,7 +197,7 @@ private:
 	std::unique_ptr<SizeType[] > elements;
 	std::unique_ptr<SizeType[] > inverse;
 	std::unique_ptr<SizeType[] > next_cell_begin;
-	std::unique_ptr<SizeType[] > element_to_cell;
+	std::unique_ptr<SizeType[] > cell_from_v_idx;
 	SizeType num_cells;
 };
 

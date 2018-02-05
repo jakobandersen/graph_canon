@@ -1,7 +1,7 @@
 #ifndef GRAPH_CANON_AUT_PRUNER_BASE_HPP
 #define GRAPH_CANON_AUT_PRUNER_BASE_HPP
 
-#include <graph_canon/visitor/compound.hpp>
+#include <graph_canon/visitor/visitor.hpp>
 
 #include <cassert>
 
@@ -39,12 +39,21 @@ auto make_aut_range(Iter first, Iter last) {
 	return aut_range<Iter>(first, last);
 }
 
-// wrapped perm
 // -----------------------------------------------------------------------------
+// rst: .. type:: template<typename Perm> \
+// rst:           wrapped_perm
+// rst:
+// rst:		A permutation storing a `Perm`, and a list of the moved points if at most half the points are moved.
+// rst:
+// rst:		.. deprecated:: v0.2
+// rst:
+// rst:			This class will be moved to the PermGroup library at some point.
+// rst:
 
 template<typename Perm>
 struct wrapped_perm {
-	using value_type = typename Perm::value_type;
+	// rst:		.. type:: value_type = typename perm_group::permutation_traits<Perm>::value_type
+	using value_type = typename perm_group::permutation_traits<Perm>::value_type;
 public:
 
 	wrapped_perm(value_type n) : perm(n) { }
@@ -76,9 +85,17 @@ public:
 	}
 public:
 
+	// rst:		.. function:: const Perm &get_perm() const
+	// rst:
+	// rst:			:returns: the wrapped permutation.
+
 	const Perm &get_perm() const {
 		return perm;
 	}
+
+	// rst:		.. function:: const std::vector<value_type> &get_moved_points() const
+	// rst:
+	// rst:			:returns: a list of the moved points, or an empty list.
 
 	const std::vector<value_type> &get_moved_points() const {
 		return moved_points;
@@ -88,8 +105,23 @@ private:
 	std::vector<value_type> moved_points;
 };
 
-// the actual pruner
 // -----------------------------------------------------------------------------
+// rst: .. class:: template<typename Derived> \
+// rst:            aut_pruner_base
+// rst:
+// rst:		A base class for implementing visitors for automorphism pruning.
+// rst:
+// rst:		:tparam Derived: The subclass of this class (that is, the CRTP pattern).
+// rst:
+// rst:		For
+// rst:
+// rst:		- a `canon_state` object `state`,
+// rst:		- a `tree_node` object `t`,
+// rst:		- a permutation `aut` representing an automorphism, and
+// rst:		- the object `derived = static_cast<Derived&>(*this)`
+// rst:
+// rst:		the following expressions must be valid:
+// rst:
 
 template<typename Derived>
 struct aut_pruner_base : null_visitor {
@@ -104,7 +136,7 @@ struct aut_pruner_base : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct InstanceData {
-		using type = tagged_list<instance_data_t, instance_data<TreeNode> >;
+		using type = tagged_element<instance_data_t, instance_data<TreeNode> >;
 	};
 
 	struct tree_data_t {
@@ -118,7 +150,7 @@ struct aut_pruner_base : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct TreeNodeData {
-		using type = tagged_list<tree_data_t, tree_data<typename Config::SizeType> >;
+		using type = tagged_element<tree_data_t, tree_data<typename Config::SizeType> >;
 	};
 private:
 
@@ -135,6 +167,9 @@ public:
 		t_path.reserve(state.n);
 		c_path.reserve(state.n);
 	}
+
+	// rst:		- | Expression: `derived.add_automorphism(state, aut)`
+	// rst:		  | Semantics: store the new automorphism `aut`.
 
 	template<typename State, typename TreeNode, typename Perm>
 	void automorphism_leaf(State &state, TreeNode &t, const Perm &aut) {
@@ -164,6 +199,13 @@ public:
 	void automorphism_implicit(State &state, TreeNode &t, const Perm &aut, std::size_t tag) {
 		get_derived().add_automorphism(state, aut);
 	}
+
+	// rst:		- | Expression: `derived.is_trivial(state, t)`
+	// rst:		  | Returns: a boolean denoting whether the stabilizer for `t` is the trivial group.
+	// rst:		- | Expression: `derived.need_update(state, t)`
+	// rst:		  | Returns: a boolean denoting whether the stabilizer for `t` should be updated.
+	// rst:		- | Expression: `derived.update(state, t)`
+	// rst:		  | Returns: a possibly empty range of automorphism generators (e.g., an `aut_range`) added to the stabilizer of `t` after updating it.
 
 	template<typename State, typename TreeNode>
 	void tree_before_descend(State &state, TreeNode &t) {
@@ -248,9 +290,9 @@ public:
 				} else {
 					// Still have to be careful about pruning.
 					assert(c_path.size() > 1); // we can not be a leaf
-					const auto canon_child_v_idx = c_path[c_path.size() - 2]->pi.get(c_path.back()->child_refiner_cell);
+					const auto canon_child_v_idx = c_path[c_path.size() - 2]->pi.get(c_path.back()->get_child_individualized_position());
 					const auto canon_child_idx = c_path.back()->pi.get_inverse(canon_child_v_idx);
-					const auto canon_child_local_idx = canon_child_idx - c_path.back()->child_refiner_cell;
+					const auto canon_child_local_idx = canon_child_idx - c_path.back()->get_child_refiner_cell();
 #ifdef GRAPH_CANON_AUT_BASE_DEBUG
 					std::cout << "Aut: canon_child: v=" << canon_child_v_idx << ", idx=" << canon_child_idx << ", local_idx=" << canon_child_local_idx << std::endl;
 #endif
@@ -268,7 +310,7 @@ public:
 				}
 			};
 
-			const auto cell_begin = a_t->child_refiner_cell;
+			const auto cell_begin = a_t->get_child_refiner_cell();
 			const SizeType * const pi_begin = a_t->pi.begin();
 			const SizeType * const pi_inv_begin = a_t->pi.begin_inverse();
 			for(auto iter = begin(new_auts); iter != end(new_auts); ++iter) {

@@ -22,14 +22,38 @@ struct Options {
 	bool permute = false;
 };
 
+// rst: .. cpp:namespace:: graph_canon
+// rst:
+// rst: ``dimacs``
+// rst: ####################################################
+// rst:
+// rst: .. program:: dimacs
+// rst:
+// rst: A program for checking the syntax of a graph in DIMACS format
+// rst: (see :cpp:func:`read_dimacs_graph`),
+// rst: and optionally print a permuted version of it.
+// rst:
+
 int main(int argc, char **argv) {
 	Options options;
 	po::options_description optionDesc("Options");
 	optionDesc.add_options()
+			// rst: .. option:: -h, --help
+			// rst:
+			// rst:		Print help message.
 			("help,h", "Print help message.")
-			("file,f", po::value<std::string>(&options.file)->required(), "File with graph. Use '-' to read from stdin.")
+			// rst: .. option:: -f <file>, --file <file>
+			// rst:
+			// rst:		Filename with graph to read. Use ``-`` to read form stdin.
+			("file,f", po::value<std::string>(&options.file)->required(), "Filename with graph to read. Use '-' to read from stdin.")
+			// rst: .. option:: -s <seed>, --seed <seed>
+			// rst:
+			// rst:		Seed for random number generator. A default seed from :cpp:expr:`boost::random::random_device` will be used if not specified.
 			("seed,s", po::value<std::size_t>(&options.seed)->default_value(-1),
 			"Seed for random number generator. A default seed from boost::random::random_device will be used if not specified.")
+			// rst: .. option:: --permute
+			// rst:
+			// rst:		Make a random permutation of the graph and print it to stdout.
 			("permute", "Make a random permutation of the graph and print it to stdout.")
 			;
 
@@ -85,7 +109,7 @@ int main(int argc, char **argv) {
 		for(std::size_t i = 0; i < num_vertices(g); i++) id_permutation[i] = i;
 		std::vector<std::size_t> permutation = make_random_permutation(options.gen, id_permutation);
 		Graph g_permuted;
-		permute_graph(g, g_permuted, permutation);
+		graph_canon::permute_graph(g, g_permuted, permutation);
 		graph_canon::write_dimacs_graph(std::cout, g_permuted);
 	}
 	return 0;

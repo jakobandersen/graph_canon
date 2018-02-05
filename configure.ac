@@ -40,10 +40,11 @@ orig_LIBS=$LIBS
 ##########################################################################
 # C++14 ------------------------------------------------------------------
 # Boost ------------------------------------------------------------------
-boostReqVersion="1.56.0"
+boostReqVersion="1.64.0"
 BOOST_LDLIBS="-lboost_program_options -lboost_random -lboost_chrono -lboost_system"
 AC_SUBST([BOOST_LDLIBS])
 # perm_group -------------------------------------------------------------
+permGroupReqVersion="v0.2"
 
 ##########################################################################
 # Options for individual dependencies
@@ -108,7 +109,7 @@ fi
 # perm_group -------------------------------------------------------------
 AC_ARG_WITH([perm_group],
 	[AS_HELP_STRING([--with-perm_group=arg],
-		[yes: enable perm_group, <path>: add specified location for dependency searching, no: not an option, you need perm_group.])],
+		[yes: enable PermGroup, <path>: add specified location for dependency searching, no: not an option, you need PermGroup.])],
 	[], [with_perm_group=yes])
 if test "$with_perm_group" != "yes" -a "$with_perm_group" != "no"; then
 	addIPath "$with_perm_group/include"
@@ -179,19 +180,42 @@ AC_LINK_IFELSE([
 # perm_group -------------------------------------------------------------
 restoreFlags
 if test "$with_perm_group" = "no"; then
-	AC_MSG_ERROR([You have to want the perm_group library. --with-perm_group=no is not an option.])
+	AC_MSG_ERROR([You have to want the PermGroup library. --with-perm_group=no is not an option.])
 else
-	AC_CHECK_HEADER([perm_group/permutation/traits.hpp],
-		[],
-		[AC_MSG_NOTICE([perm_group not found.])
-		 printPaths
-		 if test "$with_perm_group" != "yes"; then
-		 	AC_MSG_ERROR([Is the path "$with_perm_group" correct?])
-		 else
-		 	AC_MSG_ERROR([Use --with-perm_group=<path> to specify where the perm_group library is installed.])
-		 fi
-	])
+	PKG_CHECK_MODULES([perm_group], [perm-group >= $permGroupReqVersion], [], [
+		AC_MSG_NOTICE([$perm_group_PKG_ERRORS])
+		AC_MSG_NOTICE([PKG_CONFIG_PATH=$PKG_CONFIG_PATH])
+		printPaths
+		AC_MSG_ERROR([Use --with-perm_group=prefix, or set PKG_CONFIG_PATH for non-standard install prefix.])])
+	addIPath "$(pkg-config perm-group --variable=pkgincludedir)"
 fi
+
+# Sphinx -----------------------------------------------------------------
+restoreFlags
+AC_CHECK_PROGS([SPHINXBUILD], [sphinx-build sphinx-build3 sphinx-build-3 sphinx-build2], [no])
+if test "$SPHINXBUILD" = "no"; then
+    if test "$enable_doc_checks" = "yes"; then
+        AC_MSG_ERROR([sphinx-build is required for building the documentation.
+This error can be suppressed with '--disable-doc-checks'])
+    else
+        AC_MSG_WARN([sphinx-build is required for building the documentation.
+This warning will be an error without '--disable-doc-checks'])
+    fi
+fi
+AM_CONDITIONAL([ENABLE_SPHINX], [test "$SPHINXBUILD" != "no"])
+
+
+##########################################################################
+# pkg-config file
+##########################################################################
+restoreFlags
+PKG_INCLUDES=""
+for p in ${Ipaths[[@]]}; do
+	PKG_INCLUDES+=" -I$p"
+done
+
+AC_SUBST([PKG_INCLUDES])
+AC_SUBST([PKG_LIBS])
 
 ##########################################################################
 # Finalize
@@ -205,6 +229,8 @@ AC_SUBST([AM_LDLIBS])
 AC_CONFIG_FILES([
 	Makefile
 	include/Makefile
+	doc/Makefile
 	test/Makefile
+	lib/pkgconfig/graph-canon.pc
 ])
 AC_OUTPUT

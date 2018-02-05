@@ -11,7 +11,7 @@ public:
 
 	explicit_automorphism(State &state, TreeNode &t) : state(state), t(t) { }
 public: // PermutationConcept
-	typedef typename State::SizeType value_type;
+	using value_type = typename State::SizeType;
 
 	value_type get_(value_type i) const {
 		const auto &piOld = state.get_canon_leaf()->pi;

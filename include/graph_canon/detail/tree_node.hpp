@@ -52,11 +52,12 @@ private:
 		for(SizeType i = 0; i < children.size(); i++) assert(!children[i]);
 		if(!parent) return;
 		// first find our index into our parent's child list
-		const SizeType ind_idx = parent->child_refiner_cell;
+		const SizeType ind_idx = parent->get_child_individualized_position();
 		const SizeType ind_element = pi.get(ind_idx);
 		const SizeType ind_element_idx = parent->pi.get_inverse(ind_element);
-		assert(ind_element_idx >= ind_idx);
-		const SizeType child_offset = ind_element_idx - ind_idx;
+		assert(ind_element_idx >= parent->get_child_refiner_cell());
+		assert(ind_element_idx <= ind_idx);
+		const SizeType child_offset = ind_element_idx - parent->get_child_refiner_cell();
 		// mark it pruned, and set it null
 		parent->child_pruned[child_offset] = true;
 		parent->children[child_offset] = nullptr;
@@ -79,6 +80,14 @@ public:
 		return parent.get();
 	}
 
+	SizeType get_child_refiner_cell() const {
+		return child_refiner_cell;
+	}
+
+	SizeType get_child_individualized_position() const {
+		return pi.get_cell_end(child_refiner_cell) - 1;
+	}
+
 	bool get_is_pruned() const {
 		return is_pruned;
 	}
@@ -97,16 +106,14 @@ public:
 		assert(element_idx_to_individualise < pi.get_cell_end(child_refiner_cell));
 
 		Partition pi_child(pi);
-		// swap the vertex to be individualised down to the beginning
-		pi_child.put_element_on_index(pi.get(element_idx_to_individualise), child_refiner_cell);
-		pi_child.put_element_on_index(pi.get(child_refiner_cell), element_idx_to_individualise);
-		// and split the cell
-		{
-			std::size_t cell_end = pi_child.get_cell_end(child_refiner_cell);
-			pi_child.define_cell(child_refiner_cell, child_refiner_cell + 1);
-			pi_child.define_cell(child_refiner_cell + 1, cell_end);
-			pi_child.set_element_to_cell(child_refiner_cell + 1);
+		// swap the vertex to be individualised up to the end
+		const auto ind_pos = pi.get_cell_end(child_refiner_cell) - 1;
+		pi_child.swap_elements(ind_pos, element_idx_to_individualise);
+		{ // and split the cell
+			auto raii_splitter = pi_child.split_cell(child_refiner_cell);
+			raii_splitter.add_split(ind_pos);
 		}
+		pi_child.set_cell_from_v_idx(ind_pos);
 
 		OwnerPtr childPtr = make(this, std::move(pi_child), state);
 		assert(childPtr);
@@ -163,12 +170,12 @@ private:
 public:
 	const SizeType level; // distance to root
 	Partition pi;
-	SizeType child_refiner_cell; // the cell in the partition which defines the children of the node
 	// these two arrays have the same size
 	// they are empty if the node is pruned OR is a leaf
 	std::vector<Self*> children; // a nullptr child just means it hasn't been explored yet
 	std::vector<bool> child_pruned;
 private:
+	SizeType child_refiner_cell; // the cell in the partition which defines the children of the node
 	bool is_pruned;
 public:
 	Data data;

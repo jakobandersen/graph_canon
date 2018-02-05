@@ -11,6 +11,10 @@
 
 namespace graph_canon {
 
+// rst: .. class:: traversal_bfs_exp
+// rst:
+// rst:		Tree traversal visitor for breadth-first traversal with experimental paths.
+
 struct traversal_bfs_exp : null_visitor {
 	using can_explore_tree = std::true_type;
 
@@ -25,7 +29,7 @@ struct traversal_bfs_exp : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct TreeNodeData {
-		using type = tagged_list<tree_data_t, tree_data<TreeNode> >;
+		using type = tagged_element<tree_data_t, tree_data<TreeNode> >;
 	};
 
 private:
@@ -58,7 +62,7 @@ public:
 				if(node->children.empty()) {
 					// this is actually a leaf node
 					assert(node->pi.get_num_cells() == state.n);
-					state.add_terminal(node);
+					state.report_leaf(node);
 					return;
 				}
 				std::size_t next_child_index = 0;
@@ -66,7 +70,7 @@ public:
 				for(; next_child_index < node->children.size(); ++next_child_index) {
 					if(node->child_pruned[next_child_index]) continue;
 					if(node->children[next_child_index]) continue;
-					child = node->create_child(next_child_index + node->child_refiner_cell, state);
+					child = node->create_child(next_child_index + node->get_child_refiner_cell(), state);
 					if(child) break; // yay
 				}
 				if(child) {
@@ -108,7 +112,7 @@ public:
 					OwnerPtr child = node->children[next_child_index];
 					// if it doesn't exist, try to create the child
 					if(!child) {
-						child = node->create_child(next_child_index + node->child_refiner_cell, state);
+						child = node->create_child(next_child_index + node->get_child_refiner_cell(), state);
 						// the child could already be pruned
 						if(child) {
 							makeExperimentalPath(child);

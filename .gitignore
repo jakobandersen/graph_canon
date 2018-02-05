@@ -1,4 +1,7 @@
 *.swp
+*~
+__pycache__
+*.pyc
 
 Makefile.am
 Makefile.in
@@ -30,7 +33,9 @@ Makefile.in
 
 /doc/build
 /doc/doctrees
-/doc/source/api/gen_*
+/doc/source/index.rst
+/doc/source/executables/
+/doc/source/reference
 
 /include/graph_canon/Config.h_.in
 /include/graph_canon/Config.h_.in~

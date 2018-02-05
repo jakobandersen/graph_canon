@@ -12,8 +12,12 @@
 
 namespace graph_canon {
 
+// rst: .. class:: debug_visitor
+// rst:
+// rst:		A visitor for getting debug information.
+// rst:
+
 struct debug_visitor : null_visitor {
-	using can_select_target_cell = std::false_type;
 
 	struct instance_data_t {
 	};
@@ -28,7 +32,7 @@ struct debug_visitor : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct InstanceData {
-		using type = tagged_list<instance_data_t, instance_data<typename Config::SizeType> >;
+		using type = tagged_element<instance_data_t, instance_data<typename Config::SizeType> >;
 	};
 
 	struct tree_node_index_t {
@@ -36,13 +40,47 @@ struct debug_visitor : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct TreeNodeData {
-		using type = tagged_list<tree_node_index_t, std::size_t>;
+		using type = tagged_element<tree_node_index_t, std::size_t>;
 	};
 public:
 	static constexpr std::size_t prefixWidth = 10;
 
-	debug_visitor(bool tree, bool canon, bool aut, bool refine, bool compressed)
-	: tree(tree), canon(canon), aut(aut), refine_(refine), compressed(compressed) { }
+	// rst:		.. function:: debug_visitor(bool tree, bool canon, bool aut, bool refine, bool compressed, std::ostream *log = nullptr)
+	// rst:
+	// rst:			:param tree: print tree-related debug messages.
+	// rst:			:param canon: print debug messages related to the current best leaf.
+	// rst:			:param aut: print automorphism-related debug messages.
+	// rst:			:param refine: print refinement-related debug messages.
+	// rst:			:param compressed: when printing ordered partitions, print only the compressed view.
+	// rst:			:param log: print a JSON version of certain log messages to this stream.
+	debug_visitor(bool tree, bool canon, bool aut, bool refine, bool compressed, std::ostream *log = nullptr)
+	: tree(tree), canon(canon), aut(aut), refine_(refine), compressed(compressed), log(log) { }
+
+	template<typename State>
+	void initialize(State &state) {
+		if(log) {
+			auto &s = *log;
+			s << "[\n" << R"({"type":"graph")";
+			s << R"(,"graph":{"n":)" << state.n;
+			s << R"(,"edges":[)";
+			const auto es = edges(state.g);
+			bool hasPrinted = false;
+			for(auto iter = es.first; iter != es.second; ++iter) {
+				if(hasPrinted) s << ",";
+				hasPrinted = true;
+				s << R"({"src":)" << get(state.idx, source(*iter, state.g));
+				s << R"(,"tar":)" << get(state.idx, target(*iter, state.g)) << "}";
+			}
+			s << "]";
+			s << "}";
+			s << "}";
+		}
+	}
+
+	template<typename State>
+	tagged_list<> extract_result(State &state) {
+		return {};
+	}
 
 	template<typename State, typename TreeNode>
 	bool tree_create_node_begin(State &state, TreeNode &t) {
@@ -57,6 +95,18 @@ public:
 			std::cout << std::setw(prefixWidth) << std::left << "Tree";
 			std::cout << "Current number of nodes = " << i_data.cur_num_tree_nodes << std::endl;
 		}
+		if(log) {
+			auto &s = *log;
+			s << ",\n";
+			s << R"({"type":"tree_create_node_begin")";
+			s << R"(,"id":)" << get(tree_node_index_t(), t.data);
+			s << R"(,"parent":)";
+			if(t.get_parent()) {
+				s << get(tree_node_index_t(), t.get_parent()->data);
+				s << R"(,"ind_vertex":)" << t.pi.get(t.get_parent()->get_child_individualized_position());
+			} else s << "null";
+			s << "}";
+		}
 		return true;
 	}
 
@@ -67,6 +117,24 @@ public:
 			std::cout << "id=" << get(tree_node_index_t(), t.data) << " ";
 			detail::printTreeNode(std::cout, state, t, !compressed) << std::endl;
 		}
+		if(log) {
+			auto &s = *log;
+			s << ",\n";
+			s << R"({"type":"tree_create_node_end")";
+			s << R"(,"id":)" << get(tree_node_index_t(), t.data);
+			s << R"(,"target_cell":)";
+			const auto tar = t.get_child_refiner_cell();
+			if(tar == state.n) s << "null";
+			else s << tar;
+			s << R"(,"pi":{"cells":[0)";
+			for(auto cell_begin = t.pi.get_cell_end(0); cell_begin != state.n; cell_begin = t.pi.get_cell_end(cell_begin))
+				s << "," << cell_begin;
+			s << R"(],"elements":[)" << t.pi.get(0);
+			for(auto i = 1; i != state.n; ++i)
+				s << "," << t.pi.get(i);
+			s << "]}";
+			s << "}";
+		}
 		return true;
 	}
 
@@ -76,6 +144,13 @@ public:
 			std::cout << std::setw(prefixWidth) << std::left << "Tree";
 			std::cout << "Destroy, id=" << get(tree_node_index_t(), t.data) << " ";
 			detail::printTreeNode(std::cout, state, t, !compressed) << std::endl;
+		}
+		if(log) {
+			auto &s = *log;
+			s << ",\n";
+			s << R"({"type":"tree_destroy_node")";
+			s << R"(,"id":)" << get(tree_node_index_t(), t.data);
+			s << "}";
 		}
 		--get(instance_data_t(), state.data).cur_num_tree_nodes;
 	}
@@ -88,12 +163,19 @@ public:
 			std::cout << "id=" << get(tree_node_index_t(), t.data) << " ";
 			detail::printTreeNode(std::cout, state, t, !compressed) << std::endl;
 		}
+		if(log) {
+			auto &s = *log;
+			s << ",\n";
+			s << R"({"type":"tree_before_descend")";
+			s << R"(,"id":)" << get(tree_node_index_t(), t.data);
+			s << "}";
+		}
 	}
 
 	template<typename State, typename TreeNode>
 	void tree_create_child(const State &state, const TreeNode &t, std::size_t element_idx_to_individualise) {
 		if(tree) {
-			auto child_idx = element_idx_to_individualise - t.child_refiner_cell;
+			const auto child_idx = element_idx_to_individualise - t.get_child_refiner_cell();
 			std::cout << std::setw(prefixWidth) << std::left << "Tree";
 			std::cout << "Individualize idx=" << element_idx_to_individualise << ", v=" << t.pi.get(element_idx_to_individualise)
 					<< " (child idx=" << child_idx << ") of ";
@@ -121,6 +203,13 @@ public:
 			std::cout << "id=" << get(tree_node_index_t(), t.data) << " ";
 			detail::printTreeNode(std::cout, state, t, !compressed) << std::endl;
 		}
+		if(log) {
+			auto &s = *log;
+			s << ",\n";
+			s << R"({"type":"tree_prune_node")";
+			s << R"(,"id":)" << get(tree_node_index_t(), t.data);
+			s << "}";
+		}
 	}
 
 	template<typename State>
@@ -128,6 +217,13 @@ public:
 		if(canon) {
 			std::cout << std::setw(prefixWidth) << std::left << "Canon";
 			std::cout << "New best leaf!" << std::endl;
+		}
+		if(log) {
+			auto &s = *log;
+			s << ",\n";
+			s << R"({"type":"canon_new_best")";
+			s << R"(,"id":)" << get(tree_node_index_t(), state.get_canon_leaf()->data);
+			s << "}";
 		}
 	}
 
@@ -139,6 +235,13 @@ public:
 			std::cout << "id=" << get(tree_node_index_t(), t.data) << " ";
 			detail::printTreeNode(std::cout, state, t, !compressed) << std::endl;
 		}
+		if(log) {
+			auto &s = *log;
+			s << ",\n";
+			s << R"({"type":"canon_worse")";
+			s << R"(,"id":)" << get(tree_node_index_t(), t.data);
+			s << "}";
+		}
 	}
 
 	template<typename State>
@@ -146,6 +249,13 @@ public:
 		if(canon) {
 			std::cout << std::setw(prefixWidth) << std::left << "Canon";
 			std::cout << "Pruned" << std::endl;
+		}
+		if(log) {
+			auto &s = *log;
+			s << ",\n";
+			s << R"({"type":"canon_prune")";
+			s << R"(,"id":)" << get(tree_node_index_t(), state.get_canon_leaf()->data);
+			s << "}";
 		}
 	}
 
@@ -157,6 +267,18 @@ public:
 			perm_group::write_permutation_cycles(std::cout, aut);
 			std::cout << std::endl;
 		}
+		if(log) {
+			auto &s = *log;
+			s << ",\n";
+			s << R"({"type":"automorphism_leaf")";
+			s << R"(,"from":)" << get(tree_node_index_t(), t.data);
+			s << R"(,"to":)" << get(tree_node_index_t(), state.get_canon_leaf()->data);
+			s << R"(,"perm":[)" << perm_group::get(aut, 0);
+			for(int i = 1; i != state.n; ++i)
+				s << "," << perm_group::get(aut, i);
+			s << "]";
+			s << "}";
+		}
 	}
 
 	template<typename State, typename TreeNode, typename Perm>
@@ -167,6 +289,18 @@ public:
 			std::cout << "): ";
 			perm_group::write_permutation_cycles(std::cout, aut);
 			std::cout << std::endl;
+		}
+		if(log) {
+			auto &s = *log;
+			s << ",\n";
+			s << R"({"type":"automorphism_implicit")";
+			s << R"(,"id":)" << get(tree_node_index_t(), t.data);
+			s << R"(,"tag":)" << tag;
+			s << R"(,"perm":[)" << perm_group::get(aut, 0);
+			for(int i = 1; i != state.n; ++i)
+				s << "," << perm_group::get(aut, i);
+			s << "]";
+			s << "}";
 		}
 	}
 
@@ -237,9 +371,17 @@ public:
 	void refine_abort(State &state, const TreeNode &t) {
 		auto &data = get(instance_data_t(), state.data);
 		data.cell_splitting_in_progress = false;
+		if(log) {
+			auto &s = *log;
+			s << ",\n";
+			s << R"({"type":"refine_abort")";
+			s << R"(,"id":)" << get(tree_node_index_t(), t.data);
+			s << "}";
+		}
 	}
 public:
 	const bool tree, canon, aut, refine_, compressed;
+	std::ostream *log;
 };
 
 } // namespace graph_canon

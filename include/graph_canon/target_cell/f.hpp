@@ -1,9 +1,13 @@
 #ifndef GRAPH_CANON_TARGET_CELL_F_HPP
 #define GRAPH_CANON_TARGET_CELL_F_HPP
 
-#include <graph_canon/visitor/compound.hpp>
+#include <graph_canon/visitor/visitor.hpp>
 
 namespace graph_canon {
+
+// rst: .. class:: target_cell_f
+// rst:
+// rst:		Visitor for selecting the first non-singleton cell.
 
 struct target_cell_f : null_visitor {
 	using can_select_target_cell = std::true_type;

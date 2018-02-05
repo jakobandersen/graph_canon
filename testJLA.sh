@@ -43,7 +43,7 @@ args="$args	$prefix $@"
 	&& cd .. && rm -rf realBuild && mkdir realBuild		\
 	&& cd realBuild										\
 	&& cp ../preBuild/graph_canon-*.tar.gz ./			\
-	&& tar xzf graph_canon-*.tar.gz	&& cd graph_canon-*	\
+	&& tar xzf graph_canon-*.tar.gz	&& cd graph_canon-*/\
 	&& mkdir realBuild && cd realBuild					\
 	&& ../configure $args
 res=$?
@@ -56,7 +56,7 @@ if [ "$doBuild" = "no" ]; then
 else
 	time make -j $numThreads						\
 		&& rm -rf $HOME/test/graphCanonTestInstall	\
-		&& make install
+		&& make install install-doc
 	res=$?
 	if [ $res -ne 0 ]; then
 		echo "Error during installation"

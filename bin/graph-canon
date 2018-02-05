@@ -30,22 +30,19 @@ def main():
 	parser.add_argument("--memcheck", action="store_true",
 		help="Run the program through Valgrind.")
 	parser.add_argument("--debug", action="store_true",
-		help="Run the program thorugh GDB (or if --memcheck then with vgdb in Valgrind).")
+		help="Run the program through GDB (or if --memcheck then with vgdb in Valgrind).")
 	parser.add_argument("--profile", action="store_true",
-		help="Run the program thorugh Valgrind with callgrind.")
+		help="Run the program through Valgrind with callgrind.")
 	parser.add_argument("--mode", metavar="<mode>", choices=("test", "benchmark"), default="test",
 		help="The specific execution mode. This changes the executable, and thereby the corresponding options."
 			 " 'test': All canonicalisation results are compared for equality. Allows for debugging options."
 			 " 'benchmark': Minimal overhead, and no result checks.")
-	parser.add_argument("--frefine", metavar="<algorithm>", choices=("WL-1", "WL-1-1", "WL-1-2"), default="WL-1",
+	parser.add_argument("--frefine", metavar="<algorithm>", choices=("WL-1"), default="WL-1",
 		help="The degree-based refinement function."
-			 " 'WL-1': Weisfeiler-Leman algorithm, with 1 dimension. Initial version."
-			 " 'WL-1-1': Weisfeiler-Leman algorithm, with 1 dimension. Version 1."
-			 " 'WL-1-2': Weisfeiler-Leman algorithm, with 1 dimension. Version 2.")
-	parser.add_argument("--faut-pruner", metavar="<pruner>", choices=("none", "simple", "basic_old", "basic"), default="basic",
+			 " 'WL-1': Weisfeiler-Leman algorithm, with 1 dimension.")
+	parser.add_argument("--faut-pruner", metavar="<pruner>", choices=("none", "basic"), default="basic",
 		help="The automorphism pruning algorithm to use."
 			 " 'none': Do not prune using automorphisms."
-			 " 'simple': Prune using the subset of generators that fix the necessary elements."
 			 " 'basic': Prune using the subset of generators that fix the necessary elements.")
 	parser.add_argument("--faut-implicit",    action="store_true",  dest="faut_implicit", help="Use the implicit automorphisms visitor.")
 	parser.add_argument("--fno-aut-implicit", action="store_false", dest="faut_implicit", help="Do no use the implicit automorphisms visitor.")

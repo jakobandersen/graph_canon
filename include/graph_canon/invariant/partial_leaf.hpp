@@ -1,7 +1,7 @@
 #ifndef GRAPH_CANON_INVARIANT_PARTIAL_LEAF_HPP
 #define GRAPH_CANON_INVARIANT_PARTIAL_LEAF_HPP
 
-#include <graph_canon/invariant/support.hpp>
+#include <graph_canon/invariant/coordinator.hpp>
 
 #include <cassert>
 #include <vector>
@@ -14,6 +14,14 @@
 
 namespace graph_canon {
 
+// rst: .. class:: invariant_partial_leaf
+// rst:
+// rst:		An implementation of the node invariant consisting of the partial leaf certificate.
+// rst:		It uses the `refine_refiner_done` event to collect data.
+// rst:		It relies on the `refine_WL_1` visitor (or a similar visitor) being used.
+// rst:
+// rst:		Requires a `invariant_coordinator` as visitor, ordered before this visitor.
+
 struct invariant_partial_leaf : null_visitor {
 
 	struct tree_data_t {
@@ -25,7 +33,7 @@ struct invariant_partial_leaf : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct TreeNodeData {
-		using type = tagged_list<tree_data_t, tree_data>;
+		using type = tagged_element<tree_data_t, tree_data>;
 	};
 
 	struct element {
@@ -44,7 +52,7 @@ struct invariant_partial_leaf : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct InstanceData {
-		using type = tagged_list<instance_data_t, instance_data>;
+		using type = tagged_element<instance_data_t, instance_data>;
 	};
 private:
 
@@ -56,7 +64,7 @@ public:
 	void initialize(auto &state) {
 		auto &i_data = get(instance_data_t(), state.data);
 		i_data.trace.resize(state.n);
-		i_data.visitor_type = invariant_support::init_visitor(state);
+		i_data.visitor_type = invariant_coordinator::init_visitor(state);
 	}
 
 	bool tree_create_node_begin(auto &state, auto &t) {
@@ -93,7 +101,7 @@ public:
 			return true;
 		auto &i_data = get_data(state);
 		auto &t_data = get(tree_data_t(), t.data);
-		const auto continue_ = invariant_support::add_trace_element(state, t, i_data.visitor_type);
+		const auto continue_ = invariant_coordinator::add_invariant_element(state, t, i_data.visitor_type);
 		if(!continue_) return false;
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 		std::cout << "TracePL   singleton, refiner=" << refiner << std::endl;
@@ -105,7 +113,7 @@ public:
 		assert(t_data.next < i_data.next);
 		auto &elem = i_data.trace[t_data.next];
 		if(refiner > elem.canon_idx) {
-			invariant_support::better_trace(state, t);
+			invariant_coordinator::better_invariant(state, t);
 			extend_trace(state, t, refiner);
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 			std::cout << "TracePL   better(refiner), refiner=" << refiner << std::endl;
@@ -113,7 +121,7 @@ public:
 			return true;
 		} else if(refiner < elem.canon_idx) {
 			// we are worse
-			invariant_support::worse_trace(state, t);
+			invariant_coordinator::worse_invariant(state, t);
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 			std::cout << "TracePL   worse(refiner), refiner=" << refiner << std::endl;
 #endif
@@ -124,14 +132,14 @@ public:
 		std::vector<std::size_t> edges;
 		add_edges(state, t, refiner, edges);
 		if(edges.size() > elem.edges.size()) {
-			invariant_support::better_trace(state, t);
+			invariant_coordinator::better_invariant(state, t);
 			extend_trace(state, t, refiner, std::move(edges));
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 			std::cout << "TracePL   better(num_edges), refiner=" << refiner << std::endl;
 #endif
 			return true;
 		} else if(edges.size() < elem.edges.size()) {
-			invariant_support::worse_trace(state, t);
+			invariant_coordinator::worse_invariant(state, t);
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 			std::cout << "TracePL   worse(num_edges), refiner=" << refiner << std::endl;
 #endif
@@ -142,7 +150,7 @@ public:
 			const auto trace = elem.edges[i];
 			const auto cand = edges[i];
 			if(cand < trace) {
-				invariant_support::better_trace(state, t);
+				invariant_coordinator::better_invariant(state, t);
 				extend_trace(state, t, refiner, std::move(edges));
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 				std::cout << "TracePL   better(edge), refiner=" << refiner << std::endl;
@@ -152,7 +160,7 @@ public:
 				// fine
 			} else {
 				// we are worse
-				invariant_support::worse_trace(state, t);
+				invariant_coordinator::worse_invariant(state, t);
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 				std::cout << "TracePL   worse(edge), refiner=" << refiner << std::endl;
 #endif
@@ -168,7 +176,7 @@ public:
 		return true;
 	}
 
-	void trace_better(auto &state, auto &t) {
+	void invariant_better(auto &state, auto &t) {
 		auto &i_data = get_data(state);
 		auto &t_data = get(tree_data_t(), t.data);
 		i_data.next = t_data.next;

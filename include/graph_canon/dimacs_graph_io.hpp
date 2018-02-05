@@ -10,6 +10,15 @@
 
 namespace graph_canon {
 
+// rst: .. function:: template<typename Graph> \
+// rst:               void write_dimacs_graph(std::ostream &s, const Graph &g)
+// rst:
+// rst:		Write the given graph in DIMACS format (see :cpp:func:`read_dimacs_format`).
+// rst:
+// rst:		The vertices must have indices, i.e., the expression `get(boost::verex_index_t(), g)` must be valid.
+// rst:		Currently the expression `get(boost::vertex_name_t(), g)` must also be valid and return a property map with integer values
+// rst:		If any vertex have non-zero vertex name, then the graph is considered vertex labelled and the vertex names are written.
+
 template<typename Graph>
 void write_dimacs_graph(std::ostream &s, const Graph &g) {
 	s << "p edge " << num_vertices(g) << " " << num_edges(g) << '\n';
@@ -26,6 +35,29 @@ void write_dimacs_graph(std::ostream &s, const Graph &g) {
 		s << "e " << (get(boost::vertex_index_t(), g, source(*iter, g)) + 1)
 		<< " " << (get(boost::vertex_index_t(), g, target(*iter, g)) + 1) << '\n';
 }
+
+
+// rst: .. function:: template<typename Graph, typename ParallelHandler, typename LoopHandler> \
+// rst:               bool read_dimacs_graph(std::istream &s, Graph &graph, std::ostream &err, ParallelHandler parHandler, LoopHandler loopHandler)
+// rst:
+// rst:		Parse a graph in DIMACS format from `s` and store it in `graph`.
+// rst:		Reading errors are written to `err`.
+// rst:
+// rst:		The unary predicate `loopHandler` is called with vertex indices where a loop edge has been parsed.
+// rst:		The edge is added to the graph only if the handler returns `true`.
+// rst:		The binary predicate `parHandler` must similarly evaluated parallel edges, if present.
+// rst:
+// rst:		The format is line-based. Empty lines and lines starting with ``c`` are ignored.
+// rst:		The first non-ignored line must be on the form ``p edge <n> <m>`` where
+// rst:		``<n>`` is the number of vertices in edge graph and
+// rst:		``<m>`` is the number of edges.
+// rst:		Afterwards there must be exactly ``<m>`` lines on the form
+// rst:		``e <src> <tar>`` where ``<src>`` and ``<tar>`` are vertex IDs in the range 1 to :math:`n`,
+// rst:		representing and edge.
+// rst:
+// rst:		In addition there may be any number of lines on the form ``n <id> <label>``
+// rst:		where ``<id>`` is a vertex ID in the range 1 to :math:`n`,
+// rst:		and ``<label>`` is a non-negative number that will be assigned as the label of the vertex.
 
 template<typename Graph, typename ParallelHandler, typename LoopHandler>
 bool read_dimacs_graph(std::istream &s, Graph &graph, std::ostream &err, ParallelHandler parHandler, LoopHandler loopHandler) {
@@ -53,6 +85,7 @@ bool read_dimacs_graph(std::istream &s, Graph &graph, std::ostream &err, Paralle
 	unsigned int edgeCount = 0;
 	while(std::getline(s, line)) {
 		if(line.empty()) continue;
+		if(line[0] == 'c') continue;
 		if(line[0] == 'n') {
 			unsigned int id, label;
 			if(std::sscanf(line.c_str(), "n %u %u", &id, &label) != 2) {

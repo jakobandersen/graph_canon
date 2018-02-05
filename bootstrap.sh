@@ -1,4 +1,4 @@
-subdirs="include test"
+subdirs="include doc test"
 
 function indentAndSlash {
 	cat | sort | \
@@ -9,13 +9,26 @@ function indentAndSlash {
 
 function gen_root {
 	echo "SUBDIRS = $subdirs"
-	
-	echo "dist_bin_SCRIPTS = \\"
-	echo "	bin/graph-canon"
-	echo ""
-	echo "bin_PROGRAMS = dimacs"
-	echo "dimacs_SOURCES = src/dimacs.cpp"
-	echo "dimacs_LDADD = @BOOST_LDLIBS@"
+	cat << "EOF"	
+
+dist_pkgdata_DATA = \
+    VERSION
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = lib/pkgconfig/graph-canon.pc
+
+.PHONY: install-doc
+install-doc:
+	cd doc && $(MAKE) install-doc
+
+dist_bin_SCRIPTS = \
+	bin/graph-canon
+
+bin_PROGRAMS = dimacs
+dimacs_SOURCES = src/dimacs.cpp
+dimacs_LDADD = @BOOST_LDLIBS@
+dimacs_LDFLAGS = -Wl,--no-as-needed
+EOF
 
 	for mode in "test" "benchmark"; do
 		#for eLabel in "no-el" "el"; do
@@ -55,6 +68,9 @@ function gen_root {
 						echo "	src/graph_canon_${mode}.cpp"
 						echo "${amName}_LDADD = @BOOST_LDLIBS@"
 						echo "${amName}_CPPFLAGS = @AM_CPPFLAGS@"
+						if [ "$mode" = "benchmark" ]; then
+							echo "${amName}_CPPFLAGS += -DNDEBUG"
+						fi
 						if [ "$eLabel" = "el" ]; then
 							echo "${amName}_CPPFLAGS += -DGRAPH_CANON_EDGE_LABELS"
 						fi
@@ -101,6 +117,17 @@ function gen_root {
 function gen_include {
 	echo "nobase_include_HEADERS = \\"
 	find graph_canon -type f | indentAndSlash
+}
+
+function gen_doc {
+	echo "EXTRA_DIST = \\"
+	function extraDist {
+		echo "./makeDocs.sh"
+		find "./source/" -type f | grep -v -e "source/reference" -e "__pycache__"
+	}
+	extraDist | indentAndSlash
+	echo ""
+	cat Makefile.am_suffix
 }
 
 function gen_test {

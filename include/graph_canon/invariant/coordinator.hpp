@@ -1,7 +1,7 @@
 #ifndef GRAPH_CANON_INVARIANT_SUPPORT_HPP
 #define GRAPH_CANON_INVARIANT_SUPPORT_HPP
 
-#include <graph_canon/visitor/compound.hpp>
+#include <graph_canon/visitor/visitor.hpp>
 
 #include <cassert>
 #include <vector>
@@ -11,7 +11,13 @@
 
 namespace graph_canon {
 
-struct invariant_support : null_visitor {
+// rst: .. class:: invariant_coordinator
+// rst:
+// rst:		A visitor for properly coordinating multiple node invariants.
+// rst:		That is, ensuring a total order among different providers.
+// rst:
+
+struct invariant_coordinator : null_visitor {
 
 	struct tree_data_t {
 	};
@@ -25,7 +31,7 @@ struct invariant_support : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct TreeNodeData {
-		using type = tagged_list<tree_data_t, tree_data>;
+		using type = tagged_element<tree_data_t, tree_data>;
 	};
 
 	struct instance_data_t {
@@ -48,7 +54,7 @@ struct invariant_support : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct InstanceData {
-		using type = tagged_list<instance_data_t, instance_data<typename Config::SizeType> >;
+		using type = tagged_element<instance_data_t, instance_data<typename Config::SizeType> >;
 	};
 public:
 
@@ -124,7 +130,7 @@ public:
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 			std::cout << "Trace     earlier, gen=" << i_data.generation << ", max_level=" << i_data.max_level << ", i_end=" << i_end << ", t_end=" << t_end << std::endl;
 #endif
-			worse_trace(state, t);
+			worse_invariant(state, t);
 			return false;
 		} else if(t_end > i_end) {
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
@@ -132,7 +138,7 @@ public:
 #endif
 			// TODO: how can this happen ? it should be handled in add_trace
 			assert(false);
-			better_trace(state, t);
+			better_invariant(state, t);
 			i_data.generations[t.level] = t_data.generation;
 			return true;
 		} else { // same end
@@ -173,11 +179,28 @@ public:
 	}
 public:
 
-	static std::size_t init_visitor(auto &state) {
+	// rst:		.. function:: template<typename State> \
+	// rst:		              static std::size_t init_visitor(State &state)
+	// rst:
+	// rst:			Must be called by each node invariant visitor, probably in its `initialize` method.
+	// rst:
+	// rst:			:returns: an ID that must be provided in subsequent calls to the coordinator.
+
+	template<typename State>
+	static std::size_t init_visitor(State &state) {
 		return get(instance_data_t(), state.data).visitor++;
 	}
 
-	static bool add_trace_element(auto &state, auto &t, const std::size_t visitor) {
+	// rst:		.. function:: template<typename State, typename TreeNode> \
+	// rst:		              static bool add_invariant_element(State &state, TreeNode &t, const std::size_t visitor)
+	// rst:
+	// rst:			Tell the coordinator that the calling visitor wants to add another trace element.
+	// rst:			This may fail if another visitor has the current invariant position.
+	// rst:
+	// rst:			:returns: `true` if the calling visitor may add a value, `false` if not.
+
+	template<typename State, typename TreeNode>
+	static bool add_invariant_element(State &state, TreeNode &t, const std::size_t visitor) {
 		auto &i_data = get(instance_data_t(), state.data);
 		auto &t_data = get(tree_data_t(), t.data);
 		auto &trace = i_data.trace[t.level];
@@ -200,7 +223,7 @@ public:
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 			std::cout << "Trace     add(better by length), index=" << t_data.end_index << ", t_level=" << t.level << ", i_level=" << i_data.max_level << std::endl;
 #endif
-			better_trace(state, t);
+			better_invariant(state, t);
 			trace.push_back(visitor);
 			return true;
 		}
@@ -209,14 +232,14 @@ public:
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 			std::cout << "Trace     add(better by visitor), index=" << t_data.end_index << ", t_level=" << t.level << ", i_level=" << i_data.max_level << ", t_visitor=" << visitor << ", i_visitor=" << trace[t_data.end_index] << std::endl;
 #endif
-			better_trace(state, t);
+			better_invariant(state, t);
 			trace.push_back(visitor);
 			return true;
 		} else if(visitor > trace[t_data.end_index]) {
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 			std::cout << "Trace     add(worse by visitor), index=" << t_data.end_index << ", t_level=" << t.level << ", i_level=" << i_data.max_level << ", t_visitor=" << visitor << ", i_visitor=" << trace[t_data.end_index] << std::endl;
 #endif
-			worse_trace(state, t);
+			worse_invariant(state, t);
 			return false;
 		} else {
 			++t_data.end_index;
@@ -224,7 +247,16 @@ public:
 		}
 	}
 
-	static void better_trace(auto &state, auto &t) {
+	// rst:		.. function:: template<typename State, typename TreeNode> \
+	// rst:		              static void better_invariant(State &state, TreeNode &t)
+	// rst:
+	// rst:			Must be called by a visitor when it has been allowed to add a value,
+	// rst:			and that value is better than the value the visitor previously had in this position.
+	// rst:
+	// rst:			Will invoke the `invariant_better` event and prune the current best leaf.
+
+	template<typename State, typename TreeNode>
+	static void better_invariant(State &state, TreeNode &t) {
 		auto &i_data = get(instance_data_t(), state.data);
 		auto &t_data = get(tree_data_t(), t.data);
 		// shrink the trace and increase the generation
@@ -242,12 +274,21 @@ public:
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 		std::cout << "Trace     better, gen=" << i_data.generation << ", index=" << t_data.end_index << ", t_level=" << t.level << ", i_level=" << i_data.max_level << std::endl;
 #endif
-		state.visitor.trace_better(state, t);
+		state.visitor.invariant_better(state, t);
 		// if there is a canon leaf, prune it
 		state.prune_canon_leaf();
 	}
 
-	static void worse_trace(auto &state, auto &t) {
+	// rst:		.. function:: template<typename State, typename TreeNode> \
+	// rst:		              static void worse_invariant(State &state, TreeNode &t)
+	// rst:
+	// rst:			Must be called by a visitor when it has been allowed to add a value,
+	// rst:			but that value is worse than the value the visitor previously had in this position.
+	// rst:
+	// rst:			Current this method does nothing.
+
+	template<typename State, typename TreeNode>
+	static void worse_invariant(State &state, TreeNode &t) {
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 		auto &i_data = get(instance_data_t(), state.data);
 		auto &t_data = get(tree_data_t(), t.data);

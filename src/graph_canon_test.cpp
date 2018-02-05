@@ -27,7 +27,7 @@ struct TestOptions : Options {
 public:
 	bool last;
 	bool debugTree, debugCanon, debugAut, debugRefine, debugCompressed;
-	std::string graphDot, treeDot;
+	std::string graphDot, treeDot, logJson;
 	bool stats;
 };
 
@@ -65,8 +65,6 @@ struct ModeTest {
 		void at_edge_compare(Edge e1, Edge e2) const {
 			std::cout << "edgeComp() == false" << std::endl;
 		}
-
-		void at_end(bool) const { }
 	private:
 		const Graph &g1;
 		const Graph &g2;
@@ -82,10 +80,21 @@ struct ModeTest {
 	template<typename Graph, typename VertexLess, typename EdgeHandler, typename Visitor>
 	auto canonicalize_switch_debug(bool printStuff, const TestOptions &options, Graph &g, VertexLess vLess, EdgeHandler edgeHandler, Visitor visitor) {
 		//		if(options.debugCanon || options.debugRefine || options.debugTree) {
+		std::unique_ptr<std::ofstream> logJson;
+		if(printStuff && !options.logJson.empty()) {
+			logJson.reset(new std::ofstream(options.logJson));
+			if(!*logJson)
+				throw std::runtime_error("Could not open logJson file '" + options.logJson + "'.");
+		}
 		auto debugVisitor = graph_canon::debug_visitor(options.debugTree && printStuff, options.debugCanon && printStuff, options.debugAut && printStuff,
-				options.debugRefine && printStuff, options.debugCompressed && printStuff);
-		auto newVisitor = graph_canon::make_visitor(visitor, boost::ref(debugVisitor));
-		return canonicalize_switch_alg(options, g, vLess, edgeHandler, newVisitor);
+				options.debugRefine && printStuff, options.debugCompressed && printStuff, logJson.get());
+		auto newVisitor = graph_canon::make_visitor(visitor, debugVisitor);
+		auto res = canonicalize_switch_alg(options, g, vLess, edgeHandler, newVisitor);
+		if(logJson) {
+			*logJson << "\n]\n";
+		}
+		return res;
+
 		//		} else {
 		//			return canonicalize_switch_alg(options, g, vLess, eCompare, visitor);
 		//		}
@@ -109,9 +118,11 @@ struct ModeTest {
 			if(!*treeDot)
 				throw std::runtime_error("Could not open treeDot file '" + options.treeDot + "'.");
 		}
-		auto visitor = graph_canon::stats_visitor(treeDot.get());
-		auto permutation = canonicalize_switch_debug(withStuff, options, g, vLess, edgeHandler, boost::ref(visitor));
-		if(withStuff && options.stats) std::cout << "Stats:\n" << visitor;
+		auto res = canonicalize_switch_debug(withStuff, options, g, vLess, edgeHandler,
+				graph_canon::stats_visitor(treeDot.get()));
+		auto permutation = std::move(res.first);
+		const auto &stats = get(graph_canon::stats_visitor::result_t(), res.second);
+		if(withStuff && options.stats) std::cout << "Stats:\n" << stats;
 		if(withStuff && graphDot) {
 			std::ostream &s = *graphDot;
 			bool isUndirected = boost::is_undirected_graph<Graph>::value;
@@ -132,7 +143,7 @@ struct ModeTest {
 			}
 			s << "}\n";
 		}
-		return std::make_tuple(permutation, visitor.max_num_tree_nodes, visitor.num_tree_nodes);
+		return std::make_tuple(permutation, stats.max_num_tree_nodes, stats.num_tree_nodes);
 		//		}
 	}
 
@@ -164,7 +175,7 @@ struct ModeTest {
 		for(std::size_t i = 1; i <= options.rounds; i++) {
 			std::vector<std::size_t> permutation = make_random_permutation(options.gen, id_permutation);
 			Graph g_permuted;
-			permute_graph(g, g_permuted, permutation);
+			graph_canon::permute_graph(g, g_permuted, permutation);
 			Options::Clock::time_point start = Options::Clock::now();
 			auto canon_res = canonicalize(options, i, g_permuted,
 					graph_canon::make_property_less(get(boost::vertex_name_t(), g_permuted)),
@@ -255,6 +266,14 @@ struct ModeTest {
 };
 
 int main(int argc, char **argv) {
+	// rst:
+	// rst: Options Specific for Test Mode
+	// rst: ----------------------------------------------------------------------
+	// rst:
+	// rst: The program perform several rounds of canonicalization.
+	// rst: First on the input graph, and then on randomly permuted versions of that graph.
+	// rst: As default the options are applied to the first round, on the input graph.
+	// rst:
 	std::string modeDesc =
 			"Test mode: first canonicalize the input graph as is, "
 			"and verify the result of all subsequent canonicalizations. "
@@ -262,16 +281,51 @@ int main(int argc, char **argv) {
 	TestOptions options;
 	po::options_description optionsDesc("Options for 'test' mode");
 	optionsDesc.add_options()
+			// rst: .. option:: --last
+			// rst:
+			// rst:		Apply debug and output options to the last permuted graph instead of the input graph.
 			("last", "Apply debug and output options to the last permuted graph instead of the input graph.")
+			// rst: .. option:: --graph-dot <filename>
+			// rst:
+			// rst:		Print graph in dot format, with the original and canonical indices to this file.
 			("graph-dot", po::value<std::string>(&options.graphDot), "Print graph in dot format, with the original and canonical indices to this file.")
+			// rst: .. option:: --tree-dot <filename>
+			// rst:
+			// rst:		Print the search tree from a canonicalization run.
 			("tree-dot", po::value<std::string>(&options.treeDot), "Print the search tree from a canonicalization run.")
+			// rst: .. option:: --json <filename>
+			// rst:
+			// rst:		Print log data as JSON to a file, suitable for the GraphCanon Visualizer.
+			// rst:		The output is not affected by the following options.
+			("json", po::value<std::string>(&options.logJson), "Print log data as JSON to a file, suitable for the GraphCanon Visualizer.")
+			// rst: .. option:: -g, --gall
+			// rst:
+			// rst:		Print all debug information.
 			("gall,g", "Print all debug information.")
+			// rst: .. option:: --gtree
+			// rst:
+			// rst:		Print debug information related to tree traversal.
 			("gtree", "Print debug information related to tree traversal.")
+			// rst: .. option:: --gcanon
+			// rst:
+			// rst:		Print debug information related to selecting a canonical leaf in the tree.
 			("gcanon", "Print debug information related to selecting a canonical leaf in the tree.")
+			// rst: .. option:: --gaut
+			// rst:
+			// rst:		Print debug information related to automorphism discovery.
 			("gaut", "Print debug information related to automorphism discovery.")
+			// rst: .. option:: --grefine
+			// rst:
+			// rst:		Print debug information related to the refinement procedure.
 			("grefine", "Print debug information related to the refinement procedure.")
+			// rst: .. option:: --gcompressed
+			// rst:
+			// rst:		Print debug information in a shorter format.
 			("gcompressed", "Print debug information in a shorter format.")
-			("stats", "Print staticstics from one canonicalization run.")
+			// rst: .. option:: --stats
+			// rst:
+			// rst:		Print statistics from one canonicalization run.
+			("stats", "Print statistics from one canonicalization run.")
 			;
 	return common_main<ModeTest>(argc, argv, options, optionsDesc, modeDesc);
 }

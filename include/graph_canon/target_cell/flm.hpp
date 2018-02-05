@@ -1,9 +1,14 @@
 #ifndef GRAPH_CANON_TARGET_CELL_FLM_HPP
 #define GRAPH_CANON_TARGET_CELL_FLM_HPP
 
-#include <graph_canon/visitor/compound.hpp>
+#include <graph_canon/visitor/visitor.hpp>
 
 namespace graph_canon {
+
+// rst: .. class:: target_cell_flm
+// rst:
+// rst:		Visitor for selecting the first largest non-singleton cell,
+// rst:		among those with a maximum number of non-uniformly joined neighbour cells.
 
 struct target_cell_flm : null_visitor {
 	using can_select_target_cell = std::true_type;
@@ -27,7 +32,7 @@ struct target_cell_flm : null_visitor {
 
 	template<typename Config, typename TreeNode>
 	struct InstanceData {
-		using type = tagged_list<instance_data_t, instance_data<typename Config::SizeType> >;
+		using type = tagged_element<instance_data_t, instance_data<typename Config::SizeType> >;
 	};
 
 	void initialize(auto &state) {
@@ -67,8 +72,10 @@ private:
 			if(cell_begin + 1 == cell_end) continue;
 			if(!pred(cell_begin, cell_end)) continue;
 			const SizeType v_idx = pi.get(cell_begin);
+			const auto *begin_inverse = t.pi.begin_inverse();
 			detail::for_each_neighbour(state, t, vertex(v_idx, state.g),
-					[&](const auto e_out, const auto v_pos, const auto target_cell, const auto target_cell_end) {
+					[&](const auto e_out, const auto v_idx, const auto target_cell, const auto target_cell_end) {
+						const auto v_pos = begin_inverse[v_idx];
 						auto &count = data[v_pos].count;
 						auto &non_zero_count = data[target_cell].non_zero_count;
 						if(count == 0) {
@@ -95,7 +102,8 @@ private:
 
 			// cleanup
 			detail::for_each_neighbour(state, t, vertex(v_idx, state.g),
-					[&](const auto e_out, const auto v_pos, const auto target_cell, const auto target_cell_end) {
+					[&](const auto e_out, const auto v_idx, const auto target_cell, const auto target_cell_end) {
+						const auto v_pos = begin_inverse[v_idx];
 						auto &count = data[v_pos].count;
 						count = 0;
 					});

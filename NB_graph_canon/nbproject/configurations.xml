@@ -12,26 +12,30 @@
       </logicalFolder>
       <logicalFolder name="detail" displayName="detail" projectFiles="true">
         <itemPath>../include/graph_canon/detail/explicit_automorphism.hpp</itemPath>
+        <itemPath>../include/graph_canon/detail/fixed_vector.hpp</itemPath>
         <itemPath>../include/graph_canon/detail/io.hpp</itemPath>
+        <itemPath>../include/graph_canon/detail/meta.hpp</itemPath>
         <itemPath>../include/graph_canon/detail/partition.hpp</itemPath>
         <itemPath>../include/graph_canon/detail/permuted_graph_view.hpp</itemPath>
         <itemPath>../include/graph_canon/detail/tree_node.hpp</itemPath>
         <itemPath>../include/graph_canon/detail/visitor_utils.hpp</itemPath>
       </logicalFolder>
-      <logicalFolder name="edge_counter"
+      <logicalFolder name="edge_handler"
                      displayName="edge_handler"
                      projectFiles="true">
         <itemPath>../include/graph_canon/edge_handler/all_equal.hpp</itemPath>
+        <itemPath>../include/graph_canon/edge_handler/edge_handler.hpp</itemPath>
       </logicalFolder>
       <logicalFolder name="invariant" displayName="invariant" projectFiles="true">
         <itemPath>../include/graph_canon/invariant/cell_split.hpp</itemPath>
+        <itemPath>../include/graph_canon/invariant/coordinator.hpp</itemPath>
         <itemPath>../include/graph_canon/invariant/partial_leaf.hpp</itemPath>
         <itemPath>../include/graph_canon/invariant/quotient.hpp</itemPath>
-        <itemPath>../include/graph_canon/invariant/support.hpp</itemPath>
       </logicalFolder>
       <logicalFolder name="refine" displayName="refine" projectFiles="true">
         <itemPath>../include/graph_canon/refine/WL_1.hpp</itemPath>
         <itemPath>../include/graph_canon/refine/degree_1.hpp</itemPath>
+        <itemPath>../include/graph_canon/refine/refine.hpp</itemPath>
       </logicalFolder>
       <logicalFolder name="target_cell" displayName="target_cell" projectFiles="true">
         <itemPath>../include/graph_canon/target_cell/f.hpp</itemPath>
@@ -50,12 +54,14 @@
         <itemPath>../include/graph_canon/visitor/compound.hpp</itemPath>
         <itemPath>../include/graph_canon/visitor/debug.hpp</itemPath>
         <itemPath>../include/graph_canon/visitor/stats.hpp</itemPath>
+        <itemPath>../include/graph_canon/visitor/visitor.hpp</itemPath>
       </logicalFolder>
       <itemPath>../include/graph_canon/canonicalization.hpp</itemPath>
       <itemPath>../include/graph_canon/compare.hpp</itemPath>
       <itemPath>../include/graph_canon/config.hpp</itemPath>
       <itemPath>../include/graph_canon/dimacs_graph_io.hpp</itemPath>
       <itemPath>../include/graph_canon/ordered_graph.hpp</itemPath>
+      <itemPath>../include/graph_canon/shorthands.hpp</itemPath>
       <itemPath>../include/graph_canon/sorting_utils.hpp</itemPath>
       <itemPath>../include/graph_canon/tagged_list.hpp</itemPath>
       <itemPath>../include/graph_canon/util.hpp</itemPath>
@@ -71,6 +77,8 @@
                    displayName="test"
                    projectFiles="true"
                    root="../test">
+      <itemPath>../test/Makefile.am</itemPath>
+      <itemPath>../test/Makefile.in</itemPath>
       <itemPath>../test/ordered_graph.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -79,11 +87,12 @@
                    kind="IMPORTANT_FILES_FOLDER">
     </logicalFolder>
   </logicalFolder>
-  <sourceFolderFilter>(^(nbproject)$)|(^\.\./realBuild)</sourceFolderFilter>
+  <sourceFolderFilter>(^(nbproject)$)</sourceFolderFilter>
   <sourceRootList>
-    <Elem>..</Elem>
-    <Elem>..</Elem>
-    <Elem>..</Elem>
+    <Elem>../include/graph_canon</Elem>
+    <Elem>../src</Elem>
+    <Elem>../test</Elem>
+    <Elem>../examples</Elem>
   </sourceRootList>
   <projectmakefile></projectmakefile>
   <confs>
@@ -94,7 +103,7 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <flagsDictionary>
-        <element flagsID="0" commonFlags="-O3 -std=c++14"/>
+        <element flagsID="0" commonFlags="-O3 -std=c++14 -O3 -std=c++14"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
@@ -130,6 +139,7 @@
             <Elem>GRAPH_CANON_QUOTIENT</Elem>
             <Elem>GRAPH_CANON_REFINE=WL_1</Elem>
             <Elem>GRAPH_CANON_TRACE</Elem>
+            <Elem>NDEBUG</Elem>
           </preprocessorList>
         </ccTool>
       </item>
@@ -152,7 +162,7 @@
         <ccTool>
           <incDir>
             <pElem>../../../../programs/include</pElem>
-            <pElem>../../perm_group/include</pElem>
+            <pElem>../../perm_group/build/stage/include</pElem>
             <pElem>../build</pElem>
           </incDir>
           <preprocessorList>
