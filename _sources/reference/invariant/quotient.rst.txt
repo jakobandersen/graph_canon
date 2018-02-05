@@ -1,0 +1,19 @@
+.. _cpp-invariant/quotient:
+
+**********************************************************
+quotient.hpp
+**********************************************************
+
+Full path: ``graph_canon/invariant/quotient.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: invariant_quotient
+
+    An implementation of a node invariant consisting of elements from the quotient graph of each partition.
+    It uses the `refine_quotient_edge` event to collect data.
+
+    Requires a `invariant_coordinator` as visitor, ordered before this visitor.

@@ -1,0 +1,33 @@
+.. _cpp-shorthands:
+
+**********************************************************
+shorthands.hpp
+**********************************************************
+
+Full path: ``graph_canon/shorthands.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+This header defines several overloads of the `canonicalize` function template
+where various arguments have been defaulted.
+
+.. function:: auto make_default_visitor()
+
+    :returns: a compound visitor with the following visitors:
+
+    - `target_cell_flm`
+    - `traversal_bfs_exp`
+.. function:: template<bool ParallelEdges, bool Loops, typename Graph, typename Visitor> \
+              auto canonicalize(const Graph &graph, Visitor visitor)
+
+    A shorthand function for canonicalization, where only `ParallelEdges` and `Loops` must be specified.
+
+    - The size type used is `boost::graph_traits<Graph>::vertices_size_type`.
+    - The index map used is `get(boost::vertex_index_t(), graph)`.
+    - The vertices and edges are considered unlabelled, i.e., `always_false` is used as vertex-less predicate,
+      and `edge_handler_all_equal` is used as `EdgeHandlerCreator`.
+
+    See :expr:`canonicalizer::operator()`.

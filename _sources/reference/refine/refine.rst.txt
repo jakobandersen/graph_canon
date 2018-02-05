@@ -1,0 +1,33 @@
+.. _cpp-refine/refine:
+
+**********************************************************
+refine.hpp
+**********************************************************
+
+Full path: ``graph_canon/refine/refine.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. enum-class:: RefinementResult
+
+    Values from this enum should be returned from the refinement function in visitors.
+
+    .. enumerator:: Never
+
+        If the visitor did not modify the partition, and never will no matter how much it is modified.
+    .. enumerator:: Unchanged
+
+        If the visitor did not modify the partition, but potentially could if it gets refined more.
+    .. enumerator:: Changed
+
+        If the visitor modified the partition, and could potentially refine more if it gets refined more.
+    .. enumerator:: Again
+
+        If the visitor wants to be invoked again, no matter what other visitors are doing.
+        It may have modified the partition.
+    .. enumerator:: Abort
+
+        If refinement should be aborted and the tree node pruned.

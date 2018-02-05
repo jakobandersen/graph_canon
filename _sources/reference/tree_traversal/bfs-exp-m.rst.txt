@@ -1,0 +1,21 @@
+.. _cpp-tree_traversal/bfs-exp-m:
+
+**********************************************************
+bfs-exp-m.hpp
+**********************************************************
+
+Full path: ``graph_canon/tree_traversal/bfs-exp-m.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: traversal_bfs_exp_m
+
+    Tree traversal visitor for breadth-first traversal with experimental paths,
+    with fallback to depth-first traversal at a given memory limit.
+
+    .. function:: traversal_bfs_exp_m(const std::size_t max_mem_mb)
+
+        Constructor with a given memory limit, in multiples of :math:`1024*1024`.

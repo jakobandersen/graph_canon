@@ -1,0 +1,13 @@
+.. _cpp-target_cell/flmcr:
+
+**********************************************************
+flmcr.hpp
+**********************************************************
+
+Full path: ``graph_canon/target_cell/flmcr.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+

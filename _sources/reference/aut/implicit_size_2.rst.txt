@@ -1,0 +1,20 @@
+.. _cpp-aut/implicit_size_2:
+
+**********************************************************
+implicit_size_2.hpp
+**********************************************************
+
+Full path: ``graph_canon/aut/implicit_size_2.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: aut_implicit_size_2
+
+    This `Visitor` finds implicit automorphisms from ordered partitions where all cells have size 1 or 2.
+
+    .. var:: static constexpr std::size_t tag = 200
+
+        The tag used for reporting automorphisms found by this visitor.

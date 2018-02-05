@@ -1,0 +1,163 @@
+.. _cpp-canonicalization:
+
+**********************************************************
+canonicalization.hpp
+**********************************************************
+
+Full path: ``graph_canon/canonicalization.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: template< \
+           typename SizeTypeT, bool ParallelEdgesV, bool LoopsV, \
+           typename GraphT, typename IndexMapT, \
+           typename EdgeHandlerT> \
+           config
+
+    A helper-class for holding type aliases.
+
+    .. type:: SizeType = SizeTypeT
+
+        The integer type used as element type in arrays.
+    .. var:: static constexpr bool ParallelEdges = ParallelEdgesV
+
+        Indicator for whether the graph can have parallel edges.
+    .. var:: static constexpr bool Loops = LoopsV
+
+        Indicator for whether the graph can have loop edge.
+    .. type:: Graph = GraphT
+
+        The graph type given as input.
+    .. type:: IndexMap = IndexMapT
+
+        The type of `boost::ReadablePropertyMap` that maps vertices to indices.
+    .. type:: EdgeHandler = EdgeHandlerT
+
+        The type of :concept:`EdgeHandler <graph_canon::EdgeHandler>` used.
+    .. type:: Partition = detail::partition<SizeType>
+
+        The type of ordered partition used.
+    .. type:: Vertex = typename boost::graph_traits<Graph>::vertex_descriptor
+    .. type:: Edge = typename boost::graph_traits<Graph>::edge_descriptor
+.. class:: template<typename ConfigT, typename VisitorT> \
+           canon_state
+
+    A class template representing he state of a canonicalization run.
+    A reference to an object of this class will be passed to almost all functions in plugins.
+    Note that the user is not supposed to instantiate an object of this class manually.
+
+    .. type:: Vis
+
+        The type of the complete `Visitor` type used.
+    .. type:: SizeType
+
+        The integer type used as element type in various arrays.
+    .. type:: Graph
+
+        The type of the input graph.
+    .. type:: IndexMap
+
+        The `ReadablePropertyMap` given to map vertices to indices.
+    .. type:: EHandler
+
+        The `EdgeHandler` type used.
+    .. var:: static constexpr bool ParallelEdges
+
+        Configuration value for whether the given graph may have parallel edges or not.
+    .. var:: static constexpr bool Loops
+
+        Configuration value for whether the given graph may have loop edges or not.
+    .. type:: Partition
+
+        The type of `OrderedPartition` used in the algorithm.
+    .. type:: Vertex = typename boost::graph_traits<Graph>::vertex_descriptor
+    .. type:: Edge = typename boost::graph_traits<Graph>::edge_descriptor
+    .. type:: Perm = std::vector<SizeType>
+
+        The type of `perm_group::Permutation` returned from the algorithm
+    .. type:: TreeNode
+
+        The type used for instantiating tree nodes.
+    .. type:: OwnerPtr
+
+        A smart-pointer type that keeps a tree node alive (e.g., by reference counting).
+    .. type:: InstanceData
+
+        Instance data defined, e.g., by visitors, is all stored in an object of this type
+    .. function:: void report_leaf(OwnerPtr node)
+
+        Submit a tree node as a valid leaf of the search tree.
+
+        Requires that the ordered partition represented by `node` is discrete,
+        and that `report_leaf` has not been called before with this node.
+
+        Several `Visitor` methods may be called from this function:
+
+        - `Visitor::tree_leaf`, always called.
+        - `Visitor::canon_new_best`, if this node will be the best candidate leaf afterwards.
+        - `Visitor::automorphism_leaf`, if this node represents a canonical representation,
+          equal to the current best candidate.
+        - `Visitor::canon_worse`, if this nodes represents a worse representation than the current best candidate.
+    .. function:: void prune_canon_leaf()
+
+        Prune the current best candidate.
+        Requires that at least one leaf will be added with `repoort_leaf` later.
+    .. function:: TreeNode *get_canon_leaf() const
+
+        :returns: a pointer to the tree node representing the current best candidate.
+    .. var:: const Graph &g
+
+        The input graph.
+    .. var:: const SizeType n = num_vertices(g)
+    .. var:: const IndexMap idx
+
+        The given `ReadablePropertyMap` that maps vertices to indices.
+    .. var:: InstanceData data
+
+        The aggregated data structure holding all instance data.
+        Use `get(my_tag(), data)` to access your data, tagged with some tag `my_tag`.
+    .. var:: EHandler &edge_handler
+
+        A reference to the `EdgeHandler` used for this run.
+    .. var:: Vis visitor
+
+        The complete `Visitor` used.
+    .. var:: OwnerPtr root
+
+        A pointer to the root of the search tree.
+.. class:: template<typename SizeType, typename EdgeHandlerCreatorT, bool ParallelEdges, bool Loops> \
+           canonicalizer
+
+    A reusable function object for canonicalizing graphs.
+
+    Requires `SizeType` to be an integer type and `EdgeHandlerCreatorT` to be an `EdgeHandlerCreator`.
+
+    .. type:: EdgeHandler = typename EdgeHandlerCreatorT::template type<SizeType>
+    .. function:: canonicalizer(EdgeHandlerCreatorT edge_handler_creator)
+    .. function:: template<typename Graph, typename IndexMap, typename VertexLess, typename Vis> \
+                  auto operator()(const Graph &g, IndexMap idx, VertexLess vertex_less, Vis visitor)
+
+        Compute a permutation that permutes the indices of the vertices of `g` into their canonical indices.
+
+        Requires:
+
+        - `IndexMap` must be a `ReadablePropertyMap` that maps the vertices of `g` into contiguous indices starting from 0.
+        - `VertexLess` must be a less-than predicate on the vertices of `g` that induces a strict weak ordering.
+          The resulting canonical vertex order respects the ordering induced by `vertex_less`.
+        - `Vis` must be a `Visitor` type.
+
+        :returns: A `std::pair<std::vector<SizeType>, Data>` where `first` is the permutation,
+            and `second` is the auxiliary visitor data of an unspecified type `Data`.
+            See each visitor for what data they may return and what is tagged with.
+            Use `get(the_tag(), res.second)` to access the data tagged with `the_tag` from the return value `res`.
+.. function:: template<typename SizeType, bool ParallelEdges, bool Loops, typename Graph, typename IndexMap, \
+              typename VertexLess, typename EdgeHandlerCreatorT, typename Visitor> \
+              auto canonicalize(const Graph &graph, IndexMap idx, VertexLess vertex_less, EdgeHandlerCreatorT edge_handler_creator, Visitor visitor)
+
+    A shorhand function for canonicalization.
+    The `SizeType`, `ParallelEdges`, and `Loops` must be specified explicitly while remaining template parameters can be deduced.
+
+    See :expr:`canonicalizer::operator()`.

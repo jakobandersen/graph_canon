@@ -1,0 +1,16 @@
+.. _cpp-target_cell/f:
+
+**********************************************************
+f.hpp
+**********************************************************
+
+Full path: ``graph_canon/target_cell/f.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: target_cell_f
+
+    Visitor for selecting the first non-singleton cell.

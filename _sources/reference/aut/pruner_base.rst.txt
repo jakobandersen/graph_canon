@@ -1,0 +1,53 @@
+.. _cpp-aut/pruner_base:
+
+**********************************************************
+pruner_base.hpp
+**********************************************************
+
+Full path: ``graph_canon/aut/pruner_base.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. type:: template<typename Perm> \
+          wrapped_perm
+
+    A permutation storing a `Perm`, and a list of the moved points if at most half the points are moved.
+
+    .. deprecated:: v0.2
+
+        This class will be moved to the PermGroup library at some point.
+
+    .. type:: value_type = typename perm_group::permutation_traits<Perm>::value_type
+    .. function:: const Perm &get_perm() const
+
+        :returns: the wrapped permutation.
+    .. function:: const std::vector<value_type> &get_moved_points() const
+
+        :returns: a list of the moved points, or an empty list.
+.. class:: template<typename Derived> \
+           aut_pruner_base
+
+    A base class for implementing visitors for automorphism pruning.
+
+    :tparam Derived: The subclass of this class (that is, the CRTP pattern).
+
+    For
+
+    - a `canon_state` object `state`,
+    - a `tree_node` object `t`,
+    - a permutation `aut` representing an automorphism, and
+    - the object `derived = static_cast<Derived&>(*this)`
+
+    the following expressions must be valid:
+
+    - | Expression: `derived.add_automorphism(state, aut)`
+      | Semantics: store the new automorphism `aut`.
+    - | Expression: `derived.is_trivial(state, t)`
+      | Returns: a boolean denoting whether the stabilizer for `t` is the trivial group.
+    - | Expression: `derived.need_update(state, t)`
+      | Returns: a boolean denoting whether the stabilizer for `t` should be updated.
+    - | Expression: `derived.update(state, t)`
+      | Returns: a possibly empty range of automorphism generators (e.g., an `aut_range`) added to the stabilizer of `t` after updating it.

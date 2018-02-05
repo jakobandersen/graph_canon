@@ -1,0 +1,26 @@
+.. _cpp-refine/degree_1:
+
+**********************************************************
+degree_1.hpp
+**********************************************************
+
+Full path: ``graph_canon/refine/degree_1.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: refine_degree_1
+
+    Refine multiple degree 1-vertices connected to the same vertex.
+
+
+    Cells consisting entirely of degree 1 vertices, where all vertices have the
+    same neighbour, with the same type of edge, will be split into trivial cells.
+    Either Never or Unchanged will be returned and the appropriate automorphisms are reported.
+
+    .. var:: static const std::size_t split_type_cell = 2
+
+    .. var:: static const std::size_t aut_tag_swap = 100
+    .. var:: static const std::size_t aut_tag_cycle = 101

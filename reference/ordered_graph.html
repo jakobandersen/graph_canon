@@ -1,0 +1,155 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>3.8. ordered_graph.hpp &#8212; GraphCanon v0.2 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3.9. refine" href="refine/index.html" />
+    <link rel="prev" title="3.7.4. quotient.hpp" href="invariant/quotient.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="refine/index.html" title="3.9. refine"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="invariant/quotient.html" title="3.7.4. quotient.hpp"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">3. Library Reference</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ordered-graph-hpp">
+<span id="cpp-ordered-graph"></span><h1>3.8. ordered_graph.hpp<a class="headerlink" href="#ordered-graph-hpp" title="Permalink to this headline">¶</a></h1>
+<p>Full path: <code class="docutils literal notranslate"><span class="pre">graph_canon/ordered_graph.hpp</span></code></p>
+<dl class="class">
+<dt id="_CPPv3I00_bEN11graph_canon13ordered_graphE">
+<span id="_CPPv2I00_bEN11graph_canon13ordered_graphE"></span>template&lt;typename <code class="descname">Graph</code>, typename <code class="descname">IndexMap</code>, bool <code class="descname">WithInEdges</code> = false&gt;<br /><em class="property">class </em><code class="descname">ordered_graph</code><a class="headerlink" href="#_CPPv3I00_bEN11graph_canon13ordered_graphE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A graph adaptor that ensures iterator order in correspondence with a given vertex index map.</p>
+<p>Requires <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00_bEN11graph_canon13ordered_graphE" title="graph_canon::ordered_graph::Graph"><span class="pre">Graph</span></a></code> to model a <code class="docutils literal notranslate"><span class="pre">VertexListGraph</span></code> and an <code class="docutils literal notranslate"><span class="pre">IncidenceGraph</span></code>,
+and <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00_bEN11graph_canon13ordered_graphE" title="graph_canon::ordered_graph::IndexMap"><span class="pre">IndexMap</span></a></code> a <code class="docutils literal notranslate"><span class="pre">ReadableProperyMap</span></code>.
+The ordered graph models those concepts as well as <code class="docutils literal notranslate"><span class="pre">AdjacencyGraph</span></code>.
+If <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00_bEN11graph_canon13ordered_graphE" title="graph_canon::ordered_graph::WithInEdges"><span class="pre">WithInEdges</span></a></code> is <code class="docutils literal notranslate"><span class="pre">false</span></code>, and <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00_bEN11graph_canon13ordered_graphE" title="graph_canon::ordered_graph::Graph"><span class="pre">Graph</span></a></code> models a <code class="docutils literal notranslate"><span class="pre">BidirectionalGraph</span></code>,
+then the ordered graph will model the <code class="docutils literal notranslate"><span class="pre">BidirectionalGraph</span></code> concept as well.</p>
+<p>When iterating through the range of vertices, adjacency vertices, and inverse-adjacent verices,
+the vertices will appear in sorted order with respect to the given index map.
+When iterating through out-edges and in-edges, the edges will appear in sorted order with respect
+to the index of the neighbouring vertices.
+If the adapted graph has parallel edges, those will be ordered according to a predicate given to the constructor.</p>
+<dl class="function">
+<dt id="_CPPv3I0EN11graph_canon13ordered_graph13ordered_graphERK5Graph8IndexMap8EdgeLess">
+<span id="_CPPv2I0EN11graph_canon13ordered_graph13ordered_graphERK5Graph8IndexMap8EdgeLess"></span>template&lt;typename <code class="descname">EdgeLess</code>&gt;<br /><code class="descname">ordered_graph</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv3I00_bEN11graph_canon13ordered_graphE" title="graph_canon::ordered_graph::Graph">Graph</a> &amp;<em>g</em>, <a class="reference internal" href="#_CPPv3I00_bEN11graph_canon13ordered_graphE" title="graph_canon::ordered_graph::IndexMap">IndexMap</a> <em>idx</em>, <a class="reference internal" href="#_CPPv3I0EN11graph_canon13ordered_graph13ordered_graphERK5Graph8IndexMap8EdgeLess" title="graph_canon::ordered_graph::ordered_graph::EdgeLess">EdgeLess</a> <em>edge_less</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv3I0EN11graph_canon13ordered_graph13ordered_graphERK5Graph8IndexMap8EdgeLess" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct an ordered graph from a graph and a given index map (the graph is stored by reference).
+The binary edge predicate <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0EN11graph_canon13ordered_graph13ordered_graphERK5Graph8IndexMap8EdgeLess" title="graph_canon::ordered_graph::ordered_graph::edge_less"><span class="pre">edge_less</span></a></code> is used when the graph has parallel edges
+(hint: give <code class="docutils literal notranslate"><a class="reference internal" href="util.html#_CPPv3N11graph_canon12always_falseE" title="graph_canon::always_false"><span class="pre">always_false</span></a><span class="pre">(</span><span class="pre">)</span></code> for simple graphs).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv3NK11graph_canon13ordered_graph9get_graphEv">
+<span id="_CPPv2NK11graph_canon13ordered_graph9get_graphEv"></span><span id="graph_canon::ordered_graph::get_graphC"></span><em class="property">const</em> <a class="reference internal" href="#_CPPv3I00_bEN11graph_canon13ordered_graphE" title="graph_canon::ordered_graph::Graph">Graph</a> &amp;<code class="descname">get_graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv3NK11graph_canon13ordered_graph9get_graphEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a reference to the adapted graph.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv3NK11graph_canon13ordered_graph13get_index_mapEv">
+<span id="_CPPv2NK11graph_canon13ordered_graph13get_index_mapEv"></span><span id="graph_canon::ordered_graph::get_index_mapC"></span><a class="reference internal" href="#_CPPv3I00_bEN11graph_canon13ordered_graphE" title="graph_canon::ordered_graph::IndexMap">IndexMap</a> <code class="descname">get_index_map</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv3NK11graph_canon13ordered_graph13get_index_mapEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a copy of the stored index map.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="invariant/quotient.html"
+                        title="previous chapter">3.7.4. quotient.hpp</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="refine/index.html"
+                        title="next chapter">3.9. refine</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/ordered_graph.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="refine/index.html" title="3.9. refine"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="invariant/quotient.html" title="3.7.4. quotient.hpp"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >3. Library Reference</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.0+.
+    </div>
+  </body>
+</html>

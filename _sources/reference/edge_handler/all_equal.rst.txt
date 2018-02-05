@@ -1,0 +1,22 @@
+.. _cpp-edge_handler/all_equal:
+
+**********************************************************
+all_equal.hpp
+**********************************************************
+
+Full path: ``graph_canon/edge_handler/all_equal.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: template<typename SizeType> \
+           edge_handler_all_equal_impl
+
+    An `EdgeHandler` for edges without labels.
+
+.. class:: edge_handler_all_equal
+
+    An `EdgeHandlerCreator` for the `edge_handler_all_equal_impl` `EdgeHandler` class.
+

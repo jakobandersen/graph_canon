@@ -1,0 +1,16 @@
+.. _cpp-tree_traversal/dfs:
+
+**********************************************************
+dfs.hpp
+**********************************************************
+
+Full path: ``graph_canon/tree_traversal/dfs.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: traversal_dfs
+
+    Tree traversal visitor for depth-first traversal.

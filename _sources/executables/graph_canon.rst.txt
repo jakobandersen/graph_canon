@@ -1,0 +1,198 @@
+.. cpp:namespace:: graph_canon
+
+.. _graph-canon:
+
+``graph-canon``
+########################################################################
+
+.. program:: graph-canon
+
+The ``graph_canon`` program performs canonicalization of (a permutation of) a given input graph.
+It contains many different configurations of the graph canonicalization algorithm that can be selected through switches.
+The program additional has two distinct modes:
+
+.. option:: --mode <mode>
+
+    - ``test`` (default): All canonicalization results are compared for equality. Allows for outputting additional information from the algorithm execution.
+    - ``benchmark``: Minimal overhead mode, with no result checks and limited information gathering.
+
+The program really consists of many executables (all on the form ``graph-canon-*``), each with different algorithm configurations.
+The main executable, ``graph-canon``, is a wrapper script that invokes the correct executable depending on the given arguments.
+This wrapper script is a Python program, which supports `argcomplete <https://pypi.python.org/pypi/argcomplete>`__.
+
+General Options
+----------------------------------------------------------------------
+
+.. option:: -h, --help
+
+    Print help message. Note, part of the message changes depending on which :option:`--mode` has been given.
+.. option:: --id <string>
+
+    The id to print in the beginning of every output line. It defaults to either 'default', 'stdin', or the filename given with :option:`-f`.
+.. option:: --postId <string>
+
+    The id to print in the end of every data output line. It defaults to the empty string.
+.. option:: --postHeader <string>
+
+    The id to print in the end of every header output line. It defaults to the empty string.
+.. option:: -s <seed>, --seed <seed>
+
+    Seed for random number generator. The default value is :cpp:expr:`static_cast<std::size_t>(std::time(0))`.
+.. option:: -p <num>, --permutations <num>
+
+    Number of random permutations to try. For test mode an additional run is performed in the beginning with the original vertex order.
+    Default is 5.
+
+Graph Loading Options
+----------------------------------------------------------------------
+
+.. option:: -f <filename>, --dimacs <filname>
+
+    File with graph in DIMACS format (see :cpp:func:`read_dimacs_graph`). Use '-' to read from stdin.
+    If not used, a default graph is used.
+.. option:: --vertex-labels <mode>
+
+    - ``none`` (default): vertices are unlabelled.
+    - ``uniform``: vertices are labelled with a uniformly random number in the range 0 to :option:`--vertex-label-max` (excluding).
+.. option:: --vertex-label-max
+
+    See :option:`--vertex-labels`.  Default is 5.
+.. option:: --edge-labels <mode>
+
+    - ``none`` (default): edges are unlabelled.
+    - ``uniform``: edges are labelled with a uniformly random number in the range 0 to :option:`--edge-label-max` (excluding).
+.. option:: --edge-label-max
+
+    See :option:`--edge-labels`. Default is 5.
+.. option:: -d, --directed
+
+    Interpret the graph as a directed graph.
+.. option:: --parallel-edges
+
+    Allow parallel edges, otherwise they are ignored.
+.. option:: --loops
+
+    Allow loop edges, otherwise they are ignored.
+
+Algorithm Configuration Options
+----------------------------------------------------------------------
+
+.. option:: --ftarget-cell <alg>
+
+    The algorithm for selecting target cells:
+
+    - ``f``: select the first non-trivial cell.
+    - ``fl``: select the first of the largest cell.
+    - ``flm`` (default):  select the first of the largest cell of those with maximum non-uniformly joined degree.
+.. option:: --ftree-traversal <alg>
+
+    The algorithm for exploring the search tree:
+
+    - ``dfs``: depth-first traversal.
+    - ``bfs-exp`` (default): breadth-first traversal with 1 experimental path per tree vertex.
+    - ``bfs-exp-m``: breadth-first traversal with 1 experimental path per tree vertex, limited by memory specified by :option:`-m`.
+.. option:: -m <MB>, --memory <MB>
+
+    Memory limit (in MB) before the tree traversal ``bfs-exp-m`` switches to DFS mode.
+    Default is 4 GB.
+.. option:: --frefine <alg>
+
+    The degree-based refinement function to use:
+
+    - ``WL-1`` (default): Weisfeiler-Leman algorithm, with 1 dimension.
+
+.. option:: --faut-pruner <alg>
+
+    The automorphism pruning algorithm to use:
+
+    - ``none``: Do not prune using automorphisms.
+    - ``basic`` (default): Prune using the subset of generators that fix the necessary elements.
+
+.. option:: --faut-implicit, --fno-aut-implicit
+
+    Enable or disable the implicit automorphisms visitor. Enabled as default.
+
+.. option:: --fpartial-leaf, --fno-partial-leaf
+
+    Enable or disable the partial leaf certificate visitor. Enabled as default.
+
+.. option:: --ftrace, --fno-trace
+
+    Enable or disable the trace visitor. Enabled as default.
+
+.. option:: --fquotient, --fno-quotient
+
+    Enable or disable the quotient graph visitor. Enabled as default.
+
+.. option:: --fdegree-1, --fno-degree-1
+
+    Enable or disable the visitor for fast handling of degree-1 vertices. Enabled as default.
+
+
+Program Execution Options
+----------------------------------------------------------------------
+
+.. option:: --memcheck
+
+    Run the program through Valgrind.
+
+.. option:: --debug
+
+    Run the program through GDB (or if :option:`--memcheck` then with vgdb in Valgrind).
+
+.. option:: --profile
+
+    Run the program through Valgrind with callgrind.
+
+
+Options Specific for Benchmark Mode
+----------------------------------------------------------------------
+
+The program perform several rounds of canonicalization,
+all on randomly permuted versions of the input graph.
+
+.. option:: -t <s>, --time <s>
+
+    Time limit (in seconds). This is only checked after each round finishes.
+
+Options Specific for Test Mode
+----------------------------------------------------------------------
+
+The program perform several rounds of canonicalization.
+First on the input graph, and then on randomly permuted versions of that graph.
+As default the options are applied to the first round, on the input graph.
+
+.. option:: --last
+
+    Apply debug and output options to the last permuted graph instead of the input graph.
+.. option:: --graph-dot <filename>
+
+    Print graph in dot format, with the original and canonical indices to this file.
+.. option:: --tree-dot <filename>
+
+    Print the search tree from a canonicalization run.
+.. option:: --json <filename>
+
+    Print log data as JSON to a file, suitable for the GraphCanon Visualizer.
+    The output is not affected by the following options.
+.. option:: -g, --gall
+
+    Print all debug information.
+.. option:: --gtree
+
+    Print debug information related to tree traversal.
+.. option:: --gcanon
+
+    Print debug information related to selecting a canonical leaf in the tree.
+.. option:: --gaut
+
+    Print debug information related to automorphism discovery.
+.. option:: --grefine
+
+    Print debug information related to the refinement procedure.
+.. option:: --gcompressed
+
+    Print debug information in a shorter format.
+.. option:: --stats
+
+    Print statistics from one canonicalization run.

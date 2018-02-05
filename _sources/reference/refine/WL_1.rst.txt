@@ -1,0 +1,20 @@
+.. _cpp-refine/WL_1:
+
+**********************************************************
+WL_1.hpp
+**********************************************************
+
+Full path: ``graph_canon/refine/WL_1.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: refine_WL_1
+
+    The Weisfeiler-Leman refinement function of dimension 1.
+
+    .. var:: static constexpr std::size_t refine_new_cell_type = 50
+
+        The tag used for `refine_new_cell`.

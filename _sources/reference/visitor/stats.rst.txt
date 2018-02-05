@@ -1,0 +1,29 @@
+.. _cpp-visitor/stats:
+
+**********************************************************
+stats.hpp
+**********************************************************
+
+Full path: ``graph_canon/visitor/stats.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: stats_visitor
+
+    A visitor for counting stats and extracting visualizations.
+
+    .. class:: result_t
+
+        The tag type used for returning data.
+    .. class:: ResultData
+
+        The results returned.
+
+        .. todo:: document all members.
+
+    .. function:: stats_visitor(std::ostream *tree_dump = nullptr)
+
+        :param tree_dump: print a Grahpviz depiction of the search tree to this stream.

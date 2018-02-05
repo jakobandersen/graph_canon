@@ -1,0 +1,38 @@
+.. _cpp-aut/pruner_basic:
+
+**********************************************************
+pruner_basic.hpp
+**********************************************************
+
+Full path: ``graph_canon/aut/pruner_basic.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: aut_pruner_basic : aut_pruner_base<aut_pruner_basic>
+
+    A `Visitor` for pruning the search tree based on automorphisms reported by other visitors.
+    Stabilizers are computed conservatively by plain filtering of the generators.
+
+    .. type:: template<typename SizeType> \
+              BasePerm = std::vector<SizeType>
+    .. type:: template<typename SizeType> \
+              Perm = wrapped_perm<BasePerm<SizeType> >
+
+        The type used internally to store automorphisms.
+    .. type:: template<typename SizeType> \
+              Alloc = perm_group::raw_ptr_allocator<Perm<SizeType> >
+    .. type:: template<typename SizeType> \
+              BaseGroup = perm_group::generated_group<Perm<SizeType>, Alloc<SizeType> >
+
+        The automorphism group implementation used.
+    .. type:: template<typename SizeType> \
+              Stab = perm_group::basic_updatable_stabilizer<BaseGroup<SizeType> >
+
+        The stabilizer implementation used.
+    .. type:: result_t
+
+        The tag type used to store the automorphism group in the result.
+        The result type is `std::unique_ptr<BaseGroup<SizeType> >`.

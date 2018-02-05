@@ -1,0 +1,42 @@
+.. _cpp-dimacs_graph_io:
+
+**********************************************************
+dimacs_graph_io.hpp
+**********************************************************
+
+Full path: ``graph_canon/dimacs_graph_io.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. function:: template<typename Graph> \
+              void write_dimacs_graph(std::ostream &s, const Graph &g)
+
+    Write the given graph in DIMACS format (see :cpp:func:`read_dimacs_format`).
+
+    The vertices must have indices, i.e., the expression `get(boost::verex_index_t(), g)` must be valid.
+    Currently the expression `get(boost::vertex_name_t(), g)` must also be valid and return a property map with integer values
+    If any vertex have non-zero vertex name, then the graph is considered vertex labelled and the vertex names are written.
+.. function:: template<typename Graph, typename ParallelHandler, typename LoopHandler> \
+              bool read_dimacs_graph(std::istream &s, Graph &graph, std::ostream &err, ParallelHandler parHandler, LoopHandler loopHandler)
+
+    Parse a graph in DIMACS format from `s` and store it in `graph`.
+    Reading errors are written to `err`.
+
+    The unary predicate `loopHandler` is called with vertex indices where a loop edge has been parsed.
+    The edge is added to the graph only if the handler returns `true`.
+    The binary predicate `parHandler` must similarly evaluated parallel edges, if present.
+
+    The format is line-based. Empty lines and lines starting with ``c`` are ignored.
+    The first non-ignored line must be on the form ``p edge <n> <m>`` where
+    ``<n>`` is the number of vertices in edge graph and
+    ``<m>`` is the number of edges.
+    Afterwards there must be exactly ``<m>`` lines on the form
+    ``e <src> <tar>`` where ``<src>`` and ``<tar>`` are vertex IDs in the range 1 to :math:`n`,
+    representing and edge.
+
+    In addition there may be any number of lines on the form ``n <id> <label>``
+    where ``<id>`` is a vertex ID in the range 1 to :math:`n`,
+    and ``<label>`` is a non-negative number that will be assigned as the label of the vertex.

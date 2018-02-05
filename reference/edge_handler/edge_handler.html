@@ -1,0 +1,173 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>3.6.2. edge_handler.hpp &#8212; GraphCanon v0.2 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3.7. invariant" href="../invariant/index.html" />
+    <link rel="prev" title="3.6.1. all_equal.hpp" href="all_equal.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../invariant/index.html" title="3.7. invariant"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="all_equal.html" title="3.6.1. all_equal.hpp"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon v0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >3. Library Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">3.6. edge_handler</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="edge-handler-hpp">
+<span id="cpp-edge-handler-edge-handler"></span><h1>3.6.2. edge_handler.hpp<a class="headerlink" href="#edge-handler-hpp" title="Permalink to this headline">¶</a></h1>
+<p>Full path: <code class="docutils literal notranslate"><span class="pre">graph_canon/edge_handler/edge_handler.hpp</span></code></p>
+<dl class="concept">
+<dt id="_CPPv3I0EN11graph_canon18EdgeHandlerCreatorE">
+<span id="_CPPv2I0EN11graph_canon18EdgeHandlerCreatorE"></span>template&lt;typename <code class="descname">T</code>&gt;<br /><em class="property">concept </em><code class="descname">EdgeHandlerCreator</code><a class="headerlink" href="#_CPPv3I0EN11graph_canon18EdgeHandlerCreatorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An edge handler creator is an object that from a given integer type instantiates the actual edge handler object.</p>
+<div style="font-weight: bold; font-size: 110%;">Notation</div><hr style="margin-top: 0px; border: none; border-top: 1px solid #8c8c8c; width: 30em; display: inline-block;" /><dl class="type">
+<dt id="_CPPv3N11graph_canon18EdgeHandlerCreator8SizeTypeE">
+<span id="_CPPv2N11graph_canon18EdgeHandlerCreator8SizeTypeE"></span><span id="graph_canon::EdgeHandlerCreator::SizeType"></span><em class="property">type </em><code class="descname">SizeType</code><a class="headerlink" href="#_CPPv3N11graph_canon18EdgeHandlerCreator8SizeTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An integer type.</p>
+</dd></dl>
+
+<div style="font-weight: bold; font-size: 110%;">Associated Types</div><hr style="margin-top: 0px; border: none; border-top: 1px solid #8c8c8c; width: 30em; display: inline-block;" /><dl class="type">
+<dt id="_CPPv3N11graph_canon18EdgeHandlerCreator12EdgeHandlerTE">
+<span id="_CPPv2N11graph_canon18EdgeHandlerCreator12EdgeHandlerTE"></span><em class="property">using </em><code class="descname">EdgeHandlerT</code> = <em class="property">typename</em> <a class="reference internal" href="#_CPPv3I0EN11graph_canon18EdgeHandlerCreatorE" title="graph_canon::EdgeHandlerCreator::T">T</a>::template type&lt;<a class="reference internal" href="#_CPPv3N11graph_canon18EdgeHandlerCreator8SizeTypeE" title="graph_canon::EdgeHandlerCreator::SizeType">SizeType</a>&gt;<a class="headerlink" href="#_CPPv3N11graph_canon18EdgeHandlerCreator12EdgeHandlerTE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A type satisfying the <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0EN11graph_canon11EdgeHandlerE" title="graph_canon::EdgeHandler"><span class="pre">EdgeHandler</span></a></code> concept.</p>
+</dd></dl>
+
+<div style="font-weight: bold; font-size: 110%;">Valid Expressions</div><hr style="margin-top: 0px; border: none; border-top: 1px solid #8c8c8c; width: 30em; display: inline-block;" /><p><code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0EN11graph_canon18EdgeHandlerCreatorE" title="graph_canon::EdgeHandlerCreator::T"><span class="pre">T</span></a><span class="pre">::</span><span class="pre">make</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv3N11graph_canon18EdgeHandlerCreator8SizeTypeE" title="graph_canon::EdgeHandlerCreator::SizeType"><span class="pre">SizeType</span></a><span class="pre">&gt;</span><span class="pre">(</span><span class="pre">)</span></code>: return an object of type <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon18EdgeHandlerCreator12EdgeHandlerTE" title="graph_canon::EdgeHandlerCreator::EdgeHandlerT"><span class="pre">EdgeHandlerT</span></a></code>.</p>
+</dd></dl>
+
+<dl class="concept">
+<dt id="_CPPv3I0EN11graph_canon11EdgeHandlerE">
+<span id="_CPPv2I0EN11graph_canon11EdgeHandlerE"></span>template&lt;typename <code class="descname">T</code>&gt;<br /><em class="property">concept </em><code class="descname">EdgeHandler</code><a class="headerlink" href="#_CPPv3I0EN11graph_canon11EdgeHandlerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An edge handler is an object that implements procedures related to labels on edges.
+If no labels are present, the handler creator <code class="docutils literal notranslate"><a class="reference internal" href="all_equal.html#_CPPv3N11graph_canon22edge_handler_all_equalE" title="graph_canon::edge_handler_all_equal"><span class="pre">edge_handler_all_equal</span></a></code> can be used.</p>
+<div style="font-weight: bold; font-size: 110%;">Notation</div><hr style="margin-top: 0px; border: none; border-top: 1px solid #8c8c8c; width: 30em; display: inline-block;" /><dl class="var">
+<dt id="_CPPv3N11graph_canon11EdgeHandler12edge_handlerE">
+<span id="_CPPv2N11graph_canon11EdgeHandler12edge_handlerE"></span><span id="graph_canon::EdgeHandler::edge_handler__T"></span><a class="reference internal" href="#_CPPv3I0EN11graph_canon11EdgeHandlerE" title="graph_canon::EdgeHandler::T">T</a> <code class="descname">edge_handler</code><a class="headerlink" href="#_CPPv3N11graph_canon11EdgeHandler12edge_handlerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="type">
+<dt id="_CPPv3N11graph_canon11EdgeHandler5StateE">
+<span id="_CPPv2N11graph_canon11EdgeHandler5StateE"></span><span id="graph_canon::EdgeHandler::State"></span><em class="property">type </em><code class="descname">State</code><a class="headerlink" href="#_CPPv3N11graph_canon11EdgeHandler5StateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A specialization of <code class="docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv3I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a></code>.</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="_CPPv3N11graph_canon11EdgeHandler4EdgeE">
+<span id="_CPPv2N11graph_canon11EdgeHandler4EdgeE"></span><em class="property">using </em><code class="descname">Edge</code> = <em class="property">typename</em> boost::graph_traits&lt;<em class="property">typename</em> <a class="reference internal" href="#_CPPv3N11graph_canon11EdgeHandler5StateE" title="graph_canon::EdgeHandler::State">State</a>::Graph&gt;::edge_descriptor<a class="headerlink" href="#_CPPv3N11graph_canon11EdgeHandler4EdgeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="_CPPv3N11graph_canon11EdgeHandler5stateE">
+<span id="_CPPv2N11graph_canon11EdgeHandler5stateE"></span><span id="graph_canon::EdgeHandler::state__State"></span><a class="reference internal" href="#_CPPv3N11graph_canon11EdgeHandler5StateE" title="graph_canon::EdgeHandler::State">State</a> <code class="descname">state</code><a class="headerlink" href="#_CPPv3N11graph_canon11EdgeHandler5stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="var">
+<dt id="_CPPv3N11graph_canon11EdgeHandler6e_leftE">
+<span id="_CPPv2N11graph_canon11EdgeHandler6e_leftE"></span><span id="graph_canon::EdgeHandler::e_left__Edge"></span><a class="reference internal" href="#_CPPv3N11graph_canon11EdgeHandler4EdgeE" title="graph_canon::EdgeHandler::Edge">Edge</a> <code class="descname">e_left</code><a class="headerlink" href="#_CPPv3N11graph_canon11EdgeHandler6e_leftE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv3N11graph_canon11EdgeHandler7e_rightE">
+<span id="_CPPv2N11graph_canon11EdgeHandler7e_rightE"></span><span id="graph_canon::EdgeHandler::e_right__Edge"></span><a class="reference internal" href="#_CPPv3N11graph_canon11EdgeHandler4EdgeE" title="graph_canon::EdgeHandler::Edge">Edge</a> <code class="descname">e_right</code><a class="headerlink" href="#_CPPv3N11graph_canon11EdgeHandler7e_rightE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<div style="font-weight: bold; font-size: 110%;">Valid Expressions</div><hr style="margin-top: 0px; border: none; border-top: 1px solid #8c8c8c; width: 30em; display: inline-block;" /><p>The expression <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon11EdgeHandler12edge_handlerE" title="graph_canon::EdgeHandler::edge_handler"><span class="pre">edge_handler</span></a><span class="pre">.</span><span class="pre">compare</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon11EdgeHandler5stateE" title="graph_canon::EdgeHandler::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon11EdgeHandler6e_leftE" title="graph_canon::EdgeHandler::e_left"><span class="pre">e_left</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon11EdgeHandler7e_rightE" title="graph_canon::EdgeHandler::e_right"><span class="pre">e_right</span></a><span class="pre">)</span></code> compares the two edges
+(e.g., their labels) and returns an integer representing their order:</p>
+<ul class="simple">
+<li>A negative number: <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon11EdgeHandler6e_leftE" title="graph_canon::EdgeHandler::e_left"><span class="pre">e_left</span></a></code> is ordered before <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon11EdgeHandler7e_rightE" title="graph_canon::EdgeHandler::e_right"><span class="pre">e_right</span></a></code>.</li>
+<li>Zero: <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon11EdgeHandler6e_leftE" title="graph_canon::EdgeHandler::e_left"><span class="pre">e_left</span></a></code> and <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon11EdgeHandler7e_rightE" title="graph_canon::EdgeHandler::e_right"><span class="pre">e_right</span></a></code> are considered equal.</li>
+<li>A positive number: <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon11EdgeHandler6e_leftE" title="graph_canon::EdgeHandler::e_left"><span class="pre">e_left</span></a></code> is ordered after <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon11EdgeHandler7e_rightE" title="graph_canon::EdgeHandler::e_right"><span class="pre">e_right</span></a></code>.</li>
+</ul>
+<p>Note that the function should not compare the end-points, only auxiliary data.</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">List requirements fom the WL-1 refiner.</p>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="all_equal.html"
+                        title="previous chapter">3.6.1. all_equal.hpp</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../invariant/index.html"
+                        title="next chapter">3.7. invariant</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/reference/edge_handler/edge_handler.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../invariant/index.html" title="3.7. invariant"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="all_equal.html" title="3.6.1. all_equal.hpp"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon v0.2 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >3. Library Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >3.6. edge_handler</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.0+.
+    </div>
+  </body>
+</html>

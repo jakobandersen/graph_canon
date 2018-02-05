@@ -1,0 +1,20 @@
+.. _cpp-invariant/partial_leaf:
+
+**********************************************************
+partial_leaf.hpp
+**********************************************************
+
+Full path: ``graph_canon/invariant/partial_leaf.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: invariant_partial_leaf
+
+    An implementation of the node invariant consisting of the partial leaf certificate.
+    It uses the `refine_refiner_done` event to collect data.
+    It relies on the `refine_WL_1` visitor (or a similar visitor) being used.
+
+    Requires a `invariant_coordinator` as visitor, ordered before this visitor.

@@ -1,0 +1,13 @@
+.. _cpp-config:
+
+**********************************************************
+config.hpp
+**********************************************************
+
+Full path: ``graph_canon/config.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+

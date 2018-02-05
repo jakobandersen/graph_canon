@@ -1,0 +1,9 @@
+**************************
+Executables
+**************************
+
+.. toctree::
+    :maxdepth: 1
+
+    dimacs
+    graph_canon
