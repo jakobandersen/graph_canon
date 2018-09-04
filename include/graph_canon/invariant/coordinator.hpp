@@ -61,7 +61,7 @@ public:
 	void initialize(auto &state) {
 		auto &i_data = get(instance_data_t(), state.data);
 		i_data.trace.resize(state.n);
-		i_data.generations.resize(state.n);
+		i_data.generations.resize(std::max(state.n, 1));
 	}
 
 	template<typename State, typename TreeNode>
@@ -285,7 +285,7 @@ public:
 	// rst:			Must be called by a visitor when it has been allowed to add a value,
 	// rst:			but that value is worse than the value the visitor previously had in this position.
 	// rst:
-	// rst:			Current this method does nothing.
+	// rst:			Currently this method does nothing.
 
 	template<typename State, typename TreeNode>
 	static void worse_invariant(State &state, TreeNode &t) {

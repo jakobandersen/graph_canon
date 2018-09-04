@@ -5,6 +5,8 @@
 
 namespace graph_canon {
 
+// rst: .. warning:: The contents of this file is work in progress.
+
 struct target_cell_flmcr : null_visitor {
 	using can_select_target_cell = std::true_type;
 

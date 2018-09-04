@@ -35,11 +35,16 @@ EOF
 		for eLabel in "no-el"; do
 			for refine in "WL-1"; do
 			for degreeOne in "false" "true"; do
-				for autPruner in "none" "basic"; do
+			#for degreeOne in "true"; do
+				for autPruner in "none" "basic" "schreier"; do
 				for autImplicit in "false" "true"; do
+				#for autImplicit in "true"; do
 					for partialLeaf in "false" "true"; do
 					for trace in "false" "true"; do
 					for quotient in "false" "true"; do
+					#for partialLeaf in "true"; do
+					#for trace in "true"; do
+					#for quotient in "true"; do
 						name="graph-canon-${mode}_${eLabel}_${refine}"
 						if [ "$autPruner" != "none" ]; then
 							name="${name}_${autPruner}"
@@ -108,6 +113,7 @@ EOF
 
 	echo ""
 	echo "EXTRA_DIST = \\"
+	echo "	ChangeLog.rst \\"
 	(
 		find src -type f
 		find test -type f

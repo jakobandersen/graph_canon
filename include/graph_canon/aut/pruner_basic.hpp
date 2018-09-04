@@ -3,6 +3,7 @@
 
 #include <graph_canon/aut/pruner_base.hpp>
 
+#include <perm_group/allocator/pooled.hpp>
 #include <perm_group/allocator/raw_ptr.hpp>
 #include <perm_group/group/generated.hpp>
 #include <perm_group/group/basic_stabilizer.hpp>
@@ -22,40 +23,19 @@ namespace graph_canon {
 
 struct aut_pruner_basic : aut_pruner_base<aut_pruner_basic> {
 	using Base = aut_pruner_base<aut_pruner_basic>;
-public: // for aut_pruner_base
-	// rst:		.. type:: template<typename SizeType> \
-	// rst:		          BasePerm = std::vector<SizeType>
-	template<typename SizeType>
-	using BasePerm = std::vector<SizeType>;
-	// rst:		.. type:: template<typename SizeType> \
-	// rst:		          Perm = wrapped_perm<BasePerm<SizeType> >
-	// rst:
-	// rst:			The type used internally to store automorphisms.
-	template<typename SizeType>
-	using Perm = wrapped_perm<BasePerm<SizeType> >;
 public:
-	// rst:		.. type:: template<typename SizeType> \
-	// rst:		          Alloc = perm_group::raw_ptr_allocator<Perm<SizeType> >
 	template<typename SizeType>
-	using Alloc = perm_group::raw_ptr_allocator<Perm<SizeType> >;
-	// rst:		.. type:: template<typename SizeType> \
-	// rst:		          BaseGroup = perm_group::generated_group<Perm<SizeType>, Alloc<SizeType> >
-	// rst:
-	// rst:			The automorphism group implementation used.
+	using Perm = std::vector<SizeType>;
 	template<typename SizeType>
-	using BaseGroup = perm_group::generated_group<Perm<SizeType>, Alloc<SizeType> >;
-	// rst:		.. type:: template<typename SizeType> \
-	// rst:		          Stab = perm_group::basic_updatable_stabilizer<BaseGroup<SizeType> >
-	// rst:
-	// rst:			The stabilizer implementation used.
+	using AllocInner = perm_group::raw_ptr_allocator<Perm<SizeType> >;
 	template<typename SizeType>
-	using Stab = perm_group::basic_updatable_stabilizer<BaseGroup<SizeType> >;
+	using Alloc = perm_group::pooled_allocator<AllocInner<SizeType> >;
+	template<typename SizeType>
+	using BaseGroup = perm_group::generated_group<Alloc<SizeType>, perm_group::DupCheckerCompare>;
+	template<typename SizeType>
+	using Stab = perm_group::basic_stabilizer<Alloc<SizeType> >;
 public:
 
-	// rst:		.. type:: result_t
-	// rst:
-	// rst:			The tag type used to store the automorphism group in the result.
-	// rst:			The result type is `std::unique_ptr<BaseGroup<SizeType> >`.
 	struct result_t {
 	};
 
@@ -65,7 +45,6 @@ public:
 	template<typename SizeType>
 	struct instance_data {
 		std::unique_ptr<BaseGroup<SizeType> > g;
-		SizeType root_count = 1;
 	};
 
 	template<typename Config, typename TreeNode>
@@ -80,7 +59,21 @@ public:
 
 	template<typename SizeType>
 	struct tree_data {
+		// The stabilizer representation. It is not valid for the root.
+		// It is initialized in the update function.
 		std::unique_ptr<Stab<SizeType> > stab;
+		// How many of the base group gens we have used.
+		// That is, if we update this and the update stops at an ancestor because no further permutations
+		// can be added to a child, then this one is still updated as we have checked that amount of generators.
+		// The base group always has the identity, which we don't care about.
+		SizeType num_base_gens = 1;
+		// Similarly this is the number of gens in the parent node for the last update.
+		// The root doesn't use this variable.
+		SizeType num_parent_gens = 1;
+		// This means:
+		// - If num_base_gens is too low, then we or some ancestor needs updating.
+		// - After updating all ancestors, if num_parent_gens is too low, then we need to be updated.
+		// Invariant: If num_base_gens is up-to-date, then num_parent_gens must be as well.
 	};
 
 	template<typename Config, typename TreeNode>
@@ -93,93 +86,93 @@ public:
 
 	template<typename State>
 	void initialize(State &s) {
+		// base group
 		using SizeType = typename State::SizeType;
-		assert(!get(instance_data_t(), s.data).g);
-		get(instance_data_t(), s.data).g.reset(new BaseGroup<SizeType>(s.n));
+		const std::size_t pool_size = s.n;
+		auto &i_data = get(instance_data_t(), s.data);
+		i_data.g.reset(new BaseGroup<SizeType > (Alloc<SizeType>(pool_size, AllocInner<SizeType>(s.n))));
 	}
 
 	template<typename State>
 	auto extract_result(State &s) {
 		using SizeType = typename State::SizeType;
 		using Result = std::unique_ptr<BaseGroup<SizeType> >;
-		auto &data = get(instance_data_t(), s.data);
-		return tagged_element<result_t, Result>{std::move(data.g)};
+		auto &i_data = get(instance_data_t(), s.data);
+		return tagged_element<result_t, Result>{std::move(i_data.g)};
 	}
 public: // for aut_pruner_base
 
-	template<typename State, typename AutPerm>
-	void add_automorphism(State &s, const AutPerm &aut_new) {
-		using SizeType = typename State::SizeType;
-		assert(perm_group::size(aut_new) == s.n);
+	template<typename State, typename TreeNode, typename AutPerm>
+	void add_automorphism(State &s, TreeNode &t, const AutPerm &aut_new) {
+		assert(perm_group::degree(aut_new) == s.n);
 		auto &i_data = get(instance_data_t(), s.data);
 		auto &g = *i_data.g;
-		std::vector<SizeType> aut(s.n);
-		for(std::size_t i = 0; i < s.n; i++) {
-			perm_group::put(aut, i, perm_group::get(aut_new, i));
-		}
-		for(const auto &gen : generators(g)) {
-			if(aut == gen.get_perm()) return;
-		}
-		g.add_generator(Perm<SizeType>(std::move(aut)));
+		g.add_generator(aut_new);
 	}
 
 	template<typename State, typename TreeNode>
 	bool need_update(State &s, TreeNode &t) {
-		if(t.get_parent()) {
-			const auto &data = get(tree_data_t(), t.data);
-			if(!data.stab) return true;
-			return data.stab->need_update();
-		} else { // the root
-			return true;
-		}
+		const auto &i_data = get(instance_data_t(), s.data);
+		// early bail-out
+		const bool trivial_group = i_data.g->generators().size() == 1;
+		if(trivial_group) return false;
+
+		const auto &t_data = get(tree_data_t(), t.data);
+		assert(t_data.num_base_gens <= i_data.g->generators().size());
+		return t_data.num_base_gens != i_data.g->generators().size();
 	}
 
 	template<typename State, typename TreeNode>
-	auto update(State &s, TreeNode &t) {
+	auto update(const State &s, TreeNode &t) {
 		using SizeType = typename State::SizeType;
-		auto &i_data = get(instance_data_t(), s.data);
+		const auto &i_data = get(instance_data_t(), s.data);
 		auto &t_data = get(tree_data_t(), t.data);
-		// the root doesn't need additional updating
-		if(!t.get_parent()) {
-			const auto &g = *i_data.g;
-			const auto gens = generators(g);
-			const auto first = begin(gens) + i_data.root_count;
-			const auto last = end(gens);
-			i_data.root_count = gens.size();
-			return make_aut_range(first, last);
-		}
-		if(!t_data.stab) {
-			const auto new_v_idx_to_fix = t.pi.get(t.get_parent()->get_child_individualized_position());
-			if(t.get_parent()->get_parent()) {
-				const auto &parentData = get(tree_data_t(), t.get_parent()->data);
-				t_data.stab.reset(new Stab<SizeType>(new_v_idx_to_fix, *parentData.stab));
-			} else {
-				const auto &instanceData = get(instance_data_t(), s.data);
-				t_data.stab.reset(new Stab<SizeType>(new_v_idx_to_fix, *instanceData.g));
+		if(const auto *t_parent = t.get_parent()) { // not the root
+			if(!t_data.stab) {
+				const auto new_v_idx_to_fix = t.pi.get(t.get_parent()->get_child_individualized_position());
+				t_data.stab.reset(new Stab<SizeType>(new_v_idx_to_fix, i_data.g->get_allocator()));
 			}
-			const auto gens = generators(*t_data.stab);
-			// the first is always the id permutation
-			return make_aut_range(begin(gens) + 1, end(gens));
-		} else {
-			const auto pre_gens = generators(*t_data.stab);
-			const auto pre_size = std::distance(begin(pre_gens), end(pre_gens));
-			t_data.stab->update();
-			const auto post_gens = generators(*t_data.stab);
-			assert(pre_size <= std::distance(begin(post_gens), end(post_gens)));
-			return make_aut_range(begin(post_gens) + pre_size, end(post_gens));
-		}
-	}
-
-	template<typename State, typename TreeNode>
-	bool is_trivial(State &s, TreeNode &t) {
-		if(!t.get_parent()) {
-			const auto &instanceData = get(instance_data_t(), s.data);
-			const auto gens = generators(*instanceData.g);
-			return std::distance(gens.begin(), gens.end()) == 1;
-		} else {
-			const auto &data = get(tree_data_t(), t.data);
-			const auto gens = generators(*data.stab);
-			return std::distance(gens.begin(), gens.end()) == 1;
+			const auto handle_group = [&](const auto &g) {
+				const auto gens_parent = g.generator_ptrs();
+				assert(gens_parent.size() >= t_data.num_parent_gens); // invariant
+				const auto last_old = gens_parent.begin() + t_data.num_parent_gens;
+				const auto old_size = t_data.stab->generators().size();
+#ifdef GRAPH_CANON_AUT_BASE_DEBUG
+				std::cout << "Updating tree node at level " << t.level << " with " << (gens_parent.end() - last_old) << " generators." << std::endl;
+				for(auto d_iter = last_old; d_iter != gens_parent.end(); ++d_iter)
+					perm_group::write_permutation_cycles(std::cout << "\t" << (d_iter - gens_parent.begin()) << "\t", **d_iter) << std::endl;
+				std::cout << "\tcurrent gens:\n";
+				for(const auto &p : t_data.stab->generators())
+					perm_group::write_permutation_cycles(std::cout << "\t \t", p) << std::endl;
+#endif
+				t_data.stab->add_generators(gens_parent.begin(), last_old, gens_parent.end());
+				const auto gens = t_data.stab->generators();
+				t_data.num_parent_gens = gens_parent.size();
+				t_data.num_base_gens = i_data.g->generators().size();
+				assert(!t_parent->get_parent() || get(tree_data_t(), t_parent->data).num_base_gens == t_data.num_base_gens);
+#ifdef GRAPH_CANON_AUT_BASE_DEBUG
+				std::cout << "Updating tree node at level " << t.level << ", got " << (gens.end() - gens.begin() - old_size) << " new." << std::endl;
+				for(auto d_iter = gens.begin() + old_size; d_iter != gens.end(); ++d_iter)
+					perm_group::write_permutation_cycles(std::cout << "\t" << (d_iter - gens.begin()) << "\t", *d_iter) << std::endl;
+#endif
+				return make_aut_range(gens.begin() + old_size, gens.end());
+			};
+			// The root has no stabilizer, so the parent gens are those from the base group.
+			if(t_parent->get_parent()) {
+				const auto &t_parent_data = get(tree_data_t(), t_parent->data);
+				assert(t_parent_data.stab);
+				return handle_group(*t_parent_data.stab);
+			} else {
+				return handle_group(*i_data.g);
+			}
+		} else { // the root
+			const auto gens = i_data.g->generators();
+			assert(gens.size() >= t_data.num_base_gens); // invariant
+			assert(gens.size() > t_data.num_base_gens); // else we shouldn't have called this function
+			auto first = gens.begin() + t_data.num_base_gens;
+			t_data.num_base_gens = gens.size();
+			assert(t_data.num_parent_gens == 1);
+			return make_aut_range(first, gens.end());
 		}
 	}
 };

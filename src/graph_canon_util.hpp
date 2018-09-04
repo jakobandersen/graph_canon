@@ -27,6 +27,7 @@
 
 #include <graph_canon/aut/implicit_size_2.hpp>
 #include <graph_canon/aut/pruner_basic.hpp>
+#include <graph_canon/aut/pruner_schreier.hpp>
 #include <graph_canon/canonicalization.hpp>
 #include <graph_canon/compare.hpp>
 #include <graph_canon/invariant/cell_split.hpp>
@@ -725,6 +726,7 @@ int common_main(int argc, char **argv, Options &options, po::options_description
 // rst:
 // rst:		- ``none``: Do not prune using automorphisms.
 // rst:		- ``basic`` (default): Prune using the subset of generators that fix the necessary elements.
+// rst:		- ``schreier``: Prune using fully calculated stabilizers.
 // rst:
 // rst: .. option:: --faut-implicit, --fno-aut-implicit
 // rst:

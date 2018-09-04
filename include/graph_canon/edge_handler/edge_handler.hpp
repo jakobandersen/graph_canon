@@ -52,7 +52,7 @@ namespace graph_canon {
 // rst:
 // rst:		Note that the function should not compare the end-points, only auxiliary data.
 // rst:
-// rst:		.. todo:: List requirements fom the WL-1 refiner.
+// rst:		.. todo:: List requirements from the WL-1 refiner.
 // rst:
 
 } // namespace graph_canon

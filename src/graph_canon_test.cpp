@@ -296,7 +296,7 @@ int main(int argc, char **argv) {
 			// rst: .. option:: --json <filename>
 			// rst:
 			// rst:		Print log data as JSON to a file, suitable for the GraphCanon Visualizer.
-			// rst:		The output is not affected by the following options.
+			// rst:		The output is not affected by the ``--g*`` options.
 			("json", po::value<std::string>(&options.logJson), "Print log data as JSON to a file, suitable for the GraphCanon Visualizer.")
 			// rst: .. option:: -g, --gall
 			// rst:

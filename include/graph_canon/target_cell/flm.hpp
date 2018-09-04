@@ -46,7 +46,7 @@ struct target_cell_flm : null_visitor {
 		});
 
 		if(result == state.n) {
-			result = find_cell(state, t, [](const auto&...) {
+			result = find_cell(state, t, [](const auto&... args) {
 				return true;
 			});
 		}

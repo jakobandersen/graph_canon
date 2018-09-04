@@ -16,7 +16,7 @@ namespace graph_canon {
 // rst:
 // rst:		Cells consisting entirely of degree 1 vertices, where all vertices have the
 // rst:		same neighbour, with the same type of edge, will be split into trivial cells.
-// rst:		Either Never or Unchanged will be returned and the appropriate automorphisms are reported.
+// rst:		Either `RefinementResult::Never` or `RefinementResult::Unchanged` will be returned and the appropriate automorphisms are reported.
 // rst:
 
 struct refine_degree_1 : null_visitor {
@@ -86,7 +86,7 @@ struct refine_degree_1 : null_visitor {
 
 			// now report generating permutations for the symmetric group of the cell
 			aut.resize(n);
-			for(std::size_t i = 0; i < perm_group::size(aut); ++i)
+			for(std::size_t i = 0; i < perm_group::degree(aut); ++i)
 				perm_group::put(aut, i, i);
 			const std::size_t first = pi.get(cell_begin);
 			{ // first the swap in the beginning

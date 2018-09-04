@@ -1,31 +1,3 @@
-// The algorithms are implemented using the resources [1-5], and the terminology follows
-// primarily [3].
-// 
-// [1]
-// PRACTICAL GRAPH ISOMORPHISM 
-// Brendan D. McKay
-// http://cs.anu.edu.au/people/bdm/nauty/pgi.pdf
-//
-// [2]
-// McKay’s Canonical Graph Labeling Algorithm
-// Stephen G. Hartke and A. J. Radcliﬀe
-// http://www.math.unl.edu/~aradcliffe1/Papers/Canonical.pdf
-//
-// [3]
-// Practical graph isomorphism, II
-// Brendan D. McKay, Adolfo Piperno
-// http://arxiv.org/abs/1301.1493
-//
-// [4]
-// The webpage of nauty and Traces
-// http://pallini.di.uniroma1.it/
-//
-// [5]
-// Search Space Contraction in Canonical Labeling of Graphs
-// Adolfo Piperno
-// http://arxiv.org/abs/0804.4881
-
-
 #ifndef GRAPH_CANON_CANONICALIZATION_HPP
 #define GRAPH_CANON_CANONICALIZATION_HPP
 
@@ -313,7 +285,7 @@ public:
 		visitor.tree_leaf(*this, *node);
 		if(!canon_leaf) { // canon_permuted_graph may still be valid if someone pruned our canon_leaf
 			canon_leaf = node;
-			visitor.canon_new_best(*this);
+			visitor.canon_new_best(*this, static_cast<TreeNode*>(nullptr));
 			return;
 		}
 		if(!canon_permuted_graph) { // this is our second leaf, so not even the first permuted graph were created
@@ -332,8 +304,9 @@ public:
 		auto cmp = PermutedGraph::compare(*this, *extra_permuted_graph, *canon_permuted_graph);
 		if(cmp < 0) {
 			std::swap(canon_permuted_graph, extra_permuted_graph);
+			OwnerPtr previous = canon_leaf;
 			canon_leaf = node;
-			visitor.canon_new_best(*this);
+			visitor.canon_new_best(*this, previous.get());
 		} else if(cmp == 0) {
 			detail::explicit_automorphism<Self> aut(*this, *node);
 			visitor.automorphism_leaf(*this, *node, aut);
@@ -387,6 +360,9 @@ public:
 	// rst:		.. var:: OwnerPtr root
 	// rst:
 	// rst:			A pointer to the root of the search tree.
+	// rst:			Note that this pointer is only set after the root has been fully
+	// rst:			constructed. Thus, in `Visitor` methods, if `root` is `nullptr`,
+	// rst:			then you have probably been given a reference to the root as the current tree node.
 	OwnerPtr root = nullptr;
 private:
 	OwnerPtr canon_leaf = nullptr; // best graph of all the best_by_invariant
@@ -427,7 +403,7 @@ public:
 	// rst:
 	// rst:			:returns: A `std::pair<std::vector<SizeType>, Data>` where `first` is the permutation,
 	// rst:				and `second` is the auxiliary visitor data of an unspecified type `Data`.
-	// rst:				See each visitor for what data they may return and what is tagged with.
+	// rst:				See each visitor for what data they may return and what it is tagged with.
 	// rst:				Use `get(the_tag(), res.second)` to access the data tagged with `the_tag` from the return value `res`.
 
 	template<typename Graph, typename IndexMap, typename VertexLess, typename Vis>
@@ -455,7 +431,7 @@ public:
 		BOOST_ASSERT_MSG(num_vertices(g) <= std::numeric_limits<SizeType>::max(), "SizeType is too narrow for this graph.");
 		BOOST_ASSERT_MSG(num_edges(g) <= std::numeric_limits<SizeType>::max(), "SizeType is too narrow for this graph.");
 
-
+		
 		using Config = config<SizeType, ParallelEdges, Loops, Graph, IndexMap, EdgeHandler>;
 		using Partition = typename Config::Partition;
 

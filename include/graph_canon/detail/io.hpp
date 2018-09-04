@@ -39,8 +39,8 @@ std::ostream &printPartitionCompressed(std::ostream &s, const State &state, cons
 }
 
 template<typename Config, typename TreeNode>
-std::ostream &print(std::ostream &s, 
-		const permuted_graph_view<Config, TreeNode> &pg, 
+std::ostream &print(std::ostream &s,
+		const permuted_graph_view<Config, TreeNode> &pg,
 		const typename Config::Graph &g, typename Config::IndexMap idx) {
 	typedef typename boost::graph_traits<typename Config::Graph>::vertex_descriptor Vertex;
 	typedef typename boost::graph_traits<typename Config::Graph>::edge_descriptor Edge;
@@ -57,9 +57,8 @@ std::ostream &print(std::ostream &s,
 	return s;
 }
 
-template<typename State>
-std::ostream &printTreeNode(std::ostream &s, const State &state, const typename State::TreeNode &node, bool explicitPartition) {
-	typedef typename State::TreeNode TreeNode;
+template<typename TreeNode>
+std::ostream &printTreeNodeName(std::ostream &s, const TreeNode &node) {
 	s << "T<";
 	std::stack<const TreeNode*> to_write;
 	for(const TreeNode *n = &node; n->get_parent(); n = n->get_parent()) to_write.push(n);
@@ -84,7 +83,12 @@ std::ostream &printTreeNode(std::ostream &s, const State &state, const typename 
 			parent = n;
 		}
 	}
-	s << ">";
+	return s << ">";
+}
+
+template<typename State>
+std::ostream &printTreeNode(std::ostream &s, const State &state, const typename State::TreeNode &node, bool explicitPartition) {
+	printTreeNodeName(s, node);
 	s << " pi cells: ";
 	printPartitionCompressed(s, state, node.pi);
 	if(explicitPartition) {

@@ -20,7 +20,7 @@ public: // PermutationConcept
 	}
 public: // SizeAwarePermutationConcept
 
-	std::size_t size_() const {
+	std::size_t degree_() const {
 		return state.n;
 	}
 private:

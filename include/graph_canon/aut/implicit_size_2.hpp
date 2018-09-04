@@ -3,7 +3,7 @@
 
 #include <graph_canon/visitor/visitor.hpp>
 
-#include <perm_group/permutation/traits.hpp>
+#include <perm_group/permutation/interface.hpp>
 
 #include <cassert>
 
@@ -61,7 +61,7 @@ struct aut_implicit_size_2 : null_visitor {
 #endif
 		auto &instance = get(instance_data_t(), state.data);
 		instance.aut.resize(state.n);
-		for(SizeType i = 0; i < perm_group::size(instance.aut); ++i)
+		for(SizeType i = 0; i < perm_group::degree(instance.aut); ++i)
 			perm_group::put(instance.aut, i, i);
 	}
 
@@ -107,7 +107,7 @@ struct aut_implicit_size_2 : null_visitor {
 				<< "(" << first << " " << second << "), perm=";
 		perm_group::write_permutation_cycles(std::cout, i_data.aut) << std::endl;
 #endif
-		assert(perm_group::size(i_data.aut) == state.n);
+		assert(perm_group::degree(i_data.aut) == state.n);
 		assert(perm_group::get(i_data.aut, first) == first);
 		assert(perm_group::get(i_data.aut, second) == second);
 		perm_group::put(i_data.aut, first, second);
@@ -126,7 +126,7 @@ struct aut_implicit_size_2 : null_visitor {
 				perm_group::write_permutation_cycles(std::cout, instance.aut) << std::endl;
 #endif
 				auto &i_data = get(instance_data_t(), state.data);
-				for(std::size_t i = 0; i < perm_group::size(i_data.aut); ++i)
+				for(std::size_t i = 0; i < perm_group::degree(i_data.aut); ++i)
 					perm_group::put(i_data.aut, i, i);
 			}
 			return false;
@@ -140,7 +140,7 @@ struct aut_implicit_size_2 : null_visitor {
 			std::cout << "Implicit: node_end, perm reported, perm=";
 			perm_group::write_permutation_cycles(std::cout, i_data.aut) << std::endl;
 #endif
-			for(std::size_t i = 0; i < perm_group::size(i_data.aut); ++i)
+			for(std::size_t i = 0; i < perm_group::degree(i_data.aut); ++i)
 				perm_group::put(i_data.aut, i, i);
 		}
 		// we may have gotten it from the parent
