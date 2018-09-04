@@ -7,6 +7,9 @@ Changes
 Develop
 ==========================
 
+Release v0.3 (2018-09-04)
+==========================
+
 - Require version v0.3 PermGroup.
 - Add Schreier-Sims-based automorphism pruning.
 - Documentation polishing.
