@@ -7,8 +7,10 @@
                    root="../include/graph_canon">
       <logicalFolder name="aut" displayName="aut" projectFiles="true">
         <itemPath>../include/graph_canon/aut/implicit_size_2.hpp</itemPath>
+        <itemPath>../include/graph_canon/aut/perm_moved_points.hpp</itemPath>
         <itemPath>../include/graph_canon/aut/pruner_base.hpp</itemPath>
         <itemPath>../include/graph_canon/aut/pruner_basic.hpp</itemPath>
+        <itemPath>../include/graph_canon/aut/pruner_schreier.hpp</itemPath>
       </logicalFolder>
       <logicalFolder name="detail" displayName="detail" projectFiles="true">
         <itemPath>../include/graph_canon/detail/explicit_automorphism.hpp</itemPath>

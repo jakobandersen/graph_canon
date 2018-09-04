@@ -40,10 +40,12 @@ def main():
 	parser.add_argument("--frefine", metavar="<algorithm>", choices=("WL-1"), default="WL-1",
 		help="The degree-based refinement function."
 			 " 'WL-1': Weisfeiler-Leman algorithm, with 1 dimension.")
-	parser.add_argument("--faut-pruner", metavar="<pruner>", choices=("none", "basic"), default="basic",
+	parser.add_argument("--faut-pruner", metavar="<pruner>", choices=("none", "basic", "schreier"), default="basic",
 		help="The automorphism pruning algorithm to use."
 			 " 'none': Do not prune using automorphisms."
-			 " 'basic': Prune using the subset of generators that fix the necessary elements.")
+			 " 'basic': Prune using the subset of generators that fix the necessary elements."
+			 " 'schreier': Prune using fully calculated stabilizers."
+	)
 	parser.add_argument("--faut-implicit",    action="store_true",  dest="faut_implicit", help="Use the implicit automorphisms visitor.")
 	parser.add_argument("--fno-aut-implicit", action="store_false", dest="faut_implicit", help="Do no use the implicit automorphisms visitor.")
 	parser.add_argument("--fpartial-leaf",    action="store_true",  dest="fpartial_leaf", help="Use the partial leaf certificate visitor (default).")

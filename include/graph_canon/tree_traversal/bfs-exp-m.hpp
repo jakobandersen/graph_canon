@@ -56,7 +56,9 @@ public:
 
 	// rst:		.. function:: traversal_bfs_exp_m(const std::size_t max_mem_mb)
 	// rst:
-	// rst:			Constructor with a given memory limit, in multiples of :math:`1024*1024`.
+	// rst:			Construct with a given memory limit, in multiples of :math:`1024*1024` bytes.
+	// rst:			Note that memory usage is calculated conservatively and the algorithm uses slightly more meory.
+	// rst:			Memory usage by individual visitors is not factored in at this time.
 	traversal_bfs_exp_m(const std::size_t max_mem_mb) : max_mem_mb(max_mem_mb) { }
 private:
 

@@ -23,14 +23,15 @@ struct partition {
 	partition(SizeType n) // create unit partition
 	: n(n), elements(new SizeType[n]), inverse(new SizeType[n]),
 	next_cell_begin(new SizeType[n]), cell_from_v_idx(new SizeType[n]), num_cells(1) {
-#ifdef BOOST_GRAPH_CANON_CHECK_PARTITION
-		assert(n > 0);
-#endif
 		for(SizeType i = 0; i < n; i++)
 			put_element_on_index(i, i);
 		std::fill(next_cell_begin.get(), next_cell_begin.get() + n, 0);
 		std::fill(cell_from_v_idx.get(), cell_from_v_idx.get() + n, 0);
-		next_cell_begin[0] = n;
+		if(n != 0) {
+			next_cell_begin[0] = n;
+		} else {
+			num_cells = 0;
+		}
 	}
 
 	partition(partition&&) = default;
@@ -136,7 +137,7 @@ public:
 	SizeType get_cell_size(SizeType cell_begin) const {
 		return get_cell_end(cell_begin) - cell_begin;
 	}
-	
+
 	const SizeType *begin_cell_end() const {
 		return next_cell_begin.get();
 	}

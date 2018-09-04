@@ -262,12 +262,12 @@ public:
 // rst: .. class:: template<typename Graph, typename IndexMap, bool WithInEdges = false> \
 // rst:            ordered_graph
 // rst:
-// rst:		A graph adaptor that ensures iterator order in correspondence with a given vertex index map.
+// rst:		A graph adaptor that ensures iteration order in correspondence with a given vertex index map.
 // rst:
 // rst:		Requires `Graph` to model a `VertexListGraph` and an `IncidenceGraph`,
 // rst:		and `IndexMap` a `ReadableProperyMap`.
 // rst:		The ordered graph models those concepts as well as `AdjacencyGraph`.
-// rst:		If `WithInEdges` is `false`, and `Graph` models a `BidirectionalGraph`,
+// rst:		If `WithInEdges` is `true`, and `Graph` models a `BidirectionalGraph`,
 // rst:		then the ordered graph will model the `BidirectionalGraph` concept as well.
 // rst:
 // rst:		When iterating through the range of vertices, adjacency vertices, and inverse-adjacent verices,
@@ -338,9 +338,16 @@ public:
 	Data data;
 };
 
+// rst:
+// rst: .. function:: template<bool WithInEdges, typename Graph, typename IndexMap, typename EdgeLess> \
+// rst:               ordered_graph<Graph, IndexMap, WithInEdges> make_ordered_graph(const Graph &g, IndexMap idx, EdgeLess edge_less)
+// rst:
+// rst:		:returns: `ordered_graph<Graph, IndexMap, WithInEdges>(g, idx, edge_less)`
+// rst:
+
 template<bool WithInEdges, typename Graph, typename IndexMap, typename EdgeLess>
 ordered_graph<Graph, IndexMap, WithInEdges> make_ordered_graph(const Graph &g, IndexMap idx, EdgeLess edge_less) {
-	return ordered_graph<Graph, IndexMap, WithInEdges>(g, std::forward<IndexMap>(idx), edge_less);
+	return ordered_graph<Graph, IndexMap, WithInEdges>(g, idx, edge_less);
 }
 
 

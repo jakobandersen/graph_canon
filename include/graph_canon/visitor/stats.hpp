@@ -49,6 +49,8 @@ struct stats_visitor : null_visitor {
 		std::size_t max_num_tree_nodes = 0;
 	public:
 
+		// rst:			.. function:: friend std::ostream &operator<<(std::ostream &s, const ResultData &d)
+
 		friend std::ostream &operator<<(std::ostream &s, const ResultData &d) {
 			s << "num_refine:                 " << d.num_refine << '\n';
 			s << "num_refine_abort:           " << d.num_refine_abort << '\n';
@@ -93,6 +95,7 @@ public:
 	// rst:		.. function:: stats_visitor(std::ostream *tree_dump = nullptr)
 	// rst:
 	// rst:			:param tree_dump: print a Grahpviz depiction of the search tree to this stream.
+
 	stats_visitor(std::ostream *tree_dump = nullptr) : tree_dump(tree_dump) { }
 
 	template<typename State>
@@ -185,8 +188,8 @@ public:
 		}
 	}
 
-	template<typename State>
-	void canon_new_best(State &state) {
+	template<typename State, typename TreeNode>
+	void canon_new_best(State &state, const TreeNode *previous) {
 		auto &d = data(state);
 		if(tree_dump) {
 			d.vIdCanon = get(tree_node_index_t(), state.get_canon_leaf()->data);
@@ -221,7 +224,7 @@ public:
 			std::ostringstream s;
 			perm_group::write_permutation_cycles(s, aut);
 			s << ", fixed={";
-			for(std::size_t i = 0; i < perm_group::size(aut); ++i) {
+			for(std::size_t i = 0; i < perm_group::degree(aut); ++i) {
 				if(perm_group::get(aut, i) == i) s << " " << i;
 			}
 			s << " }";
@@ -240,7 +243,7 @@ public:
 			std::ostringstream s;
 			perm_group::write_permutation_cycles(s, aut);
 			s << ", fixed={";
-			for(std::size_t i = 0; i < perm_group::size(aut); ++i) {
+			for(std::size_t i = 0; i < perm_group::degree(aut); ++i) {
 				if(perm_group::get(aut, i) == i) s << " " << i;
 			}
 			s << " }, tag=" << tag;

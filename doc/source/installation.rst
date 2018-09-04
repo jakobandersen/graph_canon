@@ -12,6 +12,6 @@ where relevant arguments for ``configure`` is shown in parenthesis.
   preferably in the newest development version (``--enable-doc-checks``, ``--disable-doc-checks``).
 - A C++ compiler with reasonable C++14 support is needed. GCC 5.1 or later should work.
 - `Boost <http://boost.org>`__ dev >= 1.64 (``--with-boost=<path>``).
-- `PermGroup <https://github.com/jakobandersen/perm_group>` (``--with-perm_group=<path>``).
+- `PermGroup <https://github.com/jakobandersen/perm_group>`__ (``--with-perm_group=<path>``).
 - (optional) For the :ref:`graph-canon` program it may be useful to install the
   `argcomplete <https://pypi.python.org/pypi/argcomplete>`__ Python package.

@@ -15,7 +15,7 @@ namespace graph_canon {
 // rst:		except that element swapping is delegated to the given `swapper`.
 // rst:
 // rst:		Requires (in addition to the requirements by `std::partition`),
-// rst:		that for two dereferencial iterators `a` and `b` in the given range,
+// rst:		that for two dereferenceable iterators `a` and `b` in the given range,
 // rst:		the expression `swapper(a, b)` swaps the values represented by the iterators.
 // rst:		For example, `Swap` may be a predicate simply calling `std::iter_swap`.
 
@@ -62,12 +62,12 @@ struct counting_sorter {
 	// rst:			Requires:
 	// rst:
 	// rst:			- `Iterator` must model a `RandomAccessIterator`.
-	// rst:			- `ToValue`: for a dereferencial iterator `iter`, the expression `toValue(*iter)`
+	// rst:			- `ToValue`: for a dereferenceable iterator `iter`, the expression `toValue(*iter)`
 	// rst:			  must return an integer in the range 0 to `Max`.
 	// rst:			- `Callback`: for a range of integers `ends` representing the end of each bucket,
 	// rst:			  as offsets from `first`, the expression `callback(ends)` must be valid.
-	// rst:			- `PutValue`: for a dereferencial iterator `iter` and an element `elem`,
-	// rst:			  the expression `putter(iter, elem)`
+	// rst:			- `PutValue`: for a dereferenceable iterator `iter` and an element `elem`,
+	// rst:			  the expression `putter(iter, elem)` must be valid, and ensure that `*iter == elem` becomes true.
 
 	template<typename Iterator, typename ToValue, typename Callback, typename PutValue>
 	void operator()(const Iterator first, const Iterator last, ToValue toValue, Callback callback, PutValue putter) {

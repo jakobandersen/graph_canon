@@ -212,8 +212,8 @@ public:
 		}
 	}
 
-	template<typename State>
-	void canon_new_best(const State &state) {
+	template<typename State, typename TreeNode>
+	void canon_new_best(const State &state, const TreeNode *previous) {
 		if(canon) {
 			std::cout << std::setw(prefixWidth) << std::left << "Canon";
 			std::cout << "New best leaf!" << std::endl;

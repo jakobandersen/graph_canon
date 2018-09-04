@@ -135,7 +135,10 @@ BEGIN {
 
 function getHeaders {
 	cd $topSrcDir/include/graph_canon
-	find . -iname "*.hpp" | grep -v "detail/" | sed -e "s/^.\///" -e "s/.hpp$//" | sort
+	find . -iname "*.hpp" \
+		| grep -v -e "detail/" -e "config.hpp" \
+		| sed -e "s/^.\///" -e "s/.hpp$//" \
+		| sort
 }
 
 function makeIndex {
@@ -143,6 +146,7 @@ function makeIndex {
 		cat << "EOF"
 	installation
 	executables/index
+	changes
 	reference/index
 EOF
 	}
@@ -166,8 +170,8 @@ cat << "EOF"
 Introduction
 ============
 
-This is the documentation for the GraphCanon library and the associated executables.
-The library provides algorithm framework for graph canonicalization,
+This is the documentation for the GraphCanon library and its associated executables.
+The library provides an algorithm framework for graph canonicalization,
 graph isomorphism, and computation of automorphism groups of graphs,
 using a customizable individualization-refinement algorithm.
 
@@ -179,13 +183,13 @@ The library can for example be used for
 
 - finding a canonical order of the vertices of a given graph,
 - finding the automorphism group of a given graph,
-- using a canonical vertex order to created view of a graph with canonical iteration order,
+- using a canonical vertex order to create a view of a graph with canonical iteration order,
 - lexicographical comparison of such permuted graph views, e.g., for isomorphism testing.
 
 Graphs with vertices labelled with elements from a totally ordered set
 are handled by a user-supplied less-predicate (as you would provide to `std::sort`).
-The library also supports graphs where edges are labelled similarly,
-though for obtaining the efficient implementations this may require substantial work from the user.
+The library also supports graphs where edges are similarly labelled,
+though for obtaining efficient implementations this may require substantial work from the user.
 
 .. attention:: In the future there will be a range of examples for using the library and extending it.
 

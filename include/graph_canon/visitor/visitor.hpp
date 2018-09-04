@@ -30,9 +30,13 @@ struct no_result {
 // rst:
 
 struct no_instance_data {
+	// rst:		.. class:: template<typename Config, typename TreeNode> \
+	// rst:		           InstanceData
+	// rst:
 
 	template<typename Config, typename TreeNode>
 	struct InstanceData {
+		// rst:			.. type:: type = tagged_list<>
 		using type = tagged_list<>;
 	};
 };
@@ -45,14 +49,18 @@ struct no_instance_data {
 // rst:
 
 struct no_tree_node_data {
+	// rst:		.. class:: template<typename Config, typename TreeNode> \
+	// rst:		           TreeNodeData
+	// rst:
 
 	template<typename Config, typename TreeNode>
 	struct TreeNodeData {
+		// rst:			.. type:: type = tagged_list<>
 		using type = tagged_list<>;
 	};
 };
 
-// rst: .. class:: null_visitor
+// rst: .. class:: null_visitor : no_instance_data, no_tree_node_data, no_result
 // rst:
 // rst:		A visitor that does nothing.
 // rst:		That is, it provides a default implementation for each event.
@@ -197,15 +205,15 @@ public:
 	void tree_prune_node(State &state, TreeNode &t) { }
 
 	// rst:
-	// rst:		**Canonical From Methods**
+	// rst:		**Canonical Form Methods**
 	// rst:
 
-	// rst:		- | Expression: `vis.canon_new_best(state)`
+	// rst:		- | Expression: `vis.canon_new_best(state, t_ptr)`
 	// rst:		  | Return type: `void`
-	// rst:		  | Called: in `canon_state::report_leaf` after a new best leaf has been assigned.
+	// rst:		  | Called: in `canon_state::report_leaf` after a new best leaf has been assigned. A pointer to a previous leaf, if any, is given.
 
-	template<typename State>
-	void canon_new_best(State &state) { }
+	template<typename State, typename TreeNode>
+	void canon_new_best(State &state, TreeNode *previous) { }
 
 	// rst:		- | Expression: `vis.canon_worse(state, t)`
 	// rst:		  | Return type: `void`
@@ -214,7 +222,7 @@ public:
 	template<typename State, typename TreeNode>
 	void canon_worse(State &state, TreeNode &t) { }
 
-	// rst:		- | Expression: `vis.canon_prune(state, t)`
+	// rst:		- | Expression: `vis.canon_prune(state)`
 	// rst:		  | Return type: `void`
 	// rst:		  | Called: in `canon_state::prune_canon_leaf` if there is a best leaf, before it is unassigned.
 

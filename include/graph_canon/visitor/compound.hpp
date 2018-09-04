@@ -145,10 +145,10 @@ public:
 		});
 	}
 
-	template<typename State>
-	void canon_new_best(State &state) {
+	template<typename State, typename TreeNode>
+	void canon_new_best(State &state, TreeNode *previous) {
 		detail::tuple_for_each(visitors, [&](auto &v) {
-			v.canon_new_best(state);
+			v.canon_new_best(state, previous);
 		});
 	}
 

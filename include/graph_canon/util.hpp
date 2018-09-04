@@ -18,10 +18,12 @@ namespace graph_canon {
 
 struct always_true {
 	// rst:		.. function:: template<typename ...T> \
-	// rst:		              bool operator()(T&&...) const
+	// rst:		              bool operator()(T&&... args) const
+	// rst:
+	// rst:			:returns: `true`
 
 	template<typename ...T>
-	bool operator()(T&&...) const {
+	bool operator()(T&&... args) const {
 		return true;
 	}
 };
@@ -33,10 +35,12 @@ struct always_true {
 
 struct always_false {
 	// rst:		.. function:: template<typename ...T> \
-	// rst:		              bool operator()(T&&...) const
+	// rst:		              bool operator()(T&&... args) const
+	// rst:
+	// rst:			:returns: `false`
 
 	template<typename ...T>
-	bool operator()(T&&...) const {
+	bool operator()(T&&... args) const {
 		return false;
 	}
 };
@@ -56,7 +60,7 @@ struct property_less {
 	// rst:		.. function:: template<typename Key> \
 	// rst:		              bool operator()(const Key &lhs, const Key &rhs) const
 	// rst:
-	// rst:			:returns: get(prop, lhs) < get(prop, rhs)
+	// rst:			:returns: `get(prop, lhs) < get(prop, rhs)`
 
 	template<typename Key>
 	bool operator()(const Key &lhs, const Key &rhs) const {

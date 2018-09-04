@@ -26,7 +26,7 @@ public:
 // rst: .. class:: template<typename ...Elems> \
 // rst:            tagged_list
 // rst:
-// rst:		A tuple of tagged elements, e.g., specializations of `tagged_element`.
+// rst:		Holds a tuple of tagged elements, e.g., specializations of `tagged_element`.
 
 template<typename ...Elems>
 struct tagged_list {
