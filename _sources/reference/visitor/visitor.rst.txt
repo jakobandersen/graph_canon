@@ -23,11 +23,19 @@ Full path: ``graph_canon/visitor/visitor.hpp``
 
     A helper-class to derive visitors from that do not need extra instance-wide data.
 
+    .. class:: template<typename Config, typename TreeNode> \
+               InstanceData
+
+        .. type:: type = tagged_list<>
 .. class:: no_tree_node_data
 
     A helper-class to derive visitors from that do not need extra data in each tree node.
 
-.. class:: null_visitor
+    .. class:: template<typename Config, typename TreeNode> \
+               TreeNodeData
+
+        .. type:: type = tagged_list<>
+.. class:: null_visitor : no_instance_data, no_tree_node_data, no_result
 
     A visitor that does nothing.
     That is, it provides a default implementation for each event.
@@ -128,15 +136,15 @@ Full path: ``graph_canon/visitor/visitor.hpp``
       | Return type: `void`
       | Called: in `tree_node.prune_subtree` before the children are pruned recursively.
 
-    **Canonical From Methods**
+    **Canonical Form Methods**
 
-    - | Expression: `vis.canon_new_best(state)`
+    - | Expression: `vis.canon_new_best(state, t_ptr)`
       | Return type: `void`
-      | Called: in `canon_state::report_leaf` after a new best leaf has been assigned.
+      | Called: in `canon_state::report_leaf` after a new best leaf has been assigned. A pointer to a previous leaf, if any, is given.
     - | Expression: `vis.canon_worse(state, t)`
       | Return type: `void`
       | Called: in `canon_state::report_leaf` when the candidate node `t` is worse than the current best leaf.
-    - | Expression: `vis.canon_prune(state, t)`
+    - | Expression: `vis.canon_prune(state)`
       | Return type: `void`
       | Called: in `canon_state::prune_canon_leaf` if there is a best leaf, before it is unassigned.
 

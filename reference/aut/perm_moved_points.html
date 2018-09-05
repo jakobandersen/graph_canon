@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>4.1.4. pruner_basic.hpp &#8212; GraphCanon v0.3 documentation</title>
+    <title>4.1.2. perm_moved_points.hpp &#8212; GraphCanon v0.3 documentation</title>
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
@@ -18,8 +18,8 @@
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="4.1.5. pruner_schreier.hpp" href="pruner_schreier.html" />
-    <link rel="prev" title="4.1.3. pruner_base.hpp" href="pruner_base.html" /> 
+    <link rel="next" title="4.1.3. pruner_base.hpp" href="pruner_base.html" />
+    <link rel="prev" title="4.1.1. implicit_size_2.hpp" href="implicit_size_2.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -28,10 +28,10 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="pruner_schreier.html" title="4.1.5. pruner_schreier.hpp"
+          <a href="pruner_base.html" title="4.1.3. pruner_base.hpp"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="pruner_base.html" title="4.1.3. pruner_base.hpp"
+          <a href="implicit_size_2.html" title="4.1.1. implicit_size_2.hpp"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon v0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >4. Library Reference</a> &#187;</li>
@@ -44,14 +44,43 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="pruner-basic-hpp">
-<span id="cpp-aut-pruner-basic"></span><h1>4.1.4. pruner_basic.hpp<a class="headerlink" href="#pruner-basic-hpp" title="Permalink to this headline">¶</a></h1>
-<p>Full path: <code class="docutils literal notranslate"><span class="pre">graph_canon/aut/pruner_basic.hpp</span></code></p>
+  <div class="section" id="perm-moved-points-hpp">
+<span id="cpp-aut-perm-moved-points"></span><h1>4.1.2. perm_moved_points.hpp<a class="headerlink" href="#perm-moved-points-hpp" title="Permalink to this headline">¶</a></h1>
+<p>Full path: <code class="docutils literal notranslate"><span class="pre">graph_canon/aut/perm_moved_points.hpp</span></code></p>
 <dl class="class">
-<dt id="_CPPv3N11graph_canon16aut_pruner_basicE">
-<span id="_CPPv2N11graph_canon16aut_pruner_basicE"></span><span id="graph_canon::aut_pruner_basic"></span><em class="property">class </em><code class="descname">aut_pruner_basic</code> : <a class="reference internal" href="pruner_base.html#_CPPv3I0EN11graph_canon15aut_pruner_baseE" title="graph_canon::aut_pruner_base">aut_pruner_base</a>&lt;<a class="reference internal" href="#_CPPv3N11graph_canon16aut_pruner_basicE" title="graph_canon::aut_pruner_basic">aut_pruner_basic</a>&gt;<a class="headerlink" href="#_CPPv3N11graph_canon16aut_pruner_basicE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>A <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../visitor/visitor.html#_CPPv3I0EN11graph_canon7VisitorE" title="graph_canon::Visitor"><span class="pre">Visitor</span></a></code> for pruning the search tree based on automorphisms reported by other visitors.
-Stabilizers are computed conservatively by plain filtering of the generators.</p>
+<dt id="_CPPv3I0EN11graph_canon12wrapped_permE">
+<span id="_CPPv2I0EN11graph_canon12wrapped_permE"></span>template&lt;typename <code class="descname">Perm</code>&gt;<br /><em class="property">class </em><code class="descname">wrapped_perm</code><a class="headerlink" href="#_CPPv3I0EN11graph_canon12wrapped_permE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A permutation type that explicitly keeps track of which points are moved.</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">To be fully documented.</p>
+</div>
+<dl class="function">
+<dt id="_CPPv3NK11graph_canon12wrapped_perm8get_permEv">
+<span id="_CPPv2NK11graph_canon12wrapped_perm8get_permEv"></span><span id="graph_canon::wrapped_perm::get_permC"></span><em class="property">const</em> <a class="reference internal" href="#_CPPv3I0EN11graph_canon12wrapped_permE" title="graph_canon::wrapped_perm::Perm">Perm</a> &amp;<code class="descname">get_perm</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv3NK11graph_canon12wrapped_perm8get_permEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the wrapped permutation.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv3NK11graph_canon12wrapped_perm16get_moved_pointsEv">
+<span id="_CPPv2NK11graph_canon12wrapped_perm16get_moved_pointsEv"></span><span id="graph_canon::wrapped_perm::get_moved_pointsC"></span><em class="property">const</em> std::vector&lt;value_type&gt; &amp;<code class="descname">get_moved_points</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv3NK11graph_canon12wrapped_perm16get_moved_pointsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a list of the moved points, or an empty list.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -63,15 +92,15 @@ Stabilizers are computed conservatively by plain filtering of the generators.</p
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="pruner_base.html"
-                        title="previous chapter">4.1.3. pruner_base.hpp</a></p>
+  <p class="topless"><a href="implicit_size_2.html"
+                        title="previous chapter">4.1.1. implicit_size_2.hpp</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="pruner_schreier.html"
-                        title="next chapter">4.1.5. pruner_schreier.hpp</a></p>
+  <p class="topless"><a href="pruner_base.html"
+                        title="next chapter">4.1.3. pruner_base.hpp</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../../_sources/reference/aut/pruner_basic.rst.txt"
+      <li><a href="../../_sources/reference/aut/perm_moved_points.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -98,10 +127,10 @@ Stabilizers are computed conservatively by plain filtering of the generators.</p
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="pruner_schreier.html" title="4.1.5. pruner_schreier.hpp"
+          <a href="pruner_base.html" title="4.1.3. pruner_base.hpp"
              >next</a> |</li>
         <li class="right" >
-          <a href="pruner_base.html" title="4.1.3. pruner_base.hpp"
+          <a href="implicit_size_2.html" title="4.1.1. implicit_size_2.hpp"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon v0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >4. Library Reference</a> &#187;</li>

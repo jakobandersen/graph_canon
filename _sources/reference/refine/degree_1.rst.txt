@@ -18,7 +18,7 @@ Full path: ``graph_canon/refine/degree_1.hpp``
 
     Cells consisting entirely of degree 1 vertices, where all vertices have the
     same neighbour, with the same type of edge, will be split into trivial cells.
-    Either Never or Unchanged will be returned and the appropriate automorphisms are reported.
+    Either `RefinementResult::Never` or `RefinementResult::Unchanged` will be returned and the appropriate automorphisms are reported.
 
     .. var:: static const std::size_t split_type_cell = 2
 

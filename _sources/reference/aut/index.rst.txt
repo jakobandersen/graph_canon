@@ -5,5 +5,7 @@ aut
     :maxdepth: 2
 
     implicit_size_2
+    perm_moved_points
     pruner_base
     pruner_basic
+    pruner_schreier

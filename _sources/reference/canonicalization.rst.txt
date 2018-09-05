@@ -128,6 +128,9 @@ Full path: ``graph_canon/canonicalization.hpp``
     .. var:: OwnerPtr root
 
         A pointer to the root of the search tree.
+        Note that this pointer is only set after the root has been fully
+        constructed. Thus, in `Visitor` methods, if `root` is `nullptr`,
+        then you have probably been given a reference to the root as the current tree node.
 .. class:: template<typename SizeType, typename EdgeHandlerCreatorT, bool ParallelEdges, bool Loops> \
            canonicalizer
 
@@ -151,7 +154,7 @@ Full path: ``graph_canon/canonicalization.hpp``
 
         :returns: A `std::pair<std::vector<SizeType>, Data>` where `first` is the permutation,
             and `second` is the auxiliary visitor data of an unspecified type `Data`.
-            See each visitor for what data they may return and what is tagged with.
+            See each visitor for what data they may return and what it is tagged with.
             Use `get(the_tag(), res.second)` to access the data tagged with `the_tag` from the return value `res`.
 .. function:: template<typename SizeType, bool ParallelEdges, bool Loops, typename Graph, typename IndexMap, \
               typename VertexLess, typename EdgeHandlerCreatorT, typename Visitor> \

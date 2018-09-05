@@ -11,22 +11,19 @@ Full path: ``graph_canon/aut/pruner_base.hpp``
 
 .. cpp:namespace:: graph_canon
 
-.. type:: template<typename Perm> \
-          wrapped_perm
+.. class:: template<typename Iter> aut_range
 
-    A permutation storing a `Perm`, and a list of the moved points if at most half the points are moved.
+    An adaptor for pairs of iterators to be exposed as a range.
 
-    .. deprecated:: v0.2
+    .. function:: aut_range(Iter first, Iter last)
+    .. function:: Iter begin() const
+    .. function:: Iter end() const
 
-        This class will be moved to the PermGroup library at some point.
+.. function:: template<typename Iter> auto make_aut_range(Iter first, Iter last)
 
-    .. type:: value_type = typename perm_group::permutation_traits<Perm>::value_type
-    .. function:: const Perm &get_perm() const
+    :returns: `aut_range<Iter>(first, last)`
 
-        :returns: the wrapped permutation.
-    .. function:: const std::vector<value_type> &get_moved_points() const
 
-        :returns: a list of the moved points, or an empty list.
 .. class:: template<typename Derived> \
            aut_pruner_base
 
@@ -43,11 +40,10 @@ Full path: ``graph_canon/aut/pruner_base.hpp``
 
     the following expressions must be valid:
 
-    - | Expression: `derived.add_automorphism(state, aut)`
-      | Semantics: store the new automorphism `aut`.
-    - | Expression: `derived.is_trivial(state, t)`
-      | Returns: a boolean denoting whether the stabilizer for `t` is the trivial group.
+    - | Expression: `derived.add_automorphism(state, t, aut)`
+      | Semantics: store the new automorphism `aut`
     - | Expression: `derived.need_update(state, t)`
-      | Returns: a boolean denoting whether the stabilizer for `t` should be updated.
+      | Returns: a boolean telling whether the node needs updating.
+      | Notes: is only called on non-pruned, non-leaf nodes.
     - | Expression: `derived.update(state, t)`
       | Returns: a possibly empty range of automorphism generators (e.g., an `aut_range`) added to the stabilizer of `t` after updating it.

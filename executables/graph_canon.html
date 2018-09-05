@@ -4,19 +4,21 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>2.2. graph-canon &#8212; GraphCanon v0.2 documentation</title>
+    <title>2.2. graph-canon &#8212; GraphCanon v0.3 documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3. Library Reference" href="../reference/index.html" />
+    <link rel="next" title="3. Changes" href="../changes.html" />
     <link rel="prev" title="2.1. dimacs" href="dimacs.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -26,12 +28,12 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../reference/index.html" title="3. Library Reference"
+          <a href="../changes.html" title="3. Changes"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="dimacs.html" title="2.1. dimacs"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">2. Executables</a> &#187;</li> 
       </ul>
     </div>  
@@ -87,7 +89,7 @@ This wrapper script is a Python program, which supports <a class="reference exte
 <dl class="option">
 <dt id="cmdoption-graph-canon-s">
 <code class="descname">-s</code><code class="descclassname"> &lt;seed&gt;</code><code class="descclassname">, </code><code class="descname">--seed</code><code class="descclassname"> &lt;seed&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-s" title="Permalink to this definition">¶</a></dt>
-<dd><p>Seed for random number generator. The default value is <code class="docutils literal notranslate"><span class="pre">static_cast</span><span class="pre">&lt;</span><span class="pre">std</span><span class="pre">::</span><span class="pre">size_t</span><span class="pre">&gt;</span><span class="pre">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">time</span><span class="pre">(</span><span class="pre">0</span><span class="pre">)</span><span class="pre">)</span></code>.</p>
+<dd><p>Seed for random number generator. The default value is <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">static_cast</span><span class="pre">&lt;</span><span class="pre">std</span><span class="pre">::</span><span class="pre">size_t</span><span class="pre">&gt;</span><span class="pre">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">time</span><span class="pre">(</span><span class="pre">0</span><span class="pre">)</span><span class="pre">)</span></code>.</p>
 </dd></dl>
 
 <dl class="option">
@@ -203,6 +205,7 @@ Default is 4 GB.</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">none</span></code>: Do not prune using automorphisms.</li>
 <li><code class="docutils literal notranslate"><span class="pre">basic</span></code> (default): Prune using the subset of generators that fix the necessary elements.</li>
+<li><code class="docutils literal notranslate"><span class="pre">schreier</span></code>: Prune using fully calculated stabilizers.</li>
 </ul>
 </dd></dl>
 
@@ -296,7 +299,7 @@ As default the options are applied to the first round, on the input graph.</p>
 <dt id="cmdoption-graph-canon-json">
 <code class="descname">--json</code><code class="descclassname"> &lt;filename&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-json" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print log data as JSON to a file, suitable for the GraphCanon Visualizer.
-The output is not affected by the following options.</p>
+The output is not affected by the <code class="docutils literal notranslate"><span class="pre">--g*</span></code> options.</p>
 </dd></dl>
 
 <dl class="option">
@@ -350,7 +353,7 @@ The output is not affected by the following options.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">2.2. <code class="docutils literal notranslate"><span class="pre">graph-canon</span></code></a><ul>
 <li><a class="reference internal" href="#general-options">2.2.1. General Options</a></li>
@@ -367,8 +370,8 @@ The output is not affected by the following options.</p>
   <p class="topless"><a href="dimacs.html"
                         title="previous chapter">2.1. <code class="docutils literal notranslate"><span class="pre">dimacs</span></code></a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../reference/index.html"
-                        title="next chapter">3. Library Reference</a></p>
+  <p class="topless"><a href="../changes.html"
+                        title="next chapter">3. Changes</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -399,18 +402,18 @@ The output is not affected by the following options.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../reference/index.html" title="3. Library Reference"
+          <a href="../changes.html" title="3. Changes"
              >next</a> |</li>
         <li class="right" >
           <a href="dimacs.html" title="2.1. dimacs"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >2. Executables</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, Jakob Lykke Andersen.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.0+.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.0+.
     </div>
   </body>
 </html>

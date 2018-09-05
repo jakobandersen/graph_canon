@@ -24,6 +24,7 @@ Full path: ``graph_canon/visitor/stats.hpp``
 
         .. todo:: document all members.
 
+        .. function:: friend std::ostream &operator<<(std::ostream &s, const ResultData &d)
     .. function:: stats_visitor(std::ostream *tree_dump = nullptr)
 
         :param tree_dump: print a Grahpviz depiction of the search tree to this stream.

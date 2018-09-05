@@ -107,6 +107,7 @@ Algorithm Configuration Options
 
     - ``none``: Do not prune using automorphisms.
     - ``basic`` (default): Prune using the subset of generators that fix the necessary elements.
+    - ``schreier``: Prune using fully calculated stabilizers.
 
 .. option:: --faut-implicit, --fno-aut-implicit
 
@@ -174,7 +175,7 @@ As default the options are applied to the first round, on the input graph.
 .. option:: --json <filename>
 
     Print log data as JSON to a file, suitable for the GraphCanon Visualizer.
-    The output is not affected by the following options.
+    The output is not affected by the ``--g*`` options.
 .. option:: -g, --gall
 
     Print all debug information.

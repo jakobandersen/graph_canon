@@ -7,7 +7,6 @@ Library Reference
     aut/index
     canonicalization
     compare
-    config
     dimacs_graph_io
     edge_handler/index
     invariant/index

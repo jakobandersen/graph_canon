@@ -18,4 +18,6 @@ Full path: ``graph_canon/tree_traversal/bfs-exp-m.hpp``
 
     .. function:: traversal_bfs_exp_m(const std::size_t max_mem_mb)
 
-        Constructor with a given memory limit, in multiples of :math:`1024*1024`.
+        Construct with a given memory limit, in multiples of :math:`1024*1024` bytes.
+        Note that memory usage is calculated conservatively and the algorithm uses slightly more meory.
+        Memory usage by individual visitors is not factored in at this time.

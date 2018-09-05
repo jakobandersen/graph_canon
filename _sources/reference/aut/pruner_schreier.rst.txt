@@ -1,18 +1,18 @@
-.. _cpp-aut/pruner_basic:
+.. _cpp-aut/pruner_schreier:
 
 **********************************************************
-pruner_basic.hpp
+pruner_schreier.hpp
 **********************************************************
 
-Full path: ``graph_canon/aut/pruner_basic.hpp``
+Full path: ``graph_canon/aut/pruner_schreier.hpp``
 
 .. default-domain:: cpp
 .. default-role:: cpp:expr
 
 .. cpp:namespace:: graph_canon
 
-.. class:: aut_pruner_basic : aut_pruner_base<aut_pruner_basic>
+.. class:: aut_pruner_schreier : aut_pruner_base<aut_pruner_schreier>
 
     A `Visitor` for pruning the search tree based on automorphisms reported by other visitors.
-    Stabilizers are computed conservatively by plain filtering of the generators.
+    Stabilizers are fully computed using methods based on the Schreier-Sims algorithm.
 

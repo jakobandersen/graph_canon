@@ -42,4 +42,4 @@ Full path: ``graph_canon/invariant/coordinator.hpp``
         Must be called by a visitor when it has been allowed to add a value,
         but that value is worse than the value the visitor previously had in this position.
 
-        Current this method does nothing.
+        Currently this method does nothing.

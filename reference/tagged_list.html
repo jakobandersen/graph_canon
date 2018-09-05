@@ -4,20 +4,22 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>3.12. tagged_list.hpp &#8212; GraphCanon v0.2 documentation</title>
+    <title>4.11. tagged_list.hpp &#8212; GraphCanon v0.3 documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3.13. target_cell" href="target_cell/index.html" />
-    <link rel="prev" title="3.11. sorting_utils.hpp" href="sorting_utils.html" /> 
+    <link rel="next" title="4.12. target_cell" href="target_cell/index.html" />
+    <link rel="prev" title="4.10. sorting_utils.hpp" href="sorting_utils.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -26,13 +28,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="target_cell/index.html" title="3.13. target_cell"
+          <a href="target_cell/index.html" title="4.12. target_cell"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="sorting_utils.html" title="3.11. sorting_utils.hpp"
+          <a href="sorting_utils.html" title="4.10. sorting_utils.hpp"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.2 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">3. Library Reference</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">4. Library Reference</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -42,12 +44,12 @@
           <div class="body" role="main">
             
   <div class="section" id="tagged-list-hpp">
-<span id="cpp-tagged-list"></span><h1>3.12. tagged_list.hpp<a class="headerlink" href="#tagged-list-hpp" title="Permalink to this headline">¶</a></h1>
+<span id="cpp-tagged-list"></span><h1>4.11. tagged_list.hpp<a class="headerlink" href="#tagged-list-hpp" title="Permalink to this headline">¶</a></h1>
 <p>Full path: <code class="docutils literal notranslate"><span class="pre">graph_canon/tagged_list.hpp</span></code></p>
 <dl class="class">
 <dt id="_CPPv3I00EN11graph_canon14tagged_elementE">
 <span id="_CPPv2I00EN11graph_canon14tagged_elementE"></span>template&lt;typename <code class="descname">TagT</code>, typename <code class="descname">T</code>&gt;<br /><em class="property">class </em><code class="descname">tagged_element</code><a class="headerlink" href="#_CPPv3I00EN11graph_canon14tagged_elementE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>A wrapper for a value of type <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon14tagged_elementE" title="graph_canon::tagged_element::T"><span class="pre">T</span></a></code>, tagged with a type <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon14tagged_element3TagE" title="graph_canon::tagged_element::Tag"><span class="pre">Tag</span></a></code>.</p>
+<dd><p>A wrapper for a value of type <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon14tagged_elementE" title="graph_canon::tagged_element::T"><span class="pre">T</span></a></code>, tagged with a type <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon14tagged_element3TagE" title="graph_canon::tagged_element::Tag"><span class="pre">Tag</span></a></code>.</p>
 <dl class="type">
 <dt id="_CPPv3N11graph_canon14tagged_element3TagE">
 <span id="_CPPv2N11graph_canon14tagged_element3TagE"></span><em class="property">using </em><code class="descname">Tag</code> = <a class="reference internal" href="#_CPPv3I00EN11graph_canon14tagged_elementE" title="graph_canon::tagged_element::TagT">TagT</a><a class="headerlink" href="#_CPPv3N11graph_canon14tagged_element3TagE" title="Permalink to this definition">¶</a><br /></dt>
@@ -64,7 +66,7 @@
 <dl class="class">
 <dt id="_CPPv3IDpEN11graph_canon11tagged_listE">
 <span id="_CPPv2IDpEN11graph_canon11tagged_listE"></span>template&lt;typename ...<code class="descname">Elems</code>&gt;<br /><em class="property">class </em><code class="descname">tagged_list</code><a class="headerlink" href="#_CPPv3IDpEN11graph_canon11tagged_listE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>A tuple of tagged elements, e.g., specializations of <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon14tagged_elementE" title="graph_canon::tagged_element"><span class="pre">tagged_element</span></a></code>.</p>
+<dd><p>Holds a tuple of tagged elements, e.g., specializations of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon14tagged_elementE" title="graph_canon::tagged_element"><span class="pre">tagged_element</span></a></code>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -74,8 +76,8 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a reference to the value of a tagged element in <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0DpEN11graph_canon3getERR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get::t"><span class="pre">t</span></a></code>, tagged with type <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0DpEN11graph_canon3getERR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get::Tag"><span class="pre">Tag</span></a></code>.
-For example: <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0DpEN11graph_canon3getERR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get"><span class="pre">get</span></a><span class="pre">(</span><span class="pre">MyTag</span><span class="pre">(</span><span class="pre">)</span><span class="pre">,</span> <span class="pre">myTaggedList</span><span class="pre">)</span></code>.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a reference to the value of a tagged element in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0DpEN11graph_canon3getERR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get::t"><span class="pre">t</span></a></code>, tagged with type <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0DpEN11graph_canon3getERR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get::Tag"><span class="pre">Tag</span></a></code>.
+For example: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0DpEN11graph_canon3getERR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get"><span class="pre">get</span></a><span class="pre">(</span><span class="pre">MyTag</span><span class="pre">(</span><span class="pre">)</span><span class="pre">,</span> <span class="pre">myTaggedList</span><span class="pre">)</span></code>.</td>
 </tr>
 </tbody>
 </table>
@@ -88,8 +90,8 @@ For example: <code class="docutils literal notranslate"><a class="reference inte
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a reference the value of a tagged element in <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0DpEN11graph_canon3getERR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get::t"><span class="pre">t</span></a></code>, tagged with type <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0DpEN11graph_canon3getERR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get::Tag"><span class="pre">Tag</span></a></code>.
-For example: <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0DpEN11graph_canon3getERR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get"><span class="pre">get</span></a><span class="pre">(</span><span class="pre">MyTag</span><span class="pre">(</span><span class="pre">)</span><span class="pre">,</span> <span class="pre">myTaggedList</span><span class="pre">)</span></code>.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a reference the value of a tagged element in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0DpEN11graph_canon3getERR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get::t"><span class="pre">t</span></a></code>, tagged with type <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0DpEN11graph_canon3getERR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get::Tag"><span class="pre">Tag</span></a></code>.
+For example: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0DpEN11graph_canon3getERR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get"><span class="pre">get</span></a><span class="pre">(</span><span class="pre">MyTag</span><span class="pre">(</span><span class="pre">)</span><span class="pre">,</span> <span class="pre">myTaggedList</span><span class="pre">)</span></code>.</td>
 </tr>
 </tbody>
 </table>
@@ -105,10 +107,10 @@ For example: <code class="docutils literal notranslate"><a class="reference inte
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="sorting_utils.html"
-                        title="previous chapter">3.11. sorting_utils.hpp</a></p>
+                        title="previous chapter">4.10. sorting_utils.hpp</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="target_cell/index.html"
-                        title="next chapter">3.13. target_cell</a></p>
+                        title="next chapter">4.12. target_cell</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -139,18 +141,18 @@ For example: <code class="docutils literal notranslate"><a class="reference inte
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="target_cell/index.html" title="3.13. target_cell"
+          <a href="target_cell/index.html" title="4.12. target_cell"
              >next</a> |</li>
         <li class="right" >
-          <a href="sorting_utils.html" title="3.11. sorting_utils.hpp"
+          <a href="sorting_utils.html" title="4.10. sorting_utils.hpp"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.2 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >3. Library Reference</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >4. Library Reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, Jakob Lykke Andersen.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.0+.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.0+.
     </div>
   </body>
 </html>

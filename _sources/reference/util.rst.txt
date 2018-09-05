@@ -16,13 +16,17 @@ Full path: ``graph_canon/util.hpp``
     A function object always returning `true`.
 
     .. function:: template<typename ...T> \
-                  bool operator()(T&&...) const
+                  bool operator()(T&&... args) const
+
+        :returns: `true`
 .. class:: always_false
 
     A function object always returning `false`.
 
     .. function:: template<typename ...T> \
-                  bool operator()(T&&...) const
+                  bool operator()(T&&... args) const
+
+        :returns: `false`
 .. class:: template<typename Prop> \
            property_less
 
@@ -32,7 +36,7 @@ Full path: ``graph_canon/util.hpp``
     .. function:: template<typename Key> \
                   bool operator()(const Key &lhs, const Key &rhs) const
 
-        :returns: get(prop, lhs) < get(prop, rhs)
+        :returns: `get(prop, lhs) < get(prop, rhs)`
     .. var:: Prop prop
 .. function:: template<typename Prop> \
               property_less<Prop> make_property_less(Prop &&prop)

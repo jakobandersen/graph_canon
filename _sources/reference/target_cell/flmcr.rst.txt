@@ -11,3 +11,4 @@ Full path: ``graph_canon/target_cell/flmcr.hpp``
 
 .. cpp:namespace:: graph_canon
 
+.. warning:: The contents of this file is work in progress.

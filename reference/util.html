@@ -4,20 +4,22 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>3.15. util.hpp &#8212; GraphCanon v0.2 documentation</title>
+    <title>4.14. util.hpp &#8212; GraphCanon v0.3 documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3.16. visitor" href="visitor/index.html" />
-    <link rel="prev" title="3.14.3. dfs.hpp" href="tree_traversal/dfs.html" /> 
+    <link rel="next" title="4.15. visitor" href="visitor/index.html" />
+    <link rel="prev" title="4.13.3. dfs.hpp" href="tree_traversal/dfs.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -26,13 +28,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="visitor/index.html" title="3.16. visitor"
+          <a href="visitor/index.html" title="4.15. visitor"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="tree_traversal/dfs.html" title="3.14.3. dfs.hpp"
+          <a href="tree_traversal/dfs.html" title="4.13.3. dfs.hpp"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.2 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">3. Library Reference</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">4. Library Reference</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -42,34 +44,50 @@
           <div class="body" role="main">
             
   <div class="section" id="util-hpp">
-<span id="cpp-util"></span><h1>3.15. util.hpp<a class="headerlink" href="#util-hpp" title="Permalink to this headline">¶</a></h1>
+<span id="cpp-util"></span><h1>4.14. util.hpp<a class="headerlink" href="#util-hpp" title="Permalink to this headline">¶</a></h1>
 <p>Full path: <code class="docutils literal notranslate"><span class="pre">graph_canon/util.hpp</span></code></p>
 <dl class="class">
 <dt id="_CPPv3N11graph_canon11always_trueE">
 <span id="_CPPv2N11graph_canon11always_trueE"></span><span id="graph_canon::always_true"></span><em class="property">class </em><code class="descname">always_true</code><a class="headerlink" href="#_CPPv3N11graph_canon11always_trueE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>A function object always returning <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<dd><p>A function object always returning <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">true</span></code>.</p>
 <dl class="function">
 <dt id="_CPPv3IDpENK11graph_canon11always_trueclEDpRR1T">
-<span id="_CPPv2IDpENK11graph_canon11always_trueclEDpRR1T"></span>template&lt;typename ...<code class="descname">T</code>&gt;<br />bool <code class="descname">operator()</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv3IDpENK11graph_canon11always_trueclEDpRR1T" title="graph_canon::always_true::operator()::T">T</a>&amp;&amp;...<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv3IDpENK11graph_canon11always_trueclEDpRR1T" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
+<span id="_CPPv2IDpENK11graph_canon11always_trueclEDpRR1T"></span>template&lt;typename ...<code class="descname">T</code>&gt;<br />bool <code class="descname">operator()</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv3IDpENK11graph_canon11always_trueclEDpRR1T" title="graph_canon::always_true::operator()::T">T</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv3IDpENK11graph_canon11always_trueclEDpRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">true</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="_CPPv3N11graph_canon12always_falseE">
 <span id="_CPPv2N11graph_canon12always_falseE"></span><span id="graph_canon::always_false"></span><em class="property">class </em><code class="descname">always_false</code><a class="headerlink" href="#_CPPv3N11graph_canon12always_falseE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>A function object always returning <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<dd><p>A function object always returning <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">false</span></code>.</p>
 <dl class="function">
 <dt id="_CPPv3IDpENK11graph_canon12always_falseclEDpRR1T">
-<span id="_CPPv2IDpENK11graph_canon12always_falseclEDpRR1T"></span>template&lt;typename ...<code class="descname">T</code>&gt;<br />bool <code class="descname">operator()</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv3IDpENK11graph_canon12always_falseclEDpRR1T" title="graph_canon::always_false::operator()::T">T</a>&amp;&amp;...<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv3IDpENK11graph_canon12always_falseclEDpRR1T" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
+<span id="_CPPv2IDpENK11graph_canon12always_falseclEDpRR1T"></span>template&lt;typename ...<code class="descname">T</code>&gt;<br />bool <code class="descname">operator()</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv3IDpENK11graph_canon12always_falseclEDpRR1T" title="graph_canon::always_false::operator()::T">T</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv3IDpENK11graph_canon12always_falseclEDpRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">false</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="_CPPv3I0EN11graph_canon13property_lessE">
 <span id="_CPPv2I0EN11graph_canon13property_lessE"></span>template&lt;typename <code class="descname">Prop</code>&gt;<br /><em class="property">class </em><code class="descname">property_less</code><a class="headerlink" href="#_CPPv3I0EN11graph_canon13property_lessE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>A less-than comparator on a given property map, satisfying the <code class="docutils literal notranslate"><span class="pre">boost</span><span class="pre">::</span><span class="pre">ReadablePropertyMapConcept</span></code>.</p>
+<dd><p>A less-than comparator on a given property map, satisfying the <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">boost</span><span class="pre">::</span><span class="pre">ReadablePropertyMapConcept</span></code>.</p>
 <dl class="function">
 <dt id="_CPPv3N11graph_canon13property_less13property_lessE4Prop">
 <span id="_CPPv2N11graph_canon13property_less13property_lessE4Prop"></span><span id="graph_canon::property_less::property_less__Prop"></span><code class="descname">property_less</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv3I0EN11graph_canon13property_lessE" title="graph_canon::property_less::Prop">Prop</a> <em>prop</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv3N11graph_canon13property_less13property_lessE4Prop" title="Permalink to this definition">¶</a><br /></dt>
@@ -82,7 +100,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">get(prop, lhs) &lt; get(prop, rhs)</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="tagged_list.html#_CPPv3I0DpEN11graph_canon3getERR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get"><span class="pre">get</span></a><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon13property_less4propE" title="graph_canon::property_less::prop"><span class="pre">prop</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3I0ENK11graph_canon13property_lessclERK3KeyRK3Key" title="graph_canon::property_less::operator()::lhs"><span class="pre">lhs</span></a><span class="pre">)</span> <span class="pre">&lt;</span> <a class="reference internal" href="tagged_list.html#_CPPv3I0DpEN11graph_canon3getERR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get"><span class="pre">get</span></a><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon13property_less4propE" title="graph_canon::property_less::prop"><span class="pre">prop</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3I0ENK11graph_canon13property_lessclERK3KeyRK3Key" title="graph_canon::property_less::operator()::rhs"><span class="pre">rhs</span></a><span class="pre">)</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -102,7 +120,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0EN11graph_canon13property_lessE" title="graph_canon::property_less"><span class="pre">property_less</span></a><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv3I0EN11graph_canon18make_property_lessERR4Prop" title="graph_canon::make_property_less::Prop"><span class="pre">Prop</span></a><span class="pre">&gt;</span><span class="pre">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">forward</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv3I0EN11graph_canon18make_property_lessERR4Prop" title="graph_canon::make_property_less::Prop"><span class="pre">Prop</span></a><span class="pre">&gt;</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3I0EN11graph_canon18make_property_lessERR4Prop" title="graph_canon::make_property_less::prop"><span class="pre">prop</span></a><span class="pre">)</span><span class="pre">)</span></code></td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3I0EN11graph_canon13property_lessE" title="graph_canon::property_less"><span class="pre">property_less</span></a><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv3I0EN11graph_canon18make_property_lessERR4Prop" title="graph_canon::make_property_less::Prop"><span class="pre">Prop</span></a><span class="pre">&gt;</span><span class="pre">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">forward</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv3I0EN11graph_canon18make_property_lessERR4Prop" title="graph_canon::make_property_less::Prop"><span class="pre">Prop</span></a><span class="pre">&gt;</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3I0EN11graph_canon18make_property_lessERR4Prop" title="graph_canon::make_property_less::prop"><span class="pre">prop</span></a><span class="pre">)</span><span class="pre">)</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -111,10 +129,10 @@
 <dl class="function">
 <dt id="_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE">
 <span id="_CPPv2I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE"></span>template&lt;typename <code class="descname">Graph</code>, typename <code class="descname">SizeType</code>&gt;<br />void <code class="descname">permute_graph</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::Graph">Graph</a> &amp;<em>g_in</em>, <a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::Graph">Graph</a> &amp;<em>g_out</em>, <em class="property">const</em> std::vector&lt;<a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::SizeType">SizeType</a>&gt; &amp;<em>permutation</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Add all vertices and edges from <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_in"><span class="pre">g_in</span></a></code> to <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_out"><span class="pre">g_out</span></a></code>,
-but where the order of vertex addition is given by the <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::permutation"><span class="pre">permutation</span></a></code>.
-It must be a permutation of the vertex indices of <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_in"><span class="pre">g_in</span></a></code> and is interpreted as a map
-from the indices in <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_in"><span class="pre">g_in</span></a></code> to the indices they will get in <code class="docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_out"><span class="pre">g_out</span></a></code> (offset by <code class="docutils literal notranslate"><span class="pre">num_vertices</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_out"><span class="pre">g_out</span></a><span class="pre">)</span></code> before the call).</p>
+<dd><p>Add all vertices and edges from <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_in"><span class="pre">g_in</span></a></code> to <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_out"><span class="pre">g_out</span></a></code>,
+but where the order of vertex addition is given by the <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::permutation"><span class="pre">permutation</span></a></code>.
+It must be a permutation of the vertex indices of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_in"><span class="pre">g_in</span></a></code> and is interpreted as a map
+from the indices in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_in"><span class="pre">g_in</span></a></code> to the indices they will get in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_out"><span class="pre">g_out</span></a></code> (offset by <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">num_vertices</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_out"><span class="pre">g_out</span></a><span class="pre">)</span></code> before the call).</p>
 </dd></dl>
 
 </div>
@@ -127,10 +145,10 @@ from the indices in <code class="docutils literal notranslate"><a class="referen
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="tree_traversal/dfs.html"
-                        title="previous chapter">3.14.3. dfs.hpp</a></p>
+                        title="previous chapter">4.13.3. dfs.hpp</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="visitor/index.html"
-                        title="next chapter">3.16. visitor</a></p>
+                        title="next chapter">4.15. visitor</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -161,18 +179,18 @@ from the indices in <code class="docutils literal notranslate"><a class="referen
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="visitor/index.html" title="3.16. visitor"
+          <a href="visitor/index.html" title="4.15. visitor"
              >next</a> |</li>
         <li class="right" >
-          <a href="tree_traversal/dfs.html" title="3.14.3. dfs.hpp"
+          <a href="tree_traversal/dfs.html" title="4.13.3. dfs.hpp"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.2 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >3. Library Reference</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.3 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >4. Library Reference</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, Jakob Lykke Andersen.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.0+.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.0+.
     </div>
   </body>
 </html>

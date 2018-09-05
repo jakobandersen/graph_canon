@@ -23,7 +23,7 @@ Full path: ``graph_canon/tagged_list.hpp``
 .. class:: template<typename ...Elems> \
            tagged_list
 
-    A tuple of tagged elements, e.g., specializations of `tagged_element`.
+    Holds a tuple of tagged elements, e.g., specializations of `tagged_element`.
 .. function:: template<typename Tag, typename ...Elems> \
               auto &get(Tag&&, tagged_list<Elems...> &t)
 

@@ -18,7 +18,7 @@ Full path: ``graph_canon/sorting_utils.hpp``
     except that element swapping is delegated to the given `swapper`.
 
     Requires (in addition to the requirements by `std::partition`),
-    that for two dereferencial iterators `a` and `b` in the given range,
+    that for two dereferenceable iterators `a` and `b` in the given range,
     the expression `swapper(a, b)` swaps the values represented by the iterators.
     For example, `Swap` may be a predicate simply calling `std::iter_swap`.
 .. class:: template<typename SizeType, SizeType Max> \
@@ -35,9 +35,9 @@ Full path: ``graph_canon/sorting_utils.hpp``
         Requires:
 
         - `Iterator` must model a `RandomAccessIterator`.
-        - `ToValue`: for a dereferencial iterator `iter`, the expression `toValue(*iter)`
+        - `ToValue`: for a dereferenceable iterator `iter`, the expression `toValue(*iter)`
           must return an integer in the range 0 to `Max`.
         - `Callback`: for a range of integers `ends` representing the end of each bucket,
           as offsets from `first`, the expression `callback(ends)` must be valid.
-        - `PutValue`: for a dereferencial iterator `iter` and an element `elem`,
-          the expression `putter(iter, elem)`
+        - `PutValue`: for a dereferenceable iterator `iter` and an element `elem`,
+          the expression `putter(iter, elem)` must be valid, and ensure that `*iter == elem` becomes true.
