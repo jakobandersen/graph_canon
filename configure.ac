@@ -44,7 +44,7 @@ boostReqVersion="1.64.0"
 BOOST_LDLIBS="-lboost_program_options -lboost_random -lboost_chrono -lboost_system"
 AC_SUBST([BOOST_LDLIBS])
 # perm_group -------------------------------------------------------------
-permGroupReqVersion="v0.3"
+permGroupReqVersion="0.3.0.10"
 
 ##########################################################################
 # Options for individual dependencies

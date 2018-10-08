@@ -34,7 +34,7 @@ done
 
 args=""
 args="$args	--with-boost=$HOME/programs"
-args="$args --with-perm_group=$HOME/test/permGroupTestInstall"
+args="$args --with-perm_group=$HOME/stuff/code/perm_group/stage"
 args="$args	$prefix $@"
 ./bootstrap.sh											\
 	&& rm -rf preBuild && mkdir preBuild				\
