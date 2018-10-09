@@ -11,9 +11,9 @@
 #include <iostream>
 
 using Graph = boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS,
-	// The DIMACS reader requires this property.
-	// In real uses one probably has some other properties instead.
-	boost::property<boost::vertex_name_t, int> >;
+		// The DIMACS reader requires this property.
+		// In real uses one probably has some other properties instead.
+		boost::property<boost::vertex_name_t, int> >;
 
 namespace gc = graph_canon;
 namespace pg = perm_group;

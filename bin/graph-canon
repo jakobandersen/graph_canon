@@ -84,7 +84,7 @@ def main():
 		preCommand.extend(["valgrind", "--tool=callgrind", "--dump-instr=yes", "--collect-jumps=yes"])
 	elif args.debug:
 		preCommand.extend(["gdb", "--args"])
-	exe = "graph-canon-%s" % args.mode
+	exe = os.path.dirname(os.path.abspath(__file__)) + "/graph-canon-%s" % args.mode
 	postHeader = ""
 	postId = ""
 	opts = ['edge-labels', 'refine', 'aut-pruner', 'aut-implicit', 'partial-leaf', 'trace', 'quotient', 'degree-1']
@@ -109,6 +109,8 @@ def main():
 		subprocess.check_call(allArgs, shell=False, stderr=subprocess.STDOUT)
 		if args.help:
 			parser.print_help()
+	except FileNotFoundError as e:
+		raise ValueError("Could not launch subprcess. Is the variation you are requesting installed?")
 	except subprocess.CalledProcessError as e:
 		sys.exit(e.returncode)
 

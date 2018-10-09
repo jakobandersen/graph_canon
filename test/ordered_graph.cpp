@@ -1,4 +1,4 @@
-#include "../src/util.hpp"
+#include "util.hpp" // from bin/
 
 #include <graph_canon/ordered_graph.hpp>
 
@@ -7,6 +7,7 @@
 #include <boost/property_map/property_map_iterator.hpp>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/random_device.hpp>
+#include <boost/test/minimal.hpp>
 
 #include <iostream>
 

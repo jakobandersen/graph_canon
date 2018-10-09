@@ -3,39 +3,14 @@
 __pycache__
 *.pyc
 
-Makefile.am
-Makefile.in
-
-/aclocal.m4
-/ar-lib
-/autom4te.cache
-/auxConfig/
-/build
-/config.guess
-/config.sub
-/configure
-/depcomp
-/install-sh
-/ltmain.sh
-/m4/libtool.m4
-/m4/ltoptions.m4
-/m4/ltsugar.m4
-/m4/ltversion.m4
-/m4/lt~obsolete.m4
-/missing
-/preBuild/
-/realBuild/
+/CMakeFiles.txt
 /VERSION
 
-/NB_graph_canon/.dep.inc
-/NB_graph_canon/build/
-/NB_graph_canon/nbproject/private/
 
-/doc/build
-/doc/doctrees
+/.idea
+/build
+/stage
+
 /doc/source/index.rst
 /doc/source/executables/
 /doc/source/reference
-
-/include/graph_canon/Config.h_.in
-/include/graph_canon/Config.h_.in~

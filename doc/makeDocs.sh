@@ -5,24 +5,7 @@ if [ "x$1" = "xclean" ]; then
 	exit 0
 fi
 
-# the main logic for building is based on the auto-generated Makefile from Sphinx
-
-sphinxBuild=${1:-sphinx-build}
-topSrcDir=${2:-..}
-topBuildDir=${3:-..}
-
-which $sphinxBuild &> /dev/null
-if [ $? -ne 0 ]; then
-	echo "Error: '$sphinxBuild' was not found."
-	exit 1
-fi
-
-function doBuild {
-	allOpts="-d $topBuildDir/doc/doctrees $topSrcDir/doc/source"
-	mkdir -p $topSrcDir/doc/source/_static
-	$sphinxBuild -b html $allOpts $topBuildDir/doc/build/html -j 1 
-	echo "$sphinxBuild -b html $allOpts $topBuildDir/doc/build/html"
-}
+topSrcDir=${1:-..}
 
 function outputRST {
 	mkdir -p $topSrcDir/doc/source/$(dirname $1)
@@ -236,11 +219,11 @@ Executables
 EOF
 	}
 	index | outputRST executables/index
-	cat $topSrcDir/src/dimacs.cpp | filterCPP | outputRST executables/dimacs
+	cat $topSrcDir/bin/dimacs.cpp | filterCPP | outputRST executables/dimacs
 	(
-		cat $topSrcDir/src/graph_canon_util.hpp | filterCPP
-		cat $topSrcDir/src/graph_canon_benchmark.cpp | filterCPP
-		cat $topSrcDir/src/graph_canon_test.cpp | filterCPP
+		cat $topSrcDir/bin/graph_canon_util.hpp | filterCPP
+		cat $topSrcDir/bin/graph_canon_benchmark.cpp | filterCPP
+		cat $topSrcDir/bin/graph_canon_test.cpp | filterCPP
 	) | outputRST executables/graph_canon
 }
 
@@ -305,4 +288,3 @@ EOF
 makeIndex
 makeExecutables
 makeReference
-doBuild

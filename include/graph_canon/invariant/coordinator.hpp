@@ -3,6 +3,7 @@
 
 #include <graph_canon/visitor/visitor.hpp>
 
+#include <algorithm>
 #include <cassert>
 #include <vector>
 
@@ -58,10 +59,11 @@ struct invariant_coordinator : null_visitor {
 	};
 public:
 
-	void initialize(auto &state) {
+	template<typename State>
+	void initialize(State &state) {
 		auto &i_data = get(instance_data_t(), state.data);
 		i_data.trace.resize(state.n);
-		i_data.generations.resize(std::max(state.n, 1));
+		i_data.generations.resize(std::max(state.n, typename State::SizeType{1}));
 	}
 
 	template<typename State, typename TreeNode>

@@ -1,16 +1,13 @@
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-bindir=@bindir@
-libdir=@libdir@
-datarootdir=@datarootdir@
-datadir=@datadir@
-sysconfdir=@sysconfdir@
-includedir=@includedir@
-package=@PACKAGE@
+prefix=@CMAKE_INSTALL_PREFIX@
+bindir=@CMAKE_INSTALL_FULL_BINDIR@
+libdir=@CMAKE_INSTALL_FULL_LIBDIR@
+datarootdir=@CMAKE_INSTALL_FULL_DATAROOTDIR@
+datadir=@CMAKE_INSTALL_FULL_DATADIR@
+includedir=@CMAKE_INSTALL_FULL_INCLUDEDIR@
 
-Name: GraphCanon
-Description: GraphCanon
-Version: @PACKAGE_VERSION@
+Name: graph-canon
+Description: graph-canon
+Version: @PROJECT_VERSION@
 Requires: 
 Libs: -L${libdir} -Wl,-rpath -Wl,${libdir} @PKG_LIBS@
 Cflags: -I${includedir} @PKG_INCLUDES@

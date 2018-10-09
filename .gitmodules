@@ -1,0 +1,3 @@
+[submodule "external/perm_group"]
+	path = external/perm_group
+	url = ../perm_group
