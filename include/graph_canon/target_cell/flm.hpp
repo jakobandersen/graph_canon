@@ -35,12 +35,13 @@ struct target_cell_flm : null_visitor {
 		using type = tagged_element<instance_data_t, instance_data<typename Config::SizeType> >;
 	};
 
-	void initialize(auto &state) {
+	template<typename State>
+	void initialize(State &state) {
 		get(instance_data_t(), state.data).data.resize(state.n);
 	}
 
-	template<typename State>
-	std::size_t select_target_cell(State &state, const auto &t) {
+	template<typename State, typename TreeNode>
+	std::size_t select_target_cell(State &state, const TreeNode &t) {
 		auto result = find_cell(state, t, [&](const auto cell, const auto cell_end) {
 			return cell + 2 != cell_end;
 		});
@@ -56,8 +57,8 @@ struct target_cell_flm : null_visitor {
 	}
 private:
 
-	template<typename State>
-	std::size_t find_cell(State &state, const auto &t, const auto pred) {
+	template<typename State, typename TreeNode, typename Predicate>
+	std::size_t find_cell(State &state, const TreeNode &t, const Predicate pred) {
 		using SizeType = typename State::SizeType;
 		auto &i_data = get(instance_data_t(), state.data);
 		auto &data = i_data.data;

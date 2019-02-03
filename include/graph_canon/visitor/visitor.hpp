@@ -336,7 +336,7 @@ public:
 	// rst:		     This method will be refactored not too far in the future.
 
 	template<typename State, typename TreeNode>
-	void refine_abort(State &state, TreeNode &t) { };
+	void refine_abort(State &state, TreeNode &t) { }
 
 	// rst:
 	// rst:		**Node Invariant Methods**

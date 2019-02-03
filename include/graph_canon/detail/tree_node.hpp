@@ -22,7 +22,8 @@ struct tree_node {
 	using OwnerPtr = boost::intrusive_ptr<Self>;
 private:
 
-	tree_node(Self *parent, Partition &&pi_not_equitable, auto &state)
+	template<typename State>
+	tree_node(Self *parent, Partition &&pi_not_equitable, State &state)
 	: ref_count(0), parent(parent), level(parent ? parent->level + 1 : 0),
 	pi(std::move(pi_not_equitable)), child_refiner_cell(state.n), is_pruned(false), data(state) {
 		bool isCandidate = state.visitor.tree_create_node_begin(state, *this);
@@ -64,11 +65,13 @@ private:
 	}
 public:
 
-	static OwnerPtr make(Self *parent, Partition &&pi_not_equitable, auto &state) {
+	template<typename State>
+	static OwnerPtr make(Self *parent, Partition &&pi_not_equitable, State &state) {
 		return OwnerPtr(new Self(parent, std::move(pi_not_equitable), state));
 	}
 
-	static OwnerPtr make(Partition &&pi_not_equitable, auto &state) {
+	template<typename State>
+	static OwnerPtr make(Partition &&pi_not_equitable, State &state) {
 		return OwnerPtr(new Self(nullptr, std::move(pi_not_equitable), state));
 	}
 
@@ -126,7 +129,8 @@ public:
 		}
 	}
 
-	void prune_subtree(auto &state, const bool allow_canon_leaf_pruning = false) {
+	template<typename State>
+	void prune_subtree(State &state, const bool allow_canon_leaf_pruning = false) {
 		if(is_pruned) return;
 		assert(get_parent());
 		OwnerPtr self(this); // make sure no one kills us before we are done

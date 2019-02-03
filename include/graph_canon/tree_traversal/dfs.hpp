@@ -32,8 +32,8 @@ struct traversal_dfs : null_visitor {
 		traverse(state, work_stack, state.root);
 	}
 
-	template<typename State>
-	static void traverse(State &state, auto &work_stack, auto t_ptr) {
+	template<typename State, typename Stack>
+	static void traverse(State &state, Stack &work_stack, typename State::TreeNode::OwnerPtr t_ptr) {
 		using TreeNode = typename State::TreeNode;
 		work_stack.emplace_back(t_ptr, 0);
 		while(!work_stack.empty()) {

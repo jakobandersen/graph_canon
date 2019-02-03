@@ -18,47 +18,49 @@ template<typename SizeType>
 struct edge_handler_all_equal_impl {
 	static constexpr SizeType Max = 256;
 
-	void initialize(const auto &state) { }
+	template<typename State>
+	void initialize(const State &state) { }
 
 	//========================================================================
 	// Generic Refiner
 	//========================================================================
 
-	void add_edge(auto &state, auto &node, const SizeType cell, const SizeType cell_end, const auto &e_out) { }
+	template<typename State, typename TreeNode, typename Edge>
+	void add_edge(State &state, TreeNode &node, const SizeType cell, const SizeType cell_end, const Edge &e_out) { }
 
-	template<bool ParallelEdges, bool Loops, typename Partition>
+	template<bool ParallelEdges, bool Loops, typename Partition, typename Splits>
 	void sort_equal_hit(Partition &pi, const SizeType cell, const SizeType cell_end,
-			const SizeType max, auto &splits) { }
+			const SizeType max, Splits &splits) { }
 
-	template<bool ParallelEdges, bool Loops, typename Partition>
+	template<bool ParallelEdges, bool Loops, typename Partition, typename Splits>
 	void sort_partitioned(Partition &pi, const SizeType cell, const SizeType cell_mid, const SizeType cell_end,
-			const SizeType max_count, auto &splits) { }
+			const SizeType max_count, Splits &splits) { }
 
-	template<bool ParallelEdges, bool Loops, typename Partition>
+	template<bool ParallelEdges, bool Loops, typename Partition, typename Splits>
 	void sort_duplicate_partitioned_equal_hit(Partition &pi, const SizeType cell, const SizeType cell_mid, const SizeType cell_end,
-			const SizeType max, auto &splits) { }
+			const SizeType max, Splits &splits) { }
 
-	template<bool ParallelEdges, bool Loops, typename Partition>
+	template<bool ParallelEdges, bool Loops, typename Partition, typename Counters, typename Splits>
 	void sort_duplicate_partitioned(Partition &pi, const SizeType cell, const SizeType cell_mid, const SizeType cell_end,
 			const SizeType max, const SizeType max_count,
-			const auto &counters, auto &splits) {
+			const Counters &counters, Splits &splits) {
 		sort_range<ParallelEdges, Loops>(pi, cell_mid, cell_end, max, counters, splits);
 	}
 
-	template<bool ParallelEdges, bool Loops, typename Partition>
+	template<bool ParallelEdges, bool Loops, typename Partition, typename Counters, typename Splits>
 	void sort(Partition &pi, const SizeType cell, const SizeType cell_end,
 			const SizeType max, const SizeType max_count, SizeType &first_non_zero,
-			const auto &counters, auto &splits) {
+			const Counters &counters, Splits &splits) {
 		assert(max_count != cell_end - cell); // handled by refiner
 		assert(max > 1); // handled by refiner
 		first_non_zero = sort_range<ParallelEdges, Loops>(pi, cell, cell_end, max, counters, splits);
 	}
 private:
 
-	template<bool ParallelEdges, bool Loops, typename Partition>
+	template<bool ParallelEdges, bool Loops, typename Partition, typename Counters, typename Splits>
 	SizeType sort_range(Partition &pi, const SizeType idx_first, const SizeType idx_last,
 			const SizeType max,
-			const auto &counters, auto &splits) {
+			const Counters &counters, Splits &splits) {
 		const auto first = pi.begin() + idx_first;
 		const auto last = pi.begin() + idx_last;
 		// use counting sort to sort for low max_count
@@ -103,22 +105,27 @@ private:
 	}
 public:
 
-	void clear_cell(auto &state, auto &node, const SizeType cell, const SizeType cell_end) { }
+	template<typename State, typename TreeNode>
+	void clear_cell(State &state, TreeNode &node, const SizeType cell, const SizeType cell_end) { }
 
-	void clear_cell_aborted(auto &state, auto &node, const SizeType cell, const SizeType cell_end) { }
+	template<typename State, typename TreeNode>
+	void clear_cell_aborted(State &state, TreeNode &node, const SizeType cell, const SizeType cell_end) { }
 
 	//========================================================================
 	// Singleton Refiner
 	//========================================================================
 
-	void add_edge_singleton_refiner(auto &state, auto &node, const SizeType cell, const SizeType cell_end, const auto &e_out, const SizeType target_pos) { }
+	template<typename State, typename TreeNode, typename Edge>
+	void add_edge_singleton_refiner(State &state, TreeNode &node, const SizeType cell, const SizeType cell_end, const Edge &e_out, const SizeType target_pos) { }
 
 	template<bool ParallelEdges, bool Loops, typename Partition, typename Splits>
 	void sort_singleton_refiner(Partition &pi, const SizeType cell, const SizeType cell_mid, const SizeType cell_end, Splits &splits) { }
 
-	void clear_cell_singleton_refiner(auto &state, auto &node, const SizeType cell, const SizeType cell_end) { }
+	template<typename State, typename TreeNode>
+	void clear_cell_singleton_refiner(State &state, TreeNode &node, const SizeType cell, const SizeType cell_end) { }
 
-	void clear_cell_singleton_refiner_aborted(auto &state, auto &node, const SizeType cell, const SizeType cell_end) { }
+	template<typename State, typename TreeNode>
+	void clear_cell_singleton_refiner_aborted(State &state, TreeNode &node, const SizeType cell, const SizeType cell_end) { }
 private:
 	counting_sorter<SizeType, 4> sorter4;
 	counting_sorter<SizeType, Max> sorter;

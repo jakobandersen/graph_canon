@@ -51,13 +51,15 @@ private:
 	}
 public:
 
-	void initialize(auto &state) {
+	template<typename State>
+	void initialize(State &state) {
 		auto &i_data = get(instance_data_t(), state.data);
 		i_data.trace.resize(state.n);
 		i_data.visitor_type = invariant_coordinator::init_visitor(state);
 	}
 
-	bool tree_create_node_begin(auto &state, auto &t) {
+	template<typename State, typename TreeNode>
+	bool tree_create_node_begin(State &state, TreeNode &t) {
 		auto &t_data = get(tree_data_t(), t.data);
 		// add the individualization as a cell split
 		// and fix book keeping
@@ -78,11 +80,13 @@ public:
 		}
 	}
 
-	bool refine_new_cell(auto &state, auto &t, std::size_t cell, std::size_t type) {
+	template<typename State, typename TreeNode>
+	bool refine_new_cell(State &state, TreeNode &t, std::size_t cell, std::size_t type) {
 		return add_trace(state, t, cell);
 	}
 
-	void invariant_better(auto &state, auto &t) {
+	template<typename State, typename TreeNode>
+	void invariant_better(State &state, TreeNode &t) {
 		auto &i_data = get_data(state);
 		auto &t_data = get(tree_data_t(), t.data);
 		// shorten the trace
@@ -93,8 +97,8 @@ public:
 	}
 private:
 
-	template<typename State, typename TreeNode>
-	void extend_trace(State &state, TreeNode &t, const auto elem) {
+	template<typename State, typename TreeNode, typename Elem>
+	void extend_trace(State &state, TreeNode &t, const Elem elem) {
 		auto &i_data = get_data(state);
 		auto &t_data = get(tree_data_t(), t.data);
 		assert(t_data.end_index == i_data.trace_end);

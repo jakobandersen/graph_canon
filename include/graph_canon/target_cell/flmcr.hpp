@@ -35,12 +35,13 @@ struct target_cell_flmcr : null_visitor {
 		using type = tagged_element<instance_data_t, instance_data<typename Config::SizeType> >;
 	};
 
-	void initialize(auto &state) {
+	template<typename State>
+	void initialize(State &state) {
 		get(instance_data_t(), state.data).data.resize(state.n);
 	}
 
-	template<typename State>
-	std::size_t select_target_cell(State &state, const auto &t) {
+	template<typename State, typename TreeNode>
+	std::size_t select_target_cell(State &state, const TreeNode &t) {
 		const auto result = find_cell(state, t);
 		if(result != state.n) {
 			return result;
@@ -59,8 +60,8 @@ struct target_cell_flmcr : null_visitor {
 	}
 private:
 
-	template<typename State>
-	void find_non_uniform(State &state, const auto &t, const auto cell, const auto callback) {
+	template<typename State, typename TreeNode, typename Callback>
+	void find_non_uniform(State &state, const TreeNode &t, const typename State::SizeType cell, const Callback callback) {
 		using SizeType = typename State::SizeType;
 		auto &i_data = get(instance_data_t(), state.data);
 		auto &data = i_data.data;
@@ -94,8 +95,8 @@ private:
 		cells.clear();
 	}
 
-	template<typename State>
-	std::size_t find_cell(State &state, const auto &t) {
+	template<typename State, typename TreeNode>
+	std::size_t find_cell(State &state, const TreeNode &t) {
 		using SizeType = typename State::SizeType;
 		const auto &pi = t.pi;
 		auto &i_data = get(instance_data_t(), state.data);

@@ -135,8 +135,8 @@ public:
 	}
 private:
 
-	template<typename State>
-	void add_initial_refiner_cells(State &state, const auto &node) {
+	template<typename State, typename TreeNode>
+	void add_initial_refiner_cells(State &state, const TreeNode &node) {
 		using SizeType = typename State::SizeType;
 		auto &i_data = get(instance_data_t(), state.data);
 		auto &refiner_cells = i_data.refiner_cells;
@@ -156,8 +156,9 @@ private:
 			i_data.cell_data[refiner].is_refiner = true;
 	}
 
-	template<typename State>
-	bool refine_with_singleton_cell(State &state, auto &node, const auto refiner_begin, const auto refiner_end, RefinementResult &result) {
+	template<typename State, typename TreeNode>
+	bool refine_with_singleton_cell(State &state, TreeNode &node,
+			const typename State::SizeType refiner_begin, const typename State::SizeType refiner_end, RefinementResult &result) {
 		using SizeType = typename State::SizeType;
 
 		auto &sorter = state.edge_handler;
@@ -208,8 +209,9 @@ private:
 		return true;
 	}
 
-	template<typename State>
-	bool refine_with_cell(State &state, auto &node, const auto refiner_begin, const auto refiner_end, RefinementResult &result) {
+	template<typename State, typename TreeNode>
+	bool refine_with_cell(State &state, TreeNode &node,
+			const typename State::SizeType refiner_begin, const typename State::SizeType refiner_end, RefinementResult &result) {
 		using SizeType = typename State::SizeType;
 
 		auto &sorter = state.edge_handler;
@@ -317,8 +319,8 @@ private:
 		return true;
 	}
 
-	template<typename State>
-	void count_neighbours_from_singleton(State &state, auto &node, const auto refiner_begin) {
+	template<typename State, typename TreeNode>
+	void count_neighbours_from_singleton(State &state, TreeNode &node, const typename State::SizeType refiner_begin) {
 		assert(!State::ParallelEdges);
 		assert(!State::Loops);
 
@@ -350,8 +352,8 @@ private:
 		});
 	}
 
-	template<typename State>
-	void count_neighbours_from_cell(State &state, auto &node, const auto refiner_begin, const auto refiner_end) {
+	template<typename State, typename TreeNode>
+	void count_neighbours_from_cell(State &state, TreeNode &node, const typename State::SizeType refiner_begin, const typename State::SizeType refiner_end) {
 		auto &sorter = state.edge_handler;
 		auto &i_data = get(instance_data_t(), state.data);
 		auto &refinee_cells = i_data.refinee_cells;
@@ -387,8 +389,8 @@ private:
 		}
 	}
 
-	template<typename State>
-	void redo_neighbours_from_cell(State &state, auto &node, const auto refiner_begin, const auto refiner_end) {
+	template<typename State, typename TreeNode>
+	void redo_neighbours_from_cell(State &state, TreeNode &node, const typename State::SizeType refiner_begin, const typename State::SizeType refiner_end) {
 		auto &i_data = get(instance_data_t(), state.data);
 		auto &data = i_data.cell_data;
 
@@ -441,9 +443,9 @@ private:
 		}
 	}
 
-	template<typename State>
-	bool handle_refinee(State &state, auto &node, const auto cell, const auto cell_end,
-			const auto refiner_begin, const auto is_refiner_singleton, RefinementResult &result) {
+	template<typename State, typename TreeNode>
+	bool handle_refinee(State &state, TreeNode &node, const typename State::SizeType cell, const typename State::SizeType cell_end,
+			const typename State::SizeType refiner_begin, const bool is_refiner_singleton, RefinementResult &result) {
 		using SizeType = typename State::SizeType;
 		constexpr bool ParallelEdges = State::ParallelEdges;
 		constexpr bool Loops = State::Loops;
@@ -567,8 +569,8 @@ private:
 	}
 public:
 
-	template<typename State>
-	void add_refiner_cells(State &state, const auto &pi, const auto refinee_begin) {
+	template<typename State, typename Partition>
+	void add_refiner_cells(State &state, const Partition &pi, const typename State::SizeType refinee_begin) {
 		using SizeType = typename State::SizeType;
 		auto &i_data = get(instance_data_t(), state.data);
 		auto &refiner_cells = i_data.refiner_cells;
@@ -618,8 +620,8 @@ public:
 		} // if refinee is in refiner_cells
 	}
 
-	template<typename State>
-	void reset_cell_beginnings(State &state, auto &node) {
+	template<typename State, typename TreeNode>
+	void reset_cell_beginnings(State &state, TreeNode &node) {
 		using SizeType = typename State::SizeType;
 		const auto &pi = node.pi;
 		auto &i_data = get(instance_data_t(), state.data);

@@ -8,7 +8,8 @@
 namespace graph_canon {
 namespace detail {
 
-inline void for_each_neighbour(const auto &state, const auto &node, const auto v, const auto callback) {
+template<typename State, typename TreeNode, typename Vertex, typename Callback>
+inline void for_each_neighbour(const State &state, const TreeNode &node, const Vertex v, const Callback callback) {
 	const auto &pi = node.pi;
 	const auto *begin_cell_from_v_idx = pi.begin_cell_from_v_idx();
 	const auto *begin_cell_end = pi.begin_cell_end();

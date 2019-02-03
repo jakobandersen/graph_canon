@@ -150,7 +150,8 @@ public:
 		}
 	}
 
-	void tree_before_descend(auto &state, auto &t) {
+	template<typename State, typename TreeNode>
+	void tree_before_descend(State &state, TreeNode &t) {
 		if(!t.get_parent()) return; // the root is always ok
 		if(t.get_is_pruned()) return;
 

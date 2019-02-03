@@ -313,7 +313,8 @@ private:
 			assert(t_parent);
 		}
 
-		void operator()(auto first, auto oldLast, auto oldNew) {
+		template<typename Iter>
+		void operator()(Iter first, Iter oldLast, Iter oldNew) {
 			generator_added(*s, *t_parent, first, oldLast, oldNew);
 		}
 	private:

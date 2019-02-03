@@ -198,7 +198,8 @@ public:
 
 	dynamic_target_cell_selector(TargetCellSelector tcs) : tcs(tcs) { }
 
-	void initialize(auto &s) {
+	template<typename State>
+	void initialize(State &s) {
 		switch(tcs) {
 		case TargetCellSelector::F:
 			return graph_canon::target_cell_f().initialize(s);
@@ -211,7 +212,8 @@ public:
 		}
 	}
 
-	std::size_t select_target_cell(auto &s, auto &t) {
+	template<typename State, typename TreeNode>
+	std::size_t select_target_cell(State &s, TreeNode &t) {
 		switch(tcs) {
 		case TargetCellSelector::F:
 			return graph_canon::target_cell_f().select_target_cell(s, t);

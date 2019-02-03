@@ -60,18 +60,21 @@ struct invariant_quotient : null_visitor {
 	};
 private:
 
-	instance_data &get_data(auto &state) const {
+	template<typename State>
+	instance_data &get_data(State &state) const {
 		return get(instance_data_t(), state.data);
 	}
 public:
 
-	void initialize(auto &state) {
+	template<typename State>
+	void initialize(State &state) {
 		auto &i_data = get(instance_data_t(), state.data);
 		i_data.trace.resize(state.n);
 		i_data.visitor_type = invariant_coordinator::init_visitor(state);
 	}
 
-	bool tree_create_node_begin(auto &state, auto &t) {
+	template<typename State, typename TreeNode>
+	bool tree_create_node_begin(State &state, TreeNode &t) {
 		auto &i_data = get_data(state);
 		if(t.get_parent()) {
 			if(t.level > i_data.max_level) {
@@ -81,7 +84,8 @@ public:
 		return true;
 	}
 
-	bool tree_create_node_end(auto &state, auto &t) {
+	template<typename State, typename TreeNode>
+	bool tree_create_node_end(State &state, TreeNode &t) {
 		auto &i_data = get_data(state);
 		if(!t.get_parent())
 			return true;
@@ -130,7 +134,8 @@ public:
 		}
 	}
 
-	void invariant_better(auto &state, auto &t) {
+	template<typename State, typename TreeNode>
+	void invariant_better(State &state, TreeNode &t) {
 		auto &i_data = get_data(state);
 		auto &t_data = get(tree_data_t(), t.data);
 		assert(t.level != 0);
