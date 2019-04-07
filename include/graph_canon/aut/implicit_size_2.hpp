@@ -92,11 +92,11 @@ struct aut_implicit_size_2 : null_visitor {
 	bool refine_new_cell(State &state, TreeNode &t, std::size_t new_cell, std::size_t type) {
 		const auto &t_data = get(tree_data_t(), t.data);
 		if(!t_data.fits) return true;
-		const TreeNode * const parent = t.get_parent();
-		assert(parent);
+		assert(t.get_parent());
 		assert(new_cell > 0);
 		const std::size_t parentCell = new_cell - 1;
-		assert(parent->pi.get_cell_end(parentCell) == parentCell + 2);
+		(void) parentCell;
+		assert(t.get_parent()->pi.get_cell_end(parentCell) == parentCell + 2);
 		assert(t.pi.get_cell_end(parentCell) == parentCell + 1);
 		assert(t.pi.get_cell_end(new_cell) == new_cell + 1);
 		const std::size_t first = t.pi.get(new_cell - 1);

@@ -10,6 +10,11 @@ target_link_libraries(dimacs PRIVATE
         graph_canon
         Boost::program_options
         Boost::random)
+target_compile_options(dimacs PRIVATE -Wall -Wextra -pedantic
+        -Wno-unused-parameter
+        -Wno-comment
+        -Wno-sign-compare
+        -Wno-unused-local-typedefs)
 install(TARGETS dimacs
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT GraphCanon_run)
 
@@ -85,7 +90,7 @@ foreach(mode ${modes})
                     #string(JOIN _ name ${names})
                     add_executable(${name} graph_canon_${mode}.cpp)
                     target_compile_definitions(${name} PRIVATE ${defs})
-                    target_compile_options(${name} PRIVATE -O3)
+                    target_compile_options(${name} PRIVATE -O3 -fno-stack-protector)
                     if("${mode}" STREQUAL "test")
                         target_compile_options(${name} PRIVATE -g)
                     endif()
@@ -94,6 +99,11 @@ foreach(mode ${modes})
                                 graph_canon
                                 Boost::chrono
                                 Boost::program_options)
+                    target_compile_options(${name} PRIVATE -Wall -Wextra -pedantic
+                            -Wno-unused-parameter
+                            -Wno-comment
+                            -Wno-sign-compare
+                            -Wno-unused-local-typedefs)
                     install(TARGETS ${name} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT GraphCanon_run)
                 endforeach(quotient)
                 endforeach(trace)

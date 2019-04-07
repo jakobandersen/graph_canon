@@ -55,7 +55,7 @@ struct target_cell_flmcr : null_visitor {
 					return cell_begin;
 				}
 			}
-			assert(false);
+			__builtin_unreachable();
 		}
 	}
 private:

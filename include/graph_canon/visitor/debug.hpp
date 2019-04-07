@@ -351,11 +351,9 @@ public:
 
 	template<typename State, typename TreeNode>
 	bool refine_new_cell(const State &state, const TreeNode &t, std::size_t new_cell, std::size_t type) {
-		auto &data = get(instance_data_t(), state.data);
-		if(refine_) {
+		if(refine_)
 			std::cout << "\t\trefine_new_cell: " << new_cell << std::endl;
-		}
-		assert(data.cell_splitting_in_progress);
+		assert(get(instance_data_t(), state.data).cell_splitting_in_progress);
 		return true;
 	}
 

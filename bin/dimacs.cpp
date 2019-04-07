@@ -6,6 +6,7 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/program_options.hpp>
+#define BOOST_ALLOW_DEPRECATED_HEADERS // TODO: remove when Boost >= 1.70 is required
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/random_device.hpp>
 #include <boost/random/uniform_int_distribution.hpp>

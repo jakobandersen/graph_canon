@@ -50,6 +50,7 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graph_utility.hpp> // for boost::print_graph
 #include <boost/program_options.hpp>
+#define BOOST_ALLOW_DEPRECATED_HEADERS // TODO: remove when Boost >= 1.70 is required
 #include <boost/random/mersenne_twister.hpp>
 
 #include <iomanip>
@@ -224,6 +225,7 @@ public:
 		case TargetCellSelector::FLMCR:
 			return graph_canon::target_cell_flmcr().select_target_cell(s, t);
 		}
+		__builtin_unreachable();
 	}
 private:
 	TargetCellSelector tcs;
@@ -273,6 +275,7 @@ public:
 		case TreeTraversal::BFSExpM:
 			return graph_canon::traversal_bfs_exp_m(max_mem).tree_create_node_begin(state, t);
 		}
+		__builtin_unreachable();
 	}
 
 	template<typename State, typename TreeNode>

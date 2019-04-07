@@ -122,6 +122,7 @@ target_include_directories(graph_canon
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
         ${Boost_INCLUDE_DIR})
 target_link_libraries(graph_canon INTERFACE PermGroup::perm_group)
+#target_compile_options(graph_canon INTERFACE -Wall -Wextra)
 install(TARGETS graph_canon
         EXPORT PROJECT_exports
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT GraphCanon_lib

@@ -601,6 +601,7 @@ public: // for aut_pruner_base
 			std::cout << "Schreier: \thas main chain" << std::endl;
 #endif
 			// just assertions
+			#ifndef NDEBUG
 			for(TreeNode *tt = root; tt; tt = get(tree_data_t(), tt->data).next_child) {
 				auto &tt_data = get(tree_data_t(), tt->data);
 				assert(tt_data.num_base_gens_chain == g.generators().size());
@@ -616,6 +617,7 @@ public: // for aut_pruner_base
 			}
 			// do we need to do somthing else?
 			assert(false);
+			#endif
 		} else { // only if it's not the first automorphism
 #ifdef GRAPH_CANON_AUT_SCHREIER_DEBUG
 			std::cout << "Schreier: \tno main chain, updating current chain" << std::endl;
@@ -662,6 +664,7 @@ public: // for aut_pruner_base
 #endif
 
 		// just assertions
+		#ifndef NDEBUG
 		for(TreeNode *tt = root; tt; tt = get(tree_data_t(), tt->data).next_child) {
 			auto &tt_data = get(tree_data_t(), tt->data);
 			assert(tt_data.num_base_gens_chain == g.generators().size());
@@ -675,6 +678,7 @@ public: // for aut_pruner_base
 				}
 			}
 		}
+		#endif
 	}
 
 	template<typename State, typename TreeNode>

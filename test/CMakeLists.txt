@@ -16,6 +16,9 @@ foreach(testName ${graph_canon_TEST_FILES})
             Boost::random)
     target_compile_options(${testName} PRIVATE ${sanFlags})
     target_link_libraries(${testName} PRIVATE ${sanFlags})
+    target_compile_options(${testName} PRIVATE -Wall -Wextra -Werror -pedantic
+            -Wno-unused-parameter
+            -Wno-comment)
     add_test(${testName} ${testName})
 endforeach()
 

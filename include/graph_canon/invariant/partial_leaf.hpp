@@ -87,11 +87,13 @@ public:
 	template<typename State, typename TreeNode>
 	bool tree_create_node_end(State &state, TreeNode &t) {
 		auto &t_data = get(tree_data_t(), t.data);
+		(void) t_data;
 #ifdef GRAPH_CANON_TRACE_SUPPORT_DEBUG
 		std::cout << "TracePL   end, t_next=" << t_data.next << ", i_next=" << get(instance_data_t(), state.data).next << std::endl;
 #endif
 		if(t.get_parent() && !t.get_is_pruned()) {
 			const auto parent = get(tree_data_t(), t.get_parent()->data).next;
+			(void) parent;
 			assert(t_data.next > parent);
 		}
 		return true;
