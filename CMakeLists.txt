@@ -34,6 +34,7 @@ option(BUILD_BIN_ALL_ALG "Enable building of all algorithm configurations of oth
 option(BUILD_DOC "Enable documentation building." ON)
 option(BUILD_EXAMPLES "Enable example building." OFF)
 option(BUILD_TESTING "Enable test building." OFF)
+option(BUILD_TESTING_SANITIZERS "Compile tests with sanitizers." ON)
 enable_testing()  # should be included here to add the targets in the top-level folder
 
 option(USE_NESTED_PERM_GROUP "Use the PermGroup version in external/perm_group." ON)

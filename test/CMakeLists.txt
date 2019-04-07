@@ -14,8 +14,10 @@ foreach(testName ${graph_canon_TEST_FILES})
     target_link_libraries(${testName} PRIVATE
             graph_canon
             Boost::random)
-    target_compile_options(${testName} PRIVATE ${sanFlags})
-    target_link_libraries(${testName} PRIVATE ${sanFlags})
+    if(BUILD_TESTING_SANITIZERS)
+        target_compile_options(${testName} PRIVATE ${sanFlags})
+        target_link_libraries(${testName} PRIVATE ${sanFlags})
+    endif()
     target_compile_options(${testName} PRIVATE -Wall -Wextra -Werror -pedantic
             -Wno-unused-parameter
             -Wno-comment)
