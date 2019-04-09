@@ -1,0 +1,40 @@
+kind: pipeline
+name: default
+
+steps:
+- name: build
+  image: localhost:5000/jla/base
+  commands:
+  - git fetch --tags
+  - git submodule update --init --recursive
+  - ./bootstrap.sh
+  - mkdir build
+  - cd build
+  - CXXFLAGS="-Werror"
+       cmake ../
+       -DBUILD_BIN_BENCHMARK=on
+       -DBUILD_BIN_ALL_ALG=on
+       -DBUILD_EXAMPLES=on
+       -DBUILD_TESTING=on
+       -DBUILD_TESTING_SANITIZERS=off
+       -DBOOST_ROOT=/opt/boost_1_64_0
+  - make
+
+- name: install
+  image: localhost:5000/jla/base
+  commands:
+  - cd build
+  - make install
+
+- name: build-test
+  image: localhost:5000/jla/base
+  commands:
+  - cd build
+  - make tests
+
+- name: test
+  image: localhost:5000/jla/base
+  commands:
+  - cd build
+  - make install
+  - ctest --output-on-failure
