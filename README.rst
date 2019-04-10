@@ -12,6 +12,6 @@ The library was initially written as part of the paper
 **A Generic Framework for Engineering Graph Canonization Algorithms**
 [`DOI <http://doi.org/10.1137/1.9781611975055.13>`__ | `TR <http://arxiv.org/abs/1711.08289>`__].
 
-See `here <https://jakobandersen.github.io/graph_canon>`__ for the documentation,
-and `here <https://jakobandersen.github.io/graph_canon/installation>`__ for installation instructions.
-If you install from the repository sources, remember to run ``./bootstrap.sh`` first.
+The documentation can be found at `here <https://jakobandersen.github.io/graph_canon>`__.
+See either `here <https://jakobandersen.github.io/graph_canon/installation>`__
+for installation instructions, or in the file ``doc/source/installation.rst``.
