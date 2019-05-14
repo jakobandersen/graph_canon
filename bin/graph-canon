@@ -84,7 +84,7 @@ def main():
 		preCommand.extend(["valgrind", "--tool=callgrind", "--dump-instr=yes", "--collect-jumps=yes"])
 	elif args.debug:
 		preCommand.extend(["gdb", "--args"])
-	exe = os.path.dirname(os.path.abspath(__file__)) + "/graph-canon-%s" % args.mode
+	exe = os.path.dirname(os.path.abspath(__file__)) + "/GraphCanon/graph-canon-%s" % args.mode
 	postHeader = ""
 	postId = ""
 	opts = ['edge-labels', 'refine', 'aut-pruner', 'aut-implicit', 'partial-leaf', 'trace', 'quotient', 'degree-1']

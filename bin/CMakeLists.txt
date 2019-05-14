@@ -104,7 +104,9 @@ foreach(mode ${modes})
                             -Wno-comment
                             -Wno-sign-compare
                             -Wno-unused-local-typedefs)
-                    install(TARGETS ${name} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT GraphCanon_run)
+                    install(TARGETS ${name}
+                            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/GraphCanon
+                            COMPONENT GraphCanon_run)
                 endforeach(quotient)
                 endforeach(trace)
                 endforeach(partialLeaf)
