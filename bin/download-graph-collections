@@ -1,0 +1,160 @@
+#!/usr/bin/env python3
+# PYTHON_ARGCOMPLETE_OK
+import argparse, argcomplete
+import os, sys, shutil
+from io import BytesIO
+from zipfile import ZipFile
+import tarfile
+from urllib.request import urlopen
+
+# rst: .. cpp:namespace:: graph_canon
+# rst:
+# rst: .. _download_graph_collections:
+# rst:
+# rst: ``download-graph-collections``
+# rst: ########################################################################
+# rst:
+# rst: .. program:: download-graph-collections
+# rst:
+# rst: The ``download-graph-collections`` program will try to download a set of
+# rst: graph collections from http://pallini.di.uniroma1.it/Graphs.html and
+# rst: http://www.lics.rwth-aachen.de/cms/LICS/Forschung/Publikationen/~rtok/Benchmark-Graphs/
+# rst: which can be used as input for the other programs in GraphCanon.
+# rst: Notably the meta-program :program:`graph-canon-run` can be used for running
+# rst: a specific program on batches of graphs.
+# rst:
+
+def skipZipMember(n):
+	return n.startswith("__MACOSX")   \
+	       or n.endswith(".DS_Store") \
+	       or n.endswith("/")
+
+def main():
+	parser = argparse.ArgumentParser(
+		description="Downloader for graph collections from http://pallini.di.uniroma1.it/Graphs.html and http://www.lics.rwth-aachen.de/cms/LICS/Forschung/Publikationen/~rtok/Benchmark-Graphs/.",
+		formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+	# rst: .. option:: --dest <path>
+	# rst:
+	# rst:  The destination folder for downloaded graphs.
+	# rst:  Defaults to ``graphs``.
+	parser.add_argument("--dest", metavar="<path>", default="graphs",
+		help="The destination folder for downloaded graphs.")
+	# rst: .. option:: -f, --force
+	# rst:
+	# rst:  Delete all files at the destination first.
+	parser.add_argument("-f", "--force", action="store_true", default=False,
+		help="Delete all files at the destination first.")
+	argcomplete.autocomplete(parser)
+	args = parser.parse_args()
+	dest = args.dest
+	if args.force:
+		print("Deleting destination '%s'." % dest)
+		shutil.rmtree(dest)
+	if not os.path.exists(dest):
+		print("Creating destination '%s'." % dest)
+		os.makedirs(dest)
+	elif not os.path.isdir(dest):
+		print("Error: destination exists but is not a folder.")
+		sys.exit(1)
+
+	bliss = True
+	conauto = True
+	saucy = True
+	random = True
+	misc = True
+	cfiRigid = True
+
+	if bliss:
+		print("Downloading graphs from the Bliss distribution.")
+		destBliss = dest + "/bliss"
+		os.mkdir(destBliss)
+		data = urlopen("http://pallini.di.uniroma1.it/library/undirected_dim.zip")
+		zip = ZipFile(BytesIO(data.read()))
+		for n in zip.namelist():
+			if skipZipMember(n): continue
+			if not n.endswith(".zip"):
+				print("Error: Bliss package contains non-zip file '%s'." % n);
+				sys.exit(1);
+			# the sat_cfi collection seems to be included here by error
+			if n.endswith("sat_cfi.zip"): continue
+			print("   Extracting", n)
+			zipInner = ZipFile(BytesIO(zip.read(n)))
+			for nInner in zipInner.namelist():
+				if skipZipMember(nInner): continue
+				zipInner.extract(nInner, path=destBliss)
+
+	if conauto:
+		print("Downloading and extracting graphs from the conauto distribution.")
+		destConauto = dest + "/conauto"
+		os.mkdir(destConauto)
+		for n in ["usr", "chh", "tnn"]:
+			print("   The %s collection" % n)
+			data = urlopen("http://pallini.di.uniroma1.it/library/conauto_dim/%s.zip" % n)
+			zipInner = ZipFile(BytesIO(data.read()))
+			for nInner in zipInner.namelist():
+				if skipZipMember(nInner): continue
+				zipInner.extract(nInner, path=destConauto)
+
+	if saucy:
+		print("Downloading graphs from the Saucy distribution.")
+		data = urlopen("http://pallini.di.uniroma1.it/library/saucy_dim.zip")
+		zip = ZipFile(BytesIO(data.read()))
+		for n in zip.namelist():
+			if skipZipMember(n): continue
+			zip.extract(n, path=dest)
+		os.rename(dest + "/saucygraphs", dest + "/saucy")
+
+	if random:
+		print("Downloading and extracting random graphs.")
+		destRandom = dest + "/random"
+		os.mkdir(destRandom)
+		for n in ["ran2", "ran10", "ransq", "rantree", "ranreg"]:
+			print("   The %s collection" % n)
+			data = urlopen("http://pallini.di.uniroma1.it/library/here_dim/%s.zip" % n)
+			zipInner = ZipFile(BytesIO(data.read()))
+			for nInner in zipInner.namelist():
+				if skipZipMember(nInner): continue
+				zipInner.extract(nInner, path=destRandom)
+		os.rename(destRandom + "/ran2/ran2_500_a 2.bliss", destRandom + "/ran2/ran2_500_a_2.bliss")
+
+	if misc:
+		print("Downloading and extracting misc graphs.")
+		destMisc = dest + "/misc"
+		os.mkdir(destMisc)
+		for n in ["tran", "hypercubes", "combinatorial", "f-lex"]:
+			print("   The %s collection" % n)
+			data = urlopen("http://pallini.di.uniroma1.it/library/here_dim/%s.zip" % n)
+			zipInner = ZipFile(BytesIO(data.read()))
+			for nInner in zipInner.namelist():
+				if skipZipMember(nInner): continue
+				d = destMisc if n != "hypercubes" else destMisc + "/hypercubes"
+				zipInner.extract(nInner, path=d)
+
+	if cfiRigid:
+		print("Downloading and extracting graphs from the CFI Rigid distribution.")
+		destCfiRigid = dest + "/cfi-rigid"
+		os.mkdir(destCfiRigid)
+		cols = {
+			"z2": "aaaaaaaaabcgajq",
+			"r2": "aaaaaaaaabcgalg",
+			"s2": "aaaaaaaaabcgaln",
+			"t2": "aaaaaaaaabcgalz",
+			"z3": "aaaaaaaaabcgama",
+			"d3": "aaaaaaaaabcgamx"
+		}
+		for n, id in cols.items():
+			print("   The %s collection" % n)
+			data = urlopen("http://www.lics.rwth-aachen.de/global/show_document.asp?id=%s" % id)
+			tarInner = tarfile.open(fileobj=BytesIO(data.read()), mode='r:gz')
+			tarInner.extractall(path=destCfiRigid)
+
+main()
+
+
+
+
+
+
+
+
+

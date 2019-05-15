@@ -116,6 +116,17 @@ BEGIN {
 '
 }
 
+function filterPy {
+	cat | awk '
+{
+	if($0 ~ /^[\t]*# rst:/) {
+		sub(/^[\t]*# rst:[ 	]?/, "")
+		print
+	}
+}
+'
+}
+
 function getHeaders {
 	cd $topSrcDir/include/graph_canon
 	find . -iname "*.hpp" \
@@ -216,6 +227,7 @@ Executables
 
 	dimacs
 	graph_canon
+	download_graph_collections
 EOF
 	}
 	index | outputRST executables/index
@@ -225,6 +237,7 @@ EOF
 		cat $topSrcDir/bin/graph_canon_benchmark.cpp | filterCPP
 		cat $topSrcDir/bin/graph_canon_test.cpp | filterCPP
 	) | outputRST executables/graph_canon
+	cat $topSrcDir/bin/download-graph-collections | filterPy | outputRST executables/download_graph_collections
 }
 
 function makeReference {

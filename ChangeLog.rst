@@ -12,6 +12,8 @@ Develop
   See :ref:`installation` for how to build the package,
   or use it as a submodule in a nother CMake project.
 - Require version v0.4 PermGroup, though it is available as a Git submodule.
+- Add script for downloading various graph collections:
+  :ref:`download_graph_collections`.
 
 
 Release v0.3 (2018-09-04)

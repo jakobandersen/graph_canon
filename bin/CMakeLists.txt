@@ -19,11 +19,15 @@ install(TARGETS dimacs
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT GraphCanon_run)
 
 
-# graph-canon-* binaries
+# Scripts
 # -------------------------------------------------------------------------
-install(PROGRAMS graph-canon
+install(PROGRAMS graph-canon download-graph-collections
         DESTINATION ${CMAKE_INSTALL_BINDIR}
         COMPONENT GraphCanon_run)
+
+
+# GraphCanon/graph-canon-* binaries
+# -------------------------------------------------------------------------
 
 # Note: yes, we do dirty flag manipulation of each executable to make sure
 #       the 'test' programs has debug information and still optimization,
