@@ -1,0 +1,130 @@
+#!/bin/bash
+
+# rst: .. cpp:namespace:: graph_canon
+# rst:
+# rst: .. _graph_canon_bliss:
+# rst:
+# rst: ``graph-canon-bliss``
+# rst: ########################################################################
+# rst:
+# rst: .. program:: graph-canon-bliss
+# rst:
+# rst: The ``graph-canon-bliss`` wrapper script is simply a facade for an installed
+# rst: `Bliss <http://www.tcs.hut.fi/Software/bliss/program>`__ instance,
+# rst: to provide a common interface with :program:`graph-canon`.
+# rst:
+# rst: Each Bliss invocation is on the form ``bliss -can -v=1 <file>``.
+# rst:
+# rst: .. option:: -h
+# rst:
+# rst:  Show the help message for the wrapper script, and for Bliss, and then exit.
+# rst:
+# rst: .. option:: -f <file>
+# rst:
+# rst:  The input file, which should be in the format Bliss accepts (DIMACS).
+# rst:
+# rst: .. option:: --id <string>
+# rst:
+# rst:  A string to prepend to status lines.
+# rst:  The output of Bliss is printed by the wrapper script, but is also parsed
+# rst:  and when the tree node count and total time has been printed, an extra
+# rst:  status line is printed with the given string prepended.
+# rst:  This should provide a common tabulation scheme of results from different programs.
+# rst:
+# rst: .. option:: -p <int>, --permutations <int>
+# rst:
+# rst:  The number of repetition of the Bliss invocation to perform (default: 100).
+# rst:  Note that each invocation is the same, and thus no randomization is performed.
+# rst:
+# rst: .. option:: --memcheck
+# rst:             --vgArgs <arg>
+# rst:             --debug
+# rst:
+# rst:  Ignored options, present for compatibility with other programs.
+
+function printHelp {
+	cat << EOF
+Usage $0 [options]
+
+Options:
+-h             Show this message, and the help message from Bliss.
+-f <file>      The input file, which should be in dimacs format.
+--id <string>  The string to prepend to status lines.
+--permutations, -p <int>
+               Number of random permutations to try (default=100).
+--memcheck     No effect. Recognized for compatibility.
+--vgArgs <arg> No effect. Recognized for compatibility.
+--debug        No effect. Recognized for compatibility.
+
+EOF
+}
+
+file=""
+id=""
+mode="At"
+p=5
+while test "$1" != ""; do
+	case $1 in
+		"-h" )
+			printHelp
+			bliss -h
+			exit 0
+			;;
+		"-f" )
+			shift
+			file="$1"
+			shift
+			;;
+		"--id" )
+			shift
+			id="$1"
+			shift
+			;;
+		"-p" | "--permutations" )
+			shift
+			p=$1
+			shift
+			;;
+		"--memcheck" )
+			shift
+			;;
+		"--debug" )
+			shift
+			;;
+		"--vgArgs" )
+			shift
+			shift
+			;;
+		* )
+			echo "Unknown argument: \"$1\""
+			shift
+			;;
+	esac
+done
+if [ "x$file" = "x" ]; then
+	echo "Missing file."
+	printHelp
+	exit 1
+fi
+first=$(head -n 1 "$file")
+n=$(echo $first | awk '{print $3}')
+m=$(echo $first | awk '{print $4}')
+echo "$id	nodes	n	m	round	time (ms)"
+for round in $(seq $p); do
+	bliss -can -v=1 $file | (
+		nodes=""
+		while read line; do
+			echo "$line"
+			nodesLine=$(echo "$line" | grep "^Nodes:")
+			if [ "x$nodesLine" != "x" ]; then
+				nodes=$(echo "$nodesLine" | sed -r -e 's/Nodes: *//')
+			fi
+			time=$(echo "$line" | grep "^Total time:")
+			if [ "x$time" != "x" ]; then
+				time=$(echo "$time" | sed -e "s/Total time: *//" -e "s/ seconds//")
+				time=$(python -c "print(int($time * 1000))")
+				echo "$id	$nodes	$n	$m	$round	$time"
+			fi
+		done
+	)
+done

@@ -24,6 +24,8 @@ install(TARGETS dimacs
 install(PROGRAMS
             graph-canon
             graph-canon-run
+            graph-canon-dreadnaut
+            graph-canon-bliss
             download-graph-collections
         DESTINATION ${CMAKE_INSTALL_BINDIR}
         COMPONENT GraphCanon_run)

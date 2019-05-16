@@ -228,6 +228,8 @@ Executables
 	dimacs
 	graph_canon
 	graph_canon_run
+	graph_canon_dreadnaut
+	graph_canon_bliss
 	download_graph_collections
 EOF
 	}
@@ -240,6 +242,8 @@ EOF
 	) | outputRST executables/graph_canon
 	cat $topSrcDir/bin/download-graph-collections | filterPy | outputRST executables/download_graph_collections
 	cat $topSrcDir/bin/graph-canon-run | filterPy | outputRST executables/graph_canon_run
+	cat $topSrcDir/bin/graph-canon-dreadnaut | filterPy | outputRST executables/graph_canon_dreadnaut
+	cat $topSrcDir/bin/graph-canon-bliss | filterPy | outputRST executables/graph_canon_bliss
 }
 
 function makeReference {

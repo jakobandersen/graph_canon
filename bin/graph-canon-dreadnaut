@@ -1,0 +1,175 @@
+#!/bin/bash
+
+# rst: .. cpp:namespace:: graph_canon
+# rst:
+# rst: .. _graph_canon_dreadnaut:
+# rst:
+# rst: ``graph-canon-dreadnaut``
+# rst: ########################################################################
+# rst:
+# rst: .. program:: graph-canon-dreadnaut
+# rst:
+# rst: The ``graph-canon-dreadnaut`` wrapper script is simply a facade for an installed
+# rst: ``dreadnaut`` instance from the `nauty/Traces <http://pallini.di.uniroma1.it/>`__ package,
+# rst: to provide a common interface with :program:`graph-canon`.
+# rst:
+# rst: The script invokes ``dreadnaut`` and pipes commands into it.
+# rst: The specified input file must be in DIMACS format and the script will translate it into Dreadnaut
+# rst: format and pipe it into the program.
+# rst:
+# rst: .. option:: -h
+# rst:
+# rst:  Show the help message for the wrapper script, and then exit.
+# rst:
+# rst: .. option:: -f <file>
+# rst:
+# rst:  The input file, which should be in DIMACS format.
+# rst:
+# rst: .. option:: --id <string>
+# rst:
+# rst:  A string to prepend to status lines.
+# rst:  The output of ``dreadnaut`` is printed by the wrapper script, but is also parsed
+# rst:  and when the tree node count and total time has been printed, an extra
+# rst:  status line is printed with the given string prepended.
+# rst:  This should provide a common tabulation scheme of results from different programs.
+# rst:
+# rst: .. option:: --mode <mode>
+# rst:
+# rst:  Select the algorithm to use, among ``An`` (nauty dense), ``As`` (nauty sparse), and ``At`` (Traces).
+# rst:  The default is Traces.
+# rst:
+# rst: .. option:: -p <int>, --permutations <int>
+# rst:
+# rst:  The number of randomized permutations of the input graph to canonicalize (default: 100).
+# rst:  This is achieved by piping the commands ``jcx`` into ``dreadnaut`` this amount of times.
+# rst:
+# rst: .. option:: --memcheck
+# rst:             --vgArgs <arg>
+# rst:             --debug
+# rst:
+# rst:  Ignored options, present for compatibility with other programs.
+
+
+function printHelp {
+	cat << EOF
+Usage $0 [options]
+
+Options:
+-h             Show this message.
+-f <file>      The input file, which should be in dimacs format.
+--id <string>  The string to prepend to status lines.
+--mode <mode>  The modes that 'dreadnaut' knows of:
+               'An': dense
+               'As': sparse
+               'At': Traces
+--permutations, -p <int>
+               Number of random permutations to try (default=100).
+--memcheck     No effect. Recognized for compatibility.
+--vgArgs <arg> No effect. Recognized for compatibility.
+--debug        No effect. Recognized for compatibility.
+
+EOF
+}
+
+file=""
+id=""
+mode="At"
+p=5
+while test "$1" != ""; do
+	case $1 in
+		"-h" )
+			printHelp
+			exit 0
+			;;
+		"-f" )
+			shift
+			file="$1"
+			shift
+			;;
+		"--id" )
+			shift
+			id="$1"
+			shift
+			;;
+		"--mode" )
+			shift
+			mode="$1"
+			case $mode in
+				"An" );;
+				"As" );;
+				"At" );;
+				* )
+					echo "Unknown mode: \"$mode\""
+					exit 1
+					;;
+			esac
+			shift
+			;;
+		"-p" | "--permutations" )
+			shift
+			p=$1
+			shift
+			;;
+		"--memcheck" )
+			shift
+			;;
+		"--debug" )
+			shift
+			;;
+		"--vgArgs" )
+			shift
+			shift
+			;;
+		* )
+			echo "Unknown argument: \"$1\""
+			shift
+			;;
+	esac
+done
+if [ "x$file" = "x" ]; then
+	echo "Missing file."
+	printHelp
+	exit 1
+fi
+first=$(head -n 1 "$file")
+n=$(echo $first | awk '{print $3}')
+m=$(echo $first | awk '{print $4}')
+echo "$id	nodes	n	m	round	time (ms)"
+round=1
+(
+	if test "$(echo $first | awk '{print $1}')" != "p"; then
+		echo "First line 'p' not found."
+		exit 1
+	fi
+	if test "$(echo $first | awk '{print $2}')" != "edge"; then
+		echo "First line 'edge' not found."
+		exit 1
+	fi
+	echo "$mode"
+	echo "n $n g"
+	tail -n +2 "$file" | awk '{src = $2 - 1; tar = $3 - 1; print src ": " tar}'
+	echo "."
+	for round in $(seq 1 $p); do
+		echo "j" # random relabel
+		echo "c" # find canonical labelling
+		echo "-a" # do not write automorphisms
+		echo "V=0" # don't be verbose
+		echo "x" # execute
+	done
+) | dreadnaut | (
+	nodes=""
+	while read line; do
+		echo "$line"
+		nodesLine=$(echo "$line" | grep " node")
+		if [ "x$nodesLine" != "x" ]; then
+			nodes=$(echo "$nodesLine" | sed -r -e 's/.*gens?; ([0-9]*) node.*/\1/')
+		fi
+		time=$(echo "$line" | grep "cpu time")
+		if [ "x$time" != "x" ]; then
+			time=$(echo "$time" | sed -e "s/.*cpu time = //" -e "s/ seconds.*//")
+			time=$(python -c "print(int($time * 1000))")
+			echo "$id	$nodes	$n	$m	$round	$time"
+			let round=round+1
+		fi
+	done
+)

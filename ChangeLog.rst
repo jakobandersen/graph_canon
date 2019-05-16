@@ -16,6 +16,9 @@ Develop
   of canonicalization programs on batches of graphs.
 - Add script for downloading various graph collections:
   :ref:`download_graph_collections`.
+- Add the scripts :ref:`graph_canon_dreadnaut` and :ref:`graph_canon_bliss`
+  for providing a common interface between the programs in this package,
+  Bliss, nauty, and Traces.
 
 
 Release v0.3 (2018-09-04)
