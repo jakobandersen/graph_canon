@@ -12,6 +12,8 @@ Develop
   See :ref:`installation` for how to build the package,
   or use it as a submodule in a nother CMake project.
 - Require version v0.4 PermGroup, though it is available as a Git submodule.
+- Add the program :ref:`graph_canon_run` for easier invocation
+  of canonicalization programs on batches of graphs.
 - Add script for downloading various graph collections:
   :ref:`download_graph_collections`.
 

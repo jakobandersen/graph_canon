@@ -227,6 +227,7 @@ Executables
 
 	dimacs
 	graph_canon
+	graph_canon_run
 	download_graph_collections
 EOF
 	}
@@ -238,6 +239,7 @@ EOF
 		cat $topSrcDir/bin/graph_canon_test.cpp | filterCPP
 	) | outputRST executables/graph_canon
 	cat $topSrcDir/bin/download-graph-collections | filterPy | outputRST executables/download_graph_collections
+	cat $topSrcDir/bin/graph-canon-run | filterPy | outputRST executables/graph_canon_run
 }
 
 function makeReference {

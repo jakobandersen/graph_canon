@@ -1,0 +1,269 @@
+#!/usr/bin/env python3
+# PYTHON_ARGCOMPLETE_OK
+import argparse, argcomplete
+import inspect
+import os
+import signal
+import subprocess
+import sys
+
+# rst: .. cpp:namespace:: graph_canon
+# rst:
+# rst: .. _graph_canon_run:
+# rst:
+# rst: ``graph-canon-run``
+# rst: ########################################################################
+# rst:
+# rst: .. program:: graph-canon-run
+# rst:
+# rst: The ``graph-canon-run`` program can be used to run a specific graph canonicalistion
+# rst: program on a batch of graphs (e.g., downloaded with :ref:`download_graph_collections`).
+# rst:
+# rst: Graph Database
+# rst: ==============
+# rst:
+# rst: The program indexes graph instances from a specific folder:
+# rst:
+# rst: .. envvar:: GRAPH_CANON_DATA_DIR
+# rst:
+# rst:  If this environment variable is defined, it is assumed to be the path to a folder
+# rst:  containing a graph database.
+# rst:  If it is not defined the database folder is assumed to be the relative path ``graphs/``.
+# rst:
+graphsDir = os.environ.get("GRAPH_CANON_DATA_DIR")
+if not graphsDir:
+	dataDir = os.path.dirname(inspect.stack()[0][1])
+	graphsDir = os.path.join(dataDir, "graphs")
+
+# rst:
+# rst: A graph database is simply a folder with a specific structure: the root contains folders representing
+# rst: "packages". For example, :program:`download_graph_collections` program will download graphs from
+# rst: http://pallini.di.uniroma1.it/Graphs.html and partition them into the packages
+# rst: ``bliss``, ``conauto``, ``saucy``, ``random``, and ``misc``, corresponding to the different sources
+# rst: benchmark graphs.
+# rst: Each package subfolder is then assumed to have folder representing "collections" of graphs.
+# rst: For example, the ``bliss`` package will have the collections ``ag``, ``cfi``, ``cmz``, etc.
+# rst: The names of collections are assumed to be uniq, even across packages.
+# rst: Each collection subfolder finally contains text files with one graph each.
+# rst: For example, the file ``bliss/ag/ag2-2`` would be a file with a graph.
+# rst:
+
+
+class Instance(object):
+	def __init__(self, package, collection, instance):
+		self.package = package
+		self.collection = collection
+		self.instance = instance
+		self.fullname = "%s/%s/%s" % (package, collection, instance)
+
+	def __hash__(self):
+		return hash(self.fullname)
+
+	def __eq__(self, other):
+		return self.fullname == other.fullname
+
+def loadInstances():
+	instances = []
+	for p in os.listdir(graphsDir):
+		if not os.path.isdir(os.path.join(graphsDir, p)): continue
+		for c in os.listdir(os.path.join(graphsDir, p)):
+			if not os.path.isdir(os.path.join(graphsDir, p, c)): continue
+			for i in os.listdir(os.path.join(graphsDir, p, c)):
+				instances.append(Instance(p, c, i))
+	instances = sorted(instances, key=lambda i: (i.package, i.collection, i.instance))
+	return instances
+
+def main():
+	# rst: Listing Mode
+	# rst: =============
+	# rst:
+	epilog = "Graphs dir: %s" % graphsDir
+	parser = argparse.ArgumentParser(
+		description='Program for testing graph canonicalisation on batches of graphs.', epilog=epilog
+	)
+	# rst: .. option:: --list-collections
+	# rst:
+	# rst:  Print the list of available collections of benchmark graphs and then exit.
+	# rst:  Each collection is printed on a separate line as ``<package>/<collection>``.
+	parser.add_argument("--list-collections", action="store_true",
+		help="Print the list of available collections of benchmark graphs and then exit."
+			 "Each collection is printed on a separate line as \"<package>/<collection>\"")
+	# rst: .. option:: --list-instances [package|collection]...
+	# rst:
+	# rst:  Print the list of instances contained in the given packages or collections.
+	# rst:  Each instances is printed on a separate line as ``<package>/<collection>/<instance>``.
+	parser.add_argument("--list-instances", nargs=argparse.REMAINDER,
+		help="Print the list of instances contained in the given package or collection and then exit."
+			 "Each instances is printed on a separate line as \"<package>/<collection>/<instance>\"")
+	# rst: .. option:: --get-instance-size [package] [collection] [instance]
+	# rst:
+	# rst:  Print the number of vertices in the given instance and then exit.
+	# rst:  This assumes the graph is stored in DIMACS format, with the first line specifying the graph size
+	# rst:  (i.e., the ``p edge <n> <m>`` line is the very first).
+	parser.add_argument("--get-instance-size", nargs=3, metavar=("<package>", "<collection>", "<instance>"),
+		help="Print the number of vertices in the given instance and then exit.")
+	# rst:
+	# rst: Execution Mode
+	# rst: ===============
+	# rst:
+	# rst: .. option:: --args [arg]...
+	# rst:
+	# rst:  Additional arguments passed through to the canonicalization program.
+	parser.add_argument("--args", nargs=argparse.REMAINDER, default=[],
+	                    help="Additional arguments passed through to the canonicalization program.")
+	# rst: .. option:: -t [seconds], --timeout [seconds]
+	# rst:
+	# rst:  Time before the canonicalization is killed.
+	# rst:  However, if :option:`--memcheck` or :option:`--debug` is given, the time limit is not in effect.
+	parser.add_argument("-t", "--timeout", type=int, default=1000, metavar="<seconds>",
+		help="Time before the canonicalization is killed."
+			 " If --memcheck or --debug is given, the time limit is not in effect.")
+	# rst: .. option:: -e [executable], --exe [executable]
+	# rst:
+	# rst:  The executable to use for canonicalization.
+	# rst:  It defaults to ``graph-canon`` (i.e., the :program:`graph_canon` program, as found through normal shell lookup.
+	parser.add_argument("-e", "--exe", default="graph-canon", metavar="<executable>",
+		help="The executable to use for canonicalization.")
+	# rst: .. option:: --memcheck
+	# rst:             --debug
+	# rst:             --profile
+	# rst:
+	# rst:  Options passed through to the executable.
+	parser.add_argument("--memcheck", action="store_true",
+		help="Pass this option through to the executable.")
+	parser.add_argument("--debug", action="store_true",
+	                    help="Pass this option through to the executable.")
+	parser.add_argument("--profile", action="store_true",
+	                    help="Pass this option through to the executable.")
+	# rst: .. option:: [task]...
+	# rst:
+	# rst:  Each positional argument is assumed to be a "task", which must be the name of either
+	# rst:  a package, a collection, or the path to an instance.
+	# rst:  The executable will in turn be invoked on each instance specified.
+	# rst:  The special meta-task ``all`` can be used to specify all instances in the graph database.
+	# rst:
+	# rst:  Each invocation of the canonicalization executable will be done
+	# rst:  with ``-f <full path to graph instance>`` for specifying the current input graph-
+	# rst:  Additionally the arguments ``--id "GCDResult <package>    <collection>    <instance>"``,
+	# rst:  are passed, meant to allow the executable to prefix each data line with this string
+	# rst:  for easier tabulation of results.
+	parser.add_argument("tasks", nargs="*",  metavar="<task>", 
+		help="""
+The graphs are structured in packages, which contain collections, which again contain instances.
+A task is either the name of a package, a collection, or an instance.
+The special task 'all' will expand to the list of all packages.
+Multiple tasks can be given as argument and the program will be run on all instances in each task.
+Instances must be given as <package>/<collection>/<instance>.""")
+	
+	argcomplete.autocomplete(parser)
+	args = parser.parse_args()
+	if args.list_collections:
+		instances = loadInstances()
+		collections = {}
+		for i in instances:
+			collections[i.collection] = i.package
+		collections = sorted([(p, c) for c, p in collections.items()])
+		for a in collections:
+			print("%s/%s" % a)
+		sys.exit(0)
+	if args.list_instances:
+		instances = loadInstances()
+		printed = False
+		for i in instances:
+			if i.package in args.list_instances or i.collection in args.list_instances or "all" in args.list_instances:
+				printed = True
+				path = os.path.join(i.package, i.collection, i.instance) 
+				with open(os.path.join(graphsDir, path)) as f:
+					line = f.readline()
+					line = line[:-1]
+				fields = line.split(" ")
+				print(path, fields[-2], fields[-1])
+		if printed:
+			sys.exit(0)
+		else:
+			print("No pacakge or colleciton found with the name '%s'." % args.list_instances)
+			sys.exit(1)
+	if args.get_instance_size:
+		a = args.get_instance_size
+		p = os.path.join(graphsDir, a[0], a[1], a[2])
+		with open(p) as f:
+			line = f.readline()
+			line = line[:-1]
+			fields = line.split(" ")
+			print(fields[2])
+		sys.exit(0)
+
+	msgPrefix = "GCD: "
+
+	if args.memcheck:
+		args.args.append("--memcheck")
+	if args.debug:
+		args.args.append("--debug")
+	if args.profile:
+		args.args.append("--profile")
+	realArgs = [args.exe] + args.args
+
+	instances = None  # maybe we don't need them
+	# go through each task and expand it to instances
+	tasksUnique = set()
+	tasks = []
+	for t in args.tasks:
+		if t.count('/') == 2:
+			# handle these specially so we don't need to load all instances
+			# in order to execute them
+			ts = t.split('/')
+			i = Instance(ts[0], ts[1], ts[2])
+			if i not in tasksUnique:
+				tasksUnique.add(i)
+				tasks.append(i)
+			continue
+		if instances is None:
+			print("GCD: loading instances")
+			sys.stdout.flush()
+			instances = loadInstances()
+
+		if t == 'all':
+			tasks = instances
+			break
+
+		found = False
+		for i in instances:
+			if i.package != t and i.collection != t and i.instance != t and i.fullname != t:
+				continue
+			found = True
+			if i in tasksUnique:
+				continue
+			tasksUnique.add(i)
+			tasks.append(i)
+		if not found:
+			print("Task '%s' not found." % t)
+			sys.exit(1)
+			
+	for i in tasks:
+		identifier = "GCDResult	" + i.package + "	" + i.collection + "	" + i.instance
+		instance = os.path.join(graphsDir, i.package, i.collection, i.instance)
+		with open(instance) as f:
+			line = f.readline()
+			print("First line:", line, end="")
+		allArgs = realArgs + ["-f", str(instance)]
+		print(msgPrefix + "Call:", " ".join(allArgs), '--id "%s"' % identifier)
+		allArgs = allArgs + ["--id", identifier]
+		process = subprocess.Popen(allArgs, stderr=subprocess.STDOUT, preexec_fn=os.setsid)
+		try:
+			if args.debug or args.memcheck or args.profile:
+				retCode = process.wait()
+			else:
+				retCode = process.wait(timeout=args.timeout)
+		except subprocess.TimeoutExpired as e:
+			os.killpg(process.pid, signal.SIGKILL)
+			fields = line[:-1].split(" ")
+			print(identifier + "\t-1\t%s\t%s\tTimeoutReached" % (fields[-2], fields[-1]))
+			retCode = 0
+		except:
+			os.killpg(process.pid, signal.SIGKILL)
+			raise
+		if retCode != 0:
+			print("Non-zero exit code: %d" % retCode)
+			sys.exit(1)
+
+main()

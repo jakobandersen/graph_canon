@@ -21,7 +21,10 @@ install(TARGETS dimacs
 
 # Scripts
 # -------------------------------------------------------------------------
-install(PROGRAMS graph-canon download-graph-collections
+install(PROGRAMS
+            graph-canon
+            graph-canon-run
+            download-graph-collections
         DESTINATION ${CMAKE_INSTALL_BINDIR}
         COMPONENT GraphCanon_run)
 
