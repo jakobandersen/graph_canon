@@ -21,6 +21,8 @@ namespace graph_canon {
 // rst:
 // rst:		This `Visitor` finds implicit automorphisms from ordered partitions where all cells have size 1 or 2.
 // rst:
+// rst:		The class is DefaultConstructible.
+// rst:
 
 struct aut_implicit_size_2 : null_visitor {
 	// rst:		.. var:: static constexpr std::size_t tag = 200

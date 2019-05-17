@@ -18,6 +18,8 @@ namespace graph_canon {
 // rst:		same neighbour, with the same type of edge, will be split into trivial cells.
 // rst:		Either `RefinementResult::Never` or `RefinementResult::Unchanged` will be returned and the appropriate automorphisms are reported.
 // rst:
+// rst:		The class is DefaultConstructible.
+// rst:
 
 struct refine_degree_1 : null_visitor {
 	// rst:		.. var:: static const std::size_t split_type_cell = 2

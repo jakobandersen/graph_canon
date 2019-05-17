@@ -8,6 +8,9 @@ namespace graph_canon {
 // rst: .. class:: traversal_dfs
 // rst:
 // rst:		Tree traversal visitor for depth-first traversal.
+// rst:
+// rst:		The class is DefaultConstructible.
+// rst:
 
 struct traversal_dfs : null_visitor {
 	using can_explore_tree = std::true_type;

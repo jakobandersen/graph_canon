@@ -17,6 +17,8 @@ namespace graph_canon {
 // rst:
 // rst:		The Weisfeiler-Leman refinement function of dimension 1.
 // rst:
+// rst:		The class is DefaultConstructible.
+// rst:
 
 struct refine_WL_1 : null_visitor {
 	// rst:		.. var:: static constexpr std::size_t refine_new_cell_type = 50

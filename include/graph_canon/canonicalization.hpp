@@ -400,6 +400,7 @@ public:
 	// rst:			- `VertexLess` must be a less-than predicate on the vertices of `g` that induces a strict weak ordering.
 	// rst:			  The resulting canonical vertex order respects the ordering induced by `vertex_less`.
 	// rst:			- `Vis` must be a `Visitor` type.
+	// rst:			  Note that an `invariant_coordinator` is automatically prepended to the given visitor.
 	// rst:
 	// rst:			:returns: A `std::pair<std::vector<SizeType>, Data>` where `first` is the permutation,
 	// rst:				and `second` is the auxiliary visitor data of an unspecified type `Data`.

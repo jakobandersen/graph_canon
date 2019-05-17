@@ -13,7 +13,7 @@
 // An ordered_graph is a view on an underlying graph but where iteration through
 // vertices, in-edges, and out-edges are ordered according to a given index map
 // over the vertices.
-// Note: iteration through the overall edge list is _not_ ordered.
+// Note: iteration through the edge list is not supported.
 // Note: parallel edges are ordered arbitrarily among each other.
 
 namespace graph_canon {
@@ -270,7 +270,7 @@ public:
 // rst:		If `WithInEdges` is `true`, and `Graph` models a `BidirectionalGraph`,
 // rst:		then the ordered graph will model the `BidirectionalGraph` concept as well.
 // rst:
-// rst:		When iterating through the range of vertices, adjacency vertices, and inverse-adjacent verices,
+// rst:		When iterating through the range of vertices, adjacency vertices, and inverse-adjacent vertices,
 // rst:		the vertices will appear in sorted order with respect to the given index map.
 // rst:		When iterating through out-edges and in-edges, the edges will appear in sorted order with respect
 // rst:		to the index of the neighbouring vertices.
@@ -366,6 +366,15 @@ template<typename Graph, typename IndexMap, bool WithInEdges>
 typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::vertices_size_type
 num_vertices(const ordered_graph<Graph, IndexMap, WithInEdges> &g) {
 	return g.data.data.size();
+}
+
+// EdgeListGraph (part of it)
+//------------------------------------------------------------------------------
+
+template<typename Graph, typename IndexMap, bool WithInEdges>
+typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::vertices_size_type
+num_edges(const ordered_graph<Graph, IndexMap, WithInEdges> &g) {
+	return num_edges(g.get_graph());
 }
 
 // IncidenceGraph

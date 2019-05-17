@@ -17,7 +17,8 @@ namespace graph_canon {
 // rst:		Tree traversal visitor for breadth-first traversal with experimental paths,
 // rst:		with fallback to depth-first traversal at a given memory limit.
 // rst:
-
+// rst:		The class is DefaultConstructible.
+// rst:
 struct traversal_bfs_exp_m : null_visitor {
 	using can_explore_tree = std::true_type;
 

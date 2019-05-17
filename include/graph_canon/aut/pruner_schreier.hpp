@@ -300,6 +300,8 @@ struct aut_pruner_schreier_DupCheckerUnroller<tree_data_t, 8> {
 // rst:		A `Visitor` for pruning the search tree based on automorphisms reported by other visitors.
 // rst:		Stabilizers are fully computed using methods based on the Schreier-Sims algorithm.
 // rst:
+// rst:		The class is DefaultConstructible.
+// rst:
 
 struct aut_pruner_schreier : aut_pruner_base<aut_pruner_schreier> {
 	using Base = aut_pruner_base<aut_pruner_schreier>;
@@ -368,6 +370,11 @@ public:
 	using Stab = perm_group::schreier_stabilizer<Transversal<SizeType>, DupChecker<TreeNode, InstanceData> >;
 public:
 
+	// rst: 	.. type:: result_t
+	// rst:
+	// rst: 		The tag type for data returned to the caller after canonicalization.
+	// rst: 		The type of the returned object is :cpp:type:`std::unique_ptr<Group>` where ``Group`` is some
+	// rst: 		type fulfilling the requirements of the Group concept in PermGroup.
 	struct result_t {
 	};
 

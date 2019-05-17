@@ -45,6 +45,42 @@ struct always_false {
 	}
 };
 
+// rst: .. class:: template<typename Iter> \
+// rst:            range : std::pair<Iter, Iter>
+// rst:
+// rst:	A class for adapting a pair of iterators into a range, e.g., useful when using Boost.Graph.
+// rst:	See :cpp:expr:`as_range`.
+// rst:
+// adapted from http://stackoverflow.com/questions/6167598/why-was-pair-range-access-removed-from-c11
+// (e.g., for used with Boost.Graph, which returns pairs of iterators)
+
+template<typename Iter>
+struct range : std::pair<Iter, Iter> {
+	using iterator = Iter;
+	using const_iterator = iterator;
+
+	range(const std::pair<Iter, Iter> &x) : std::pair<Iter, Iter>(x) { }
+
+	Iter begin() const {
+		return this->first;
+	}
+
+	Iter end() const {
+		return this->second;
+	}
+};
+
+// rst: .. cpp:function:: template<typename Iter> \
+// rst:                   range<Iter> as_range(const std::pair<Iter, Iter> &x)
+// rst:
+// rst:	:returns: :cpp:expr:`range<Iter>(x)`
+// rst:
+
+template<typename Iter>
+range<Iter> as_range(const std::pair<Iter, Iter> &x) {
+	return range<Iter>(x);
+}
+
 // rst: .. class:: template<typename Prop> \
 // rst:            property_less
 // rst:

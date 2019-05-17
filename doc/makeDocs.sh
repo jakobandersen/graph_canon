@@ -139,8 +139,9 @@ function makeIndex {
 	function indexFiles {
 		cat << "EOF"
 	installation
-	executables/index
 	changes
+	examples/index
+	executables/index
 	reference/index
 EOF
 	}
@@ -184,8 +185,6 @@ Graphs with vertices labelled with elements from a totally ordered set
 are handled by a user-supplied less-predicate (as you would provide to `std::sort`).
 The library also supports graphs where edges are similarly labelled,
 though for obtaining efficient implementations this may require substantial work from the user.
-
-.. attention:: In the future there will be a range of examples for using the library and extending it.
 
 Handling of permutation groups is done using the `PermGroup <https://github.com/jakobandersen/perm_group>`__ library which is currently under heavy development.
 

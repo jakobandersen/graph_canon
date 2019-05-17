@@ -20,6 +20,8 @@ namespace graph_canon {
 // rst:		A `Visitor` for pruning the search tree based on automorphisms reported by other visitors.
 // rst:		Stabilizers are computed conservatively by plain filtering of the generators.
 // rst:
+// rst:		The class is DefaultConstructible.
+// rst:
 
 struct aut_pruner_basic : aut_pruner_base<aut_pruner_basic> {
 	using Base = aut_pruner_base<aut_pruner_basic>;
@@ -36,6 +38,11 @@ public:
 	using Stab = perm_group::basic_stabilizer<Alloc<SizeType> >;
 public:
 
+	// rst: 	.. type:: result_t
+	// rst:
+	// rst: 		The tag type for data returned to the caller after canonicalization.
+	// rst: 		The type of the returned object is :cpp:type:`std::unique_ptr<Group>` where ``Group`` is some
+	// rst: 		type fulfilling the requirements of the Group concept in PermGroup.
 	struct result_t {
 	};
 

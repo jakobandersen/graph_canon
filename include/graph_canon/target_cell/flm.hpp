@@ -9,6 +9,9 @@ namespace graph_canon {
 // rst:
 // rst:		Visitor for selecting the first largest non-singleton cell,
 // rst:		among those with a maximum number of non-uniformly joined neighbour cells.
+// rst:
+// rst:		The class is DefaultConstructible.
+// rst:
 
 struct target_cell_flm : null_visitor {
 	using can_select_target_cell = std::true_type;
