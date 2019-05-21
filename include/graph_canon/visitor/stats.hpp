@@ -103,9 +103,23 @@ public:
 		if(tree_dump) {
 			auto &d = data(state);
 			std::ostream &s = *tree_dump;
-			s << "digraph g {\nrankdir=LR\n";
+			s << "digraph g {\nrankdir=LR\nnode [ shape=Mrecord ];\n";
+			const auto printRecordEscaped = [](std::ostream &s, const std::string &str) {
+				for(auto c : str) {
+					switch(c) {
+						case '|':
+						case '{':
+						case '}':
+							s << '\\';
+							[[fallthrough]];
+						default:
+							s << c;
+					}
+				}
+			};
 			for(const Node &node : d.nodes) {
-				s << node.id << " [ " << node.data;
+				s << node.id << " [ ";
+				printRecordEscaped(s, node.data);
 				if(node.id == d.vIdCanon) s << "color=\"darkgreen\"";
 				else if(node.has_been_canon) s << " color=\"green\"";
 				else if(node.refine_abort) s << " color=\"red\"";
@@ -120,7 +134,9 @@ public:
 			for(auto e : d.automorphismEdges) {
 				const std::size_t src = get<0>(e);
 				const std::size_t tar = get<1>(e);
-				s << "aut_" << src << "_" << iUnique << " [ color=\"gray\" label=\"aut = " << get<2>(e) << "\" ];\n";
+				s << "aut_" << src << "_" << iUnique << " [ color=\"gray\" label=\"<f0>aut = ";
+				printRecordEscaped(s, get<2>(e));
+				s << "\" ];\n";
 				s << src << " -> aut_" << src << "_" << iUnique << ";\n";
 				// tar == -1 means it was implicit
 				if(tar != -1) s << "aut_" << src << "_" << iUnique << " -> " << tar << " [ constraint=false ];\n";
@@ -160,7 +176,7 @@ public:
 			auto &d = data(state);
 			Node &node = d.nodes.back();
 			std::ostringstream s;
-			s << "label=\"id=" << node.id << ", ";
+			s << "label=\"<f0>id=" << node.id << ", ";
 			printPartition(s, state, t.pi) << "\"";
 			node.data = s.str();
 			if(t.get_parent()) {

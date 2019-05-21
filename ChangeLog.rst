@@ -16,6 +16,8 @@ Incompatible Changes
 - Require version v0.4 PermGroup, though it is available as a Git submodule.
 - Change :cpp:func:`make_default_visitor` to include many more visitors,
   to provide a quick way to get a reasonable algorithm configuration.
+- Change the style of search tree depictions from :cpp:class:`stats_visitor`
+  to use rounded rectangles as node shapes.
 
 New Features
 ------------
