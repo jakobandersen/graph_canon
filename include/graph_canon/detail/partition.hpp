@@ -144,7 +144,7 @@ public:
 public:
 
 	class cell_splitter {
-		friend class partition;
+		friend struct partition;
 
 		cell_splitter(partition<SizeType> &pi, SizeType cell_begin, SizeType cell_end)
 		: pi(pi), cell_begin(cell_begin), cell_end(cell_end) {
