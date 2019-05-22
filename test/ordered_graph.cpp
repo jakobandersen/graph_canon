@@ -5,12 +5,10 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graph_concepts.hpp>
 #include <boost/property_map/property_map_iterator.hpp>
-#define BOOST_ALLOW_DEPRECATED_HEADERS // TODO: remove when Boost >= 1.70 is required
-#include <boost/random/mersenne_twister.hpp>
-#include <boost/random/random_device.hpp>
 #include <boost/test/minimal.hpp>
 
 #include <iostream>
+#include <random>
 
 template<typename OrdGraph, typename IndexMap, typename EdgeLess>
 void check_incidence(const OrdGraph &g, IndexMap idx, EdgeLess edge_less) {
@@ -112,7 +110,7 @@ void check_bidirectional(const OrdGraph &g, IndexMap idx, EdgeLess edge_less) {
 
 template<typename Graph, typename Gen>
 void randomize_edge_name(Graph &g, Gen &gen, std::size_t max_edge_name) {
-	boost::random::uniform_int_distribution<std::size_t> dist(0, max_edge_name);
+	std::uniform_int_distribution<std::size_t> dist(0, max_edge_name);
 
 	BGL_FORALL_EDGES_T(e, g, Graph) {
 		put(boost::edge_name_t(), g, e, dist(gen));
@@ -138,9 +136,9 @@ int test_main(int argc, char **argv) {
 	const std::size_t max_parallel_edges = 3;
 	const double parallel_edge_probability = 0.3;
 	const std::size_t max_edge_name = 5;
-	const std::size_t seed = boost::random::random_device()();
+	const std::size_t seed = std::random_device()();
 	std::cout << "Seed: " << seed << std::endl;
-	boost::mt19937 gen(seed);
+	std::mt19937 gen(seed);
 
 	typedef std::vector<std::size_t> IdxStore;
 	IdxStore idx;

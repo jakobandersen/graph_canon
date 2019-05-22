@@ -45,17 +45,15 @@
 #include <graph_canon/dimacs_graph_io.hpp>
 #include <graph_canon/util.hpp>
 
-#include <boost/chrono/duration.hpp>
-#include <boost/chrono/system_clocks.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graph_utility.hpp> // for boost::print_graph
 #include <boost/program_options.hpp>
-#define BOOST_ALLOW_DEPRECATED_HEADERS // TODO: remove when Boost >= 1.70 is required
-#include <boost/random/mersenne_twister.hpp>
 
+#include <chrono>
 #include <iomanip>
 #include <iostream>
 #include <fstream>
+#include <random>
 
 namespace po = boost::program_options;
 
@@ -145,7 +143,7 @@ std::ostream &operator<<(std::ostream &s, TreeTraversal tree) {
 //------------------------------------------------------------------------------
 
 struct Options {
-	using Clock = boost::chrono::system_clock;
+	using Clock = std::chrono::system_clock;
 
 	void setSource(const std::string &src) {
 		if(id.empty()) id = src;
@@ -172,7 +170,7 @@ struct Options {
 	}
 public:
 	std::string id, postId, postHeader;
-	boost::random::mt19937 gen;
+	std::mt19937 gen;
 	std::string dimacs;
 	LabelMode vLabelMode, eLabelMode;
 	std::size_t vLabelMax, eLabelMax;

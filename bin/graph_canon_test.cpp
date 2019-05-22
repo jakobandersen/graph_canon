@@ -165,7 +165,7 @@ struct ModeTest {
 		const auto maxTreeNodes = std::get<1>(canon_res);
 		const auto numTreeNodes = std::get<2>(canon_res);
 		options.printValues(std::cout) << "\t" << maxTreeNodes << "\t" << numTreeNodes << "\t" << num_vertices(g) << "\t" << num_edges(g) << "\t"
-				<< 0 << "\t" << boost::chrono::duration_cast<boost::chrono::milliseconds>(time).count() << std::endl;
+				<< 0 << "\t" << std::chrono::duration_cast<std::chrono::milliseconds>(time).count() << std::endl;
 		auto idxMap = boost::make_iterator_property_map(idx.cbegin(), get(boost::vertex_index_t(), g));
 		graph_canon::ordered_graph<Graph, decltype(idxMap) > orderedInputCanon(g, idxMap,
 				graph_canon::make_property_less(get(boost::edge_name_t(), g)));
@@ -190,7 +190,7 @@ struct ModeTest {
 			const auto maxTreeNodes = std::get<1>(canon_res);
 			const auto numTreeNodes = std::get<2>(canon_res);
 			options.printValues(std::cout) << "\t" << maxTreeNodes << "\t" << numTreeNodes << "\t" << num_vertices(g) << "\t" << num_edges(g) << "\t"
-					<< i << "\t" << boost::chrono::duration_cast<boost::chrono::milliseconds>(dur).count() << std::endl;
+					<< i << "\t" << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count() << std::endl;
 			time += dur;
 			auto idxPermutedMap = boost::make_iterator_property_map(idxPermuted.cbegin(), get(boost::vertex_index_t(), g_permuted));
 			graph_canon::ordered_graph<Graph, decltype(idxPermutedMap) > orderedPermutedCanon(g_permuted, idxPermutedMap,
@@ -259,7 +259,7 @@ struct ModeTest {
 			bool less = graph_canon::ordered_graph_less(orderedInputCanon, orderedPermutedCanon, vLess, eLess, vEqual, eEqual);
 			(void) less;
 		}
-		std::size_t totalTime = boost::chrono::duration_cast<boost::chrono::milliseconds>(time).count();
+		std::size_t totalTime = std::chrono::duration_cast<std::chrono::milliseconds>(time).count();
 		std::cout << "Time: " << totalTime << " ms (" << (static_cast<double> (totalTime) / (options.rounds + 1))
 				<< " ms, " << (options.rounds + 1) << " rounds)" << std::endl;
 	}

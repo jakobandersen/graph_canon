@@ -6,19 +6,16 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/program_options.hpp>
-#define BOOST_ALLOW_DEPRECATED_HEADERS // TODO: remove when Boost >= 1.70 is required
-#include <boost/random/mersenne_twister.hpp>
-#include <boost/random/random_device.hpp>
-#include <boost/random/uniform_int_distribution.hpp>
 
 #include <fstream>
 #include <iostream>
+#include <random>
 
 namespace po = boost::program_options;
 
 struct Options {
 	std::string file;
-	boost::random::mt19937 gen;
+	std::mt19937 gen;
 	std::size_t seed;
 	bool permute = false;
 };
@@ -49,9 +46,9 @@ int main(int argc, char **argv) {
 			("file,f", po::value<std::string>(&options.file)->required(), "Filename with graph to read. Use '-' to read from stdin.")
 			// rst: .. option:: -s <seed>, --seed <seed>
 			// rst:
-			// rst:		Seed for random number generator. A default seed from :cpp:expr:`boost::random::random_device` will be used if not specified.
+			// rst:		Seed for random number generator. A default seed from :cpp:expr:`std::random_device` will be used if not specified.
 			("seed,s", po::value<std::size_t>(&options.seed)->default_value(-1),
-			"Seed for random number generator. A default seed from boost::random::random_device will be used if not specified.")
+			"Seed for random number generator. A default seed from std::random_device will be used if not specified.")
 			// rst: .. option:: --permute
 			// rst:
 			// rst:		Make a random permutation of the graph and print it to stdout.
@@ -73,8 +70,8 @@ int main(int argc, char **argv) {
 	if(rawOptions.count("permute"))
 		options.permute = true;
 	if(options.seed == -1) {
-		boost::random::random_device dev;
-		boost::random::uniform_int_distribution<std::size_t> dist;
+		std::random_device dev;
+		std::uniform_int_distribution<std::size_t> dist;
 		options.seed = dist(dev);
 	}
 	options.gen.seed(options.seed);

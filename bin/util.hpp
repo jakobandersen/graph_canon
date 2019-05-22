@@ -4,11 +4,10 @@
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/iteration_macros.hpp>
 #include <boost/graph/properties.hpp>
-#include <boost/random/uniform_int_distribution.hpp>
-#include <boost/random/uniform_real_distribution.hpp>
 
 #include <cassert>
 #include <iostream>
+#include <random>
 #include <vector>
 
 template <typename Generator>
@@ -17,7 +16,7 @@ struct random_functor {
 	random_functor(Generator &g) : g(g) { }
 
 	std::size_t operator()(std::size_t n) {
-		boost::random::uniform_int_distribution<std::size_t> distrib(0, n - 1);
+		std::uniform_int_distribution<std::size_t> distrib(0, n - 1);
 		return distrib(g);
 	}
 private:
@@ -37,7 +36,7 @@ void make_random_graph(Graph &g, Gen &gen, double edge_probability,
 	assert((0 <= edge_probability) && (edge_probability <= 1));
 	assert((0 <= parallel_edge_probability) && (parallel_edge_probability <= 1));
 
-	auto dist_real = boost::random::uniform_real_distribution<double>(0.0, 1.0);
+	auto dist_real = std::uniform_real_distribution<double>(0.0, 1.0);
 
 	const auto vs = vertices(g);
 	for(auto u = vs.first; u != vs.second; ++u) {

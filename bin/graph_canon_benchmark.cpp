@@ -38,7 +38,7 @@ struct ModeBenchmark {
 		std::string prefix = sPrefix.str();
 		for(std::size_t i = 1;
 				i <= options.rounds
-				&& boost::chrono::duration_cast<boost::chrono::seconds>(time).count() <= options.time;
+				&& std::chrono::duration_cast<std::chrono::seconds>(time).count() <= options.time;
 				i++) {
 			std::vector<std::size_t> permutation = make_random_permutation(options.gen, id_permutation);
 			Graph g_permuted;
@@ -55,7 +55,9 @@ struct ModeBenchmark {
 					);
 			const auto &stats = get(graph_canon::stats_visitor::result_t(), res.second);
 			Options::Clock::duration dur = Options::Clock::now() - start;
-			std::cout << prefix << "\t" << stats.max_num_tree_nodes << "\t" << stats.num_tree_nodes << "\t" << num_vertices(g) << "\t" << num_edges(g) << "\t" << i << "\t" << boost::chrono::duration_cast<boost::chrono::milliseconds>(dur).count() << std::endl;
+			std::cout << prefix << "\t" << stats.max_num_tree_nodes << "\t" << stats.num_tree_nodes
+				<< "\t" << num_vertices(g) << "\t" << num_edges(g) << "\t" << i
+				<< "\t" << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count() << std::endl;
 			time += dur;
 		}
 	}

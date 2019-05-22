@@ -8,8 +8,7 @@ endif()
 add_executable(dimacs dimacs.cpp)
 target_link_libraries(dimacs PRIVATE
         graph_canon
-        Boost::program_options
-        Boost::random)
+        Boost::program_options)
 target_compile_options(dimacs PRIVATE -Wall -Wextra -pedantic
         -Wno-unused-parameter
         -Wno-comment
@@ -106,7 +105,6 @@ foreach(mode ${modes})
                     target_link_libraries(${name}
                             PRIVATE
                                 graph_canon
-                                Boost::chrono
                                 Boost::program_options)
                     target_compile_options(${name} PRIVATE -Wall -Wextra -pedantic
                             -Wno-unused-parameter

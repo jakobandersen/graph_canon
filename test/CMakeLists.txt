@@ -11,9 +11,7 @@ foreach(testName ${graph_canon_TEST_FILES})
             PRIVATE
                 ${PROJECT_SOURCE_DIR}/bin
                 ${Boost_INCLUDE_DIR})
-    target_link_libraries(${testName} PRIVATE
-            graph_canon
-            Boost::random)
+    target_link_libraries(${testName} PRIVATE graph_canon)
     if(BUILD_TESTING_SANITIZERS)
         target_compile_options(${testName} PRIVATE ${sanFlags})
         target_link_libraries(${testName} PRIVATE ${sanFlags})
