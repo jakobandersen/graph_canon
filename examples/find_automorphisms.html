@@ -1,0 +1,213 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>3.1.3. Finding the Automorphism Group &#8212; GraphCanon 0.4 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3.1.4. Investigating the Details of an Algorithm Configuration" href="debug_and_stats.html" />
+    <link rel="prev" title="3.1.2. Deciding Graph Ismorphism and Total Ordering of Graphs" href="check_isomorphism.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="debug_and_stats.html" title="3.1.4. Investigating the Details of an Algorithm Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="check_isomorphism.html" title="3.1.2. Deciding Graph Ismorphism and Total Ordering of Graphs"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">3. Examples</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="finding-the-automorphism-group">
+<h1>3.1.3. Finding the Automorphism Group<a class="headerlink" href="#finding-the-automorphism-group" title="Permalink to this headline">¶</a></h1>
+<p>Usually an algorithm configuration includes a visitor for pruning the
+search tree based on discovered autormphisms.
+In fact, the algorithm will incidentially compute a generating set
+for the complete automorphism group of the graph.
+We can get this generating set out from the result, along with the
+canonical order.</p>
+<p>Source file: <code class="docutils literal notranslate"><span class="pre">find_automorphisms.cpp</span></code></p>
+<div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">// In the examples we will load graphs in DIMACS format.</span>
+<span class="cp">#include</span> <span class="cpf">&lt;graph_canon/dimacs_graph_io.hpp&gt;</span><span class="cp"></span>
+<span class="c1">// We want to make a permuted view of the graph so we can iterate in canonical order.</span>
+<span class="cp">#include</span> <span class="cpf">&lt;graph_canon/ordered_graph.hpp&gt;</span><span class="cp"></span>
+<span class="c1">// Let&#39;s use a simplified interface for the canonicalization.</span>
+<span class="cp">#include</span> <span class="cpf">&lt;graph_canon/shorthands.hpp&gt;</span><span class="cp"></span>
+<span class="c1">// Provides for example the function object &#39;always_false&#39; and the function &#39;as_range&#39;.</span>
+<span class="cp">#include</span> <span class="cpf">&lt;graph_canon/util.hpp&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;perm_group/group/io.hpp&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;boost/graph/adjacency_list.hpp&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="n">Graph</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">adjacency_list</span><span class="o">&lt;</span><span class="n">boost</span><span class="o">::</span><span class="n">vecS</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">vecS</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">undirectedS</span><span class="p">,</span>
+		<span class="c1">// The DIMACS reader requires this property.</span>
+		<span class="c1">// In real uses one probably has some other properties instead.</span>
+		<span class="n">boost</span><span class="o">::</span><span class="n">property</span><span class="o">&lt;</span><span class="n">boost</span><span class="o">::</span><span class="n">vertex_name_t</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="n">gc</span> <span class="o">=</span> <span class="n">graph_canon</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="n">pg</span> <span class="o">=</span> <span class="n">perm_group</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Missing input file.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+		<span class="n">std</span><span class="o">::</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">ifs</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ifs</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Could not open file &#39;&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;&#39;.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+		<span class="n">std</span><span class="o">::</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="n">Graph</span> <span class="n">g</span><span class="p">;</span>
+	<span class="c1">// parse the given file, but error on both parallel edges and loops</span>
+	<span class="n">gc</span><span class="o">::</span><span class="n">read_dimacs_graph</span><span class="p">(</span><span class="n">ifs</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">cerr</span><span class="p">,</span> <span class="n">gc</span><span class="o">::</span><span class="n">always_false</span><span class="p">(),</span> <span class="n">gc</span><span class="o">::</span><span class="n">always_false</span><span class="p">());</span>
+	<span class="c1">// run the canonicalization, ignoring any labels, and using many defaults,</span>
+	<span class="k">auto</span> <span class="n">res</span> <span class="o">=</span> <span class="n">gc</span><span class="o">::</span><span class="n">canonicalize</span><span class="o">&lt;</span><span class="nb">false</span><span class="p">,</span> <span class="nb">false</span><span class="o">&gt;</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">gc</span><span class="o">::</span><span class="n">make_default_visitor</span><span class="p">());</span>
+	<span class="c1">// res is a pair with the first entry being the mapping from input IDs to canonical IDs,</span>
+	<span class="c1">// but the second entry is auxiliary data from the attached visitors.</span>
+	<span class="c1">// Through gc::make_default_visitor() we know that aut_pruner_basic is attached,</span>
+	<span class="c1">// so we can extract the automorphism group found during the canonicalisation:</span>
+	<span class="c1">// it is a unique_ptr to the group, so we move it out of the result</span>
+	<span class="k">auto</span> <span class="n">autGroupPtr</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">gc</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="n">gc</span><span class="o">::</span><span class="n">aut_pruner_basic</span><span class="o">::</span><span class="n">result_t</span><span class="p">(),</span> <span class="n">res</span><span class="p">.</span><span class="n">second</span><span class="p">));</span>
+	<span class="c1">// and we can now print the group as a generating set</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Aut(G): &quot;</span><span class="p">;</span>
+	<span class="n">pg</span><span class="o">::</span><span class="n">write_group</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">,</span> <span class="o">*</span><span class="n">autGroupPtr</span><span class="p">);</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="check_isomorphism.html"
+                        title="previous chapter">3.1.2. Deciding Graph Ismorphism and Total Ordering of Graphs</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="debug_and_stats.html"
+                        title="next chapter">3.1.4. Investigating the Details of an Algorithm Configuration</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/examples/find_automorphisms.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="debug_and_stats.html" title="3.1.4. Investigating the Details of an Algorithm Configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="check_isomorphism.html" title="3.1.2. Deciding Graph Ismorphism and Total Ordering of Graphs"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >3. Examples</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.0+/076e7f6.
+    </div>
+  </body>
+</html>

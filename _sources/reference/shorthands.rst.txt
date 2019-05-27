@@ -20,6 +20,12 @@ where various arguments have been defaulted.
 
     - `target_cell_flm`
     - `traversal_bfs_exp`
+        - `refine_WL_1`
+    - `aut_pruner_basic`
+    - `aut_implicit_size_2`
+    - `invariant_cell_split`
+    - `invariant_partial_leaf`
+    - `invariant_quotient`
 .. function:: template<bool ParallelEdges, bool Loops, typename Graph, typename Visitor> \
               auto canonicalize(const Graph &graph, Visitor visitor)
 
@@ -29,5 +35,15 @@ where various arguments have been defaulted.
     - The index map used is `get(boost::vertex_index_t(), graph)`.
     - The vertices and edges are considered unlabelled, i.e., `always_false` is used as vertex-less predicate,
       and `edge_handler_all_equal` is used as `EdgeHandlerCreator`.
+
+    See :expr:`canonicalizer::operator()`.
+.. function:: template<bool ParallelEdges, bool Loops, typename Graph, typename VertexLess, typename Visitor> \
+              auto canonicalize(const Graph &graph, VertexLess vertex_less, Visitor visitor)
+
+    A shorthand function for canonicalization, where only `ParallelEdges`, `Loops`, and `VertexLess` must be specified.
+
+    - The size type used is `boost::graph_traits<Graph>::vertices_size_type`.
+    - The index map used is `get(boost::vertex_index_t(), graph)`.
+    - The edges are considered unlabelled, i.e., `edge_handler_all_equal` is used as `EdgeHandlerCreator`.
 
     See :expr:`canonicalizer::operator()`.

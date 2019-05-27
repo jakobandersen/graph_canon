@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>4.15.4. visitor.hpp &#8212; GraphCanon v0.3 documentation</title>
+    <title>5.15.4. visitor.hpp &#8212; GraphCanon 0.4 documentation</title>
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
@@ -14,11 +14,12 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="prev" title="4.15.3. stats.hpp" href="stats.html" /> 
+    <link rel="prev" title="5.15.3. stats.hpp" href="stats.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -27,11 +28,11 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="stats.html" title="4.15.3. stats.hpp"
+          <a href="stats.html" title="5.15.3. stats.hpp"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon v0.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >4. Library Reference</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">4.15. visitor</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon 0.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >5. Library Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">5.15. visitor</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -41,20 +42,20 @@
           <div class="body" role="main">
             
   <div class="section" id="visitor-hpp">
-<span id="cpp-visitor-visitor"></span><h1>4.15.4. visitor.hpp<a class="headerlink" href="#visitor-hpp" title="Permalink to this headline">¶</a></h1>
+<span id="cpp-visitor-visitor"></span><h1>5.15.4. visitor.hpp<a class="headerlink" href="#visitor-hpp" title="Permalink to this headline">¶</a></h1>
 <p>Full path: <code class="docutils literal notranslate"><span class="pre">graph_canon/visitor/visitor.hpp</span></code></p>
 <dl class="class">
-<dt id="_CPPv3N11graph_canon9no_resultE">
-<span id="_CPPv2N11graph_canon9no_resultE"></span><span id="graph_canon::no_result"></span><em class="property">class </em><code class="descname">no_result</code><a class="headerlink" href="#_CPPv3N11graph_canon9no_resultE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N11graph_canon9no_resultE">
+<span id="_CPPv3N11graph_canon9no_resultE"></span><span id="_CPPv2N11graph_canon9no_resultE"></span><span id="graph_canon::no_result"></span><em class="property">class </em><code class="descname">no_result</code><a class="headerlink" href="#_CPPv4N11graph_canon9no_resultE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>A helper-class to derive visitors from that do not want to return data.</p>
 <dl class="function">
-<dt id="_CPPv3I0EN11graph_canon9no_result14extract_resultERK5State">
-<span id="_CPPv2I0EN11graph_canon9no_result14extract_resultERK5State"></span>template&lt;typename <code class="descname">State</code>&gt;<br /><a class="reference internal" href="../tagged_list.html#_CPPv3IDpEN11graph_canon11tagged_listE" title="graph_canon::tagged_list">tagged_list</a>&lt;&gt; <code class="descname">extract_result</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv3I0EN11graph_canon9no_result14extract_resultERK5State" title="graph_canon::no_result::extract_result::State">State</a>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv3I0EN11graph_canon9no_result14extract_resultERK5State" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I0EN11graph_canon9no_result14extract_resultE11tagged_listIERK5State">
+<span id="_CPPv3I0EN11graph_canon9no_result14extract_resultERK5State"></span><span id="_CPPv2I0EN11graph_canon9no_result14extract_resultERK5State"></span>template&lt;typename <code class="descname">State</code>&gt;<br /><a class="reference internal" href="../tagged_list.html#_CPPv4IDpEN11graph_canon11tagged_listE" title="graph_canon::tagged_list">tagged_list</a>&lt;&gt; <code class="descname">extract_result</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I0EN11graph_canon9no_result14extract_resultE11tagged_listIERK5State" title="graph_canon::no_result::extract_result::State">State</a>&amp;<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN11graph_canon9no_result14extract_resultE11tagged_listIERK5State" title="Permalink to this definition">¶</a><br /></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../tagged_list.html#_CPPv3IDpEN11graph_canon11tagged_listE" title="graph_canon::tagged_list"><span class="pre">tagged_list</span></a><span class="pre">&lt;</span><span class="pre">&gt;</span><span class="pre">(</span><span class="pre">)</span></code></td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../tagged_list.html#_CPPv4IDpEN11graph_canon11tagged_listE" title="graph_canon::tagged_list"><span class="pre">tagged_list</span></a><span class="pre">&lt;</span><span class="pre">&gt;</span><span class="pre">(</span><span class="pre">)</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -63,15 +64,15 @@
 </dd></dl>
 
 <dl class="class">
-<dt id="_CPPv3N11graph_canon16no_instance_dataE">
-<span id="_CPPv2N11graph_canon16no_instance_dataE"></span><span id="graph_canon::no_instance_data"></span><em class="property">class </em><code class="descname">no_instance_data</code><a class="headerlink" href="#_CPPv3N11graph_canon16no_instance_dataE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N11graph_canon16no_instance_dataE">
+<span id="_CPPv3N11graph_canon16no_instance_dataE"></span><span id="_CPPv2N11graph_canon16no_instance_dataE"></span><span id="graph_canon::no_instance_data"></span><em class="property">class </em><code class="descname">no_instance_data</code><a class="headerlink" href="#_CPPv4N11graph_canon16no_instance_dataE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>A helper-class to derive visitors from that do not need extra instance-wide data.</p>
 <dl class="class">
-<dt id="_CPPv3I00EN11graph_canon16no_instance_data12InstanceDataE">
-<span id="_CPPv2I00EN11graph_canon16no_instance_data12InstanceDataE"></span>template&lt;typename <code class="descname">Config</code>, typename <code class="descname">TreeNode</code>&gt;<br /><em class="property">class </em><code class="descname">InstanceData</code><a class="headerlink" href="#_CPPv3I00EN11graph_canon16no_instance_data12InstanceDataE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I00EN11graph_canon16no_instance_data12InstanceDataE">
+<span id="_CPPv3I00EN11graph_canon16no_instance_data12InstanceDataE"></span><span id="_CPPv2I00EN11graph_canon16no_instance_data12InstanceDataE"></span>template&lt;typename <code class="descname">Config</code>, typename <code class="descname">TreeNode</code>&gt;<br /><em class="property">class </em><code class="descname">InstanceData</code><a class="headerlink" href="#_CPPv4I00EN11graph_canon16no_instance_data12InstanceDataE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><dl class="type">
-<dt id="_CPPv3N11graph_canon16no_instance_data12InstanceData4typeE">
-<span id="_CPPv2N11graph_canon16no_instance_data12InstanceData4typeE"></span><em class="property">using </em><code class="descname">type</code> = <a class="reference internal" href="../tagged_list.html#_CPPv3IDpEN11graph_canon11tagged_listE" title="graph_canon::tagged_list">tagged_list</a>&lt;&gt;<a class="headerlink" href="#_CPPv3N11graph_canon16no_instance_data12InstanceData4typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N11graph_canon16no_instance_data12InstanceData4typeE">
+<span id="_CPPv3N11graph_canon16no_instance_data12InstanceData4typeE"></span><span id="_CPPv2N11graph_canon16no_instance_data12InstanceData4typeE"></span><em class="property">using </em><code class="descname">type</code> = <a class="reference internal" href="../tagged_list.html#_CPPv4IDpEN11graph_canon11tagged_listE" title="graph_canon::tagged_list">tagged_list</a>&lt;&gt;<a class="headerlink" href="#_CPPv4N11graph_canon16no_instance_data12InstanceData4typeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -79,15 +80,15 @@
 </dd></dl>
 
 <dl class="class">
-<dt id="_CPPv3N11graph_canon17no_tree_node_dataE">
-<span id="_CPPv2N11graph_canon17no_tree_node_dataE"></span><span id="graph_canon::no_tree_node_data"></span><em class="property">class </em><code class="descname">no_tree_node_data</code><a class="headerlink" href="#_CPPv3N11graph_canon17no_tree_node_dataE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N11graph_canon17no_tree_node_dataE">
+<span id="_CPPv3N11graph_canon17no_tree_node_dataE"></span><span id="_CPPv2N11graph_canon17no_tree_node_dataE"></span><span id="graph_canon::no_tree_node_data"></span><em class="property">class </em><code class="descname">no_tree_node_data</code><a class="headerlink" href="#_CPPv4N11graph_canon17no_tree_node_dataE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>A helper-class to derive visitors from that do not need extra data in each tree node.</p>
 <dl class="class">
-<dt id="_CPPv3I00EN11graph_canon17no_tree_node_data12TreeNodeDataE">
-<span id="_CPPv2I00EN11graph_canon17no_tree_node_data12TreeNodeDataE"></span>template&lt;typename <code class="descname">Config</code>, typename <code class="descname">TreeNode</code>&gt;<br /><em class="property">class </em><code class="descname">TreeNodeData</code><a class="headerlink" href="#_CPPv3I00EN11graph_canon17no_tree_node_data12TreeNodeDataE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I00EN11graph_canon17no_tree_node_data12TreeNodeDataE">
+<span id="_CPPv3I00EN11graph_canon17no_tree_node_data12TreeNodeDataE"></span><span id="_CPPv2I00EN11graph_canon17no_tree_node_data12TreeNodeDataE"></span>template&lt;typename <code class="descname">Config</code>, typename <code class="descname">TreeNode</code>&gt;<br /><em class="property">class </em><code class="descname">TreeNodeData</code><a class="headerlink" href="#_CPPv4I00EN11graph_canon17no_tree_node_data12TreeNodeDataE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><dl class="type">
-<dt id="_CPPv3N11graph_canon17no_tree_node_data12TreeNodeData4typeE">
-<span id="_CPPv2N11graph_canon17no_tree_node_data12TreeNodeData4typeE"></span><em class="property">using </em><code class="descname">type</code> = <a class="reference internal" href="../tagged_list.html#_CPPv3IDpEN11graph_canon11tagged_listE" title="graph_canon::tagged_list">tagged_list</a>&lt;&gt;<a class="headerlink" href="#_CPPv3N11graph_canon17no_tree_node_data12TreeNodeData4typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N11graph_canon17no_tree_node_data12TreeNodeData4typeE">
+<span id="_CPPv3N11graph_canon17no_tree_node_data12TreeNodeData4typeE"></span><span id="_CPPv2N11graph_canon17no_tree_node_data12TreeNodeData4typeE"></span><em class="property">using </em><code class="descname">type</code> = <a class="reference internal" href="../tagged_list.html#_CPPv4IDpEN11graph_canon11tagged_listE" title="graph_canon::tagged_list">tagged_list</a>&lt;&gt;<a class="headerlink" href="#_CPPv4N11graph_canon17no_tree_node_data12TreeNodeData4typeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -95,51 +96,51 @@
 </dd></dl>
 
 <dl class="class">
-<dt id="_CPPv3N11graph_canon12null_visitorE">
-<span id="_CPPv2N11graph_canon12null_visitorE"></span><span id="graph_canon::null_visitor"></span><em class="property">class </em><code class="descname">null_visitor</code> : <a class="reference internal" href="#_CPPv3N11graph_canon16no_instance_dataE" title="graph_canon::no_instance_data">no_instance_data</a>, <a class="reference internal" href="#_CPPv3N11graph_canon17no_tree_node_dataE" title="graph_canon::no_tree_node_data">no_tree_node_data</a>, <a class="reference internal" href="#_CPPv3N11graph_canon9no_resultE" title="graph_canon::no_result">no_result</a><a class="headerlink" href="#_CPPv3N11graph_canon12null_visitorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N11graph_canon12null_visitorE">
+<span id="_CPPv3N11graph_canon12null_visitorE"></span><span id="_CPPv2N11graph_canon12null_visitorE"></span><span id="graph_canon::null_visitor"></span><em class="property">class </em><code class="descname">null_visitor</code> : <a class="reference internal" href="#_CPPv4N11graph_canon16no_instance_dataE" title="graph_canon::no_instance_data">no_instance_data</a>, <a class="reference internal" href="#_CPPv4N11graph_canon17no_tree_node_dataE" title="graph_canon::no_tree_node_data">no_tree_node_data</a>, <a class="reference internal" href="#_CPPv4N11graph_canon9no_resultE" title="graph_canon::no_result">no_result</a><a class="headerlink" href="#_CPPv4N11graph_canon12null_visitorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>A visitor that does nothing.
 That is, it provides a default implementation for each event.</p>
 </dd></dl>
 
 <dl class="concept">
-<dt id="_CPPv3I0EN11graph_canon7VisitorE">
-<span id="_CPPv2I0EN11graph_canon7VisitorE"></span>template&lt;typename <code class="descname">Vis</code>&gt;<br /><em class="property">concept </em><code class="descname">Visitor</code><a class="headerlink" href="#_CPPv3I0EN11graph_canon7VisitorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I0EN11graph_canon7VisitorE">
+<span id="_CPPv3I0EN11graph_canon7VisitorE"></span><span id="_CPPv2I0EN11graph_canon7VisitorE"></span>template&lt;typename <code class="descname">Vis</code>&gt;<br /><em class="property">concept </em><code class="descname">Visitor</code><a class="headerlink" href="#_CPPv4I0EN11graph_canon7VisitorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The central concept for plugins.
-When writing new plugins it may be useful to derive from <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon12null_visitorE" title="graph_canon::null_visitor"><span class="pre">null_visitor</span></a></code>
+When writing new plugins it may be useful to derive from <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon12null_visitorE" title="graph_canon::null_visitor"><span class="pre">null_visitor</span></a></code>
 to start with default-implementations of all elements.</p>
 <div style="font-weight: bold; font-size: 110%;">Notation</div><hr style="margin-top: 0px; border: none; border-top: 1px solid #8c8c8c; width: 30em; display: inline-block;" /><dl class="var">
-<dt id="_CPPv3N11graph_canon7Visitor3visE">
-<span id="_CPPv2N11graph_canon7Visitor3visE"></span><span id="graph_canon::Visitor::vis__Vis"></span><a class="reference internal" href="#_CPPv3I0EN11graph_canon7VisitorE" title="graph_canon::Visitor::Vis">Vis</a> <code class="descname">vis</code><a class="headerlink" href="#_CPPv3N11graph_canon7Visitor3visE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N11graph_canon7Visitor3visE">
+<span id="_CPPv3N11graph_canon7Visitor3visE"></span><span id="_CPPv2N11graph_canon7Visitor3visE"></span><span id="graph_canon::Visitor::vis__Vis"></span><a class="reference internal" href="#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor::Vis">Vis</a> <code class="descname">vis</code><a class="headerlink" href="#_CPPv4N11graph_canon7Visitor3visE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="var">
-<dt id="_CPPv3N11graph_canon7Visitor5stateE">
-<span id="_CPPv2N11graph_canon7Visitor5stateE"></span><span id="graph_canon::Visitor::state__State"></span>State <code class="descname">state</code><a class="headerlink" href="#_CPPv3N11graph_canon7Visitor5stateE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>A specialization of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv3I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a></code>.</p>
+<dt id="_CPPv4N11graph_canon7Visitor5stateE">
+<span id="_CPPv3N11graph_canon7Visitor5stateE"></span><span id="_CPPv2N11graph_canon7Visitor5stateE"></span><span id="graph_canon::Visitor::state__State"></span>State <code class="descname">state</code><a class="headerlink" href="#_CPPv4N11graph_canon7Visitor5stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A specialization of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv4I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a></code>.</p>
 </dd></dl>
 
 <dl class="var">
-<dt id="_CPPv3N11graph_canon7Visitor1tE">
-<span id="_CPPv2N11graph_canon7Visitor1tE"></span><span id="graph_canon::Visitor::t__TreeNode"></span>TreeNode <code class="descname">t</code><a class="headerlink" href="#_CPPv3N11graph_canon7Visitor1tE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N11graph_canon7Visitor1tE">
+<span id="_CPPv3N11graph_canon7Visitor1tE"></span><span id="_CPPv2N11graph_canon7Visitor1tE"></span><span id="graph_canon::Visitor::t__TreeNode"></span>TreeNode <code class="descname">t</code><a class="headerlink" href="#_CPPv4N11graph_canon7Visitor1tE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>A specialization of <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">tree_node</span></code>.</p>
 </dd></dl>
 
 <dl class="var">
-<dt id="_CPPv3N11graph_canon7Visitor3autE">
-<span id="_CPPv2N11graph_canon7Visitor3autE"></span><span id="graph_canon::Visitor::aut__Perm"></span>Perm <code class="descname">aut</code><a class="headerlink" href="#_CPPv3N11graph_canon7Visitor3autE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N11graph_canon7Visitor3autE">
+<span id="_CPPv3N11graph_canon7Visitor3autE"></span><span id="_CPPv2N11graph_canon7Visitor3autE"></span><span id="graph_canon::Visitor::aut__Perm"></span>Perm <code class="descname">aut</code><a class="headerlink" href="#_CPPv4N11graph_canon7Visitor3autE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>A <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">perm_group</span><span class="pre">::</span><span class="pre">Permutation</span></code>.</p>
 </dd></dl>
 
 <div style="font-weight: bold; font-size: 110%;">Associated Types</div><hr style="margin-top: 0px; border: none; border-top: 1px solid #8c8c8c; width: 30em; display: inline-block;" /><dl class="class">
-<dt id="_CPPv3I00EN11graph_canon7Visitor3Vis12InstanceDataE">
-<span id="_CPPv2I00EN11graph_canon7Visitor3Vis12InstanceDataE"></span>template&lt;typename <code class="descname">Config</code>, typename <code class="descname">TreeNode</code>&gt;<br /><em class="property">class </em><code class="descclassname"><a class="reference internal" href="#_CPPv3I0EN11graph_canon7VisitorE" title="graph_canon::Visitor::Vis">Vis</a><code class="descclassname">::</code></code><code class="descname">InstanceData</code><a class="headerlink" href="#_CPPv3I00EN11graph_canon7Visitor3Vis12InstanceDataE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I00EN11graph_canon7Visitor3Vis12InstanceDataE">
+<span id="_CPPv3I00EN11graph_canon7Visitor3Vis12InstanceDataE"></span><span id="_CPPv2I00EN11graph_canon7Visitor3Vis12InstanceDataE"></span>template&lt;typename <code class="descname">Config</code>, typename <code class="descname">TreeNode</code>&gt;<br /><em class="property">class </em><code class="descclassname"><a class="reference internal" href="#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor::Vis">Vis</a><code class="descclassname">::</code></code><code class="descname">InstanceData</code><a class="headerlink" href="#_CPPv4I00EN11graph_canon7Visitor3Vis12InstanceDataE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name" colspan="2">Template Parameters:</th></tr>
 <tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first last simple">
-<li><strong>Config</strong> – a specialization of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv3I0_b_b000EN11graph_canon6configE" title="graph_canon::config"><span class="pre">config</span></a></code>.</li>
+<li><strong>Config</strong> – a specialization of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv4I0_b_b000EN11graph_canon6configE" title="graph_canon::config"><span class="pre">config</span></a></code>.</li>
 <li><strong>TreeNode</strong> – a specialization of <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">tree_node</span></code>.</li>
 </ul>
 </td>
@@ -147,48 +148,48 @@ to start with default-implementations of all elements.</p>
 </tbody>
 </table>
 <dl class="type">
-<dt id="_CPPv3N11graph_canon7Visitor3Vis12InstanceData4typeE">
-<span id="_CPPv2N11graph_canon7Visitor3Vis12InstanceData4typeE"></span><span id="graph_canon::Visitor::Vis::InstanceData::type"></span><em class="property">type </em><code class="descname">type</code><a class="headerlink" href="#_CPPv3N11graph_canon7Visitor3Vis12InstanceData4typeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>An alias for either a <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../tagged_list.html#_CPPv3IDpEN11graph_canon11tagged_listE" title="graph_canon::tagged_list"><span class="pre">tagged_list</span></a></code> or a <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../tagged_list.html#_CPPv3I00EN11graph_canon14tagged_elementE" title="graph_canon::tagged_element"><span class="pre">tagged_element</span></a></code>.
-An object of the this type will be instantiated in each <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv3I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a></code>.
-If non is needed, you can derive from <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon16no_instance_dataE" title="graph_canon::no_instance_data"><span class="pre">no_instance_data</span></a></code>.</p>
+<dt id="_CPPv4N11graph_canon7Visitor3Vis12InstanceData4typeE">
+<span id="_CPPv3N11graph_canon7Visitor3Vis12InstanceData4typeE"></span><span id="_CPPv2N11graph_canon7Visitor3Vis12InstanceData4typeE"></span><span id="graph_canon::Visitor::Vis::InstanceData::type"></span><em class="property">type </em><code class="descname">type</code><a class="headerlink" href="#_CPPv4N11graph_canon7Visitor3Vis12InstanceData4typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An alias for either a <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../tagged_list.html#_CPPv4IDpEN11graph_canon11tagged_listE" title="graph_canon::tagged_list"><span class="pre">tagged_list</span></a></code> or a <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../tagged_list.html#_CPPv4I00EN11graph_canon14tagged_elementE" title="graph_canon::tagged_element"><span class="pre">tagged_element</span></a></code>.
+An object of the this type will be instantiated in each <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv4I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a></code>.
+If non is needed, you can derive from <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon16no_instance_dataE" title="graph_canon::no_instance_data"><span class="pre">no_instance_data</span></a></code>.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="_CPPv3I00EN11graph_canon7Visitor3Vis12TreeNodeDataE">
-<span id="_CPPv2I00EN11graph_canon7Visitor3Vis12TreeNodeDataE"></span>template&lt;typename <code class="descname">Config</code>, typename <code class="descname">TreeNode</code>&gt;<br /><em class="property">class </em><code class="descclassname"><a class="reference internal" href="#_CPPv3I0EN11graph_canon7VisitorE" title="graph_canon::Visitor::Vis">Vis</a><code class="descclassname">::</code></code><code class="descname">TreeNodeData</code><a class="headerlink" href="#_CPPv3I00EN11graph_canon7Visitor3Vis12TreeNodeDataE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I00EN11graph_canon7Visitor3Vis12TreeNodeDataE">
+<span id="_CPPv3I00EN11graph_canon7Visitor3Vis12TreeNodeDataE"></span><span id="_CPPv2I00EN11graph_canon7Visitor3Vis12TreeNodeDataE"></span>template&lt;typename <code class="descname">Config</code>, typename <code class="descname">TreeNode</code>&gt;<br /><em class="property">class </em><code class="descclassname"><a class="reference internal" href="#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor::Vis">Vis</a><code class="descclassname">::</code></code><code class="descname">TreeNodeData</code><a class="headerlink" href="#_CPPv4I00EN11graph_canon7Visitor3Vis12TreeNodeDataE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><dl class="type">
-<dt id="_CPPv3N11graph_canon7Visitor3Vis12TreeNodeData4typeE">
-<span id="_CPPv2N11graph_canon7Visitor3Vis12TreeNodeData4typeE"></span><span id="graph_canon::Visitor::Vis::TreeNodeData::type"></span><em class="property">type </em><code class="descname">type</code><a class="headerlink" href="#_CPPv3N11graph_canon7Visitor3Vis12TreeNodeData4typeE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>An alias for either a <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../tagged_list.html#_CPPv3IDpEN11graph_canon11tagged_listE" title="graph_canon::tagged_list"><span class="pre">tagged_list</span></a></code> or a <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../tagged_list.html#_CPPv3I00EN11graph_canon14tagged_elementE" title="graph_canon::tagged_element"><span class="pre">tagged_element</span></a></code>.
+<dt id="_CPPv4N11graph_canon7Visitor3Vis12TreeNodeData4typeE">
+<span id="_CPPv3N11graph_canon7Visitor3Vis12TreeNodeData4typeE"></span><span id="_CPPv2N11graph_canon7Visitor3Vis12TreeNodeData4typeE"></span><span id="graph_canon::Visitor::Vis::TreeNodeData::type"></span><em class="property">type </em><code class="descname">type</code><a class="headerlink" href="#_CPPv4N11graph_canon7Visitor3Vis12TreeNodeData4typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An alias for either a <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../tagged_list.html#_CPPv4IDpEN11graph_canon11tagged_listE" title="graph_canon::tagged_list"><span class="pre">tagged_list</span></a></code> or a <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../tagged_list.html#_CPPv4I00EN11graph_canon14tagged_elementE" title="graph_canon::tagged_element"><span class="pre">tagged_element</span></a></code>.
 An object of the this type will be instantiated in each <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">tree_node</span></code>.
-If non is needed, you can derive from <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon17no_tree_node_dataE" title="graph_canon::no_tree_node_data"><span class="pre">no_tree_node_data</span></a></code>.</p>
+If non is needed, you can derive from <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon17no_tree_node_dataE" title="graph_canon::no_tree_node_data"><span class="pre">no_tree_node_data</span></a></code>.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="type">
-<dt id="_CPPv3N11graph_canon7Visitor3Vis22can_select_target_cellE">
-<span id="_CPPv2N11graph_canon7Visitor3Vis22can_select_target_cellE"></span><span id="graph_canon::Visitor::Vis::can_select_target_cell"></span><em class="property">type </em><code class="descclassname"><a class="reference internal" href="#_CPPv3I0EN11graph_canon7VisitorE" title="graph_canon::Visitor::Vis">Vis</a><code class="descclassname">::</code></code><code class="descname">can_select_target_cell</code><a class="headerlink" href="#_CPPv3N11graph_canon7Visitor3Vis22can_select_target_cellE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N11graph_canon7Visitor3Vis22can_select_target_cellE">
+<span id="_CPPv3N11graph_canon7Visitor3Vis22can_select_target_cellE"></span><span id="_CPPv2N11graph_canon7Visitor3Vis22can_select_target_cellE"></span><span id="graph_canon::Visitor::Vis::can_select_target_cell"></span><em class="property">type </em><code class="descclassname"><a class="reference internal" href="#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor::Vis">Vis</a><code class="descclassname">::</code></code><code class="descname">can_select_target_cell</code><a class="headerlink" href="#_CPPv4N11graph_canon7Visitor3Vis22can_select_target_cellE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>An alias for either <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">std</span><span class="pre">::</span><span class="pre">true_type</span></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">std</span><span class="pre">::</span><span class="pre">false_type</span></code>
 to denote whether the visitor want to be the target cell selector.
-If so, the expression <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">select_target_cell</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code> must be valid,
+If so, the expression <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">select_target_cell</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code> must be valid,
 and return a non-negative integer strictly less than <span class="math notranslate nohighlight">\(n\)</span>.</p>
 </dd></dl>
 
 <dl class="type">
-<dt id="_CPPv3N11graph_canon7Visitor3Vis16can_explore_treeE">
-<span id="_CPPv2N11graph_canon7Visitor3Vis16can_explore_treeE"></span><span id="graph_canon::Visitor::Vis::can_explore_tree"></span><em class="property">type </em><code class="descclassname"><a class="reference internal" href="#_CPPv3I0EN11graph_canon7VisitorE" title="graph_canon::Visitor::Vis">Vis</a><code class="descclassname">::</code></code><code class="descname">can_explore_tree</code><a class="headerlink" href="#_CPPv3N11graph_canon7Visitor3Vis16can_explore_treeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N11graph_canon7Visitor3Vis16can_explore_treeE">
+<span id="_CPPv3N11graph_canon7Visitor3Vis16can_explore_treeE"></span><span id="_CPPv2N11graph_canon7Visitor3Vis16can_explore_treeE"></span><span id="graph_canon::Visitor::Vis::can_explore_tree"></span><em class="property">type </em><code class="descclassname"><a class="reference internal" href="#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor::Vis">Vis</a><code class="descclassname">::</code></code><code class="descname">can_explore_tree</code><a class="headerlink" href="#_CPPv4N11graph_canon7Visitor3Vis16can_explore_treeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>An alias for either <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">std</span><span class="pre">::</span><span class="pre">true_type</span></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">std</span><span class="pre">::</span><span class="pre">false_type</span></code>
 to denote whether the visitor want to provide the tree traversal algorithm.
-If so, the expression <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">explore_tree</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">)</span></code> must be valid.</p>
+If so, the expression <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">explore_tree</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">)</span></code> must be valid.</p>
 </dd></dl>
 
 <div style="font-weight: bold; font-size: 110%;">Valid Expressions</div><hr style="margin-top: 0px; border: none; border-top: 1px solid #8c8c8c; width: 30em; display: inline-block;" /><ul>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">initialize</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">initialize</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">void</span></code></div>
 <div class="line">Called: before the root node is constructed.</div>
 </div>
@@ -197,33 +198,33 @@ If so, the expression <code class="xref cpp cpp-expr docutils literal notranslat
 <p><strong>Tree Node Methods</strong></p>
 <ul>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">extract_result</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">)</span></code></div>
-<div class="line">Return type: a specialization of either <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../tagged_list.html#_CPPv3IDpEN11graph_canon11tagged_listE" title="graph_canon::tagged_list"><span class="pre">tagged_list</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../tagged_list.html#_CPPv3I00EN11graph_canon14tagged_elementE" title="graph_canon::tagged_element"><span class="pre">tagged_element</span></a></code>.</div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">extract_result</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">)</span></code></div>
+<div class="line">Return type: a specialization of either <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../tagged_list.html#_CPPv4IDpEN11graph_canon11tagged_listE" title="graph_canon::tagged_list"><span class="pre">tagged_list</span></a></code> or <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../tagged_list.html#_CPPv4I00EN11graph_canon14tagged_elementE" title="graph_canon::tagged_element"><span class="pre">tagged_element</span></a></code>.</div>
 <div class="line">Called: when the complete tree has been explored.</div>
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">tree_create_node_begin</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">tree_create_node_begin</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">bool</span></code></div>
 <div class="line">Called: in the beginning of the <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">tree_node</span></code> constructor.</div>
 <div class="line">Returning <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">false</span></code> means the tree node should be pruned.</div>
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">tree_create_node_end</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">tree_create_node_end</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">bool</span></code></div>
 <div class="line">Called: in the end of the <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">tree_node</span></code> constructor.</div>
 <div class="line">Returning <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">false</span></code> means the tree node should be pruned.</div>
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">tree_destroy_node</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">tree_destroy_node</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">void</span></code></div>
 <div class="line">Called: in the beginning of the <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">tree_node</span></code> destructor.</div>
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">tree_before_descend</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">tree_before_descend</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">void</span></code></div>
 <div class="line">Called: by tree traversal algorithms before inspecting the list of children.</div>
 <div class="line">The method facilitates pruning of children, and may be called at any time</div>
@@ -231,20 +232,20 @@ If so, the expression <code class="xref cpp cpp-expr docutils literal notranslat
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">tree_create_child</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <span class="pre">element_idx_to_individualise</span><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">tree_create_child</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <span class="pre">element_idx_to_individualise</span><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">void</span></code></div>
 <div class="line">Called: by <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">tree_node</span><span class="pre">.</span><span class="pre">create_child</span></code> before a new tree node is created.</div>
 <div class="line">See <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">tree_node</span><span class="pre">.</span><span class="pre">create_child</span></code> for the meaning of <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">element_idx_to_individualise</span></code>.</div>
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">tree_leaf</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">tree_leaf</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">void</span></code></div>
-<div class="line">Called: in the beginning of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv3I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a><span class="pre">::</span><a class="reference internal" href="../canonicalization.html#_CPPv3N11graph_canon11canon_state11report_leafE8OwnerPtr" title="graph_canon::canon_state::report_leaf"><span class="pre">report_leaf</span></a></code>.</div>
+<div class="line">Called: in the beginning of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv4I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a><span class="pre">::</span><a class="reference internal" href="../canonicalization.html#_CPPv4N11graph_canon11canon_state11report_leafE8OwnerPtr" title="graph_canon::canon_state::report_leaf"><span class="pre">report_leaf</span></a></code>.</div>
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">tree_prune_node</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">tree_prune_node</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">void</span></code></div>
 <div class="line">Called: in <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">tree_node</span><span class="pre">.</span><span class="pre">prune_subtree</span></code> before the children are pruned recursively.</div>
 </div>
@@ -253,37 +254,37 @@ If so, the expression <code class="xref cpp cpp-expr docutils literal notranslat
 <p><strong>Canonical Form Methods</strong></p>
 <ul>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">canon_new_best</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <span class="pre">t_ptr</span><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">canon_new_best</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <span class="pre">t_ptr</span><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">void</span></code></div>
-<div class="line">Called: in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv3I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a><span class="pre">::</span><a class="reference internal" href="../canonicalization.html#_CPPv3N11graph_canon11canon_state11report_leafE8OwnerPtr" title="graph_canon::canon_state::report_leaf"><span class="pre">report_leaf</span></a></code> after a new best leaf has been assigned. A pointer to a previous leaf, if any, is given.</div>
+<div class="line">Called: in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv4I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a><span class="pre">::</span><a class="reference internal" href="../canonicalization.html#_CPPv4N11graph_canon11canon_state11report_leafE8OwnerPtr" title="graph_canon::canon_state::report_leaf"><span class="pre">report_leaf</span></a></code> after a new best leaf has been assigned. A pointer to a previous leaf, if any, is given.</div>
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">canon_worse</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">canon_worse</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">void</span></code></div>
-<div class="line">Called: in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv3I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a><span class="pre">::</span><a class="reference internal" href="../canonicalization.html#_CPPv3N11graph_canon11canon_state11report_leafE8OwnerPtr" title="graph_canon::canon_state::report_leaf"><span class="pre">report_leaf</span></a></code> when the candidate node <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> is worse than the current best leaf.</div>
+<div class="line">Called: in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv4I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a><span class="pre">::</span><a class="reference internal" href="../canonicalization.html#_CPPv4N11graph_canon11canon_state11report_leafE8OwnerPtr" title="graph_canon::canon_state::report_leaf"><span class="pre">report_leaf</span></a></code> when the candidate node <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> is worse than the current best leaf.</div>
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">canon_prune</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">canon_prune</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">void</span></code></div>
-<div class="line">Called: in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv3I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a><span class="pre">::</span><a class="reference internal" href="../canonicalization.html#_CPPv3N11graph_canon11canon_state16prune_canon_leafEv" title="graph_canon::canon_state::prune_canon_leaf"><span class="pre">prune_canon_leaf</span></a></code> if there is a best leaf, before it is unassigned.</div>
+<div class="line">Called: in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv4I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a><span class="pre">::</span><a class="reference internal" href="../canonicalization.html#_CPPv4N11graph_canon11canon_state16prune_canon_leafEv" title="graph_canon::canon_state::prune_canon_leaf"><span class="pre">prune_canon_leaf</span></a></code> if there is a best leaf, before it is unassigned.</div>
 </div>
 </li>
 </ul>
 <p><strong>Automorphism Methods</strong></p>
 <ul>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">automorphism_leaf</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3autE" title="graph_canon::Visitor::aut"><span class="pre">aut</span></a><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">automorphism_leaf</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3autE" title="graph_canon::Visitor::aut"><span class="pre">aut</span></a><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">void</span></code></div>
-<div class="line">Called: in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv3I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a><span class="pre">::</span><a class="reference internal" href="../canonicalization.html#_CPPv3N11graph_canon11canon_state16prune_canon_leafEv" title="graph_canon::canon_state::prune_canon_leaf"><span class="pre">prune_canon_leaf</span></a></code> when the candidate leaf <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> is as good as the current best leaf.</div>
-<div class="line">The given permutation <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3autE" title="graph_canon::Visitor::aut"><span class="pre">aut</span></a></code> is the automorphism that maps the current best leaf to <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code>.</div>
+<div class="line">Called: in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv4I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a><span class="pre">::</span><a class="reference internal" href="../canonicalization.html#_CPPv4N11graph_canon11canon_state16prune_canon_leafEv" title="graph_canon::canon_state::prune_canon_leaf"><span class="pre">prune_canon_leaf</span></a></code> when the candidate leaf <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> is as good as the current best leaf.</div>
+<div class="line">The given permutation <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3autE" title="graph_canon::Visitor::aut"><span class="pre">aut</span></a></code> is the automorphism that maps the current best leaf to <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code>.</div>
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">automorphism_implicit</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3autE" title="graph_canon::Visitor::aut"><span class="pre">aut</span></a><span class="pre">,</span> <span class="pre">tag</span><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">automorphism_implicit</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3autE" title="graph_canon::Visitor::aut"><span class="pre">aut</span></a><span class="pre">,</span> <span class="pre">tag</span><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">void</span></code></div>
-<div class="line">Called: by visitors when they have a permutation <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3autE" title="graph_canon::Visitor::aut"><span class="pre">aut</span></a></code> which is an automorphism.</div>
+<div class="line">Called: by visitors when they have a permutation <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3autE" title="graph_canon::Visitor::aut"><span class="pre">aut</span></a></code> which is an automorphism.</div>
 <div class="line">The <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">tag</span></code>, of type <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">std</span><span class="pre">::</span><span class="pre">size_t</span></code>, is a visitor-defined number.</div>
 </div>
 </li>
@@ -291,80 +292,80 @@ If so, the expression <code class="xref cpp cpp-expr docutils literal notranslat
 <p><strong>Refinement Methods</strong></p>
 <ul>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
-<div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refine/refine.html#_CPPv3N11graph_canon16RefinementResultE" title="graph_canon::RefinementResult"><span class="pre">RefinementResult</span></a></code></div>
-<div class="line">Called: by the <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv3I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a></code> through the <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">tree_node</span></code> constructor.</div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
+<div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../refine/refine.html#_CPPv4N11graph_canon16RefinementResultE" title="graph_canon::RefinementResult"><span class="pre">RefinementResult</span></a></code></div>
+<div class="line">Called: by the <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv4I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a></code> through the <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">tree_node</span></code> constructor.</div>
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_cell_split_begin</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <span class="pre">refiner_begin</span><span class="pre">,</span> <span class="pre">refinee_begin</span><span class="pre">,</span> <span class="pre">refinee_end</span><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_cell_split_begin</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <span class="pre">refiner_begin</span><span class="pre">,</span> <span class="pre">refinee_begin</span><span class="pre">,</span> <span class="pre">refinee_end</span><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">void</span></code></div>
 <div class="line">Called: by visitors before the cell starting at <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">refinee_begin</span></code> and ending at <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">refinee_end</span></code> is being split.</div>
-<div class="line">The partition of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> must be in a valid state when this method is called.</div>
-<div class="line">The <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">refiner_begin</span></code> may be <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv3I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a><span class="pre">::</span><a class="reference internal" href="../canonicalization.html#_CPPv3N11graph_canon11canon_state1nE" title="graph_canon::canon_state::n"><span class="pre">n</span></a></code> or the cell which the calling visitor defines as being responsible for the splits.</div>
-<div class="line">After this method call the <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_new_cell</span></code> method may be invoked with numbers in the range <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">refinee_begin</span></code> to <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">refinee_end</span></code>.</div>
-<div class="line">A matching call to <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_cell_split_end</span></code> with the same arguments must be made before a new cell can be split.</div>
+<div class="line">The partition of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> must be in a valid state when this method is called.</div>
+<div class="line">The <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">refiner_begin</span></code> may be <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../canonicalization.html#_CPPv4I00EN11graph_canon11canon_stateE" title="graph_canon::canon_state"><span class="pre">canon_state</span></a><span class="pre">::</span><a class="reference internal" href="../canonicalization.html#_CPPv4N11graph_canon11canon_state1nE" title="graph_canon::canon_state::n"><span class="pre">n</span></a></code> or the cell which the calling visitor defines as being responsible for the splits.</div>
+<div class="line">After this method call the <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_new_cell</span></code> method may be invoked with numbers in the range <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">refinee_begin</span></code> to <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">refinee_end</span></code>.</div>
+<div class="line">A matching call to <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_cell_split_end</span></code> with the same arguments must be made before a new cell can be split.</div>
 <div class="line">This method will not be called before an individualization operation.</div>
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_new_cell</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <span class="pre">new_cell</span><span class="pre">,</span> <span class="pre">type</span><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_new_cell</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <span class="pre">new_cell</span><span class="pre">,</span> <span class="pre">type</span><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">void</span></code></div>
 <div class="line">Called: by visitors for each new cell-beginning being created. E.g., for a cell 0 to 10, split into 0 to 2 and 2 to 10, only a call with 2 will be made.</div>
-<div class="line">The method may only be called between a matching pair of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_cell_split_begin</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_cell_split_end</span></code>, and only with cell beginnings in the range specified by those calls.</div>
-<div class="line">The partition of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> must be in a valid state when this method is called, and the cell must have been created at this time.
-That is, after <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_cell_split_begin</span></code> the partition is fully modified (all splits are made), and then all calls to <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_new_cell</span></code> is made.</div>
+<div class="line">The method may only be called between a matching pair of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_cell_split_begin</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_cell_split_end</span></code>, and only with cell beginnings in the range specified by those calls.</div>
+<div class="line">The partition of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> must be in a valid state when this method is called, and the cell must have been created at this time.
+That is, after <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_cell_split_begin</span></code> the partition is fully modified (all splits are made), and then all calls to <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_new_cell</span></code> is made.</div>
 <div class="line">The <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">type</span></code> variable of type <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">std</span><span class="pre">::</span><span class="pre">size_t</span></code> is a visitor-defined number to communicate which kind of split it made.</div>
 <div class="line">This method will not be called before an individualization operation.</div>
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_cell_split_end</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <span class="pre">refiner_begin</span><span class="pre">,</span> <span class="pre">refinee_begin</span><span class="pre">,</span> <span class="pre">refinee_end</span><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_cell_split_end</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <span class="pre">refiner_begin</span><span class="pre">,</span> <span class="pre">refinee_begin</span><span class="pre">,</span> <span class="pre">refinee_end</span><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">bool</span></code></div>
 <div class="line">Called: by visitors after the cell starting at <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">refinee_begin</span></code> and ending at <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">refinee_end</span></code> was split.</div>
-<div class="line">The partition of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> must be in a valid state when this method is called.</div>
-<div class="line">The call must be after a matching <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_cell_begin</span></code> and must be given the same arguments.</div>
+<div class="line">The partition of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> must be in a valid state when this method is called.</div>
+<div class="line">The call must be after a matching <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_cell_begin</span></code> and must be given the same arguments.</div>
 <div class="line">Returning <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">false</span></code> means refinement should be aborted and the tree node pruned.</div>
 <div class="line">This method will not be called before an individualization operation.</div>
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_quotient_edge</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <span class="pre">refiner</span><span class="pre">,</span> <span class="pre">refinee</span><span class="pre">,</span> <span class="pre">count</span><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_quotient_edge</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <span class="pre">refiner</span><span class="pre">,</span> <span class="pre">refinee</span><span class="pre">,</span> <span class="pre">count</span><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">bool</span></code></div>
 <div class="line">Called: by visitors, probably mostly Weisfeiler-Leman-style visitors.</div>
-<div class="line">The partition of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> must be in a valid state when this method is called.</div>
+<div class="line">The partition of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> must be in a valid state when this method is called.</div>
 </div>
 <div class="deprecated">
-<p><span class="versionmodified">Deprecated since version 0.2: </span>This method will be refactored not too far in the future.</p>
+<p><span class="versionmodified deprecated">Deprecated since version 0.2: </span>This method will be refactored not too far in the future.</p>
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_refiner_done</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <span class="pre">refiner</span><span class="pre">,</span> <span class="pre">refiner_end</span><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_refiner_done</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">,</span> <span class="pre">refiner</span><span class="pre">,</span> <span class="pre">refiner_end</span><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">bool</span></code></div>
 <div class="line">Called: by visitors, probably mostly Weisfeiler-Leman-style visitors.</div>
-<div class="line">The partition of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> must be in a valid state when this method is called.</div>
+<div class="line">The partition of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> must be in a valid state when this method is called.</div>
 </div>
 <div class="deprecated">
-<p><span class="versionmodified">Deprecated since version 0.2: </span>This method will be refactored not too far in the future.</p>
+<p><span class="versionmodified deprecated">Deprecated since version 0.2: </span>This method will be refactored not too far in the future.</p>
 </div>
 </li>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_abort</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">refine_abort</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">void</span></code></div>
 <div class="line">Called: by visitors and by the <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">tree_node</span></code> constructor when refinement is being aborted.</div>
-<div class="line">The partition of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> must be in a valid state when this method is called.</div>
+<div class="line">The partition of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a></code> must be in a valid state when this method is called.</div>
 </div>
 <div class="deprecated">
-<p><span class="versionmodified">Deprecated since version 0.2: </span>This method will be refactored not too far in the future.</p>
+<p><span class="versionmodified deprecated">Deprecated since version 0.2: </span>This method will be refactored not too far in the future.</p>
 </div>
 </li>
 </ul>
 <p><strong>Node Invariant Methods</strong></p>
 <ul>
 <li><div class="first line-block">
-<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">invariant_better</span><span class="pre">(</span><a class="reference internal" href="#_CPPv3N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv3N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
+<div class="line">Expression: <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor3visE" title="graph_canon::Visitor::vis"><span class="pre">vis</span></a><span class="pre">.</span><span class="pre">invariant_better</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon7Visitor5stateE" title="graph_canon::Visitor::state"><span class="pre">state</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon7Visitor1tE" title="graph_canon::Visitor::t"><span class="pre">t</span></a><span class="pre">)</span></code></div>
 <div class="line">Return type: <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">void</span></code></div>
-<div class="line">Called: by <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../invariant/coordinator.html#_CPPv3N11graph_canon21invariant_coordinatorE" title="graph_canon::invariant_coordinator"><span class="pre">invariant_coordinator</span></a><span class="pre">::</span><a class="reference internal" href="../invariant/coordinator.html#_CPPv3I00EN11graph_canon21invariant_coordinator16better_invariantER5StateR8TreeNode" title="graph_canon::invariant_coordinator::better_invariant"><span class="pre">better_invariant</span></a></code> when a visitor reports that it has a better invariant value.</div>
+<div class="line">Called: by <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../invariant/coordinator.html#_CPPv4N11graph_canon21invariant_coordinatorE" title="graph_canon::invariant_coordinator"><span class="pre">invariant_coordinator</span></a><span class="pre">::</span><a class="reference internal" href="../invariant/coordinator.html#_CPPv4I00EN11graph_canon21invariant_coordinator16better_invariantEvR5StateR8TreeNode" title="graph_canon::invariant_coordinator::better_invariant"><span class="pre">better_invariant</span></a></code> when a visitor reports that it has a better invariant value.</div>
 </div>
 </li>
 </ul>
@@ -380,7 +381,7 @@ That is, after <code class="xref cpp cpp-expr docutils literal notranslate"><a c
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="stats.html"
-                        title="previous chapter">4.15.3. stats.hpp</a></p>
+                        title="previous chapter">5.15.3. stats.hpp</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -394,8 +395,6 @@ That is, after <code class="xref cpp cpp-expr docutils literal notranslate"><a c
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -411,16 +410,16 @@ That is, after <code class="xref cpp cpp-expr docutils literal notranslate"><a c
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="stats.html" title="4.15.3. stats.hpp"
+          <a href="stats.html" title="5.15.3. stats.hpp"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon v0.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >4. Library Reference</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="index.html" >4.15. visitor</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon 0.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >5. Library Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >5.15. visitor</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, Jakob Lykke Andersen.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.0+.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.0+/076e7f6.
     </div>
   </body>
 </html>

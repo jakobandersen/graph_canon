@@ -1,0 +1,41 @@
+.. cpp:namespace:: graph_canon
+
+.. _graph_canon_bliss:
+
+``graph-canon-bliss``
+########################################################################
+
+.. program:: graph-canon-bliss
+
+The ``graph-canon-bliss`` wrapper script is simply a facade for an installed
+`Bliss <http://www.tcs.hut.fi/Software/bliss/program>`__ instance,
+to provide a common interface with :program:`graph-canon`.
+
+Each Bliss invocation is on the form ``bliss -can -v=1 <file>``.
+
+.. option:: -h
+
+ Show the help message for the wrapper script, and for Bliss, and then exit.
+
+.. option:: -f <file>
+
+ The input file, which should be in the format Bliss accepts (DIMACS).
+
+.. option:: --id <string>
+
+ A string to prepend to status lines.
+ The output of Bliss is printed by the wrapper script, but is also parsed
+ and when the tree node count and total time has been printed, an extra
+ status line is printed with the given string prepended.
+ This should provide a common tabulation scheme of results from different programs.
+
+.. option:: -p <int>, --permutations <int>
+
+ The number of repetition of the Bliss invocation to perform (default: 100).
+ Note that each invocation is the same, and thus no randomization is performed.
+
+.. option:: --memcheck
+            --vgArgs <arg>
+            --debug
+
+ Ignored options, present for compatibility with other programs.

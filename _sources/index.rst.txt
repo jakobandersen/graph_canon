@@ -7,8 +7,9 @@ GraphCanon
     :numbered:
     
     installation
-    executables/index
     changes
+    examples/index
+    executables/index
     reference/index
 
 
@@ -38,8 +39,6 @@ are handled by a user-supplied less-predicate (as you would provide to `std::sor
 The library also supports graphs where edges are similarly labelled,
 though for obtaining efficient implementations this may require substantial work from the user.
 
-.. attention:: In the future there will be a range of examples for using the library and extending it.
-
 Handling of permutation groups is done using the `PermGroup <https://github.com/jakobandersen/perm_group>`__ library which is currently under heavy development.
 
 The package additionally contains a program ``graph-canon``,
@@ -61,6 +60,7 @@ Table of Contents
     :maxdepth: 4
     
     installation
-    executables/index
     changes
+    examples/index
+    executables/index
     reference/index

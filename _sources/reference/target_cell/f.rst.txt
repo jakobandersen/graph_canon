@@ -14,3 +14,6 @@ Full path: ``graph_canon/target_cell/f.hpp``
 .. class:: target_cell_f
 
     Visitor for selecting the first non-singleton cell.
+
+    The class is DefaultConstructible.
+

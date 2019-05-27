@@ -22,7 +22,7 @@ Full path: ``graph_canon/ordered_graph.hpp``
     If `WithInEdges` is `true`, and `Graph` models a `BidirectionalGraph`,
     then the ordered graph will model the `BidirectionalGraph` concept as well.
 
-    When iterating through the range of vertices, adjacency vertices, and inverse-adjacent verices,
+    When iterating through the range of vertices, adjacency vertices, and inverse-adjacent vertices,
     the vertices will appear in sorted order with respect to the given index map.
     When iterating through out-edges and in-edges, the edges will appear in sorted order with respect
     to the index of the neighbouring vertices.

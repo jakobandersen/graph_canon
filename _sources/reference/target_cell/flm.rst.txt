@@ -15,3 +15,6 @@ Full path: ``graph_canon/target_cell/flm.hpp``
 
     Visitor for selecting the first largest non-singleton cell,
     among those with a maximum number of non-uniformly joined neighbour cells.
+
+    The class is DefaultConstructible.
+

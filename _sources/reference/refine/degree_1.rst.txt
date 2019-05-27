@@ -20,6 +20,8 @@ Full path: ``graph_canon/refine/degree_1.hpp``
     same neighbour, with the same type of edge, will be split into trivial cells.
     Either `RefinementResult::Never` or `RefinementResult::Unchanged` will be returned and the appropriate automorphisms are reported.
 
+    The class is DefaultConstructible.
+
     .. var:: static const std::size_t split_type_cell = 2
 
     .. var:: static const std::size_t aut_tag_swap = 100

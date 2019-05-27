@@ -151,6 +151,7 @@ Full path: ``graph_canon/canonicalization.hpp``
         - `VertexLess` must be a less-than predicate on the vertices of `g` that induces a strict weak ordering.
           The resulting canonical vertex order respects the ordering induced by `vertex_less`.
         - `Vis` must be a `Visitor` type.
+          Note that an `invariant_coordinator` is automatically prepended to the given visitor.
 
         :returns: A `std::pair<std::vector<SizeType>, Data>` where `first` is the permutation,
             and `second` is the auxiliary visitor data of an unspecified type `Data`.

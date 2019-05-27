@@ -17,7 +17,7 @@ and optionally print a permuted version of it.
     Filename with graph to read. Use ``-`` to read form stdin.
 .. option:: -s <seed>, --seed <seed>
 
-    Seed for random number generator. A default seed from :cpp:expr:`boost::random::random_device` will be used if not specified.
+    Seed for random number generator. A default seed from :cpp:expr:`std::random_device` will be used if not specified.
 .. option:: --permute
 
     Make a random permutation of the graph and print it to stdout.

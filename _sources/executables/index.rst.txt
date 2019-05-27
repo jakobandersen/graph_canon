@@ -7,3 +7,7 @@ Executables
 
     dimacs
     graph_canon
+    graph_canon_run
+    graph_canon_dreadnaut
+    graph_canon_bliss
+    download_graph_collections

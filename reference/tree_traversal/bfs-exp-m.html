@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>4.13.2. bfs-exp-m.hpp &#8212; GraphCanon v0.3 documentation</title>
+    <title>5.13.2. bfs-exp-m.hpp &#8212; GraphCanon 0.4 documentation</title>
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
@@ -14,12 +14,13 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="4.13.3. dfs.hpp" href="dfs.html" />
-    <link rel="prev" title="4.13.1. bfs-exp.hpp" href="bfs-exp.html" /> 
+    <link rel="next" title="5.13.3. dfs.hpp" href="dfs.html" />
+    <link rel="prev" title="5.13.1. bfs-exp.hpp" href="bfs-exp.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -28,14 +29,14 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="dfs.html" title="4.13.3. dfs.hpp"
+          <a href="dfs.html" title="5.13.3. dfs.hpp"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="bfs-exp.html" title="4.13.1. bfs-exp.hpp"
+          <a href="bfs-exp.html" title="5.13.1. bfs-exp.hpp"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon v0.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >4. Library Reference</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">4.13. tree_traversal</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon 0.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >5. Library Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">5.13. tree_traversal</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -45,16 +46,17 @@
           <div class="body" role="main">
             
   <div class="section" id="bfs-exp-m-hpp">
-<span id="cpp-tree-traversal-bfs-exp-m"></span><h1>4.13.2. bfs-exp-m.hpp<a class="headerlink" href="#bfs-exp-m-hpp" title="Permalink to this headline">¶</a></h1>
+<span id="cpp-tree-traversal-bfs-exp-m"></span><h1>5.13.2. bfs-exp-m.hpp<a class="headerlink" href="#bfs-exp-m-hpp" title="Permalink to this headline">¶</a></h1>
 <p>Full path: <code class="docutils literal notranslate"><span class="pre">graph_canon/tree_traversal/bfs-exp-m.hpp</span></code></p>
 <dl class="class">
-<dt id="_CPPv3N11graph_canon19traversal_bfs_exp_mE">
-<span id="_CPPv2N11graph_canon19traversal_bfs_exp_mE"></span><span id="graph_canon::traversal_bfs_exp_m"></span><em class="property">class </em><code class="descname">traversal_bfs_exp_m</code><a class="headerlink" href="#_CPPv3N11graph_canon19traversal_bfs_exp_mE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N11graph_canon19traversal_bfs_exp_mE">
+<span id="_CPPv3N11graph_canon19traversal_bfs_exp_mE"></span><span id="_CPPv2N11graph_canon19traversal_bfs_exp_mE"></span><span id="graph_canon::traversal_bfs_exp_m"></span><em class="property">class </em><code class="descname">traversal_bfs_exp_m</code><a class="headerlink" href="#_CPPv4N11graph_canon19traversal_bfs_exp_mE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Tree traversal visitor for breadth-first traversal with experimental paths,
 with fallback to depth-first traversal at a given memory limit.</p>
+<p>The class is DefaultConstructible.</p>
 <dl class="function">
-<dt id="_CPPv3N11graph_canon19traversal_bfs_exp_m19traversal_bfs_exp_mEKNSt6size_tE">
-<span id="_CPPv2N11graph_canon19traversal_bfs_exp_m19traversal_bfs_exp_mEKNSt6size_tE"></span><span id="graph_canon::traversal_bfs_exp_m::traversal_bfs_exp_m__std::sC"></span><code class="descname">traversal_bfs_exp_m</code><span class="sig-paren">(</span><em class="property">const</em> std::size_t <em>max_mem_mb</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv3N11graph_canon19traversal_bfs_exp_m19traversal_bfs_exp_mEKNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N11graph_canon19traversal_bfs_exp_m19traversal_bfs_exp_mEKNSt6size_tE">
+<span id="_CPPv3N11graph_canon19traversal_bfs_exp_m19traversal_bfs_exp_mEKNSt6size_tE"></span><span id="_CPPv2N11graph_canon19traversal_bfs_exp_m19traversal_bfs_exp_mEKNSt6size_tE"></span><span id="graph_canon::traversal_bfs_exp_m::traversal_bfs_exp_m__std::sC"></span><code class="descname">traversal_bfs_exp_m</code><span class="sig-paren">(</span><em class="property">const</em> std::size_t <em>max_mem_mb</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11graph_canon19traversal_bfs_exp_m19traversal_bfs_exp_mEKNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Construct with a given memory limit, in multiples of <span class="math notranslate nohighlight">\(1024*1024\)</span> bytes.
 Note that memory usage is calculated conservatively and the algorithm uses slightly more meory.
 Memory usage by individual visitors is not factored in at this time.</p>
@@ -72,10 +74,10 @@ Memory usage by individual visitors is not factored in at this time.</p>
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="bfs-exp.html"
-                        title="previous chapter">4.13.1. bfs-exp.hpp</a></p>
+                        title="previous chapter">5.13.1. bfs-exp.hpp</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="dfs.html"
-                        title="next chapter">4.13.3. dfs.hpp</a></p>
+                        title="next chapter">5.13.3. dfs.hpp</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -89,8 +91,6 @@ Memory usage by individual visitors is not factored in at this time.</p>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -106,19 +106,19 @@ Memory usage by individual visitors is not factored in at this time.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="dfs.html" title="4.13.3. dfs.hpp"
+          <a href="dfs.html" title="5.13.3. dfs.hpp"
              >next</a> |</li>
         <li class="right" >
-          <a href="bfs-exp.html" title="4.13.1. bfs-exp.hpp"
+          <a href="bfs-exp.html" title="5.13.1. bfs-exp.hpp"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon v0.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >4. Library Reference</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="index.html" >4.13. tree_traversal</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon 0.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >5. Library Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >5.13. tree_traversal</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, Jakob Lykke Andersen.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.0+.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.0+/076e7f6.
     </div>
   </body>
 </html>

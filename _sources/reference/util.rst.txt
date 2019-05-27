@@ -27,6 +27,17 @@ Full path: ``graph_canon/util.hpp``
                   bool operator()(T&&... args) const
 
         :returns: `false`
+.. class:: template<typename Iter> \
+           range : std::pair<Iter, Iter>
+
+A class for adapting a pair of iterators into a range, e.g., useful when using Boost.Graph.
+See :cpp:expr:`as_range`.
+
+.. cpp:function:: template<typename Iter> \
+                  range<Iter> as_range(const std::pair<Iter, Iter> &x)
+
+:returns: :cpp:expr:`range<Iter>(x)`
+
 .. class:: template<typename Prop> \
            property_less
 

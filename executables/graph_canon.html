@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>2.2. graph-canon &#8212; GraphCanon v0.3 documentation</title>
+    <title>4.2. graph-canon &#8212; GraphCanon 0.4 documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
@@ -14,12 +14,13 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3. Changes" href="../changes.html" />
-    <link rel="prev" title="2.1. dimacs" href="dimacs.html" /> 
+    <link rel="next" title="4.3. graph-canon-run" href="graph_canon_run.html" />
+    <link rel="prev" title="4.1. dimacs" href="dimacs.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -28,13 +29,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../changes.html" title="3. Changes"
+          <a href="graph_canon_run.html" title="4.3. graph-canon-run"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="dimacs.html" title="2.1. dimacs"
+          <a href="dimacs.html" title="4.1. dimacs"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">2. Executables</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">4. Executables</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -44,7 +45,7 @@
           <div class="body" role="main">
             
   <div class="section" id="graph-canon">
-<span id="id1"></span><h1>2.2. <code class="docutils literal notranslate"><span class="pre">graph-canon</span></code><a class="headerlink" href="#graph-canon" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>4.2. <code class="docutils literal notranslate"><span class="pre">graph-canon</span></code><a class="headerlink" href="#graph-canon" title="Permalink to this headline">¶</a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">graph_canon</span></code> program performs canonicalization of (a permutation of) a given input graph.
 It contains many different configurations of the graph canonicalization algorithm that can be selected through switches.
 The program additional has two distinct modes:</p>
@@ -61,7 +62,7 @@ The program additional has two distinct modes:</p>
 The main executable, <code class="docutils literal notranslate"><span class="pre">graph-canon</span></code>, is a wrapper script that invokes the correct executable depending on the given arguments.
 This wrapper script is a Python program, which supports <a class="reference external" href="https://pypi.python.org/pypi/argcomplete">argcomplete</a>.</p>
 <div class="section" id="general-options">
-<h2>2.2.1. General Options<a class="headerlink" href="#general-options" title="Permalink to this headline">¶</a></h2>
+<h2>4.2.1. General Options<a class="headerlink" href="#general-options" title="Permalink to this headline">¶</a></h2>
 <dl class="option">
 <dt id="cmdoption-graph-canon-h">
 <code class="descname">-h</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--help</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-h" title="Permalink to this definition">¶</a></dt>
@@ -101,11 +102,11 @@ Default is 5.</p>
 
 </div>
 <div class="section" id="graph-loading-options">
-<h2>2.2.2. Graph Loading Options<a class="headerlink" href="#graph-loading-options" title="Permalink to this headline">¶</a></h2>
+<h2>4.2.2. Graph Loading Options<a class="headerlink" href="#graph-loading-options" title="Permalink to this headline">¶</a></h2>
 <dl class="option">
 <dt id="cmdoption-graph-canon-f">
 <code class="descname">-f</code><code class="descclassname"> &lt;filename&gt;</code><code class="descclassname">, </code><code class="descname">--dimacs</code><code class="descclassname"> &lt;filname&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-f" title="Permalink to this definition">¶</a></dt>
-<dd><p>File with graph in DIMACS format (see <a class="reference internal" href="../reference/dimacs_graph_io.html#_CPPv3I000EN11graph_canon17read_dimacs_graphERNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler" title="graph_canon::read_dimacs_graph"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">read_dimacs_graph()</span></code></a>). Use ‘-‘ to read from stdin.
+<dd><p>File with graph in DIMACS format (see <a class="reference internal" href="../reference/dimacs_graph_io.html#_CPPv4I000EN11graph_canon17read_dimacs_graphEbRNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler" title="graph_canon::read_dimacs_graph"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">read_dimacs_graph()</span></code></a>). Use ‘-‘ to read from stdin.
 If not used, a default graph is used.</p>
 </dd></dl>
 
@@ -159,7 +160,7 @@ If not used, a default graph is used.</p>
 
 </div>
 <div class="section" id="algorithm-configuration-options">
-<h2>2.2.3. Algorithm Configuration Options<a class="headerlink" href="#algorithm-configuration-options" title="Permalink to this headline">¶</a></h2>
+<h2>4.2.3. Algorithm Configuration Options<a class="headerlink" href="#algorithm-configuration-options" title="Permalink to this headline">¶</a></h2>
 <dl class="option">
 <dt id="cmdoption-graph-canon-ftarget-cell">
 <code class="descname">--ftarget-cell</code><code class="descclassname"> &lt;alg&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-ftarget-cell" title="Permalink to this definition">¶</a></dt>
@@ -241,7 +242,7 @@ Default is 4 GB.</p>
 
 </div>
 <div class="section" id="program-execution-options">
-<h2>2.2.4. Program Execution Options<a class="headerlink" href="#program-execution-options" title="Permalink to this headline">¶</a></h2>
+<h2>4.2.4. Program Execution Options<a class="headerlink" href="#program-execution-options" title="Permalink to this headline">¶</a></h2>
 <dl class="option">
 <dt id="cmdoption-graph-canon-memcheck">
 <code class="descname">--memcheck</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-memcheck" title="Permalink to this definition">¶</a></dt>
@@ -262,7 +263,7 @@ Default is 4 GB.</p>
 
 </div>
 <div class="section" id="options-specific-for-benchmark-mode">
-<h2>2.2.5. Options Specific for Benchmark Mode<a class="headerlink" href="#options-specific-for-benchmark-mode" title="Permalink to this headline">¶</a></h2>
+<h2>4.2.5. Options Specific for Benchmark Mode<a class="headerlink" href="#options-specific-for-benchmark-mode" title="Permalink to this headline">¶</a></h2>
 <p>The program perform several rounds of canonicalization,
 all on randomly permuted versions of the input graph.</p>
 <dl class="option">
@@ -273,7 +274,7 @@ all on randomly permuted versions of the input graph.</p>
 
 </div>
 <div class="section" id="options-specific-for-test-mode">
-<h2>2.2.6. Options Specific for Test Mode<a class="headerlink" href="#options-specific-for-test-mode" title="Permalink to this headline">¶</a></h2>
+<h2>4.2.6. Options Specific for Test Mode<a class="headerlink" href="#options-specific-for-test-mode" title="Permalink to this headline">¶</a></h2>
 <p>The program perform several rounds of canonicalization.
 First on the input graph, and then on randomly permuted versions of that graph.
 As default the options are applied to the first round, on the input graph.</p>
@@ -355,23 +356,23 @@ The output is not affected by the <code class="docutils literal notranslate"><sp
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">2.2. <code class="docutils literal notranslate"><span class="pre">graph-canon</span></code></a><ul>
-<li><a class="reference internal" href="#general-options">2.2.1. General Options</a></li>
-<li><a class="reference internal" href="#graph-loading-options">2.2.2. Graph Loading Options</a></li>
-<li><a class="reference internal" href="#algorithm-configuration-options">2.2.3. Algorithm Configuration Options</a></li>
-<li><a class="reference internal" href="#program-execution-options">2.2.4. Program Execution Options</a></li>
-<li><a class="reference internal" href="#options-specific-for-benchmark-mode">2.2.5. Options Specific for Benchmark Mode</a></li>
-<li><a class="reference internal" href="#options-specific-for-test-mode">2.2.6. Options Specific for Test Mode</a></li>
+<li><a class="reference internal" href="#">4.2. <code class="docutils literal notranslate"><span class="pre">graph-canon</span></code></a><ul>
+<li><a class="reference internal" href="#general-options">4.2.1. General Options</a></li>
+<li><a class="reference internal" href="#graph-loading-options">4.2.2. Graph Loading Options</a></li>
+<li><a class="reference internal" href="#algorithm-configuration-options">4.2.3. Algorithm Configuration Options</a></li>
+<li><a class="reference internal" href="#program-execution-options">4.2.4. Program Execution Options</a></li>
+<li><a class="reference internal" href="#options-specific-for-benchmark-mode">4.2.5. Options Specific for Benchmark Mode</a></li>
+<li><a class="reference internal" href="#options-specific-for-test-mode">4.2.6. Options Specific for Test Mode</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="dimacs.html"
-                        title="previous chapter">2.1. <code class="docutils literal notranslate"><span class="pre">dimacs</span></code></a></p>
+                        title="previous chapter">4.1. <code class="docutils literal notranslate"><span class="pre">dimacs</span></code></a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../changes.html"
-                        title="next chapter">3. Changes</a></p>
+  <p class="topless"><a href="graph_canon_run.html"
+                        title="next chapter">4.3. <code class="docutils literal notranslate"><span class="pre">graph-canon-run</span></code></a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -385,8 +386,6 @@ The output is not affected by the <code class="docutils literal notranslate"><sp
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -402,18 +401,18 @@ The output is not affected by the <code class="docutils literal notranslate"><sp
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../changes.html" title="3. Changes"
+          <a href="graph_canon_run.html" title="4.3. graph-canon-run"
              >next</a> |</li>
         <li class="right" >
-          <a href="dimacs.html" title="2.1. dimacs"
+          <a href="dimacs.html" title="4.1. dimacs"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon v0.3 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >2. Executables</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >4. Executables</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, Jakob Lykke Andersen.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.0+.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.0+/076e7f6.
     </div>
   </body>
 </html>

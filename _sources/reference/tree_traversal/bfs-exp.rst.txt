@@ -14,3 +14,6 @@ Full path: ``graph_canon/tree_traversal/bfs-exp.hpp``
 .. class:: traversal_bfs_exp
 
     Tree traversal visitor for breadth-first traversal with experimental paths.
+
+    The class is DefaultConstructible.
+

@@ -1,0 +1,157 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>4.4. graph-canon-dreadnaut &#8212; GraphCanon 0.4 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4.5. graph-canon-bliss" href="graph_canon_bliss.html" />
+    <link rel="prev" title="4.3. graph-canon-run" href="graph_canon_run.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="graph_canon_bliss.html" title="4.5. graph-canon-bliss"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="graph_canon_run.html" title="4.3. graph-canon-run"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">4. Executables</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="graph-canon-dreadnaut">
+<span id="id1"></span><h1>4.4. <code class="docutils literal notranslate"><span class="pre">graph-canon-dreadnaut</span></code><a class="headerlink" href="#graph-canon-dreadnaut" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">graph-canon-dreadnaut</span></code> wrapper script is simply a facade for an installed
+<code class="docutils literal notranslate"><span class="pre">dreadnaut</span></code> instance from the <a class="reference external" href="http://pallini.di.uniroma1.it/">nauty/Traces</a> package,
+to provide a common interface with <strong class="program">graph-canon</strong>.</p>
+<p>The script invokes <code class="docutils literal notranslate"><span class="pre">dreadnaut</span></code> and pipes commands into it.
+The specified input file must be in DIMACS format and the script will translate it into Dreadnaut
+format and pipe it into the program.</p>
+<dl class="option">
+<dt id="cmdoption-graph-canon-dreadnaut-h">
+<code class="descname">-h</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-h" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the help message for the wrapper script, and then exit.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-graph-canon-dreadnaut-f">
+<code class="descname">-f</code><code class="descclassname"> &lt;file&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-f" title="Permalink to this definition">¶</a></dt>
+<dd><p>The input file, which should be in DIMACS format.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-graph-canon-dreadnaut-id">
+<code class="descname">--id</code><code class="descclassname"> &lt;string&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string to prepend to status lines.
+The output of <code class="docutils literal notranslate"><span class="pre">dreadnaut</span></code> is printed by the wrapper script, but is also parsed
+and when the tree node count and total time has been printed, an extra
+status line is printed with the given string prepended.
+This should provide a common tabulation scheme of results from different programs.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-graph-canon-dreadnaut-mode">
+<code class="descname">--mode</code><code class="descclassname"> &lt;mode&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select the algorithm to use, among <code class="docutils literal notranslate"><span class="pre">An</span></code> (nauty dense), <code class="docutils literal notranslate"><span class="pre">As</span></code> (nauty sparse), and <code class="docutils literal notranslate"><span class="pre">At</span></code> (Traces).
+The default is Traces.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-graph-canon-dreadnaut-p">
+<code class="descname">-p</code><code class="descclassname"> &lt;int&gt;</code><code class="descclassname">, </code><code class="descname">--permutations</code><code class="descclassname"> &lt;int&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-p" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of randomized permutations of the input graph to canonicalize (default: 100).
+This is achieved by piping the commands <code class="docutils literal notranslate"><span class="pre">jcx</span></code> into <code class="docutils literal notranslate"><span class="pre">dreadnaut</span></code> this amount of times.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-graph-canon-dreadnaut-memcheck">
+<code class="descname">--memcheck</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-memcheck" title="Permalink to this definition">¶</a></dt>
+<dt id="cmdoption-graph-canon-dreadnaut-vgargs">
+<code class="descname">--vgArgs</code><code class="descclassname"> &lt;arg&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-vgargs" title="Permalink to this definition">¶</a></dt>
+<dt id="cmdoption-graph-canon-dreadnaut-debug">
+<code class="descname">--debug</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ignored options, present for compatibility with other programs.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="graph_canon_run.html"
+                        title="previous chapter">4.3. <code class="docutils literal notranslate"><span class="pre">graph-canon-run</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="graph_canon_bliss.html"
+                        title="next chapter">4.5. <code class="docutils literal notranslate"><span class="pre">graph-canon-bliss</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/executables/graph_canon_dreadnaut.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="graph_canon_bliss.html" title="4.5. graph-canon-bliss"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="graph_canon_run.html" title="4.3. graph-canon-run"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.4 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >4. Executables</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.0+/076e7f6.
+    </div>
+  </body>
+</html>

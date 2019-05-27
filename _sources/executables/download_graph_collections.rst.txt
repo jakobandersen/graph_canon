@@ -1,0 +1,23 @@
+.. cpp:namespace:: graph_canon
+
+.. _download_graph_collections:
+
+``download-graph-collections``
+########################################################################
+
+.. program:: download-graph-collections
+
+The ``download-graph-collections`` program will try to download a set of
+graph collections from http://pallini.di.uniroma1.it/Graphs.html and
+http://www.lics.rwth-aachen.de/cms/LICS/Forschung/Publikationen/~rtok/Benchmark-Graphs/
+which can be used as input for the other programs in GraphCanon.
+Notably the meta-program :program:`graph-canon-run` can be used for running
+a specific program on batches of graphs.
+
+.. option:: --dest <path>
+
+ The destination folder for downloaded graphs.
+ Defaults to ``graphs``.
+.. option:: -f, --force
+
+ Delete all files at the destination first.

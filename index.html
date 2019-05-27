@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>GraphCanon &#8212; GraphCanon v0.3 documentation</title>
+    <title>GraphCanon &#8212; GraphCanon 0.4 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
@@ -14,7 +14,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -29,7 +30,7 @@
         <li class="right" >
           <a href="installation.html" title="1. Installation"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">GraphCanon v0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">GraphCanon 0.4 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -43,9 +44,10 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">1. Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="executables/index.html">2. Executables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="changes.html">3. Changes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reference/index.html">4. Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">2. Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">3. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="executables/index.html">4. Executables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">5. Library Reference</a></li>
 </ul>
 </div>
 <div class="section" id="introduction">
@@ -68,10 +70,6 @@ using a customizable individualization-refinement algorithm.</p>
 are handled by a user-supplied less-predicate (as you would provide to <cite>std::sort</cite>).
 The library also supports graphs where edges are similarly labelled,
 though for obtaining efficient implementations this may require substantial work from the user.</p>
-<div class="admonition attention">
-<p class="first admonition-title">Attention</p>
-<p class="last">In the future there will be a range of examples for using the library and extending it.</p>
-</div>
 <p>Handling of permutation groups is done using the <a class="reference external" href="https://github.com/jakobandersen/perm_group">PermGroup</a> library which is currently under heavy development.</p>
 <p>The package additionally contains a program <code class="docutils literal notranslate"><span class="pre">graph-canon</span></code>,
 which makes many variations of the core algorithm available from the command line.
@@ -88,79 +86,110 @@ e.g., visualization data for the <a class="reference external" href="https://git
 <h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">1. Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="executables/index.html">2. Executables</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="executables/dimacs.html">2.1. <code class="docutils literal notranslate"><span class="pre">dimacs</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="executables/graph_canon.html">2.2. <code class="docutils literal notranslate"><span class="pre">graph-canon</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="executables/graph_canon.html#general-options">2.2.1. General Options</a></li>
-<li class="toctree-l3"><a class="reference internal" href="executables/graph_canon.html#graph-loading-options">2.2.2. Graph Loading Options</a></li>
-<li class="toctree-l3"><a class="reference internal" href="executables/graph_canon.html#algorithm-configuration-options">2.2.3. Algorithm Configuration Options</a></li>
-<li class="toctree-l3"><a class="reference internal" href="executables/graph_canon.html#program-execution-options">2.2.4. Program Execution Options</a></li>
-<li class="toctree-l3"><a class="reference internal" href="executables/graph_canon.html#options-specific-for-benchmark-mode">2.2.5. Options Specific for Benchmark Mode</a></li>
-<li class="toctree-l3"><a class="reference internal" href="executables/graph_canon.html#options-specific-for-test-mode">2.2.6. Options Specific for Test Mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">1. Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-a-git-repository">1.1. From a Git Repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#as-dependency-of-another-cmake-project">1.2. As Dependency of Another CMake Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#from-a-source-archive">1.3. From a Source Archive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#dependencies">1.4. Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">2. Changes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changes.html#v0-4-2019-05-27">2.1. v0.4 (2019-05-27)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changes.html#incompatible-changes">2.1.1. Incompatible Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changes.html#new-features">2.1.2. New Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changes.html#other">2.1.3. Other</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changes.html#v0-3-2018-09-04">2.2. v0.3 (2018-09-04)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changes.html#v0-2-2018-02-05">2.3. v0.2 (2018-02-05)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">3. Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/index.html#basic-library-usage">3.1. Basic Library Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/find_canon_form.html">3.1.1. Computing the Canonical Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/check_isomorphism.html">3.1.2. Deciding Graph Ismorphism and Total Ordering of Graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/find_automorphisms.html">3.1.3. Finding the Automorphism Group</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/debug_and_stats.html">3.1.4. Investigating the Details of an Algorithm Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/vertex_labels.html">3.1.5. Vertex Labelled Graphs</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="changes.html">3. Changes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changes.html#develop">3.1. Develop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changes.html#release-v0-3-2018-09-04">3.2. Release v0.3 (2018-09-04)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changes.html#release-v0-2-2018-02-05">3.3. Release v0.2 (2018-02-05)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="executables/index.html">4. Executables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="executables/dimacs.html">4.1. <code class="docutils literal notranslate"><span class="pre">dimacs</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="executables/graph_canon.html">4.2. <code class="docutils literal notranslate"><span class="pre">graph-canon</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="executables/graph_canon.html#general-options">4.2.1. General Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables/graph_canon.html#graph-loading-options">4.2.2. Graph Loading Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables/graph_canon.html#algorithm-configuration-options">4.2.3. Algorithm Configuration Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables/graph_canon.html#program-execution-options">4.2.4. Program Execution Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables/graph_canon.html#options-specific-for-benchmark-mode">4.2.5. Options Specific for Benchmark Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables/graph_canon.html#options-specific-for-test-mode">4.2.6. Options Specific for Test Mode</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="reference/index.html">4. Library Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="reference/aut/index.html">4.1. aut</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="reference/aut/implicit_size_2.html">4.1.1. implicit_size_2.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/aut/perm_moved_points.html">4.1.2. perm_moved_points.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/aut/pruner_base.html">4.1.3. pruner_base.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/aut/pruner_basic.html">4.1.4. pruner_basic.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/aut/pruner_schreier.html">4.1.5. pruner_schreier.hpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="executables/graph_canon_run.html">4.3. <code class="docutils literal notranslate"><span class="pre">graph-canon-run</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="executables/graph_canon_run.html#graph-database">4.3.1. Graph Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables/graph_canon_run.html#listing-mode">4.3.2. Listing Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="executables/graph_canon_run.html#execution-mode">4.3.3. Execution Mode</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="reference/canonicalization.html">4.2. canonicalization.hpp</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/compare.html">4.3. compare.hpp</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/dimacs_graph_io.html">4.4. dimacs_graph_io.hpp</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/edge_handler/index.html">4.5. edge_handler</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="reference/edge_handler/all_equal.html">4.5.1. all_equal.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/edge_handler/edge_handler.html">4.5.2. edge_handler.hpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="executables/graph_canon_dreadnaut.html">4.4. <code class="docutils literal notranslate"><span class="pre">graph-canon-dreadnaut</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="executables/graph_canon_bliss.html">4.5. <code class="docutils literal notranslate"><span class="pre">graph-canon-bliss</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="executables/download_graph_collections.html">4.6. <code class="docutils literal notranslate"><span class="pre">download-graph-collections</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="reference/invariant/index.html">4.6. invariant</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="reference/invariant/cell_split.html">4.6.1. cell_split.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/invariant/coordinator.html">4.6.2. coordinator.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/invariant/partial_leaf.html">4.6.3. partial_leaf.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/invariant/quotient.html">4.6.4. quotient.hpp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">5. Library Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/aut/index.html">5.1. aut</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/aut/implicit_size_2.html">5.1.1. implicit_size_2.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/aut/perm_moved_points.html">5.1.2. perm_moved_points.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/aut/pruner_base.html">5.1.3. pruner_base.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/aut/pruner_basic.html">5.1.4. pruner_basic.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/aut/pruner_schreier.html">5.1.5. pruner_schreier.hpp</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="reference/ordered_graph.html">4.7. ordered_graph.hpp</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/refine/index.html">4.8. refine</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="reference/refine/degree_1.html">4.8.1. degree_1.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/refine/refine.html">4.8.2. refine.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/refine/WL_1.html">4.8.3. WL_1.hpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/canonicalization.html">5.2. canonicalization.hpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/compare.html">5.3. compare.hpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/dimacs_graph_io.html">5.4. dimacs_graph_io.hpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/edge_handler/index.html">5.5. edge_handler</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/edge_handler/all_equal.html">5.5.1. all_equal.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/edge_handler/edge_handler.html">5.5.2. edge_handler.hpp</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="reference/shorthands.html">4.9. shorthands.hpp</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/sorting_utils.html">4.10. sorting_utils.hpp</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/tagged_list.html">4.11. tagged_list.hpp</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/target_cell/index.html">4.12. target_cell</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="reference/target_cell/f.html">4.12.1. f.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/target_cell/fl.html">4.12.2. fl.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/target_cell/flm.html">4.12.3. flm.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/target_cell/flmcr.html">4.12.4. flmcr.hpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/invariant/index.html">5.6. invariant</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/invariant/cell_split.html">5.6.1. cell_split.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/invariant/coordinator.html">5.6.2. coordinator.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/invariant/partial_leaf.html">5.6.3. partial_leaf.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/invariant/quotient.html">5.6.4. quotient.hpp</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="reference/tree_traversal/index.html">4.13. tree_traversal</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="reference/tree_traversal/bfs-exp.html">4.13.1. bfs-exp.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/tree_traversal/bfs-exp-m.html">4.13.2. bfs-exp-m.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/tree_traversal/dfs.html">4.13.3. dfs.hpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/ordered_graph.html">5.7. ordered_graph.hpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/refine/index.html">5.8. refine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/refine/degree_1.html">5.8.1. degree_1.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/refine/refine.html">5.8.2. refine.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/refine/WL_1.html">5.8.3. WL_1.hpp</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="reference/util.html">4.14. util.hpp</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/visitor/index.html">4.15. visitor</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="reference/visitor/compound.html">4.15.1. compound.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/visitor/debug.html">4.15.2. debug.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/visitor/stats.html">4.15.3. stats.hpp</a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference/visitor/visitor.html">4.15.4. visitor.hpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/shorthands.html">5.9. shorthands.hpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/sorting_utils.html">5.10. sorting_utils.hpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/tagged_list.html">5.11. tagged_list.hpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/target_cell/index.html">5.12. target_cell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/target_cell/f.html">5.12.1. f.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/target_cell/fl.html">5.12.2. fl.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/target_cell/flm.html">5.12.3. flm.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/target_cell/flmcr.html">5.12.4. flmcr.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/tree_traversal/index.html">5.13. tree_traversal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/tree_traversal/bfs-exp.html">5.13.1. bfs-exp.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/tree_traversal/bfs-exp-m.html">5.13.2. bfs-exp-m.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/tree_traversal/dfs.html">5.13.3. dfs.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/util.html">5.14. util.hpp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/visitor/index.html">5.15. visitor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/visitor/compound.html">5.15.1. compound.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/visitor/debug.html">5.15.2. debug.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/visitor/stats.html">5.15.3. stats.hpp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/visitor/visitor.html">5.15.4. visitor.hpp</a></li>
 </ul>
 </li>
 </ul>
@@ -202,8 +231,6 @@ e.g., visualization data for the <a class="reference external" href="https://git
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -221,12 +248,12 @@ e.g., visualization data for the <a class="reference external" href="https://git
         <li class="right" >
           <a href="installation.html" title="1. Installation"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">GraphCanon v0.3 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">GraphCanon 0.4 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, Jakob Lykke Andersen.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.0+.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.0+/076e7f6.
     </div>
   </body>
 </html>
