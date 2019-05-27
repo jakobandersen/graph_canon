@@ -4,8 +4,8 @@
 Changes
 #######
 
-Develop
-=======
+v0.4 (2019-05-27)
+=================
 
 Incompatible Changes
 --------------------
@@ -41,8 +41,8 @@ Other
 - Lots of documentation improvements.
 
 
-Release v0.3 (2018-09-04)
-=========================
+v0.3 (2018-09-04)
+=================
 
 - Require version v0.3 PermGroup.
 - Add Schreier-Sims-based automorphism pruning.
@@ -52,7 +52,7 @@ Release v0.3 (2018-09-04)
 - Running the algorithm on an empty graph now works.
 
 
-Release v0.2 (2018-02-05)
-=========================
+v0.2 (2018-02-05)
+=================
 
 Second public version.
