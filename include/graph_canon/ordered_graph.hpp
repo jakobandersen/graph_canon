@@ -259,7 +259,7 @@ public:
 
 } // namespace detail
 
-// rst: .. class:: template<typename Graph, typename IndexMap, bool WithInEdges = false> \
+// rst: .. class:: template<typename GraphT, typename IndexMapT, bool WithInEdges = false> \
 // rst:            ordered_graph
 // rst:
 // rst:		A graph adaptor that ensures iteration order in correspondence with a given vertex index map.
@@ -277,16 +277,24 @@ public:
 // rst:		If the adapted graph has parallel edges, those will be ordered according to a predicate given to the constructor.
 // rst:
 
-template<typename Graph, typename IndexMap, bool WithInEdges = false >
+template<typename GraphT, typename IndexMapT, bool WithInEdges = false>
 struct ordered_graph {
-	BOOST_CONCEPT_ASSERT((VertexListGraphConcept<Graph>));
-	BOOST_CONCEPT_ASSERT((IncidenceGraphConcept<Graph>));
-	BOOST_STATIC_ASSERT(!WithInEdges || boost::is_bidirectional_graph<Graph>::value);
+	BOOST_CONCEPT_ASSERT((VertexListGraphConcept<GraphT>));
+	BOOST_CONCEPT_ASSERT((IncidenceGraphConcept<GraphT>));
+	BOOST_STATIC_ASSERT(!WithInEdges || boost::is_bidirectional_graph<GraphT>::value);
 public:
-	using Data = typename boost::conditional<WithInEdges,
-			/**/ detail::ordered_bidirectional<Graph, IndexMap>,
-			/**/ detail::ordered_incidence<Graph, IndexMap> >::type;
+	// rst:		.. type:: Graph = GraphT
+	// rst:
+	// rst: 			The type of the underlying graph.
+	using Graph = GraphT;
+	// rst:		.. type:: IndexMap = IndexMapT
+	// rst:
+	// rst:			The type of the vertex index map representing the order to use for iteration.
+	using IndexMap = IndexMapT;
 	using Traits = graph_traits<Graph>;
+	using Data = typename boost::conditional<WithInEdges,
+			 /**/ detail::ordered_bidirectional<Graph, IndexMap>,
+			 /**/ detail::ordered_incidence<Graph, IndexMap> >::type;
 	// Graph
 	using vertex_descriptor = typename Traits::vertex_descriptor;
 	using edge_descriptor = typename Traits::edge_descriptor;
@@ -324,7 +332,7 @@ public:
 	// rst:			:returns: a reference to the adapted graph.
 
 	const Graph &get_graph() const {
-		return *data.g;
+		return data.g;
 	}
 
 	// rst:		.. function:: IndexMap get_index_map() const

@@ -10,8 +10,17 @@
 #include <iostream>
 #include <random>
 
+template<typename OrdGraph>
+void check_other_api(const OrdGraph &gOrd) {
+	const typename OrdGraph::Graph &g = gOrd.get_graph();
+	(void) g;
+	typename OrdGraph::IndexMap idx = gOrd.get_index_map();
+	(void) idx;
+}
+
 template<typename OrdGraph, typename IndexMap, typename EdgeLess>
 void check_incidence(const OrdGraph &g, IndexMap idx, EdgeLess edge_less) {
+	check_other_api(g);
 	BOOST_CONCEPT_ASSERT((boost::VertexListGraphConcept<OrdGraph>));
 	BOOST_CONCEPT_ASSERT((boost::RandomAccessIteratorConcept<typename boost::graph_traits<OrdGraph>::vertex_iterator>));
 	BOOST_CONCEPT_ASSERT((boost::IncidenceGraphConcept<OrdGraph>));

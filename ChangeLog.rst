@@ -4,6 +4,21 @@
 Changes
 #######
 
+develop
+=======
+
+New Features
+------------
+
+- Added convenience type aliasses `ordered_graph::Graph` and `ordered_raph::IndexMap`.
+
+Bugs Fixed
+----------
+
+- Fix extranous dereference in `ordered_graph::get_graph`.
+  Thanks to Gregor Kälin.
+
+
 v0.4 (2019-05-27)
 =================
 
