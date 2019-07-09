@@ -110,7 +110,8 @@ foreach(mode ${modes})
                             -Wno-unused-parameter
                             -Wno-comment
                             -Wno-sign-compare
-                            -Wno-unused-local-typedefs)
+                            -Wno-unused-local-typedefs
+                            $<$<CXX_COMPILER_ID:Clang>:-Wno-error=c++17-extensions>)
                     install(TARGETS ${name}
                             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/GraphCanon
                             COMPONENT GraphCanon_run)

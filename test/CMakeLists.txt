@@ -16,9 +16,13 @@ foreach(testName ${graph_canon_TEST_FILES})
         target_compile_options(${testName} PRIVATE ${sanFlags})
         target_link_libraries(${testName} PRIVATE ${sanFlags})
     endif()
-    target_compile_options(${testName} PRIVATE -Wall -Wextra -Werror -pedantic
+    target_compile_options(${testName} PRIVATE -Wall -Wextra -pedantic
             -Wno-unused-parameter
-            -Wno-comment)
+            -Wno-comment
+            -Wno-parentheses
+            -Wno-unused-local-typedefs
+            $<$<CXX_COMPILER_ID:GNU>:-Wno-error=maybe-uninitialized>
+            $<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_GREATER_EQUAL:${CMAKE_CXX_COMPILER_VERSION},9>>:-Wno-error=deprecated-copy>)
     add_test(${testName} ${testName})
 endforeach()
 
