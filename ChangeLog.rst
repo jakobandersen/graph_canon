@@ -17,6 +17,15 @@ Bugs Fixed
 
 - Fix extranous dereference in `ordered_graph::get_graph`.
   Thanks to Gregor Kälin.
+- Use `idx` when setting up initial partition.
+  Thanks to Gregor Kälin.
+- Use ``get(idx, v)`` instead of ``idx[v]`` consistently everywhere.
+- Add missing concept checks in `canonicalize` for the graph type.
+
+Other
+=====
+
+- Update documentation for `EdgeHandler` and `canonicalize`.
 
 
 v0.4 (2019-05-27)

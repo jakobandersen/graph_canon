@@ -43,14 +43,17 @@ namespace graph_canon {
 // rst:
 // rst:		.. valid_expr::
 // rst:
-// rst:		The expression `edge_handler.compare(state, e_left, e_right)` compares the two edges
-// rst:		(e.g., their labels) and returns an integer representing their order:
+// rst: 		- `edge_handler.initialize(state)`. Is executed in the beginning of canonicalization.
+// rst:		- `edge_handler.compare(state, e_left, e_right)` must compare the two edges
+// rst:		  (e.g., their labels) and return an integer representing their order:
 // rst:
-// rst:		- A negative number: `e_left` is ordered before `e_right`.
-// rst:		- Zero: `e_left` and `e_right` are considered equal.
-// rst:		- A positive number: `e_left` is ordered after `e_right`.
+// rst:		  - A negative number: `e_left` is ordered before `e_right`.
+// rst:		  - Zero: `e_left` and `e_right` are considered equal.
+// rst:		  - A positive number: `e_left` is ordered after `e_right`.
 // rst:
-// rst:		Note that the function should not compare the end-points, only auxiliary data.
+// rst: 		  The function is at least used when creating ordered graphs in the leaves of the search tree,
+// rst: 		  but may also be used by visitors.
+// rst:		  Note that the function should not compare the end-points, only auxiliary data.
 // rst:
 // rst:		.. todo:: List requirements from the WL-1 refiner.
 // rst:

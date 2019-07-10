@@ -17,6 +17,7 @@ foreach(testName ${graph_canon_TEST_FILES})
         target_link_libraries(${testName} PRIVATE ${sanFlags})
     endif()
     target_compile_options(${testName} PRIVATE -Wall -Wextra -pedantic
+            -Wno-sign-compare
             -Wno-unused-parameter
             -Wno-comment
             -Wno-parentheses

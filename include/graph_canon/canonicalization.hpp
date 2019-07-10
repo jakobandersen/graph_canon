@@ -17,6 +17,7 @@
 #include <boost/assert.hpp>
 #include <boost/concept/assert.hpp>
 #include <boost/concept_check.hpp>
+#include <boost/graph/graph_concepts.hpp>
 #include <boost/graph/properties.hpp>
 #include <boost/property_map/property_map.hpp>
 #include <boost/static_assert.hpp>
@@ -37,9 +38,9 @@ namespace graph_canon {
 // rst:
 
 template<
-typename SizeTypeT, bool ParallelEdgesV, bool LoopsV,
-typename GraphT, typename IndexMapT,
-typename EdgeHandlerT
+		typename SizeTypeT, bool ParallelEdgesV, bool LoopsV,
+		typename GraphT, typename IndexMapT,
+		typename EdgeHandlerT
 >
 struct config {
 	// rst:		.. type:: SizeType = SizeTypeT
@@ -98,7 +99,8 @@ struct TreeNodeDataGenerator {
 
 		struct type {
 
-			type(State &state) : state(state) { }
+			type(State &state) : state(state) {}
+
 		public:
 			Data data;
 			State &state;
@@ -131,10 +133,10 @@ template<typename ConfigT, typename VisitorT>
 class canon_state {
 	using Self = canon_state<ConfigT, VisitorT>;
 	using Config = ConfigT;
-	canon_state(const canon_state&) = delete;
-	canon_state(canon_state&&) = delete;
-	canon_state &operator=(const canon_state&) = delete;
-	canon_state &operator=(canon_state&&) = delete;
+	canon_state(const canon_state &) = delete;
+	canon_state(canon_state &&) = delete;
+	canon_state &operator=(const canon_state &) = delete;
+	canon_state &operator=(canon_state &&) = delete;
 public:
 	// rst:		.. type:: Vis
 	// rst:
@@ -213,17 +215,23 @@ private:
 		for(SizeType cell = 0; cell != n; cell = pi.get_cell_end(cell))
 			pi.set_cell_from_v_idx(cell);
 	}
+
 public:
 
 	template<typename VertexLess>
-	canon_state(const Graph &g, IndexMap idx, EHandler &edge_handler, Vis visitor, VertexLess vertex_less, Partition &&pi)
-	: g(g), n(num_vertices(g)), idx(idx), edge_handler(edge_handler), visitor(std::move(visitor)) {
+	canon_state(const Graph &g,
+					IndexMap idx,
+					EHandler &edge_handler,
+					Vis visitor,
+					VertexLess vertex_less,
+					Partition &&pi)
+			: g(g), n(num_vertices(g)), idx(idx), edge_handler(edge_handler), visitor(std::move(visitor)) {
 		this->edge_handler.initialize(*this);
 		this->visitor.initialize(*this);
 		// first let the user determine the order
 		splitByPredicate(vertex_less, pi);
 		// and let's do it by degree as well such that visitors can rely on this refinement
-		const auto vertex_degree_less = [&g](const Vertex &u, const Vertex & v) {
+		const auto vertex_degree_less = [&g](const Vertex &u, const Vertex &v) {
 			return degree(u, g) < degree(v, g);
 		};
 		splitByPredicate(vertex_degree_less, pi);
@@ -262,8 +270,8 @@ public:
 	SizeType select_target_cell(TreeNode &t) {
 		return visitor.select_target_cell(*this, t);
 	}
-public:
 
+public:
 	// rst:		.. function:: void report_leaf(OwnerPtr node)
 	// rst:
 	// rst:			Submit a tree node as a valid leaf of the search tree.
@@ -285,7 +293,7 @@ public:
 		visitor.tree_leaf(*this, *node);
 		if(!canon_leaf) { // canon_permuted_graph may still be valid if someone pruned our canon_leaf
 			canon_leaf = node;
-			visitor.canon_new_best(*this, static_cast<TreeNode*>(nullptr));
+			visitor.canon_new_best(*this, static_cast<TreeNode *>(nullptr));
 			return;
 		}
 		if(!canon_permuted_graph) { // this is our second leaf, so not even the first permuted graph were created
@@ -333,6 +341,7 @@ public:
 	TreeNode *get_canon_leaf() const {
 		return canon_leaf.get();
 	}
+
 public:
 	// rst:		.. var:: const Graph &g
 	// rst:
@@ -387,7 +396,7 @@ public:
 	// rst:		.. function:: canonicalizer(EdgeHandlerCreatorT edge_handler_creator)
 
 	canonicalizer(EdgeHandlerCreatorT edge_handler_creator)
-	: edge_handler(edge_handler_creator.template make<SizeType>()) { }
+			: edge_handler(edge_handler_creator.template make<SizeType>()) {}
 
 	// rst:		.. function:: template<typename Graph, typename IndexMap, typename VertexLess, typename Vis> \
 	// rst:		              auto operator()(const Graph &g, IndexMap idx, VertexLess vertex_less, Vis visitor)
@@ -396,11 +405,16 @@ public:
 	// rst:
 	// rst:			Requires:
 	// rst:
+	// rst:			- `Graph` must be a `VertexListGraph`, an `EdgeListGraph`, and a `BidirectionalGraph`.
 	// rst:			- `IndexMap` must be a `ReadablePropertyMap` that maps the vertices of `g` into contiguous indices starting from 0.
 	// rst:			- `VertexLess` must be a less-than predicate on the vertices of `g` that induces a strict weak ordering.
 	// rst:			  The resulting canonical vertex order respects the ordering induced by `vertex_less`.
 	// rst:			- `Vis` must be a `Visitor` type.
 	// rst:			  Note that an `invariant_coordinator` is automatically prepended to the given visitor.
+	// rst:
+	// rst:			.. note:: Currently the expression `vertex(i, g)` for a vertex index `i` is also required to be valid,
+	// rst:			          and returning the corresponding vertex descriptor. It must be the inverse of the index map `idx`.
+	// rst:			          This requirement will be lifted in a future version.
 	// rst:
 	// rst:			:returns: A `std::pair<std::vector<SizeType>, Data>` where `first` is the permutation,
 	// rst:				and `second` is the auxiliary visitor data of an unspecified type `Data`.
@@ -410,11 +424,15 @@ public:
 	template<typename Graph, typename IndexMap, typename VertexLess, typename Vis>
 	auto operator()(const Graph &g, IndexMap idx, VertexLess vertex_less, Vis visitor) {
 		// static checks
-		BOOST_CONCEPT_ASSERT((boost::ReadablePropertyMapConcept<IndexMap, typename boost::graph_traits<Graph>::vertex_descriptor>));
+		BOOST_CONCEPT_ASSERT((boost::VertexAndEdgeListGraphConcept<Graph>));
+		BOOST_CONCEPT_ASSERT((boost::BidirectionalGraphConcept<Graph>));
+		// only undirected graphs for now
+		BOOST_STATIC_ASSERT(
+				(boost::is_convertible<typename boost::graph_traits<Graph>::directed_category, boost::undirected_tag>::value));
+		BOOST_CONCEPT_ASSERT(
+				(boost::ReadablePropertyMapConcept<IndexMap, typename boost::graph_traits<Graph>::vertex_descriptor>));
 		using IndexMapValue = typename boost::property_traits<IndexMap>::value_type;
 		BOOST_STATIC_ASSERT((boost::is_convertible<IndexMapValue, SizeType>::value));
-		// only undirected graphs for now
-		BOOST_STATIC_ASSERT((boost::is_convertible<typename boost::graph_traits<Graph>::directed_category, boost::undirected_tag>::value));
 		// don't have duplicate visitors
 		auto visitor_with_inv = make_visitor(invariant_coordinator(), visitor);
 		using VisitorWithInv = decltype(visitor_with_inv);
@@ -429,10 +447,11 @@ public:
 		using TreeTraversers = meta::copy_if<VisitorWithInv, detail::pred_tree_traversal>;
 		static_assert(meta::size<TreeTraversers>::value == 1, "There can be only one tree traverser.");
 		// dynamic checks
-		BOOST_ASSERT_MSG(num_vertices(g) <= std::numeric_limits<SizeType>::max(), "SizeType is too narrow for this graph.");
+		BOOST_ASSERT_MSG(num_vertices(g) <= std::numeric_limits<SizeType>::max(),
+							  "SizeType is too narrow for this graph.");
 		BOOST_ASSERT_MSG(num_edges(g) <= std::numeric_limits<SizeType>::max(), "SizeType is too narrow for this graph.");
 
-		
+
 		using Config = config<SizeType, ParallelEdges, Loops, Graph, IndexMap, EdgeHandler>;
 		using Partition = typename Config::Partition;
 
@@ -441,7 +460,8 @@ public:
 		const auto vs = vertices(g);
 		for(auto iter = vs.first; iter != vs.second; ++iter) {
 			const auto v = *iter;
-			pi.put_element_on_index(v, get(idx, v));
+			const auto i = get(idx, v);
+			pi.put_element_on_index(i, i);
 		}
 
 		// Create and explore tree
@@ -450,6 +470,7 @@ public:
 		visitor_with_inv.explore_tree(state);
 		return std::make_pair(state.get_canonical_permutation(), visitor_with_inv.extract_result(state));
 	}
+
 private:
 	EdgeHandler edge_handler;
 };
@@ -464,13 +485,18 @@ private:
 // rst:		See :expr:`canonicalizer::operator()`.
 
 template<
-typename SizeType, bool ParallelEdges, bool Loops,
-typename Graph, typename IndexMap,
-typename VertexLess, typename EdgeHandlerCreatorT,
-typename Visitor
+		typename SizeType, bool ParallelEdges, bool Loops,
+		typename Graph, typename IndexMap,
+		typename VertexLess, typename EdgeHandlerCreatorT,
+		typename Visitor
 >
-auto canonicalize(const Graph &graph, IndexMap idx, VertexLess vertex_less, EdgeHandlerCreatorT edge_handler_creator, Visitor visitor) {
-	return canonicalizer<SizeType, EdgeHandlerCreatorT, ParallelEdges, Loops>(edge_handler_creator) (graph, idx, vertex_less, visitor);
+auto canonicalize(const Graph &graph,
+						IndexMap idx,
+						VertexLess vertex_less,
+						EdgeHandlerCreatorT edge_handler_creator,
+						Visitor visitor) {
+	return canonicalizer<SizeType, EdgeHandlerCreatorT, ParallelEdges, Loops>(edge_handler_creator)(
+			graph, idx, vertex_less, visitor);
 }
 
 } // namespace graph_canon

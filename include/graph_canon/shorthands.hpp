@@ -33,7 +33,7 @@ auto make_default_visitor() {
 			target_cell_flm(),
 			// rst:		- `traversal_bfs_exp`
 			traversal_bfs_exp(),
-			// rst: 		- `refine_WL_1`
+			// rst:		- `refine_WL_1`
 			refine_WL_1(),
 			// rst:		- `aut_pruner_basic`
 			aut_pruner_basic(),

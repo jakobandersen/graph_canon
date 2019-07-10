@@ -43,19 +43,20 @@ template<typename Graph, typename IndexMap, typename Adj = ordered_adj_incidence
 struct ordered_incidence {
 
 	struct traversal_category :
-	virtual vertex_list_graph_tag,
-	virtual incidence_graph_tag,
-	virtual adjacency_graph_tag {
+			virtual vertex_list_graph_tag,
+			virtual incidence_graph_tag,
+			virtual adjacency_graph_tag {
 	};
 
 	struct vertex_iterator : boost::iterator_facade<vertex_iterator, typename graph_traits<Graph>::vertex_descriptor,
-	std::random_access_iterator_tag, typename graph_traits<Graph>::vertex_descriptor> {
+			std::random_access_iterator_tag, typename graph_traits<Graph>::vertex_descriptor> {
 		typedef boost::iterator_facade<vertex_iterator, typename graph_traits<Graph>::vertex_descriptor,
-		std::random_access_iterator_tag, typename graph_traits<Graph>::vertex_descriptor> base_type;
+				std::random_access_iterator_tag, typename graph_traits<Graph>::vertex_descriptor> base_type;
 
-		vertex_iterator() { }
+		vertex_iterator() {}
 
-		explicit vertex_iterator(typename std::vector<Adj>::const_iterator iter) : iter(iter) { }
+		explicit vertex_iterator(typename std::vector<Adj>::const_iterator iter) : iter(iter) {}
+
 	private:
 		friend class boost::iterator_core_access;
 
@@ -82,20 +83,23 @@ struct ordered_incidence {
 		typename base_type::difference_type distance_to(const vertex_iterator &other) const {
 			return other.iter - iter;
 		}
+
 	private:
 		typename std::vector<Adj>::const_iterator iter;
 	};
 
 	typedef typename std::vector<typename graph_traits<Graph>::edge_descriptor>::const_iterator out_edge_iterator;
 
-	struct adjacency_iterator : boost::iterator_facade<adjacency_iterator, typename graph_traits<Graph>::vertex_descriptor,
-	std::random_access_iterator_tag, typename graph_traits<Graph>::vertex_descriptor> {
+	struct adjacency_iterator
+			: boost::iterator_facade<adjacency_iterator, typename graph_traits<Graph>::vertex_descriptor,
+					std::random_access_iterator_tag, typename graph_traits<Graph>::vertex_descriptor> {
 		typedef boost::iterator_facade<adjacency_iterator, typename graph_traits<Graph>::vertex_descriptor,
-		std::random_access_iterator_tag, typename graph_traits<Graph>::vertex_descriptor> base_type;
+				std::random_access_iterator_tag, typename graph_traits<Graph>::vertex_descriptor> base_type;
 
-		adjacency_iterator() { }
+		adjacency_iterator() {}
 
-		explicit adjacency_iterator(const Graph *g, const out_edge_iterator &iter) : g(g), iter(iter) { }
+		explicit adjacency_iterator(const Graph *g, const out_edge_iterator &iter) : g(g), iter(iter) {}
+
 	private:
 		friend class boost::iterator_core_access;
 
@@ -122,6 +126,7 @@ struct ordered_incidence {
 		typename base_type::difference_type distance_to(const adjacency_iterator &other) const {
 			return other.iter - iter;
 		}
+
 	private:
 		const Graph *g;
 		out_edge_iterator iter;
@@ -133,19 +138,22 @@ struct ordered_incidence {
 	template<typename EdgeLess>
 	struct out_edge_less {
 
-		out_edge_less(const Graph &g, IndexMap idx, EdgeLess edge_less) : g(g), idx(idx), edge_less(edge_less) { }
+		out_edge_less(const Graph &g, IndexMap idx, EdgeLess edge_less) : g(g), idx(idx), edge_less(edge_less) {}
 
 		bool operator()(const typename graph_traits<Graph>::edge_descriptor &lhs,
-				const typename graph_traits<Graph>::edge_descriptor &rhs) const {
-			typename graph_traits<Graph>::vertices_size_type idx_lhs = idx[target(lhs, g)], idx_rhs = idx[target(rhs, g)];
+							 const typename graph_traits<Graph>::edge_descriptor &rhs) const {
+			const auto idx_lhs = get(idx, target(lhs, g));
+			const auto idx_rhs = get(idx, target(rhs, g));
 			if(idx_lhs != idx_rhs) return idx_lhs < idx_rhs;
 			else return edge_less(lhs, rhs);
 		}
+
 	private:
 		const Graph &g;
 		IndexMap idx;
 		EdgeLess edge_less;
 	};
+
 public:
 
 	template<typename EdgeLess>
@@ -154,16 +162,16 @@ public:
 		out_edge_less<EdgeLess> less(g, idx, edge_less);
 
 		BGL_FORALL_VERTICES_T(v, g, Graph) {
-			std::size_t v_idx = get(idx, v);
-			Adj &adj = data[v_idx];
-			adj.v = v;
-			adj.out_edges.reserve(out_degree(v, g));
+				std::size_t v_idx = get(idx, v);
+				Adj &adj = data[v_idx];
+				adj.v = v;
+				adj.out_edges.reserve(out_degree(v, g));
 
-			BGL_FORALL_OUTEDGES_T(v, e_out, g, Graph) {
-				adj.out_edges.push_back(e_out);
+				BGL_FORALL_OUTEDGES_T(v, e_out, g, Graph) {
+						adj.out_edges.push_back(e_out);
+					}
+				std::sort(adj.out_edges.begin(), adj.out_edges.end(), less);
 			}
-			std::sort(adj.out_edges.begin(), adj.out_edges.end(), less);
-		}
 	}
 
 	//protected:
@@ -176,20 +184,22 @@ template<typename Graph, typename IndexMap, typename Adj = ordered_adj_bidirecti
 struct ordered_bidirectional : ordered_incidence<Graph, IndexMap, Adj> {
 
 	struct traversal_category :
-	virtual ordered_incidence<Graph, Adj>::traversal_category,
-	virtual bidirectional_graph_tag {
+			virtual ordered_incidence<Graph, Adj>::traversal_category,
+			virtual bidirectional_graph_tag {
 	};
 
 	typedef typename std::vector<typename graph_traits<Graph>::edge_descriptor>::const_iterator in_edge_iterator;
 
-	struct inv_adjacency_iterator : boost::iterator_facade<inv_adjacency_iterator, typename graph_traits<Graph>::vertex_descriptor,
-	std::random_access_iterator_tag, typename graph_traits<Graph>::vertex_descriptor> {
+	struct inv_adjacency_iterator
+			: boost::iterator_facade<inv_adjacency_iterator, typename graph_traits<Graph>::vertex_descriptor,
+					std::random_access_iterator_tag, typename graph_traits<Graph>::vertex_descriptor> {
 		typedef boost::iterator_facade<inv_adjacency_iterator, typename graph_traits<Graph>::vertex_descriptor,
-		std::random_access_iterator_tag, typename graph_traits<Graph>::vertex_descriptor> base_type;
+				std::random_access_iterator_tag, typename graph_traits<Graph>::vertex_descriptor> base_type;
 
-		inv_adjacency_iterator() { }
+		inv_adjacency_iterator() {}
 
-		explicit inv_adjacency_iterator(const Graph *g, const in_edge_iterator &iter) : g(g), iter(iter) { }
+		explicit inv_adjacency_iterator(const Graph *g, const in_edge_iterator &iter) : g(g), iter(iter) {}
+
 	private:
 		friend class boost::iterator_core_access;
 
@@ -216,6 +226,7 @@ struct ordered_bidirectional : ordered_incidence<Graph, IndexMap, Adj> {
 		typename base_type::difference_type distance_to(const inv_adjacency_iterator &other) const {
 			return other.iter - iter;
 		}
+
 	private:
 		const Graph *g;
 		in_edge_iterator iter;
@@ -224,36 +235,39 @@ struct ordered_bidirectional : ordered_incidence<Graph, IndexMap, Adj> {
 	template<typename EdgeLess>
 	struct in_edge_less {
 
-		in_edge_less(const Graph &g, IndexMap idx, EdgeLess edge_less) : g(g), idx(idx), edge_less(edge_less) { }
+		in_edge_less(const Graph &g, IndexMap idx, EdgeLess edge_less) : g(g), idx(idx), edge_less(edge_less) {}
 
 		bool operator()(const typename graph_traits<Graph>::edge_descriptor &lhs,
-				const typename graph_traits<Graph>::edge_descriptor &rhs) const {
-			typename graph_traits<Graph>::vertices_size_type idx_lhs = idx[source(lhs, g)], idx_rhs = idx[source(rhs, g)];
+							 const typename graph_traits<Graph>::edge_descriptor &rhs) const {
+			const auto idx_lhs = get(idx, source(lhs, g));
+			const auto idx_rhs = get(idx, source(rhs, g));
 			if(idx_lhs != idx_rhs) return idx_lhs < idx_rhs;
 			else return edge_less(lhs, rhs);
 		}
+
 	private:
 		const Graph &g;
 		IndexMap idx;
 		EdgeLess edge_less;
 	};
+
 public:
 
 	template<typename EdgeLess>
 	ordered_bidirectional(const Graph &g, IndexMap idx, EdgeLess edge_less)
-	: ordered_incidence<Graph, IndexMap, Adj>(g, idx, edge_less) {
+			: ordered_incidence<Graph, IndexMap, Adj>(g, idx, edge_less) {
 		in_edge_less<EdgeLess> less(g, idx, edge_less);
 
 		BGL_FORALL_VERTICES_T(v, g, Graph) {
-			std::size_t v_idx = get(idx, v);
-			Adj &adj = this->data[v_idx];
-			adj.in_edges.reserve(in_degree(v, g));
+				std::size_t v_idx = get(idx, v);
+				Adj &adj = this->data[v_idx];
+				adj.in_edges.reserve(in_degree(v, g));
 
-			BGL_FORALL_INEDGES_T(v, e_in, g, Graph) {
-				adj.in_edges.push_back(e_in);
+				BGL_FORALL_INEDGES_T(v, e_in, g, Graph) {
+						adj.in_edges.push_back(e_in);
+					}
+				std::sort(adj.in_edges.begin(), adj.in_edges.end(), less);
 			}
-			std::sort(adj.in_edges.begin(), adj.in_edges.end(), less);
-		}
 	}
 };
 
@@ -293,8 +307,8 @@ public:
 	using IndexMap = IndexMapT;
 	using Traits = graph_traits<Graph>;
 	using Data = typename boost::conditional<WithInEdges,
-			 /**/ detail::ordered_bidirectional<Graph, IndexMap>,
-			 /**/ detail::ordered_incidence<Graph, IndexMap> >::type;
+			/**/ detail::ordered_bidirectional<Graph, IndexMap>,
+			/**/ detail::ordered_incidence<Graph, IndexMap> >::type;
 	// Graph
 	using vertex_descriptor = typename Traits::vertex_descriptor;
 	using edge_descriptor = typename Traits::edge_descriptor;
@@ -342,6 +356,7 @@ public:
 	IndexMap get_index_map() const {
 		return data.idx;
 	}
+
 	//private:
 	Data data;
 };
@@ -364,7 +379,7 @@ ordered_graph<Graph, IndexMap, WithInEdges> make_ordered_graph(const Graph &g, I
 
 template<typename Graph, typename IndexMap, bool WithInEdges>
 std::pair<typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::vertex_iterator,
-typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::vertex_iterator>
+		typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::vertex_iterator>
 vertices(const ordered_graph<Graph, IndexMap, WithInEdges> &g) {
 	typedef typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::vertex_iterator Iter;
 	return std::make_pair(Iter(g.data.data.begin()), Iter(g.data.data.end()));
@@ -390,8 +405,9 @@ num_edges(const ordered_graph<Graph, IndexMap, WithInEdges> &g) {
 
 template<typename Graph, typename IndexMap, bool WithInEdges>
 std::pair<typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::out_edge_iterator,
-typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::out_edge_iterator>
-out_edges(const typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::vertex_descriptor &v, const ordered_graph<Graph, IndexMap, WithInEdges> &g) {
+		typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::out_edge_iterator>
+out_edges(const typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::vertex_descriptor &v,
+			 const ordered_graph<Graph, IndexMap, WithInEdges> &g) {
 	return std::make_pair(
 			g.data.data[get(g.data.idx, v)].out_edges.begin(),
 			g.data.data[get(g.data.idx, v)].out_edges.end());
@@ -399,19 +415,22 @@ out_edges(const typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges
 
 template<typename Graph, typename IndexMap, bool WithInEdges>
 typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::vertex_descriptor
-source(const typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::edge_descriptor &e, const ordered_graph<Graph, IndexMap, WithInEdges> &g) {
+source(const typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::edge_descriptor &e,
+		 const ordered_graph<Graph, IndexMap, WithInEdges> &g) {
 	return source(e, g.data.g);
 }
 
 template<typename Graph, typename IndexMap, bool WithInEdges>
 typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::vertex_descriptor
-target(const typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::edge_descriptor &e, const ordered_graph<Graph, IndexMap, WithInEdges> &g) {
+target(const typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::edge_descriptor &e,
+		 const ordered_graph<Graph, IndexMap, WithInEdges> &g) {
 	return target(e, g.data.g);
 }
 
 template<typename Graph, typename IndexMap, bool WithInEdges>
 typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::degree_size_type
-out_degree(const typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::vertex_descriptor &v, const ordered_graph<Graph, IndexMap, WithInEdges> &g) {
+out_degree(const typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::vertex_descriptor &v,
+			  const ordered_graph<Graph, IndexMap, WithInEdges> &g) {
 	return g.data.data[get(g.data.idx, v)].out_edges.size();
 }
 
@@ -420,8 +439,9 @@ out_degree(const typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdge
 
 template<typename Graph, typename IndexMap, bool WithInEdges>
 std::pair<typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::adjacency_iterator,
-typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::adjacency_iterator>
-adjacent_vertices(const typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::vertex_descriptor &v, const ordered_graph<Graph, IndexMap, WithInEdges> &g) {
+		typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::adjacency_iterator>
+adjacent_vertices(const typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::vertex_descriptor &v,
+						const ordered_graph<Graph, IndexMap, WithInEdges> &g) {
 	typedef typename graph_traits<ordered_graph<Graph, IndexMap, WithInEdges> >::adjacency_iterator Iter;
 	return std::make_pair(
 			Iter(&g.data.g, g.data.data[get(g.data.idx, v)].out_edges.begin()),
@@ -433,8 +453,9 @@ adjacent_vertices(const typename graph_traits<ordered_graph<Graph, IndexMap, Wit
 
 template<typename Graph, typename IndexMap>
 std::pair<typename graph_traits<ordered_graph<Graph, IndexMap, true> >::in_edge_iterator,
-typename graph_traits<ordered_graph<Graph, IndexMap, true> >::in_edge_iterator>
-in_edges(const typename graph_traits<ordered_graph<Graph, IndexMap, true> >::vertex_descriptor &v, const ordered_graph<Graph, IndexMap, true> &g) {
+		typename graph_traits<ordered_graph<Graph, IndexMap, true> >::in_edge_iterator>
+in_edges(const typename graph_traits<ordered_graph<Graph, IndexMap, true> >::vertex_descriptor &v,
+			const ordered_graph<Graph, IndexMap, true> &g) {
 	return std::make_pair(
 			g.data.data[get(g.data.idx, v)].in_edges.begin(),
 			g.data.data[get(g.data.idx, v)].in_edges.end());
@@ -442,7 +463,8 @@ in_edges(const typename graph_traits<ordered_graph<Graph, IndexMap, true> >::ver
 
 template<typename Graph, typename IndexMap>
 typename graph_traits<ordered_graph<Graph, IndexMap, true> >::degree_size_type
-in_degree(const typename graph_traits<ordered_graph<Graph, IndexMap, true> >::vertex_descriptor &v, const ordered_graph<Graph, IndexMap, true> &g) {
+in_degree(const typename graph_traits<ordered_graph<Graph, IndexMap, true> >::vertex_descriptor &v,
+			 const ordered_graph<Graph, IndexMap, true> &g) {
 	return g.data.data[get(g.data.idx, v)].in_edges.size();
 }
 
@@ -450,7 +472,8 @@ template<typename Graph, typename IndexMap>
 typename std::enable_if<is_directed_graph<Graph>::value,
 /**/ typename graph_traits<ordered_graph<Graph, IndexMap, true> >::degree_size_type
 >::type
-degree(const typename graph_traits<ordered_graph<Graph, IndexMap, true> >::vertex_descriptor &v, const ordered_graph<Graph, IndexMap, true> &g) {
+degree(const typename graph_traits<ordered_graph<Graph, IndexMap, true> >::vertex_descriptor &v,
+		 const ordered_graph<Graph, IndexMap, true> &g) {
 	return out_degree(v, g) + in_degree(v, g);
 }
 
@@ -458,7 +481,8 @@ template<typename Graph, typename IndexMap>
 typename std::enable_if<!is_directed_graph<Graph>::value,
 /**/ typename graph_traits<ordered_graph<Graph, IndexMap, true> >::degree_size_type
 >::type
-degree(const typename graph_traits<ordered_graph<Graph, IndexMap, true> >::vertex_descriptor &v, const ordered_graph<Graph, IndexMap, true> &g) {
+degree(const typename graph_traits<ordered_graph<Graph, IndexMap, true> >::vertex_descriptor &v,
+		 const ordered_graph<Graph, IndexMap, true> &g) {
 	return out_degree(v, g);
 }
 
@@ -468,8 +492,9 @@ degree(const typename graph_traits<ordered_graph<Graph, IndexMap, true> >::verte
 
 template<typename Graph, typename IndexMap>
 std::pair<typename /*graph_traits<*/ordered_graph<Graph, IndexMap, true>/* >*/::inv_adjacency_iterator,
-typename /*graph_traits<*/ordered_graph<Graph, IndexMap, true>/* >*/::inv_adjacency_iterator>
-inv_adjacent_vertices(const typename graph_traits<ordered_graph<Graph, IndexMap, true> >::vertex_descriptor &v, const ordered_graph<Graph, IndexMap, true> &g) {
+		typename /*graph_traits<*/ordered_graph<Graph, IndexMap, true>/* >*/::inv_adjacency_iterator>
+inv_adjacent_vertices(const typename graph_traits<ordered_graph<Graph, IndexMap, true> >::vertex_descriptor &v,
+							 const ordered_graph<Graph, IndexMap, true> &g) {
 	typedef typename /*graph_traits<*/ordered_graph<Graph, IndexMap, true>/* >*/::inv_adjacency_iterator Iter;
 	return std::make_pair(
 			Iter(&g.data.g, g.data.data[get(g.data.idx, v)].in_edges.begin()),

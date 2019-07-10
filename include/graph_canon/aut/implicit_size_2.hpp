@@ -21,6 +21,8 @@ namespace graph_canon {
 // rst:
 // rst:		This `Visitor` finds implicit automorphisms from ordered partitions where all cells have size 1 or 2.
 // rst:
+// rst: 		.. warning:: This visitor may only be used when other visitors ensure equitability of the ordered partitions.
+// rst:
 // rst:		The class is DefaultConstructible.
 // rst:
 

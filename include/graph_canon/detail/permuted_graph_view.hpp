@@ -26,16 +26,17 @@ struct permuted_graph_view {
 	template<typename State>
 	struct edge_less {
 
-		edge_less(const State &state, const partition<SizeType> &pi) : state(state), begin_inverse(pi.begin_inverse()) { }
+		edge_less(const State &state, const partition <SizeType> &pi) : state(state), begin_inverse(pi.begin_inverse()) {}
 
 		bool operator()(const Edge &lhs, const Edge &rhs) const {
 			const Graph &g = state.g;
 			const IndexMap &idx = state.idx;
-			if(begin_inverse[idx[target(lhs, g)]]
-					!= begin_inverse[idx[target(rhs, g)]])
-				return begin_inverse[idx[target(lhs, g)]] < begin_inverse[idx[target(rhs, g)]];
+			if(begin_inverse[get(idx, target(lhs, g))]
+				!= begin_inverse[get(idx, target(rhs, g))])
+				return begin_inverse[get(idx, target(lhs, g))] < begin_inverse[get(idx, target(rhs, g))];
 			return state.edge_handler.compare(state, lhs, rhs) < 0;
 		}
+
 	private:
 		const State &state;
 		const SizeType *begin_inverse;
@@ -43,7 +44,7 @@ struct permuted_graph_view {
 
 	template<typename State>
 	permuted_graph_view(const State &state, const typename TreeNode::OwnerPtr &leaf_node)
-	: leaf_node(leaf_node), n(state.n), repr(new Adj[n]), extra_repr(nullptr) {
+			: leaf_node(leaf_node), n(state.n), repr(new Adj[n]), extra_repr(nullptr) {
 		const auto &pi = leaf_node->pi;
 		const Graph &g = state.g;
 		const IndexMap &idx = state.idx;
@@ -54,7 +55,7 @@ struct permuted_graph_view {
 		const auto vs = vertices(g);
 		for(auto v_iter = vs.first; v_iter != vs.second; ++v_iter) {
 			const auto v = *v_iter;
-			const auto v_idx = pi.get_inverse(idx[v]);
+			const auto v_idx = pi.get_inverse(get(idx, v));
 
 			repr[v_idx].v = v;
 			const auto d = repr[v_idx].out_degree = out_degree(v, g);
@@ -94,16 +95,16 @@ struct permuted_graph_view {
 	~permuted_graph_view() {
 		if(repr) {
 			for(SizeType i = 0; i < n; i++)
-				delete [] repr[i].out_edges;
+				delete[] repr[i].out_edges;
 		}
-		delete [] repr;
-		delete [] extra_repr;
+		delete[] repr;
+		delete[] extra_repr;
 	}
 
 	template<typename State>
 	static long long compare(const State &state,
-			const permuted_graph_view<Config, typename State::TreeNode> &g1,
-			const permuted_graph_view<Config, typename State::TreeNode> &g2) {
+									 const permuted_graph_view<Config, typename State::TreeNode> &g1,
+									 const permuted_graph_view<Config, typename State::TreeNode> &g2) {
 		const Graph &g = state.g;
 		const IndexMap &idx = state.idx;
 		assert(g1.n == g2.n);
@@ -120,8 +121,8 @@ struct permuted_graph_view {
 				const Edge e2 = edges2[e_id];
 				const Vertex v1 = target(e1, g);
 				const Vertex v2 = target(e2, g);
-				const auto v_tar_idx1 = g1.leaf_node->pi.get_inverse(idx[v1]);
-				const auto v_tar_idx2 = g2.leaf_node->pi.get_inverse(idx[v2]);
+				const auto v_tar_idx1 = g1.leaf_node->pi.get_inverse(get(idx, v1));
+				const auto v_tar_idx2 = g2.leaf_node->pi.get_inverse(get(idx, v2));
 				if(v_tar_idx1 != v_tar_idx2)
 					return v_tar_idx1 - v_tar_idx2;
 				auto eDiff = state.edge_handler.compare(state, e1, e2);
@@ -134,6 +135,7 @@ struct permuted_graph_view {
 	typename TreeNode::OwnerPtr get_node() const {
 		return leaf_node;
 	}
+
 private:
 	typename TreeNode::OwnerPtr leaf_node;
 	SizeType n;

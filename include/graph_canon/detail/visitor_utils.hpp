@@ -17,7 +17,7 @@ inline void for_each_neighbour(const State &state, const TreeNode &node, const V
 	for(auto e_iter = oes.first; e_iter != oes.second; ++e_iter) {
 		const auto e_out = *e_iter;
 		const auto v_target = target(e_out, state.g);
-		const auto v_idx = state.idx[v_target];
+		const auto v_idx = get(state.idx, v_target);
 		const auto target_element_cell = begin_cell_from_v_idx[v_idx];
 		const auto target_element_cell_end = begin_cell_end[target_element_cell];
 		const bool is_singleton = target_element_cell + 1 == target_element_cell_end;
