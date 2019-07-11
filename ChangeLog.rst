@@ -21,6 +21,8 @@ Bugs Fixed
   Thanks to Gregor Kälin.
 - Use ``get(idx, v)`` instead of ``idx[v]`` consistently everywhere.
 - Add missing concept checks in `canonicalize` for the graph type.
+- Add missing inline on `make_default_visitor`.
+  Thanks to Gregor Kälin.
 
 Other
 =====

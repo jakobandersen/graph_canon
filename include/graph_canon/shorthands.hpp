@@ -22,12 +22,12 @@
 
 namespace graph_canon {
 
-// rst: .. function:: auto make_default_visitor()
+// rst: .. function:: inline auto make_default_visitor()
 // rst:
 // rst:		:returns: a compound visitor with the following visitors:
 // rst:
 
-auto make_default_visitor() {
+inline auto make_default_visitor() {
 	return make_visitor(
 			// rst:		- `target_cell_flm`
 			target_cell_flm(),
