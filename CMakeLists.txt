@@ -53,6 +53,9 @@ endif()
 ###########################################################################
 set(CMAKE_CXX_STANDARD 14)
 
+set(graph_canon_config_dependencies "")
+set(graph_canon_config_find_files "")
+
 
 # Boost
 # -------------------------------------------------------------------------
@@ -62,6 +65,10 @@ if(BUILD_BIN)
 else()
     find_package(Boost ${v} REQUIRED)
 endif()
+message(STATUS "(Boost include dir is ${Boost_INCLUDE_DIRS})")
+string(APPEND graph_canon_config_dependencies "set(BOOST_FOUND 0)\n") # TODO: remove when CMake 3.15 is required https://gitlab.kitware.com/cmake/cmake/issues/18590
+string(APPEND graph_canon_config_dependencies "find_dependency(Boost ${v})\n")
+list(APPEND graph_canon_config_find_files "FindBoost.cmake")
 
 
 # PermGroup
@@ -77,6 +84,7 @@ if(USE_NESTED_PERM_GROUP)
     endif()
 else()
     find_package(PermGroup ${v} REQUIRED)
+    string(APPEND graph_canon_config_dependencies "find_dependency(PermGroup ${v})\n")
     message(STATUS "PermGroup version: ${PermGroup_VERSION}")
 endif()
 
@@ -118,9 +126,8 @@ target_include_directories(graph_canon
         INTERFACE
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-        ${Boost_INCLUDE_DIR})
-target_link_libraries(graph_canon INTERFACE PermGroup::perm_group)
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>)
+target_link_libraries(graph_canon INTERFACE PermGroup::perm_group Boost::boost)
 #target_compile_options(graph_canon INTERFACE -Wall -Wextra)
 install(TARGETS graph_canon
         EXPORT PROJECT_exports
@@ -154,6 +161,10 @@ add_subdirectory(examples)
 include(CMakePackageConfigHelpers)
 # due to the stupid restrictive version formatting we change it
 set(exportDir ${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/${PROJECT_NAME})
+configure_file(${PROJECT_NAME}Config.cmake ${exportDir}/${PROJECT_NAME}Config.cmake @ONLY)
+foreach(f ${graph_canon_config_find_files})
+    configure_file(${PROJECT_SOURCE_DIR}/cmake/${f} ${exportDir}/${f} COPYONLY)
+endforeach()
 write_basic_package_version_file(
         ${exportDir}/${PROJECT_NAME}Config-version.cmake
         VERSION ${PROJECT_VERSION}
@@ -161,7 +172,7 @@ write_basic_package_version_file(
 install(EXPORT PROJECT_exports
         NAMESPACE ${PROJECT_NAME}::
         DESTINATION lib/cmake/${PROJECT_NAME}
-        FILE ${PROJECT_NAME}Config.cmake)
+        FILE ${PROJECT_NAME}Targets.cmake)
 install(DIRECTORY ${exportDir}
         DESTINATION lib/cmake
         COMPONENT GraphCanon_dev)
