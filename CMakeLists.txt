@@ -184,15 +184,6 @@ install(DIRECTORY ${exportDir}
         COMPONENT GraphCanon_dev)
 
 
-# pkg-config file
-# -------------------------------------------------------------------------
-set(exportDir ${CMAKE_CURRENT_BINARY_DIR}/lib/pkgconfig)
-configure_file(lib/pkgconfig/graph-canon.pc.in ${exportDir}/graph-canon.pc @ONLY)
-install(FILES ${exportDir}/graph-canon.pc
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
-        COMPONENT GraphCanon_dev)
-
-
 # Packaging
 # -------------------------------------------------------------------------
 string(TOUPPER ${PROJECT_NAME} PNAME_UPPER)
