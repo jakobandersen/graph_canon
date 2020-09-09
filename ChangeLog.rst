@@ -7,10 +7,16 @@ Changes
 develop
 =======
 
+Incompatible Chagnes
+--------------------
+
+- Bump Boost requirement to 1.67.
+
 New Features
 ------------
 
-- Added convenience type aliasses `ordered_graph::Graph` and `ordered_raph::IndexMap`.
+- Added convenience type aliasses `ordered_graph::Graph` and
+  `ordered_graph::IndexMap`.
 
 Bugs Fixed
 ----------
@@ -25,7 +31,7 @@ Bugs Fixed
   Thanks to Gregor Kälin.
 
 Other
-=====
+-----
 
 - Update documentation for `EdgeHandler` and `canonicalize`.
 

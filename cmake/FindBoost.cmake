@@ -1,3 +1,6 @@
+# This is a mix of the file from CMake v3.14.7, but with the dependency specification
+# from CMake 3.16. The newer ones uses a policy added in CMake 3.12, but we only require 3.10.
+
 # Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
 # file Copyright.txt or https://cmake.org/licensing for details.
 
@@ -344,8 +347,8 @@ macro(_Boost_ADJUST_LIB_VARS basename)
   endif()
   # Make variables changeable to the advanced user
   mark_as_advanced(
-      Boost_${basename}_LIBRARY_RELEASE
-      Boost_${basename}_LIBRARY_DEBUG
+          Boost_${basename}_LIBRARY_RELEASE
+          Boost_${basename}_LIBRARY_DEBUG
   )
 endmacro()
 
@@ -403,8 +406,8 @@ macro(_Boost_FIND_LIBRARY var build_type)
     set(_boost_LIBRARY_SEARCH_DIRS_${build_type} ${Boost_LIBRARY_DIR_${build_type}} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
     if(Boost_DEBUG)
       message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-        " Boost_LIBRARY_DIR_${build_type} = ${Boost_LIBRARY_DIR_${build_type}}"
-        " _boost_LIBRARY_SEARCH_DIRS_${build_type} = ${_boost_LIBRARY_SEARCH_DIRS_${build_type}}")
+              " Boost_LIBRARY_DIR_${build_type} = ${Boost_LIBRARY_DIR_${build_type}}"
+              " _boost_LIBRARY_SEARCH_DIRS_${build_type} = ${_boost_LIBRARY_SEARCH_DIRS_${build_type}}")
     endif()
   endif()
 endmacro()
@@ -414,9 +417,9 @@ endmacro()
 # Convert CMAKE_CXX_COMPILER_VERSION to boost compiler suffix version.
 function(_Boost_COMPILER_DUMPVERSION _OUTPUT_VERSION _OUTPUT_VERSION_MAJOR _OUTPUT_VERSION_MINOR)
   string(REGEX REPLACE "([0-9]+)\\.([0-9]+)(\\.[0-9]+)?" "\\1"
-    _boost_COMPILER_VERSION_MAJOR "${CMAKE_CXX_COMPILER_VERSION}")
+          _boost_COMPILER_VERSION_MAJOR "${CMAKE_CXX_COMPILER_VERSION}")
   string(REGEX REPLACE "([0-9]+)\\.([0-9]+)(\\.[0-9]+)?" "\\2"
-    _boost_COMPILER_VERSION_MINOR "${CMAKE_CXX_COMPILER_VERSION}")
+          _boost_COMPILER_VERSION_MINOR "${CMAKE_CXX_COMPILER_VERSION}")
 
   set(_boost_COMPILER_VERSION "${_boost_COMPILER_VERSION_MAJOR}${_boost_COMPILER_VERSION_MINOR}")
 
@@ -466,8 +469,17 @@ function(_Boost_GUESS_COMPILER_PREFIX _ret)
   elseif (GHSMULTI)
     set(_boost_COMPILER "-ghs")
   elseif("x${CMAKE_CXX_COMPILER_ID}" STREQUAL "xMSVC")
-    if(MSVC_TOOLSET_VERSION GREATER_EQUAL 141)
-      set(_boost_COMPILER "-vc141;-vc140")
+    if(MSVC_TOOLSET_VERSION GREATER_EQUAL 150)
+      # Not yet known.
+      set(_boost_COMPILER "")
+    elseif(MSVC_TOOLSET_VERSION GREATER_EQUAL 140)
+      # MSVC toolset 14.x versions are forward compatible.
+      set(_boost_COMPILER "")
+      foreach(v 9 8 7 6 5 4 3 2 1 0)
+        if(MSVC_TOOLSET_VERSION GREATER_EQUAL 14${v})
+          list(APPEND _boost_COMPILER "-vc14${v}")
+        endif()
+      endforeach()
     elseif(MSVC_TOOLSET_VERSION GREATER_EQUAL 80)
       set(_boost_COMPILER "-vc${MSVC_TOOLSET_VERSION}")
     elseif(NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS 13.10)
@@ -485,7 +497,7 @@ function(_Boost_GUESS_COMPILER_PREFIX _ret)
     set(_boost_COMPILER "-xlc")
   elseif (MINGW)
     if(${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION} VERSION_LESS 1.34)
-        set(_boost_COMPILER "-mgw") # no GCC version encoding prior to 1.34
+      set(_boost_COMPILER "-mgw") # no GCC version encoding prior to 1.34
     else()
       _Boost_COMPILER_DUMPVERSION(_boost_COMPILER_VERSION _boost_COMPILER_VERSION_MAJOR _boost_COMPILER_VERSION_MINOR)
       set(_boost_COMPILER "-mgw${_boost_COMPILER_VERSION}")
@@ -862,23 +874,49 @@ function(_Boost_COMPONENT_DEPENDENCIES component _ret)
     set(_Boost_TIMER_DEPENDENCIES chrono system)
     set(_Boost_WAVE_DEPENDENCIES filesystem system serialization thread chrono date_time atomic)
     set(_Boost_WSERIALIZATION_DEPENDENCIES serialization)
-  else()
-    if(NOT Boost_VERSION VERSION_LESS 106900)
-      set(_Boost_CONTRACT_DEPENDENCIES thread chrono date_time)
-      set(_Boost_COROUTINE_DEPENDENCIES context)
-      set(_Boost_FIBER_DEPENDENCIES context)
-      set(_Boost_IOSTREAMS_DEPENDENCIES regex)
-      set(_Boost_LOG_DEPENDENCIES date_time log_setup filesystem thread regex chrono atomic)
-      set(_Boost_MATH_DEPENDENCIES math_c99 math_c99f math_c99l math_tr1 math_tr1f math_tr1l atomic)
-      set(_Boost_MPI_DEPENDENCIES serialization)
-      set(_Boost_MPI_PYTHON_DEPENDENCIES python${component_python_version} mpi serialization)
-      set(_Boost_NUMPY_DEPENDENCIES python${component_python_version})
-      set(_Boost_THREAD_DEPENDENCIES chrono date_time atomic)
-      set(_Boost_TIMER_DEPENDENCIES chrono system)
-      set(_Boost_WAVE_DEPENDENCIES filesystem serialization thread chrono date_time atomic)
-      set(_Boost_WSERIALIZATION_DEPENDENCIES serialization)
-    endif()
-    if(NOT Boost_VERSION VERSION_LESS 107000)
+  elseif(NOT Boost_VERSION VERSION_LESS 106900 AND Boost_VERSION VERSION_LESS 107000)
+    set(_Boost_CONTRACT_DEPENDENCIES thread chrono date_time)
+    set(_Boost_COROUTINE_DEPENDENCIES context)
+    set(_Boost_FIBER_DEPENDENCIES context)
+    set(_Boost_IOSTREAMS_DEPENDENCIES regex)
+    set(_Boost_LOG_DEPENDENCIES date_time log_setup filesystem thread regex chrono atomic)
+    set(_Boost_MATH_DEPENDENCIES math_c99 math_c99f math_c99l math_tr1 math_tr1f math_tr1l atomic)
+    set(_Boost_MPI_DEPENDENCIES serialization)
+    set(_Boost_MPI_PYTHON_DEPENDENCIES python${component_python_version} mpi serialization)
+    set(_Boost_NUMPY_DEPENDENCIES python${component_python_version})
+    set(_Boost_THREAD_DEPENDENCIES chrono date_time atomic)
+    set(_Boost_TIMER_DEPENDENCIES chrono system)
+    set(_Boost_WAVE_DEPENDENCIES filesystem serialization thread chrono date_time atomic)
+    set(_Boost_WSERIALIZATION_DEPENDENCIES serialization)
+  elseif(NOT Boost_VERSION_STRING VERSION_LESS 1.70.0 AND Boost_VERSION_STRING VERSION_LESS 1.72.0)
+    set(_Boost_CONTRACT_DEPENDENCIES thread chrono date_time)
+    set(_Boost_COROUTINE_DEPENDENCIES context)
+    set(_Boost_FIBER_DEPENDENCIES context)
+    set(_Boost_IOSTREAMS_DEPENDENCIES regex)
+    set(_Boost_LOG_DEPENDENCIES date_time log_setup filesystem thread regex chrono atomic)
+    set(_Boost_MATH_DEPENDENCIES math_c99 math_c99f math_c99l math_tr1 math_tr1f math_tr1l atomic)
+    set(_Boost_MPI_DEPENDENCIES serialization)
+    set(_Boost_MPI_PYTHON_DEPENDENCIES python${component_python_version} mpi serialization)
+    set(_Boost_NUMPY_DEPENDENCIES python${component_python_version})
+    set(_Boost_THREAD_DEPENDENCIES chrono date_time atomic)
+    set(_Boost_TIMER_DEPENDENCIES chrono)
+    set(_Boost_WAVE_DEPENDENCIES filesystem serialization thread chrono date_time atomic)
+    set(_Boost_WSERIALIZATION_DEPENDENCIES serialization)
+  elseif(NOT Boost_VERSION_STRING VERSION_LESS 1.72.0)
+    set(_Boost_CONTRACT_DEPENDENCIES thread chrono date_time)
+    set(_Boost_COROUTINE_DEPENDENCIES context)
+    set(_Boost_FIBER_DEPENDENCIES context)
+    set(_Boost_IOSTREAMS_DEPENDENCIES regex)
+    set(_Boost_LOG_DEPENDENCIES date_time log_setup filesystem thread regex chrono atomic)
+    set(_Boost_MATH_DEPENDENCIES math_c99 math_c99f math_c99l math_tr1 math_tr1f math_tr1l chrono atomic)
+    set(_Boost_MPI_DEPENDENCIES serialization)
+    set(_Boost_MPI_PYTHON_DEPENDENCIES python${component_python_version} mpi serialization)
+    set(_Boost_NUMPY_DEPENDENCIES python${component_python_version})
+    set(_Boost_THREAD_DEPENDENCIES chrono date_time atomic)
+    set(_Boost_TIMER_DEPENDENCIES chrono)
+    set(_Boost_WAVE_DEPENDENCIES filesystem serialization thread chrono date_time atomic)
+    set(_Boost_WSERIALIZATION_DEPENDENCIES serialization)
+    if(NOT Boost_VERSION_STRING VERSION_LESS 1.75.0)
       message(WARNING "New Boost version may have incorrect or missing dependencies and imported targets")
     endif()
   endif()
@@ -1025,25 +1063,43 @@ endfunction()
 # Some boost libraries may require particular set of compler features.
 # The very first one was `boost::fiber` introduced in Boost 1.62.
 # One can check required compiler features of it in
-# `${Boost_ROOT}/libs/fiber/build/Jamfile.v2`.
+# - `${Boost_ROOT}/libs/fiber/build/Jamfile.v2`;
+# - `${Boost_ROOT}/libs/context/build/Jamfile.v2`.
+#
+# TODO (Re)Check compiler features on (every?) release ???
+# One may use the following command to get the files to check:
+#
+#   $ find . -name Jamfile.v2 | grep build | xargs grep -l cxx1
 #
 function(_Boost_COMPILER_FEATURES component _ret)
-  # Boost >= 1.62 and < 1.67
-  if(NOT Boost_VERSION VERSION_LESS 106200 AND Boost_VERSION VERSION_LESS 106700)
+  # Boost >= 1.62
+  if(NOT Boost_VERSION VERSION_LESS 106200)
     set(_Boost_FIBER_COMPILER_FEATURES
-        cxx_alias_templates
-        cxx_auto_type
-        cxx_constexpr
-        cxx_defaulted_functions
-        cxx_final
-        cxx_lambdas
-        cxx_noexcept
-        cxx_nullptr
-        cxx_rvalue_references
-        cxx_thread_local
-        cxx_variadic_templates
-    )
+            cxx_alias_templates
+            cxx_auto_type
+            cxx_constexpr
+            cxx_defaulted_functions
+            cxx_final
+            cxx_lambdas
+            cxx_noexcept
+            cxx_nullptr
+            cxx_rvalue_references
+            cxx_thread_local
+            cxx_variadic_templates
+            )
+    # Compiler feature for `context` same as for `fiber`.
+    set(_Boost_CONTEXT_COMPILER_FEATURES ${_Boost_FIBER_COMPILER_FEATURES})
   endif()
+
+  # Boost Contract library available in >= 1.67
+  if(NOT Boost_VERSION_STRING VERSION_LESS 1.67.0)
+    # From `libs/contract/build/boost_contract_build.jam`
+    set(_Boost_CONTRACT_COMPILER_FEATURES
+            cxx_lambdas
+            cxx_variadic_templates
+            )
+  endif()
+
   string(TOUPPER ${component} uppercomponent)
   set(${_ret} ${_Boost_${uppercomponent}_COMPILER_FEATURES} PARENT_SCOPE)
 endfunction()
@@ -1063,9 +1119,15 @@ function(_Boost_UPDATE_WINDOWS_LIBRARY_SEARCH_DIRS_WITH_PREBUILT_PATHS component
     else()
       set(_arch_suffix 32)
     endif()
-    if(MSVC_TOOLSET_VERSION GREATER_EQUAL 141)
-      list(APPEND ${componentlibvar} ${basedir}/lib${_arch_suffix}-msvc-14.1)
-      list(APPEND ${componentlibvar} ${basedir}/lib${_arch_suffix}-msvc-14.0)
+    if(MSVC_TOOLSET_VERSION GREATER_EQUAL 150)
+      # Not yet known.
+    elseif(MSVC_TOOLSET_VERSION GREATER_EQUAL 140)
+      # MSVC toolset 14.x versions are forward compatible.
+      foreach(v 9 8 7 6 5 4 3 2 1 0)
+        if(MSVC_TOOLSET_VERSION GREATER_EQUAL 14${v})
+          list(APPEND ${componentlibvar} ${basedir}/lib${_arch_suffix}-msvc-14.${v})
+        endif()
+      endforeach()
     elseif(MSVC_TOOLSET_VERSION GREATER_EQUAL 80)
       math(EXPR _toolset_major_version "${MSVC_TOOLSET_VERSION} / 10")
       list(APPEND ${componentlibvar} ${basedir}/lib${_arch_suffix}-msvc-${_toolset_major_version}.0)
@@ -1115,8 +1177,8 @@ if(Boost_FIND_VERSION_EXACT)
   # The version may appear in a directory with or without the patch
   # level, even when the patch level is non-zero.
   set(_boost_TEST_VERSIONS
-    "${Boost_FIND_VERSION_MAJOR}.${Boost_FIND_VERSION_MINOR}.${Boost_FIND_VERSION_PATCH}"
-    "${Boost_FIND_VERSION_MAJOR}.${Boost_FIND_VERSION_MINOR}")
+          "${Boost_FIND_VERSION_MAJOR}.${Boost_FIND_VERSION_MINOR}.${Boost_FIND_VERSION_PATCH}"
+          "${Boost_FIND_VERSION_MAJOR}.${Boost_FIND_VERSION_MINOR}")
 else()
   # The user has not requested an exact version.  Among known
   # versions, find those that are acceptable to the user request.
@@ -1126,16 +1188,16 @@ else()
   # _Boost_COMPONENT_HEADERS.  See the instructions at the top of
   # _Boost_COMPONENT_DEPENDENCIES.
   set(_Boost_KNOWN_VERSIONS ${Boost_ADDITIONAL_VERSIONS}
-    "1.69.0" "1.69"
-    "1.68.0" "1.68" "1.67.0" "1.67" "1.66.0" "1.66" "1.65.1" "1.65.0" "1.65"
-    "1.64.0" "1.64" "1.63.0" "1.63" "1.62.0" "1.62" "1.61.0" "1.61" "1.60.0" "1.60"
-    "1.59.0" "1.59" "1.58.0" "1.58" "1.57.0" "1.57" "1.56.0" "1.56" "1.55.0" "1.55"
-    "1.54.0" "1.54" "1.53.0" "1.53" "1.52.0" "1.52" "1.51.0" "1.51"
-    "1.50.0" "1.50" "1.49.0" "1.49" "1.48.0" "1.48" "1.47.0" "1.47" "1.46.1"
-    "1.46.0" "1.46" "1.45.0" "1.45" "1.44.0" "1.44" "1.43.0" "1.43" "1.42.0" "1.42"
-    "1.41.0" "1.41" "1.40.0" "1.40" "1.39.0" "1.39" "1.38.0" "1.38" "1.37.0" "1.37"
-    "1.36.1" "1.36.0" "1.36" "1.35.1" "1.35.0" "1.35" "1.34.1" "1.34.0"
-    "1.34" "1.33.1" "1.33.0" "1.33")
+          "1.70.0" "1.70" "1.69.0" "1.69"
+          "1.68.0" "1.68" "1.67.0" "1.67" "1.66.0" "1.66" "1.65.1" "1.65.0" "1.65"
+          "1.64.0" "1.64" "1.63.0" "1.63" "1.62.0" "1.62" "1.61.0" "1.61" "1.60.0" "1.60"
+          "1.59.0" "1.59" "1.58.0" "1.58" "1.57.0" "1.57" "1.56.0" "1.56" "1.55.0" "1.55"
+          "1.54.0" "1.54" "1.53.0" "1.53" "1.52.0" "1.52" "1.51.0" "1.51"
+          "1.50.0" "1.50" "1.49.0" "1.49" "1.48.0" "1.48" "1.47.0" "1.47" "1.46.1"
+          "1.46.0" "1.46" "1.45.0" "1.45" "1.44.0" "1.44" "1.43.0" "1.43" "1.42.0" "1.42"
+          "1.41.0" "1.41" "1.40.0" "1.40" "1.39.0" "1.39" "1.38.0" "1.38" "1.37.0" "1.37"
+          "1.36.1" "1.36.0" "1.36" "1.35.1" "1.35.0" "1.35" "1.34.1" "1.34.0"
+          "1.34" "1.33.1" "1.33.0" "1.33")
 
   set(_boost_TEST_VERSIONS)
   if(Boost_FIND_VERSION)
@@ -1165,17 +1227,17 @@ set(Boost_ERROR_REASON)
 if(Boost_DEBUG)
   # Output some of their choices
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                 "_boost_TEST_VERSIONS = ${_boost_TEST_VERSIONS}")
+          "_boost_TEST_VERSIONS = ${_boost_TEST_VERSIONS}")
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                 "Boost_USE_MULTITHREADED = ${Boost_USE_MULTITHREADED}")
+          "Boost_USE_MULTITHREADED = ${Boost_USE_MULTITHREADED}")
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                 "Boost_USE_STATIC_LIBS = ${Boost_USE_STATIC_LIBS}")
+          "Boost_USE_STATIC_LIBS = ${Boost_USE_STATIC_LIBS}")
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                 "Boost_USE_STATIC_RUNTIME = ${Boost_USE_STATIC_RUNTIME}")
+          "Boost_USE_STATIC_RUNTIME = ${Boost_USE_STATIC_RUNTIME}")
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                 "Boost_ADDITIONAL_VERSIONS = ${Boost_ADDITIONAL_VERSIONS}")
+          "Boost_ADDITIONAL_VERSIONS = ${Boost_ADDITIONAL_VERSIONS}")
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                 "Boost_NO_SYSTEM_PATHS = ${Boost_NO_SYSTEM_PATHS}")
+          "Boost_NO_SYSTEM_PATHS = ${Boost_NO_SYSTEM_PATHS}")
 endif()
 
 # Supply Boost_LIB_DIAGNOSTIC_DEFINITIONS as a convenience target. It
@@ -1208,11 +1270,11 @@ if(WIN32)
   # for linking.
   set(Boost_LIB_DIAGNOSTIC_DEFINITIONS "-DBOOST_LIB_DIAGNOSTIC")
   set_target_properties(Boost::diagnostic_definitions PROPERTIES
-    INTERFACE_COMPILE_DEFINITIONS "BOOST_LIB_DIAGNOSTIC")
+          INTERFACE_COMPILE_DEFINITIONS "BOOST_LIB_DIAGNOSTIC")
   set_target_properties(Boost::disable_autolinking PROPERTIES
-    INTERFACE_COMPILE_DEFINITIONS "BOOST_ALL_NO_LIB")
+          INTERFACE_COMPILE_DEFINITIONS "BOOST_ALL_NO_LIB")
   set_target_properties(Boost::dynamic_linking PROPERTIES
-    INTERFACE_COMPILE_DEFINITIONS "BOOST_ALL_DYN_LINK")
+          INTERFACE_COMPILE_DEFINITIONS "BOOST_ALL_DYN_LINK")
 endif()
 
 _Boost_CHECK_SPELLING(Boost_ROOT)
@@ -1237,21 +1299,21 @@ if(NOT BOOST_ROOT AND BOOSTROOT)
   set(BOOST_ROOT "${BOOSTROOT}")
 endif()
 set(_Boost_VARS_DIR
-  BOOST_ROOT
-  Boost_NO_SYSTEM_PATHS
-  )
+        BOOST_ROOT
+        Boost_NO_SYSTEM_PATHS
+        )
 
 if(Boost_DEBUG)
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                 "Declared as CMake or Environmental Variables:")
+          "Declared as CMake or Environmental Variables:")
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                 "  BOOST_ROOT = ${BOOST_ROOT}")
+          "  BOOST_ROOT = ${BOOST_ROOT}")
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                 "  BOOST_INCLUDEDIR = ${BOOST_INCLUDEDIR}")
+          "  BOOST_INCLUDEDIR = ${BOOST_INCLUDEDIR}")
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                 "  BOOST_LIBRARYDIR = ${BOOST_LIBRARYDIR}")
+          "  BOOST_LIBRARYDIR = ${BOOST_LIBRARYDIR}")
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                 "_boost_TEST_VERSIONS = ${_boost_TEST_VERSIONS}")
+          "_boost_TEST_VERSIONS = ${_boost_TEST_VERSIONS}")
 endif()
 
 # ------------------------------------------------------------------------
@@ -1290,10 +1352,10 @@ if(NOT Boost_INCLUDE_DIR)
       endforeach()
     endif()
     list(APPEND _boost_INCLUDE_SEARCH_DIRS PATHS
-      C:/boost/include
-      C:/boost
-      /sw/local/include
-      )
+            C:/boost/include
+            C:/boost
+            /sw/local/include
+            )
   endif()
 
   # Try to find Boost by stepping backwards through the Boost versions
@@ -1308,37 +1370,37 @@ if(NOT Boost_INCLUDE_DIR)
 
     # Transform 1.35 => 1_35 and 1.36.0 => 1_36_0
     if(_boost_VER MATCHES "([0-9]+)\\.([0-9]+)\\.([0-9]+)")
-        set(_boost_BOOSTIFIED_VERSION
-          "${CMAKE_MATCH_1}_${CMAKE_MATCH_2}_${CMAKE_MATCH_3}")
+      set(_boost_BOOSTIFIED_VERSION
+              "${CMAKE_MATCH_1}_${CMAKE_MATCH_2}_${CMAKE_MATCH_3}")
     elseif(_boost_VER MATCHES "([0-9]+)\\.([0-9]+)")
-        set(_boost_BOOSTIFIED_VERSION
-          "${CMAKE_MATCH_1}_${CMAKE_MATCH_2}")
+      set(_boost_BOOSTIFIED_VERSION
+              "${CMAKE_MATCH_1}_${CMAKE_MATCH_2}")
     endif()
 
     list(APPEND _boost_PATH_SUFFIXES
-      "boost-${_boost_BOOSTIFIED_VERSION}"
-      "boost_${_boost_BOOSTIFIED_VERSION}"
-      "boost/boost-${_boost_BOOSTIFIED_VERSION}"
-      "boost/boost_${_boost_BOOSTIFIED_VERSION}"
-      )
+            "boost-${_boost_BOOSTIFIED_VERSION}"
+            "boost_${_boost_BOOSTIFIED_VERSION}"
+            "boost/boost-${_boost_BOOSTIFIED_VERSION}"
+            "boost/boost_${_boost_BOOSTIFIED_VERSION}"
+            )
 
   endforeach()
 
   if(Boost_DEBUG)
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                   "Include debugging info:")
+            "Include debugging info:")
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                   "  _boost_INCLUDE_SEARCH_DIRS = ${_boost_INCLUDE_SEARCH_DIRS}")
+            "  _boost_INCLUDE_SEARCH_DIRS = ${_boost_INCLUDE_SEARCH_DIRS}")
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                   "  _boost_PATH_SUFFIXES = ${_boost_PATH_SUFFIXES}")
+            "  _boost_PATH_SUFFIXES = ${_boost_PATH_SUFFIXES}")
   endif()
 
   # Look for a standard boost header file.
   find_path(Boost_INCLUDE_DIR
-    NAMES         boost/config.hpp
-    HINTS         ${_boost_INCLUDE_SEARCH_DIRS}
-    PATH_SUFFIXES ${_boost_PATH_SUFFIXES}
-    )
+          NAMES         boost/config.hpp
+          HINTS         ${_boost_INCLUDE_SEARCH_DIRS}
+          PATH_SUFFIXES ${_boost_PATH_SUFFIXES}
+          )
 endif()
 
 # ------------------------------------------------------------------------
@@ -1350,7 +1412,7 @@ endif()
 if(Boost_INCLUDE_DIR)
   if(Boost_DEBUG)
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                   "location of version.hpp: ${Boost_INCLUDE_DIR}/boost/version.hpp")
+            "location of version.hpp: ${Boost_INCLUDE_DIR}/boost/version.hpp")
   endif()
 
   # Extract Boost_VERSION and Boost_LIB_VERSION from version.hpp
@@ -1372,11 +1434,11 @@ if(Boost_INCLUDE_DIR)
   set(Boost_VERSION_STRING "${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}")
 
   string(APPEND Boost_ERROR_REASON
-    "Boost version: ${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}\nBoost include path: ${Boost_INCLUDE_DIR}")
+          "Boost version: ${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}\nBoost include path: ${Boost_INCLUDE_DIR}")
   if(Boost_DEBUG)
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                   "version.hpp reveals boost "
-                   "${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}")
+            "version.hpp reveals boost "
+            "${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION}")
   endif()
 
   if(Boost_FIND_VERSION)
@@ -1386,7 +1448,7 @@ if(Boost_INCLUDE_DIR)
       set(Boost_FOUND 0)
       set(_Boost_VERSION_AGE "old")
     elseif(Boost_FIND_VERSION_EXACT AND
-        NOT "${_Boost_VERSION}" VERSION_EQUAL "${Boost_FIND_VERSION}")
+            NOT "${_Boost_VERSION}" VERSION_EQUAL "${Boost_FIND_VERSION}")
       set(Boost_FOUND 0)
       set(_Boost_VERSION_AGE "new")
     else()
@@ -1395,10 +1457,10 @@ if(Boost_INCLUDE_DIR)
     if(NOT Boost_FOUND)
       # State that we found a version of Boost that is too new or too old.
       string(APPEND Boost_ERROR_REASON
-        "\nDetected version of Boost is too ${_Boost_VERSION_AGE}. Requested version was ${Boost_FIND_VERSION_MAJOR}.${Boost_FIND_VERSION_MINOR}")
+              "\nDetected version of Boost is too ${_Boost_VERSION_AGE}. Requested version was ${Boost_FIND_VERSION_MAJOR}.${Boost_FIND_VERSION_MINOR}")
       if (Boost_FIND_VERSION_PATCH)
         string(APPEND Boost_ERROR_REASON
-          ".${Boost_FIND_VERSION_PATCH}")
+                ".${Boost_FIND_VERSION_PATCH}")
       endif ()
       if (NOT Boost_FIND_VERSION_EXACT)
         string(APPEND Boost_ERROR_REASON " (or newer)")
@@ -1412,7 +1474,7 @@ if(Boost_INCLUDE_DIR)
 else()
   set(Boost_FOUND 0)
   string(APPEND Boost_ERROR_REASON
-    "Unable to find the Boost header files. Please set BOOST_ROOT to the root directory containing Boost or BOOST_INCLUDEDIR to the directory containing Boost's headers.")
+          "Unable to find the Boost header files. Please set BOOST_ROOT to the root directory containing Boost or BOOST_INCLUDEDIR to the directory containing Boost's headers.")
 endif()
 
 # ------------------------------------------------------------------------
@@ -1421,7 +1483,7 @@ endif()
 
 set(Boost_LIB_PREFIX "")
 if ( (GHSMULTI AND Boost_USE_STATIC_LIBS) OR
-    (WIN32 AND Boost_USE_STATIC_LIBS AND NOT CYGWIN) )
+(WIN32 AND Boost_USE_STATIC_LIBS AND NOT CYGWIN) )
   set(Boost_LIB_PREFIX "lib")
 endif()
 
@@ -1431,9 +1493,9 @@ endif()
 
 if(Boost_DEBUG)
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-    "Boost_LIB_PREFIX = ${Boost_LIB_PREFIX}")
+          "Boost_LIB_PREFIX = ${Boost_LIB_PREFIX}")
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-    "Boost_NAMESPACE = ${Boost_NAMESPACE}")
+          "Boost_NAMESPACE = ${Boost_NAMESPACE}")
 endif()
 
 # ------------------------------------------------------------------------
@@ -1441,16 +1503,16 @@ endif()
 # ------------------------------------------------------------------------
 
 set(_Boost_VARS_NAME
-  Boost_NAMESPACE
-  Boost_COMPILER
-  Boost_THREADAPI
-  Boost_USE_DEBUG_PYTHON
-  Boost_USE_MULTITHREADED
-  Boost_USE_STATIC_LIBS
-  Boost_USE_STATIC_RUNTIME
-  Boost_USE_STLPORT
-  Boost_USE_STLPORT_DEPRECATED_NATIVE_IOSTREAMS
-  )
+        Boost_NAMESPACE
+        Boost_COMPILER
+        Boost_THREADAPI
+        Boost_USE_DEBUG_PYTHON
+        Boost_USE_MULTITHREADED
+        Boost_USE_STATIC_LIBS
+        Boost_USE_STATIC_RUNTIME
+        Boost_USE_STLPORT
+        Boost_USE_STLPORT_DEPRECATED_NATIVE_IOSTREAMS
+        )
 _Boost_CHANGE_DETECT(_Boost_CHANGE_LIBNAME ${_Boost_VARS_NAME})
 
 # Setting some more suffixes for the library
@@ -1458,7 +1520,7 @@ if (Boost_COMPILER)
   set(_boost_COMPILER ${Boost_COMPILER})
   if(Boost_DEBUG)
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                   "using user-specified Boost_COMPILER = ${_boost_COMPILER}")
+            "using user-specified Boost_COMPILER = ${_boost_COMPILER}")
   endif()
 else()
   # Attempt to guess the compiler suffix
@@ -1468,7 +1530,7 @@ else()
   _Boost_GUESS_COMPILER_PREFIX(_boost_COMPILER)
   if(Boost_DEBUG)
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-      "guessed _boost_COMPILER = ${_boost_COMPILER}")
+            "guessed _boost_COMPILER = ${_boost_COMPILER}")
   endif()
 endif()
 
@@ -1478,7 +1540,7 @@ if( NOT Boost_USE_MULTITHREADED )
 endif()
 if(Boost_DEBUG)
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-    "_boost_MULTITHREADED = ${_boost_MULTITHREADED}")
+          "_boost_MULTITHREADED = ${_boost_MULTITHREADED}")
 endif()
 
 #======================
@@ -1532,7 +1594,7 @@ if(DEFINED Boost_ARCHITECTURE)
   set(_boost_ARCHITECTURE_TAG "${Boost_ARCHITECTURE}")
   if(Boost_DEBUG)
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-      "using user-specified Boost_ARCHITECTURE = ${_boost_ARCHITECTURE_TAG}")
+            "using user-specified Boost_ARCHITECTURE = ${_boost_ARCHITECTURE_TAG}")
   endif()
 else()
   set(_boost_ARCHITECTURE_TAG "")
@@ -1544,7 +1606,7 @@ else()
     if(CMAKE_CXX_COMPILER_ARCHITECTURE_ID STREQUAL "IA64")
       string(APPEND _boost_ARCHITECTURE_TAG "i")
     elseif(CMAKE_CXX_COMPILER_ARCHITECTURE_ID STREQUAL "X86"
-              OR CMAKE_CXX_COMPILER_ARCHITECTURE_ID STREQUAL "x64")
+            OR CMAKE_CXX_COMPILER_ARCHITECTURE_ID STREQUAL "x64")
       string(APPEND _boost_ARCHITECTURE_TAG "x")
     elseif(CMAKE_CXX_COMPILER_ARCHITECTURE_ID MATCHES "^ARM")
       string(APPEND _boost_ARCHITECTURE_TAG "a")
@@ -1562,9 +1624,9 @@ endif()
 
 if(Boost_DEBUG)
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-    "_boost_RELEASE_ABI_TAG = ${_boost_RELEASE_ABI_TAG}")
+          "_boost_RELEASE_ABI_TAG = ${_boost_RELEASE_ABI_TAG}")
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-    "_boost_DEBUG_ABI_TAG = ${_boost_DEBUG_ABI_TAG}")
+          "_boost_DEBUG_ABI_TAG = ${_boost_DEBUG_ABI_TAG}")
 endif()
 
 # ------------------------------------------------------------------------
@@ -1602,10 +1664,10 @@ foreach(c DEBUG RELEASE)
     endif()
 
     list(APPEND _boost_LIBRARY_SEARCH_DIRS_${c}
-      ${Boost_INCLUDE_DIR}/lib
-      ${Boost_INCLUDE_DIR}/../lib
-      ${Boost_INCLUDE_DIR}/stage/lib
-      )
+            ${Boost_INCLUDE_DIR}/lib
+            ${Boost_INCLUDE_DIR}/../lib
+            ${Boost_INCLUDE_DIR}/stage/lib
+            )
     _Boost_UPDATE_WINDOWS_LIBRARY_SEARCH_DIRS_WITH_PREBUILT_PATHS(_boost_LIBRARY_SEARCH_DIRS_${c} "${Boost_INCLUDE_DIR}/..")
     _Boost_UPDATE_WINDOWS_LIBRARY_SEARCH_DIRS_WITH_PREBUILT_PATHS(_boost_LIBRARY_SEARCH_DIRS_${c} "${Boost_INCLUDE_DIR}")
     if( Boost_NO_SYSTEM_PATHS )
@@ -1617,18 +1679,18 @@ foreach(c DEBUG RELEASE)
       endforeach()
       _Boost_UPDATE_WINDOWS_LIBRARY_SEARCH_DIRS_WITH_PREBUILT_PATHS(_boost_LIBRARY_SEARCH_DIRS_${c} "C:/boost")
       list(APPEND _boost_LIBRARY_SEARCH_DIRS_${c} PATHS
-        C:/boost/lib
-        C:/boost
-        /sw/local/lib
-        )
+              C:/boost/lib
+              C:/boost
+              /sw/local/lib
+              )
     endif()
   endif()
 endforeach()
 
 if(Boost_DEBUG)
   message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-    "_boost_LIBRARY_SEARCH_DIRS_RELEASE = ${_boost_LIBRARY_SEARCH_DIRS_RELEASE}"
-    "_boost_LIBRARY_SEARCH_DIRS_DEBUG   = ${_boost_LIBRARY_SEARCH_DIRS_DEBUG}")
+          "_boost_LIBRARY_SEARCH_DIRS_RELEASE = ${_boost_LIBRARY_SEARCH_DIRS_RELEASE}"
+          "_boost_LIBRARY_SEARCH_DIRS_DEBUG   = ${_boost_LIBRARY_SEARCH_DIRS_DEBUG}")
 endif()
 
 # Support preference of static libs by adjusting CMAKE_FIND_LIBRARY_SUFFIXES
@@ -1670,9 +1732,9 @@ endif()
 # On versions < 1.35, remove the System library from the considered list
 # since it wasn't added until 1.35.
 if(Boost_VERSION AND Boost_FIND_COMPONENTS)
-   if(Boost_VERSION LESS 103500)
-     list(REMOVE_ITEM Boost_FIND_COMPONENTS system)
-   endif()
+  if(Boost_VERSION LESS 103500)
+    list(REMOVE_ITEM Boost_FIND_COMPONENTS system)
+  endif()
 endif()
 
 # Additional components may be required via component dependencies.
@@ -1712,7 +1774,7 @@ foreach(COMPONENT ${Boost_FIND_COMPONENTS})
   # Compute component-specific hints.
   set(_Boost_FIND_LIBRARY_HINTS_FOR_COMPONENT "")
   if(${COMPONENT} STREQUAL "mpi" OR ${COMPONENT} STREQUAL "mpi_python" OR
-     ${COMPONENT} STREQUAL "graph_parallel")
+          ${COMPONENT} STREQUAL "graph_parallel")
     foreach(lib ${MPI_CXX_LIBRARIES} ${MPI_C_LIBRARIES})
       if(IS_ABSOLUTE "${lib}")
         get_filename_component(libdir "${lib}" PATH)
@@ -1742,7 +1804,7 @@ foreach(COMPONENT ${Boost_FIND_COMPONENTS})
     list(APPEND _Boost_FIND_LIBRARY_HINTS_FOR_COMPONENT_NAME "${COMPONENT_UNVERSIONED}${COMPONENT_PYTHON_VERSION_MAJOR}-py${COMPONENT_PYTHON_VERSION_MAJOR}${COMPONENT_PYTHON_VERSION_MINOR}")
     list(APPEND _Boost_FIND_LIBRARY_HINTS_FOR_COMPONENT_NAME "${COMPONENT_UNVERSIONED}-py${COMPONENT_PYTHON_VERSION_MAJOR}${COMPONENT_PYTHON_VERSION_MINOR}")
     # Gentoo
-    list(APPEND _Boost_FIND_LIBRARY_HINTS_FOR_COMPONENT_NAME "${COMPONENT_UNVERSIONED}-${COMPONENT_PYTHON_VERSION_MAJOR}${COMPONENT_PYTHON_VERSION_MINOR}")
+    list(APPEND _Boost_FIND_LIBRARY_HINTS_FOR_COMPONENT_NAME "${COMPONENT_UNVERSIONED}-${COMPONENT_PYTHON_VERSION_MAJOR}.${COMPONENT_PYTHON_VERSION_MINOR}")
     # RPMs
     list(APPEND _Boost_FIND_LIBRARY_HINTS_FOR_COMPONENT_NAME "${COMPONENT_UNVERSIONED}-${COMPONENT_PYTHON_VERSION_MAJOR}${COMPONENT_PYTHON_VERSION_MINOR}")
   endif()
@@ -1756,16 +1818,16 @@ foreach(COMPONENT ${Boost_FIND_COMPONENTS})
     list(REMOVE_DUPLICATES _Boost_FIND_LIBRARY_HINTS_FOR_COMPONENT_NAME)
     if(Boost_DEBUG)
       message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-        "Component-specific library search names for ${COMPONENT_NAME}: "
-        "${_Boost_FIND_LIBRARY_HINTS_FOR_COMPONENT_NAME}")
+              "Component-specific library search names for ${COMPONENT_NAME}: "
+              "${_Boost_FIND_LIBRARY_HINTS_FOR_COMPONENT_NAME}")
     endif()
   endif()
   if(_Boost_FIND_LIBRARY_HINTS_FOR_COMPONENT)
     list(REMOVE_DUPLICATES _Boost_FIND_LIBRARY_HINTS_FOR_COMPONENT)
     if(Boost_DEBUG)
       message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-        "Component-specific library search paths for ${COMPONENT}: "
-        "${_Boost_FIND_LIBRARY_HINTS_FOR_COMPONENT}")
+              "Component-specific library search paths for ${COMPONENT}: "
+              "${_Boost_FIND_LIBRARY_HINTS_FOR_COMPONENT}")
     endif()
   endif()
 
@@ -1792,24 +1854,28 @@ foreach(COMPONENT ${Boost_FIND_COMPONENTS})
   foreach(component IN LISTS _Boost_FIND_LIBRARY_HINTS_FOR_COMPONENT_NAME COMPONENT)
     foreach(compiler IN LISTS _boost_COMPILER)
       list(APPEND _boost_RELEASE_NAMES
-        ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_RELEASE_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
-        ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_RELEASE_ABI_TAG} )
+              ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_RELEASE_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
+              ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_RELEASE_ABI_TAG}${_boost_ARCHITECTURE_TAG}
+              ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_RELEASE_ABI_TAG} )
     endforeach()
     list(APPEND _boost_RELEASE_NAMES
-      ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_RELEASE_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
-      ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_RELEASE_ABI_TAG}
-      ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}
-      ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component} )
+            ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_RELEASE_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
+            ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_RELEASE_ABI_TAG}${_boost_ARCHITECTURE_TAG}
+            ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_RELEASE_ABI_TAG}
+            ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}
+            ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component} )
     if(_boost_STATIC_RUNTIME_WORKAROUND)
       set(_boost_RELEASE_STATIC_ABI_TAG "-s${_boost_RELEASE_ABI_TAG}")
       foreach(compiler IN LISTS _boost_COMPILER)
         list(APPEND _boost_RELEASE_NAMES
-          ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_RELEASE_STATIC_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
-          ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_RELEASE_STATIC_ABI_TAG} )
+                ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_RELEASE_STATIC_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
+                ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_RELEASE_STATIC_ABI_TAG}${_boost_ARCHITECTURE_TAG}
+                ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_RELEASE_STATIC_ABI_TAG} )
       endforeach()
       list(APPEND _boost_RELEASE_NAMES
-        ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_RELEASE_STATIC_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
-        ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_RELEASE_STATIC_ABI_TAG} )
+              ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_RELEASE_STATIC_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
+              ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_RELEASE_STATIC_ABI_TAG}${_boost_ARCHITECTURE_TAG}
+              ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_RELEASE_STATIC_ABI_TAG} )
     endif()
   endforeach()
   if(Boost_THREADAPI AND ${COMPONENT} STREQUAL "thread")
@@ -1817,7 +1883,7 @@ foreach(COMPONENT ${Boost_FIND_COMPONENTS})
   endif()
   if(Boost_DEBUG)
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                   "Searching for ${UPPERCOMPONENT}_LIBRARY_RELEASE: ${_boost_RELEASE_NAMES}")
+            "Searching for ${UPPERCOMPONENT}_LIBRARY_RELEASE: ${_boost_RELEASE_NAMES}")
   endif()
 
   # if Boost_LIBRARY_DIR_RELEASE is not defined,
@@ -1831,11 +1897,11 @@ foreach(COMPONENT ${Boost_FIND_COMPONENTS})
 
   if(Boost_USE_RELEASE_LIBS)
     _Boost_FIND_LIBRARY(Boost_${UPPERCOMPONENT}_LIBRARY_RELEASE RELEASE
-      NAMES ${_boost_RELEASE_NAMES}
-      HINTS ${_boost_LIBRARY_SEARCH_DIRS_tmp}
-      NAMES_PER_DIR
-      DOC "${_boost_docstring_release}"
-      )
+            NAMES ${_boost_RELEASE_NAMES}
+            HINTS ${_boost_LIBRARY_SEARCH_DIRS_tmp}
+            NAMES_PER_DIR
+            DOC "${_boost_docstring_release}"
+            )
   endif()
 
   #
@@ -1845,32 +1911,36 @@ foreach(COMPONENT ${Boost_FIND_COMPONENTS})
   foreach(component IN LISTS _Boost_FIND_LIBRARY_HINTS_FOR_COMPONENT_NAME COMPONENT)
     foreach(compiler IN LISTS _boost_COMPILER)
       list(APPEND _boost_DEBUG_NAMES
-        ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_DEBUG_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
-        ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_DEBUG_ABI_TAG} )
+              ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_DEBUG_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
+              ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_DEBUG_ABI_TAG}${_boost_ARCHITECTURE_TAG}
+              ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_DEBUG_ABI_TAG} )
     endforeach()
     list(APPEND _boost_DEBUG_NAMES
-      ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_DEBUG_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
-      ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_DEBUG_ABI_TAG}
-      ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}
-      ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component} )
+            ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_DEBUG_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
+            ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_DEBUG_ABI_TAG}${_boost_ARCHITECTURE_TAG}
+            ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_DEBUG_ABI_TAG}
+            ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}
+            ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component} )
     if(_boost_STATIC_RUNTIME_WORKAROUND)
       set(_boost_DEBUG_STATIC_ABI_TAG "-s${_boost_DEBUG_ABI_TAG}")
       foreach(compiler IN LISTS _boost_COMPILER)
         list(APPEND _boost_DEBUG_NAMES
-          ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_DEBUG_STATIC_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
-          ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_DEBUG_STATIC_ABI_TAG} )
+                ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_DEBUG_STATIC_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
+                ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_DEBUG_STATIC_ABI_TAG}${_boost_ARCHITECTURE_TAG}
+                ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${compiler}${_boost_MULTITHREADED}${_boost_DEBUG_STATIC_ABI_TAG} )
       endforeach()
       list(APPEND _boost_DEBUG_NAMES
-        ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_DEBUG_STATIC_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
-        ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_DEBUG_STATIC_ABI_TAG} )
+              ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_DEBUG_STATIC_ABI_TAG}${_boost_ARCHITECTURE_TAG}-${Boost_LIB_VERSION}
+              ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_DEBUG_STATIC_ABI_TAG}${_boost_ARCHITECTURE_TAG}
+              ${Boost_LIB_PREFIX}${Boost_NAMESPACE}_${component}${_boost_MULTITHREADED}${_boost_DEBUG_STATIC_ABI_TAG} )
     endif()
   endforeach()
   if(Boost_THREADAPI AND ${COMPONENT} STREQUAL "thread")
-     _Boost_PREPEND_LIST_WITH_THREADAPI(_boost_DEBUG_NAMES ${_boost_DEBUG_NAMES})
+    _Boost_PREPEND_LIST_WITH_THREADAPI(_boost_DEBUG_NAMES ${_boost_DEBUG_NAMES})
   endif()
   if(Boost_DEBUG)
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                   "Searching for ${UPPERCOMPONENT}_LIBRARY_DEBUG: ${_boost_DEBUG_NAMES}")
+            "Searching for ${UPPERCOMPONENT}_LIBRARY_DEBUG: ${_boost_DEBUG_NAMES}")
   endif()
 
   # if Boost_LIBRARY_DIR_DEBUG is not defined,
@@ -1884,11 +1954,11 @@ foreach(COMPONENT ${Boost_FIND_COMPONENTS})
 
   if(Boost_USE_DEBUG_LIBS)
     _Boost_FIND_LIBRARY(Boost_${UPPERCOMPONENT}_LIBRARY_DEBUG DEBUG
-      NAMES ${_boost_DEBUG_NAMES}
-      HINTS ${_boost_LIBRARY_SEARCH_DIRS_tmp}
-      NAMES_PER_DIR
-      DOC "${_boost_docstring_debug}"
-      )
+            NAMES ${_boost_DEBUG_NAMES}
+            HINTS ${_boost_LIBRARY_SEARCH_DIRS_tmp}
+            NAMES_PER_DIR
+            DOC "${_boost_docstring_debug}"
+            )
   endif ()
 
   if(Boost_REALPATH)
@@ -1951,26 +2021,26 @@ if(Boost_FOUND)
     # We were unable to find some libraries, so generate a sensible
     # error message that lists the libraries we were unable to find.
     string(APPEND Boost_ERROR_REASON
-      "\nCould not find the following")
+            "\nCould not find the following")
     if(Boost_USE_STATIC_LIBS)
       string(APPEND Boost_ERROR_REASON " static")
     endif()
     string(APPEND Boost_ERROR_REASON
-      " Boost libraries:\n")
+            " Boost libraries:\n")
     foreach(COMPONENT ${_Boost_MISSING_COMPONENTS})
       string(TOUPPER ${COMPONENT} UPPERCOMPONENT)
       string(APPEND Boost_ERROR_REASON
-        "        ${Boost_NAMESPACE}_${COMPONENT}${Boost_ERROR_REASON_${UPPERCOMPONENT}}\n")
+              "        ${Boost_NAMESPACE}_${COMPONENT}${Boost_ERROR_REASON_${UPPERCOMPONENT}}\n")
     endforeach()
 
     list(LENGTH Boost_FIND_COMPONENTS Boost_NUM_COMPONENTS_WANTED)
     list(LENGTH _Boost_MISSING_COMPONENTS Boost_NUM_MISSING_COMPONENTS)
     if (${Boost_NUM_COMPONENTS_WANTED} EQUAL ${Boost_NUM_MISSING_COMPONENTS})
       string(APPEND Boost_ERROR_REASON
-        "No Boost libraries were found. You may need to set BOOST_LIBRARYDIR to the directory containing Boost libraries or BOOST_ROOT to the location of Boost.")
+              "No Boost libraries were found. You may need to set BOOST_LIBRARYDIR to the directory containing Boost libraries or BOOST_ROOT to the location of Boost.")
     else ()
       string(APPEND Boost_ERROR_REASON
-        "Some (but not all) of the required Boost libraries were found. You may need to install these additional Boost libraries. Alternatively, set BOOST_LIBRARYDIR to the directory containing Boost libraries or BOOST_ROOT to the location of Boost.")
+              "Some (but not all) of the required Boost libraries were found. You may need to install these additional Boost libraries. Alternatively, set BOOST_LIBRARYDIR to the directory containing Boost libraries or BOOST_ROOT to the location of Boost.")
     endif ()
   endif ()
 
@@ -2023,7 +2093,7 @@ if(Boost_FOUND)
     add_library(Boost::boost INTERFACE IMPORTED)
     if(Boost_INCLUDE_DIRS)
       set_target_properties(Boost::boost PROPERTIES
-        INTERFACE_INCLUDE_DIRECTORIES "${Boost_INCLUDE_DIRS}")
+              INTERFACE_INCLUDE_DIRECTORIES "${Boost_INCLUDE_DIRS}")
     endif()
   endif()
 
@@ -2040,26 +2110,26 @@ if(Boost_FOUND)
         endif()
         if(Boost_INCLUDE_DIRS)
           set_target_properties(Boost::${COMPONENT} PROPERTIES
-            INTERFACE_INCLUDE_DIRECTORIES "${Boost_INCLUDE_DIRS}")
+                  INTERFACE_INCLUDE_DIRECTORIES "${Boost_INCLUDE_DIRS}")
         endif()
         if(EXISTS "${Boost_${UPPERCOMPONENT}_LIBRARY}")
           set_target_properties(Boost::${COMPONENT} PROPERTIES
-            IMPORTED_LINK_INTERFACE_LANGUAGES "CXX"
-            IMPORTED_LOCATION "${Boost_${UPPERCOMPONENT}_LIBRARY}")
+                  IMPORTED_LINK_INTERFACE_LANGUAGES "CXX"
+                  IMPORTED_LOCATION "${Boost_${UPPERCOMPONENT}_LIBRARY}")
         endif()
         if(EXISTS "${Boost_${UPPERCOMPONENT}_LIBRARY_RELEASE}")
           set_property(TARGET Boost::${COMPONENT} APPEND PROPERTY
-            IMPORTED_CONFIGURATIONS RELEASE)
+                  IMPORTED_CONFIGURATIONS RELEASE)
           set_target_properties(Boost::${COMPONENT} PROPERTIES
-            IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-            IMPORTED_LOCATION_RELEASE "${Boost_${UPPERCOMPONENT}_LIBRARY_RELEASE}")
+                  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
+                  IMPORTED_LOCATION_RELEASE "${Boost_${UPPERCOMPONENT}_LIBRARY_RELEASE}")
         endif()
         if(EXISTS "${Boost_${UPPERCOMPONENT}_LIBRARY_DEBUG}")
           set_property(TARGET Boost::${COMPONENT} APPEND PROPERTY
-            IMPORTED_CONFIGURATIONS DEBUG)
+                  IMPORTED_CONFIGURATIONS DEBUG)
           set_target_properties(Boost::${COMPONENT} PROPERTIES
-            IMPORTED_LINK_INTERFACE_LANGUAGES_DEBUG "CXX"
-            IMPORTED_LOCATION_DEBUG "${Boost_${UPPERCOMPONENT}_LIBRARY_DEBUG}")
+                  IMPORTED_LINK_INTERFACE_LANGUAGES_DEBUG "CXX"
+                  IMPORTED_LOCATION_DEBUG "${Boost_${UPPERCOMPONENT}_LIBRARY_DEBUG}")
         endif()
         if(_Boost_${UPPERCOMPONENT}_DEPENDENCIES)
           unset(_Boost_${UPPERCOMPONENT}_TARGET_DEPENDENCIES)
@@ -2070,11 +2140,11 @@ if(Boost_FOUND)
             list(APPEND _Boost_${UPPERCOMPONENT}_TARGET_DEPENDENCIES Threads::Threads)
           endif()
           set_target_properties(Boost::${COMPONENT} PROPERTIES
-            INTERFACE_LINK_LIBRARIES "${_Boost_${UPPERCOMPONENT}_TARGET_DEPENDENCIES}")
+                  INTERFACE_LINK_LIBRARIES "${_Boost_${UPPERCOMPONENT}_TARGET_DEPENDENCIES}")
         endif()
         if(_Boost_${UPPERCOMPONENT}_COMPILER_FEATURES)
           set_target_properties(Boost::${COMPONENT} PROPERTIES
-            INTERFACE_COMPILE_FEATURES "${_Boost_${UPPERCOMPONENT}_COMPILER_FEATURES}")
+                  INTERFACE_COMPILE_FEATURES "${_Boost_${UPPERCOMPONENT}_COMPILER_FEATURES}")
         endif()
       endif()
     endif()
@@ -2141,9 +2211,9 @@ endforeach()
 # Record last used values of input variables so we can
 # detect on the next run if the user changed them.
 foreach(v
-    ${_Boost_VARS_INC} ${_Boost_VARS_LIB}
-    ${_Boost_VARS_DIR} ${_Boost_VARS_NAME}
-    )
+        ${_Boost_VARS_INC} ${_Boost_VARS_LIB}
+        ${_Boost_VARS_DIR} ${_Boost_VARS_NAME}
+        )
   if(DEFINED ${v})
     set(_${v}_LAST "${${v}}" CACHE INTERNAL "Last used ${v} value.")
   else()
@@ -2158,7 +2228,7 @@ list(APPEND _Boost_COMPONENTS_SEARCHED ${Boost_FIND_COMPONENTS})
 list(REMOVE_DUPLICATES _Boost_COMPONENTS_SEARCHED)
 list(SORT _Boost_COMPONENTS_SEARCHED)
 set(_Boost_COMPONENTS_SEARCHED "${_Boost_COMPONENTS_SEARCHED}"
-  CACHE INTERNAL "Components requested for this build tree.")
+        CACHE INTERNAL "Components requested for this build tree.")
 
 # Restore project's policies
 cmake_policy(POP)
