@@ -82,8 +82,8 @@ Dependencies
 
 - This documentation requires a supported version of `Sphinx <http://sphinx-doc.org>`__
   (``-DBUILD_DOC=on``).
-- A C++ compiler with reasonable C++14 support is needed. GCC 5.1 or later should work.
-- `Boost <http://boost.org>`__ dev >= 1.64
+- A C++ compiler with reasonable C++17 support is needed.
+- `Boost <http://boost.org>`__ dev >= 1.67
   (use ``-DBOOST_ROOT=<path>`` for non-standard locations).
 - `PermGroup <https://github.com/jakobandersen/perm_group>`__ >= 0.4.
   This is fulfilled via a Git submodule (make sure to do ``git submodule update --init --recursive``),
