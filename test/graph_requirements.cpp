@@ -1,7 +1,10 @@
 #include "graph.hpp"
 
 #include <graph_canon/shorthands.hpp>
-#include <boost/test/minimal.hpp>
+
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MAIN
+#include <boost/test/unit_test.hpp>
 
 
 template<typename DirectedS>
@@ -13,8 +16,7 @@ void doIt() {
 			graph_canon::make_default_visitor());
 }
 
-int test_main(int argc, char **argv) {
+BOOST_AUTO_TEST_CASE(test_main) {
 	doIt<boost::undirectedS>();
 	//	doIt<boost::bidirectionalS>();
-	return 0;
 }

@@ -5,7 +5,10 @@
 
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graph_concepts.hpp>
-#include <boost/test/minimal.hpp>
+
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MAIN
+#include <boost/test/unit_test.hpp>
 
 #include <iostream>
 #include <random>
@@ -168,7 +171,7 @@ struct boost::property_traits<PermutedIndexMap<Idx>> {
 	using category = boost::readable_property_map_tag;
 };
 
-int test_main(int argc, char **argv) {
+BOOST_AUTO_TEST_CASE(test_main) {
 	const std::size_t num_vertices = 100;
 	const double edge_probability = 0.5;
 	const std::size_t max_parallel_edges = 3;
@@ -241,5 +244,4 @@ int test_main(int argc, char **argv) {
 		OrdGraph gOrd(g, permutedIdx, less);
 		check_bidirectional(gOrd, permutedIdx, less);
 	}
-	return 0;
 }
