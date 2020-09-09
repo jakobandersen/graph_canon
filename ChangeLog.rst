@@ -11,6 +11,7 @@ Incompatible Chagnes
 --------------------
 
 - Bump Boost requirement to 1.67.
+- Require C++17.
 
 New Features
 ------------

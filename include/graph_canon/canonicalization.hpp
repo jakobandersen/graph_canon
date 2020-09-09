@@ -245,7 +245,7 @@ public:
 		// The rest is for debugging purposes:
 		// make sure we actually have the very last owner pointers to the tree.
 		canon_leaf = nullptr; // may deallocate a path in the tree
-		assert(std::uncaught_exception() || root->get_ref_count() == 1);
+		assert(std::uncaught_exceptions() != 0 || root->get_ref_count() == 1);
 		root = nullptr;
 	}
 
