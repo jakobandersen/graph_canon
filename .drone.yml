@@ -3726,7 +3726,7 @@ steps:
 
 ---
 kind: pipeline
-name: clang++11, Boost 1_67_0
+name: clang++-11, Boost 1_67_0
 
 platform:
   os: linux
@@ -3748,7 +3748,7 @@ steps:
   - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_67_0
   - make
   environment:
-    CXX: clang++11
+    CXX: clang++-11
     CXXFLAGS: -Werror
 
 - name: install
@@ -3772,7 +3772,7 @@ steps:
 
 ---
 kind: pipeline
-name: clang++11, Boost 1_68_0
+name: clang++-11, Boost 1_68_0
 
 platform:
   os: linux
@@ -3794,7 +3794,7 @@ steps:
   - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_68_0
   - make
   environment:
-    CXX: clang++11
+    CXX: clang++-11
     CXXFLAGS: -Werror
 
 - name: install
@@ -3818,7 +3818,7 @@ steps:
 
 ---
 kind: pipeline
-name: clang++11, Boost 1_69_0
+name: clang++-11, Boost 1_69_0
 
 platform:
   os: linux
@@ -3840,7 +3840,7 @@ steps:
   - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_69_0
   - make
   environment:
-    CXX: clang++11
+    CXX: clang++-11
     CXXFLAGS: -Werror
 
 - name: install
@@ -3864,7 +3864,7 @@ steps:
 
 ---
 kind: pipeline
-name: clang++11, Boost 1_70_0
+name: clang++-11, Boost 1_70_0
 
 platform:
   os: linux
@@ -3886,7 +3886,7 @@ steps:
   - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_70_0
   - make
   environment:
-    CXX: clang++11
+    CXX: clang++-11
     CXXFLAGS: -Werror
 
 - name: install
@@ -3910,7 +3910,7 @@ steps:
 
 ---
 kind: pipeline
-name: clang++11, Boost 1_71_0
+name: clang++-11, Boost 1_71_0
 
 platform:
   os: linux
@@ -3932,7 +3932,7 @@ steps:
   - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_71_0
   - make
   environment:
-    CXX: clang++11
+    CXX: clang++-11
     CXXFLAGS: -Werror
 
 - name: install
@@ -3956,7 +3956,7 @@ steps:
 
 ---
 kind: pipeline
-name: clang++11, Boost 1_72_0
+name: clang++-11, Boost 1_72_0
 
 platform:
   os: linux
@@ -3978,7 +3978,7 @@ steps:
   - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_72_0
   - make
   environment:
-    CXX: clang++11
+    CXX: clang++-11
     CXXFLAGS: -Werror
 
 - name: install
@@ -4002,7 +4002,7 @@ steps:
 
 ---
 kind: pipeline
-name: clang++11, Boost 1_73_0
+name: clang++-11, Boost 1_73_0
 
 platform:
   os: linux
@@ -4024,7 +4024,7 @@ steps:
   - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_73_0
   - make
   environment:
-    CXX: clang++11
+    CXX: clang++-11
     CXXFLAGS: -Werror
 
 - name: install
@@ -4048,7 +4048,7 @@ steps:
 
 ---
 kind: pipeline
-name: clang++11, Boost 1_74_0
+name: clang++-11, Boost 1_74_0
 
 platform:
   os: linux
@@ -4070,7 +4070,7 @@ steps:
   - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_74_0
   - make
   environment:
-    CXX: clang++11
+    CXX: clang++-11
     CXXFLAGS: -Werror
 
 - name: install
@@ -4094,7 +4094,7 @@ steps:
 
 ---
 kind: pipeline
-name: clang++11, Boost 1_75_0
+name: clang++-11, Boost 1_75_0
 
 platform:
   os: linux
@@ -4116,7 +4116,7 @@ steps:
   - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_75_0
   - make
   environment:
-    CXX: clang++11
+    CXX: clang++-11
     CXXFLAGS: -Werror
 
 - name: install
