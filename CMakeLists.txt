@@ -78,7 +78,7 @@ string(APPEND graph_canon_config_dependencies "find_dependency(Boost ${v})\n")
 
 # PermGroup
 # -------------------------------------------------------------------------
-set(v 0.4)
+set(v 0.5)
 if(USE_NESTED_PERM_GROUP)
     message(STATUS "PermGroup: using external/perm_group")
     add_subdirectory(external/perm_group)

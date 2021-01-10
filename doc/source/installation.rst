@@ -85,7 +85,7 @@ Dependencies
 - A C++ compiler with reasonable C++17 support is needed.
 - `Boost <http://boost.org>`__ dev >= 1.67
   (use ``-DBOOST_ROOT=<path>`` for non-standard locations).
-- `PermGroup <https://github.com/jakobandersen/perm_group>`__ >= 0.4.
+- `PermGroup <https://github.com/jakobandersen/perm_group>`__ >= 0.5.
   This is fulfilled via a Git submodule (make sure to do ``git submodule update --init --recursive``),
   but if another source is needed, set ``-DUSE_NESTED_PERM_GROUP=off``.
 - (optional) For the :ref:`graph-canon` program it may be useful to install the
