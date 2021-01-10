@@ -4,6 +4,40 @@
 Changes
 #######
 
+v0.5 (2020-01-12)
+=================
+
+Incompatible Chagnes
+--------------------
+
+- Bump Boost requirement to 1.67.
+- Require C++17.
+- Bump PermGroup requirement to 0.5.
+
+New Features
+------------
+
+- Added convenience type aliasses `ordered_graph::Graph` and
+  `ordered_graph::IndexMap`.
+
+Bugs Fixed
+----------
+
+- Fix extranous dereference in `ordered_graph::get_graph`.
+  Thanks to Gregor Kälin.
+- Use `idx` when setting up initial partition.
+  Thanks to Gregor Kälin.
+- Use ``get(idx, v)`` instead of ``idx[v]`` consistently everywhere.
+- Add missing concept checks in `canonicalize` for the graph type.
+- Add missing inline on `make_default_visitor`.
+  Thanks to Gregor Kälin.
+
+Other
+-----
+
+- Update documentation for `EdgeHandler` and `canonicalize`.
+
+
 v0.4 (2019-05-27)
 =================
 

@@ -60,6 +60,7 @@ private:
 	instance_data &get_data(State &state) const {
 		return get(instance_data_t(), state.data);
 	}
+
 public:
 
 	template<typename State>
@@ -188,6 +189,7 @@ public:
 		auto &t_data = get(tree_data_t(), t.data);
 		i_data.next = t_data.next;
 	}
+
 private:
 
 	template<typename State, typename TreeNode>
@@ -232,7 +234,7 @@ private:
 		const auto oes = out_edges(v, state.g);
 		for(auto e_iter = oes.first; e_iter != oes.second; ++e_iter) {
 			const auto v_adj = target(*e_iter, state.g);
-			const auto v_adj_idx = state.idx[v_adj];
+			const auto v_adj_idx = get(state.idx, v_adj);
 			const auto v_adj_canon_idx = t.pi.get_inverse(v_adj_idx);
 			edges.push_back(v_adj_canon_idx);
 		}

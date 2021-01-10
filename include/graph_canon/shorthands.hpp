@@ -22,18 +22,18 @@
 
 namespace graph_canon {
 
-// rst: .. function:: auto make_default_visitor()
+// rst: .. function:: inline auto make_default_visitor()
 // rst:
 // rst:		:returns: a compound visitor with the following visitors:
 // rst:
 
-auto make_default_visitor() {
+inline auto make_default_visitor() {
 	return make_visitor(
 			// rst:		- `target_cell_flm`
 			target_cell_flm(),
 			// rst:		- `traversal_bfs_exp`
 			traversal_bfs_exp(),
-			// rst: 		- `refine_WL_1`
+			// rst:		- `refine_WL_1`
 			refine_WL_1(),
 			// rst:		- `aut_pruner_basic`
 			aut_pruner_basic(),
