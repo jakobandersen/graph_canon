@@ -11,7 +11,7 @@ if(TARGET doc)
 else()
     add_custom_target(doc ALL DEPENDS graph_canon_doc)
 endif()
-set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${output})
+set_property(DIRECTORY PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${output} ${doctrees})
 install(DIRECTORY ${output}
         DESTINATION ${CMAKE_INSTALL_DOCDIR}
         COMPONENT GraphCanon_doc)

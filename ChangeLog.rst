@@ -31,6 +31,7 @@ Bugs Fixed
 - Add missing concept checks in `canonicalize` for the graph type.
 - Add missing inline on `make_default_visitor`.
   Thanks to Gregor Kälin.
+- Doc, fix indendation issues.
 
 Other
 -----
