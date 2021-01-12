@@ -1,0 +1,66 @@
+################################################
+GraphCanon
+################################################
+
+.. toctree::
+    :maxdepth: 1
+    :numbered:
+    
+    installation
+    changes
+    examples/index
+    executables/index
+    reference/index
+
+
+.. _overview:
+
+Introduction
+============
+
+This is the documentation for the GraphCanon library and its associated executables.
+The library provides an algorithm framework for graph canonicalization,
+graph isomorphism, and computation of automorphism groups of graphs,
+using a customizable individualization-refinement algorithm.
+
+The library was initially written as part of the paper
+**A Generic Framework for Engineering Graph Canonization Algorithms**
+[`DOI <http://doi.org/10.1137/1.9781611975055.13>`__ | `TR <http://arxiv.org/abs/1711.08289>`__].
+
+The library can for example be used for
+
+- finding a canonical order of the vertices of a given graph,
+- finding the automorphism group of a given graph,
+- using a canonical vertex order to create a view of a graph with canonical iteration order,
+- lexicographical comparison of such permuted graph views, e.g., for isomorphism testing.
+
+Graphs with vertices labelled with elements from a totally ordered set
+are handled by a user-supplied less-predicate (as you would provide to `std::sort`).
+The library also supports graphs where edges are similarly labelled,
+though for obtaining efficient implementations this may require substantial work from the user.
+
+Handling of permutation groups is done using the `PermGroup <https://github.com/jakobandersen/perm_group>`__ library which is currently under heavy development.
+
+The package additionally contains a program ``graph-canon``,
+which makes many variations of the core algorithm available from the command line.
+The program also facilitates extraction of additional data from the algorithm run,
+e.g., visualization data for the `GraphCanon Visualizer <https://github.com/jakobandersen/graph_canon_vis>`__.
+
+
+
+Indices and Tables
+==================
+
+* :ref:`genindex`
+
+Table of Contents
+=================
+
+.. toctree::
+    :maxdepth: 4
+    
+    installation
+    changes
+    examples/index
+    executables/index
+    reference/index

@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5.6.2. coordinator.hpp &#8212; GraphCanon 0.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.6.3. partial_leaf.hpp" href="partial_leaf.html" />
+    <link rel="prev" title="5.6.1. cell_split.hpp" href="cell_split.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="partial_leaf.html" title="5.6.3. partial_leaf.hpp"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cell_split.html" title="5.6.1. cell_split.hpp"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" ><span class="section-number">5. </span>Library Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U"><span class="section-number">5.6. </span>invariant</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.6.2. </span>coordinator.hpp</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="coordinator-hpp">
+<span id="cpp-invariant-coordinator"></span><h1><span class="section-number">5.6.2. </span>coordinator.hpp<a class="headerlink" href="#coordinator-hpp" title="Permalink to this headline">¶</a></h1>
+<p>Full path: <code class="docutils literal notranslate"><span class="pre">graph_canon/invariant/coordinator.hpp</span></code></p>
+<dl class="cpp class">
+<dt id="_CPPv4N11graph_canon21invariant_coordinatorE">
+<span id="_CPPv3N11graph_canon21invariant_coordinatorE"></span><span id="_CPPv2N11graph_canon21invariant_coordinatorE"></span><span id="graph_canon::invariant_coordinator"></span><em class="property">class </em><code class="sig-name descname">invariant_coordinator</code><a class="headerlink" href="#_CPPv4N11graph_canon21invariant_coordinatorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A visitor for properly coordinating multiple node invariants.
+That is, ensuring a total order among different providers.</p>
+<dl class="cpp function">
+<dt id="_CPPv4I0EN11graph_canon21invariant_coordinator12init_visitorENSt6size_tER5State">
+<span id="_CPPv3I0EN11graph_canon21invariant_coordinator12init_visitorER5State"></span><span id="_CPPv2I0EN11graph_canon21invariant_coordinator12init_visitorER5State"></span>template&lt;typename <code class="sig-name descname">State</code>&gt;<br /><em class="property">static</em> std::size_t <code class="sig-name descname">init_visitor</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN11graph_canon21invariant_coordinator12init_visitorENSt6size_tER5State" title="graph_canon::invariant_coordinator::init_visitor::State">State</a> &amp;<em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN11graph_canon21invariant_coordinator12init_visitorENSt6size_tER5State" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Must be called by each node invariant visitor, probably in its <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">initialize</span></code> method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>an ID that must be provided in subsequent calls to the coordinator.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN11graph_canon21invariant_coordinator21add_invariant_elementEbR5StateR8TreeNodeKNSt6size_tE">
+<span id="_CPPv3I00EN11graph_canon21invariant_coordinator21add_invariant_elementER5StateR8TreeNodeKNSt6size_tE"></span><span id="_CPPv2I00EN11graph_canon21invariant_coordinator21add_invariant_elementER5StateR8TreeNodeKNSt6size_tE"></span>template&lt;typename <code class="sig-name descname">State</code>, typename <code class="sig-name descname">TreeNode</code>&gt;<br /><em class="property">static</em> bool <code class="sig-name descname">add_invariant_element</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00EN11graph_canon21invariant_coordinator21add_invariant_elementEbR5StateR8TreeNodeKNSt6size_tE" title="graph_canon::invariant_coordinator::add_invariant_element::State">State</a> &amp;<em>state</em>, <a class="reference internal" href="#_CPPv4I00EN11graph_canon21invariant_coordinator21add_invariant_elementEbR5StateR8TreeNodeKNSt6size_tE" title="graph_canon::invariant_coordinator::add_invariant_element::TreeNode">TreeNode</a> &amp;<em>t</em>, <em class="property">const</em> std::size_t <em>visitor</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN11graph_canon21invariant_coordinator21add_invariant_elementEbR5StateR8TreeNodeKNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Tell the coordinator that the calling visitor wants to add another trace element.
+This may fail if another visitor has the current invariant position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">true</span></code> if the calling visitor may add a value, <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">false</span></code> if not.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN11graph_canon21invariant_coordinator16better_invariantEvR5StateR8TreeNode">
+<span id="_CPPv3I00EN11graph_canon21invariant_coordinator16better_invariantER5StateR8TreeNode"></span><span id="_CPPv2I00EN11graph_canon21invariant_coordinator16better_invariantER5StateR8TreeNode"></span>template&lt;typename <code class="sig-name descname">State</code>, typename <code class="sig-name descname">TreeNode</code>&gt;<br /><em class="property">static</em> void <code class="sig-name descname">better_invariant</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00EN11graph_canon21invariant_coordinator16better_invariantEvR5StateR8TreeNode" title="graph_canon::invariant_coordinator::better_invariant::State">State</a> &amp;<em>state</em>, <a class="reference internal" href="#_CPPv4I00EN11graph_canon21invariant_coordinator16better_invariantEvR5StateR8TreeNode" title="graph_canon::invariant_coordinator::better_invariant::TreeNode">TreeNode</a> &amp;<em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN11graph_canon21invariant_coordinator16better_invariantEvR5StateR8TreeNode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Must be called by a visitor when it has been allowed to add a value,
+and that value is better than the value the visitor previously had in this position.</p>
+<p>Will invoke the <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">invariant_better</span></code> event and prune the current best leaf.</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN11graph_canon21invariant_coordinator15worse_invariantEvR5StateR8TreeNode">
+<span id="_CPPv3I00EN11graph_canon21invariant_coordinator15worse_invariantER5StateR8TreeNode"></span><span id="_CPPv2I00EN11graph_canon21invariant_coordinator15worse_invariantER5StateR8TreeNode"></span>template&lt;typename <code class="sig-name descname">State</code>, typename <code class="sig-name descname">TreeNode</code>&gt;<br /><em class="property">static</em> void <code class="sig-name descname">worse_invariant</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00EN11graph_canon21invariant_coordinator15worse_invariantEvR5StateR8TreeNode" title="graph_canon::invariant_coordinator::worse_invariant::State">State</a> &amp;<em>state</em>, <a class="reference internal" href="#_CPPv4I00EN11graph_canon21invariant_coordinator15worse_invariantEvR5StateR8TreeNode" title="graph_canon::invariant_coordinator::worse_invariant::TreeNode">TreeNode</a> &amp;<em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN11graph_canon21invariant_coordinator15worse_invariantEvR5StateR8TreeNode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Must be called by a visitor when it has been allowed to add a value,
+but that value is worse than the value the visitor previously had in this position.</p>
+<p>Currently this method does nothing.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="cell_split.html"
+                        title="previous chapter"><span class="section-number">5.6.1. </span>cell_split.hpp</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="partial_leaf.html"
+                        title="next chapter"><span class="section-number">5.6.3. </span>partial_leaf.hpp</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/reference/invariant/coordinator.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="partial_leaf.html" title="5.6.3. partial_leaf.hpp"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cell_split.html" title="5.6.1. cell_split.hpp"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" ><span class="section-number">5. </span>Library Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" ><span class="section-number">5.6. </span>invariant</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.6.2. </span>coordinator.hpp</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.0+/e314789f4.
+    </div>
+  </body>
+</html>

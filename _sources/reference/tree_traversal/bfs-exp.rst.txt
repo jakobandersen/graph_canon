@@ -1,0 +1,19 @@
+.. _cpp-tree_traversal/bfs-exp:
+
+**********************************************************
+bfs-exp.hpp
+**********************************************************
+
+Full path: ``graph_canon/tree_traversal/bfs-exp.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: traversal_bfs_exp
+
+    Tree traversal visitor for breadth-first traversal with experimental paths.
+
+    The class is DefaultConstructible.
+

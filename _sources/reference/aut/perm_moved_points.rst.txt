@@ -1,0 +1,25 @@
+.. _cpp-aut/perm_moved_points:
+
+**********************************************************
+perm_moved_points.hpp
+**********************************************************
+
+Full path: ``graph_canon/aut/perm_moved_points.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: template<typename Perm> wrapped_perm
+
+    A permutation type that explicitly keeps track of which points are moved.
+
+    .. todo:: To be fully documented.
+
+    .. function:: const Perm &get_perm() const
+
+        :returns: the wrapped permutation.
+    .. function:: const std::vector<value_type> &get_moved_points() const
+
+        :returns: a list of the moved points, or an empty list.

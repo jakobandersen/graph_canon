@@ -1,0 +1,36 @@
+.. _cpp-tagged_list:
+
+**********************************************************
+tagged_list.hpp
+**********************************************************
+
+Full path: ``graph_canon/tagged_list.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: template<typename TagT, typename T> \
+           tagged_element
+
+    A wrapper for a value of type `T`, tagged with a type `Tag`.
+
+    .. type:: Tag = TagT
+    .. var:: T value
+
+        The wrapped value.
+.. class:: template<typename ...Elems> \
+           tagged_list
+
+    Holds a tuple of tagged elements, e.g., specializations of `tagged_element`.
+.. function:: template<typename Tag, typename ...Elems> \
+              auto &get(Tag&&, tagged_list<Elems...> &t)
+
+    :returns: a reference to the value of a tagged element in `t`, tagged with type `Tag`.
+        For example: `get(MyTag(), myTaggedList)`.
+.. function:: template<typename Tag, typename ...Elems> \
+              auto &get(Tag&&, const tagged_list<Elems...> &t)
+
+    :returns: a reference the value of a tagged element in `t`, tagged with type `Tag`.
+        For example: `get(MyTag(), myTaggedList)`.

@@ -1,0 +1,19 @@
+.. _cpp-invariant/cell_split:
+
+**********************************************************
+cell_split.hpp
+**********************************************************
+
+Full path: ``graph_canon/invariant/cell_split.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: invariant_cell_split
+
+    An implementation of the node invariant consisting of the sequence of cell splits performed in each tree node.
+    It uses the `refine_new_cell` event to collect data.
+
+    Requires a `invariant_coordinator` as visitor, ordered before this visitor.

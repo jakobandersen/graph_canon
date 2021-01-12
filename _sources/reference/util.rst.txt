@@ -1,0 +1,62 @@
+.. _cpp-util:
+
+**********************************************************
+util.hpp
+**********************************************************
+
+Full path: ``graph_canon/util.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: always_true
+
+    A function object always returning `true`.
+
+    .. function:: template<typename ...T> \
+                  bool operator()(T&&... args) const
+
+        :returns: `true`
+.. class:: always_false
+
+    A function object always returning `false`.
+
+    .. function:: template<typename ...T> \
+                  bool operator()(T&&... args) const
+
+        :returns: `false`
+.. class:: template<typename Iter> \
+           range : std::pair<Iter, Iter>
+
+A class for adapting a pair of iterators into a range, e.g., useful when using Boost.Graph.
+See :cpp:expr:`as_range`.
+
+.. cpp:function:: template<typename Iter> \
+                  range<Iter> as_range(const std::pair<Iter, Iter> &x)
+
+:returns: :cpp:expr:`range<Iter>(x)`
+
+.. class:: template<typename Prop> \
+           property_less
+
+    A less-than comparator on a given property map, satisfying the `boost::ReadablePropertyMapConcept`.
+
+    .. function:: property_less(Prop prop)
+    .. function:: template<typename Key> \
+                  bool operator()(const Key &lhs, const Key &rhs) const
+
+        :returns: `get(prop, lhs) < get(prop, rhs)`
+    .. var:: Prop prop
+.. function:: template<typename Prop> \
+              property_less<Prop> make_property_less(Prop &&prop)
+
+    :returns: `property_less<Prop>(std::forward<Prop>(prop))`
+.. function:: template<typename Graph, typename SizeType> \
+              void permute_graph(const Graph &g_in, Graph &g_out, const std::vector<SizeType> &permutation)
+
+    Add all vertices and edges from `g_in` to `g_out`,
+    but where the order of vertex addition is given by the `permutation`.
+    It must be a permutation of the vertex indices of `g_in` and is interpreted as a map
+    from the indices in `g_in` to the indices they will get in `g_out` (offset by `num_vertices(g_out)` before the call).

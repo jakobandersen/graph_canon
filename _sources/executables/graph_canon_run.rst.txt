@@ -1,0 +1,83 @@
+.. cpp:namespace:: graph_canon
+
+.. _graph_canon_run:
+
+``graph-canon-run``
+########################################################################
+
+.. program:: graph-canon-run
+
+The ``graph-canon-run`` program can be used to run a specific graph canonicalistion
+program on a batch of graphs (e.g., downloaded with :ref:`download_graph_collections`).
+
+Graph Database
+==============
+
+The program indexes graph instances from a specific folder:
+
+.. envvar:: GRAPH_CANON_DATA_DIR
+
+ If this environment variable is defined, it is assumed to be the path to a folder
+ containing a graph database.
+ If it is not defined the database folder is assumed to be the relative path ``graphs/``.
+
+
+A graph database is simply a folder with a specific structure: the root contains folders representing
+"packages". For example, :program:`download_graph_collections` program will download graphs from
+http://pallini.di.uniroma1.it/Graphs.html and partition them into the packages
+``bliss``, ``conauto``, ``saucy``, ``random``, and ``misc``, corresponding to the different sources
+benchmark graphs.
+Each package subfolder is then assumed to have folder representing "collections" of graphs.
+For example, the ``bliss`` package will have the collections ``ag``, ``cfi``, ``cmz``, etc.
+The names of collections are assumed to be uniq, even across packages.
+Each collection subfolder finally contains text files with one graph each.
+For example, the file ``bliss/ag/ag2-2`` would be a file with a graph.
+
+Listing Mode
+=============
+
+.. option:: --list-collections
+
+ Print the list of available collections of benchmark graphs and then exit.
+ Each collection is printed on a separate line as ``<package>/<collection>``.
+.. option:: --list-instances [package|collection]...
+
+ Print the list of instances contained in the given packages or collections.
+ Each instances is printed on a separate line as ``<package>/<collection>/<instance>``.
+.. option:: --get-instance-size [package] [collection] [instance]
+
+ Print the number of vertices in the given instance and then exit.
+ This assumes the graph is stored in DIMACS format, with the first line specifying the graph size
+ (i.e., the ``p edge <n> <m>`` line is the very first).
+
+Execution Mode
+===============
+
+.. option:: --args [arg]...
+
+ Additional arguments passed through to the canonicalization program.
+.. option:: -t [seconds], --timeout [seconds]
+
+ Time before the canonicalization is killed.
+ However, if :option:`--memcheck` or :option:`--debug` is given, the time limit is not in effect.
+.. option:: -e [executable], --exe [executable]
+
+ The executable to use for canonicalization.
+ It defaults to ``graph-canon`` (i.e., the :program:`graph_canon` program, as found through normal shell lookup.
+.. option:: --memcheck
+            --debug
+            --profile
+
+ Options passed through to the executable.
+.. option:: [task]...
+
+ Each positional argument is assumed to be a "task", which must be the name of either
+ a package, a collection, or the path to an instance.
+ The executable will in turn be invoked on each instance specified.
+ The special meta-task ``all`` can be used to specify all instances in the graph database.
+
+ Each invocation of the canonicalization executable will be done
+ with ``-f <full path to graph instance>`` for specifying the current input graph-
+ Additionally the arguments ``--id "GCDResult <package>    <collection>    <instance>"``,
+ are passed, meant to allow the executable to prefix each data line with this string
+ for easier tabulation of results.

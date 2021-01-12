@@ -1,0 +1,19 @@
+.. _cpp-target_cell/fl:
+
+**********************************************************
+fl.hpp
+**********************************************************
+
+Full path: ``graph_canon/target_cell/fl.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: target_cell_fl
+
+    Visitor for selecting the first largest non-singleton cell.
+
+    The class is DefaultConstructible.
+

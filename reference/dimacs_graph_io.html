@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5.4. dimacs_graph_io.hpp &#8212; GraphCanon 0.5 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5.5. edge_handler" href="edge_handler/index.html" />
+    <link rel="prev" title="5.3. compare.hpp" href="compare.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="edge_handler/index.html" title="5.5. edge_handler"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="compare.html" title="5.3. compare.hpp"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U"><span class="section-number">5. </span>Library Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.4. </span>dimacs_graph_io.hpp</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="dimacs-graph-io-hpp">
+<span id="cpp-dimacs-graph-io"></span><h1><span class="section-number">5.4. </span>dimacs_graph_io.hpp<a class="headerlink" href="#dimacs-graph-io-hpp" title="Permalink to this headline">¶</a></h1>
+<p>Full path: <code class="docutils literal notranslate"><span class="pre">graph_canon/dimacs_graph_io.hpp</span></code></p>
+<dl class="cpp function">
+<dt id="_CPPv4I0EN11graph_canon18write_dimacs_graphEvRNSt7ostreamERK5Graph">
+<span id="_CPPv3I0EN11graph_canon18write_dimacs_graphERNSt7ostreamERK5Graph"></span><span id="_CPPv2I0EN11graph_canon18write_dimacs_graphERNSt7ostreamERK5Graph"></span>template&lt;typename <code class="sig-name descname">Graph</code>&gt;<br />void <code class="sig-name descname">write_dimacs_graph</code><span class="sig-paren">(</span>std::ostream &amp;<em>s</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4I0EN11graph_canon18write_dimacs_graphEvRNSt7ostreamERK5Graph" title="graph_canon::write_dimacs_graph::Graph">Graph</a> &amp;<em>g</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN11graph_canon18write_dimacs_graphEvRNSt7ostreamERK5Graph" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Write the given graph in DIMACS format (see <code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">read_dimacs_format()</span></code>).</p>
+<p>The vertices must have indices, i.e., the expression <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="tagged_list.html#_CPPv4I0DpEN11graph_canon3getERDaRR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get"><span class="pre">get</span></a><span class="pre">(</span><span class="pre">boost</span><span class="pre">::</span><span class="pre">verex_index_t</span><span class="pre">(</span><span class="pre">)</span><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0EN11graph_canon18write_dimacs_graphEvRNSt7ostreamERK5Graph" title="graph_canon::write_dimacs_graph::g"><span class="pre">g</span></a><span class="pre">)</span></code> must be valid.
+Currently the expression <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="tagged_list.html#_CPPv4I0DpEN11graph_canon3getERDaRR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get"><span class="pre">get</span></a><span class="pre">(</span><span class="pre">boost</span><span class="pre">::</span><span class="pre">vertex_name_t</span><span class="pre">(</span><span class="pre">)</span><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0EN11graph_canon18write_dimacs_graphEvRNSt7ostreamERK5Graph" title="graph_canon::write_dimacs_graph::g"><span class="pre">g</span></a><span class="pre">)</span></code> must also be valid and return a property map with integer values
+If any vertex have non-zero vertex name, then the graph is considered vertex labelled and the vertex names are written.</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I000EN11graph_canon17read_dimacs_graphEbRNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler">
+<span id="_CPPv3I000EN11graph_canon17read_dimacs_graphERNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler"></span><span id="_CPPv2I000EN11graph_canon17read_dimacs_graphERNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler"></span>template&lt;typename <code class="sig-name descname">Graph</code>, typename <code class="sig-name descname">ParallelHandler</code>, typename <code class="sig-name descname">LoopHandler</code>&gt;<br />bool <code class="sig-name descname">read_dimacs_graph</code><span class="sig-paren">(</span>std::istream &amp;<em>s</em>, <a class="reference internal" href="#_CPPv4I000EN11graph_canon17read_dimacs_graphEbRNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler" title="graph_canon::read_dimacs_graph::Graph">Graph</a> &amp;<em>graph</em>, std::ostream &amp;<em>err</em>, <a class="reference internal" href="#_CPPv4I000EN11graph_canon17read_dimacs_graphEbRNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler" title="graph_canon::read_dimacs_graph::ParallelHandler">ParallelHandler</a> <em>parHandler</em>, <a class="reference internal" href="#_CPPv4I000EN11graph_canon17read_dimacs_graphEbRNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler" title="graph_canon::read_dimacs_graph::LoopHandler">LoopHandler</a> <em>loopHandler</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I000EN11graph_canon17read_dimacs_graphEbRNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parse a graph in DIMACS format from <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I000EN11graph_canon17read_dimacs_graphEbRNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler" title="graph_canon::read_dimacs_graph::s"><span class="pre">s</span></a></code> and store it in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I000EN11graph_canon17read_dimacs_graphEbRNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler" title="graph_canon::read_dimacs_graph::graph"><span class="pre">graph</span></a></code>.
+Reading errors are written to <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I000EN11graph_canon17read_dimacs_graphEbRNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler" title="graph_canon::read_dimacs_graph::err"><span class="pre">err</span></a></code>.</p>
+<p>The unary predicate <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I000EN11graph_canon17read_dimacs_graphEbRNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler" title="graph_canon::read_dimacs_graph::loopHandler"><span class="pre">loopHandler</span></a></code> is called with vertex indices where a loop edge has been parsed.
+The edge is added to the graph only if the handler returns <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">true</span></code>.
+The binary predicate <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I000EN11graph_canon17read_dimacs_graphEbRNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler" title="graph_canon::read_dimacs_graph::parHandler"><span class="pre">parHandler</span></a></code> must similarly evaluated parallel edges, if present.</p>
+<p>The format is line-based. Empty lines and lines starting with <code class="docutils literal notranslate"><span class="pre">c</span></code> are ignored.
+The first non-ignored line must be on the form <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">edge</span> <span class="pre">&lt;n&gt;</span> <span class="pre">&lt;m&gt;</span></code> where
+<code class="docutils literal notranslate"><span class="pre">&lt;n&gt;</span></code> is the number of vertices in edge graph and
+<code class="docutils literal notranslate"><span class="pre">&lt;m&gt;</span></code> is the number of edges.
+Afterwards there must be exactly <code class="docutils literal notranslate"><span class="pre">&lt;m&gt;</span></code> lines on the form
+<code class="docutils literal notranslate"><span class="pre">e</span> <span class="pre">&lt;src&gt;</span> <span class="pre">&lt;tar&gt;</span></code> where <code class="docutils literal notranslate"><span class="pre">&lt;src&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;tar&gt;</span></code> are vertex IDs in the range 1 to <span class="math notranslate nohighlight">\(n\)</span>,
+representing and edge.</p>
+<p>In addition there may be any number of lines on the form <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&lt;id&gt;</span> <span class="pre">&lt;label&gt;</span></code>
+where <code class="docutils literal notranslate"><span class="pre">&lt;id&gt;</span></code> is a vertex ID in the range 1 to <span class="math notranslate nohighlight">\(n\)</span>,
+and <code class="docutils literal notranslate"><span class="pre">&lt;label&gt;</span></code> is a non-negative number that will be assigned as the label of the vertex.</p>
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="compare.html"
+                        title="previous chapter"><span class="section-number">5.3. </span>compare.hpp</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="edge_handler/index.html"
+                        title="next chapter"><span class="section-number">5.5. </span>edge_handler</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/dimacs_graph_io.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="edge_handler/index.html" title="5.5. edge_handler"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="compare.html" title="5.3. compare.hpp"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" ><span class="section-number">5. </span>Library Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.4. </span>dimacs_graph_io.hpp</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.0+/e314789f4.
+    </div>
+  </body>
+</html>

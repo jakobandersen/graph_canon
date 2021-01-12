@@ -1,0 +1,23 @@
+.. cpp:namespace:: graph_canon
+
+``dimacs``
+####################################################
+
+.. program:: dimacs
+
+A program for checking the syntax of a graph in DIMACS format
+(see :cpp:func:`read_dimacs_graph`),
+and optionally print a permuted version of it.
+
+.. option:: -h, --help
+
+    Print help message.
+.. option:: -f <file>, --file <file>
+
+    Filename with graph to read. Use ``-`` to read form stdin.
+.. option:: -s <seed>, --seed <seed>
+
+    Seed for random number generator. A default seed from :cpp:expr:`std::random_device` will be used if not specified.
+.. option:: --permute
+
+    Make a random permutation of the graph and print it to stdout.

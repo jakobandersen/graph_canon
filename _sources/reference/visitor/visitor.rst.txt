@@ -1,0 +1,216 @@
+.. _cpp-visitor/visitor:
+
+**********************************************************
+visitor.hpp
+**********************************************************
+
+Full path: ``graph_canon/visitor/visitor.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: no_result
+
+    A helper-class to derive visitors from that do not want to return data.
+
+    .. function:: template<typename State> \
+                  tagged_list<> extract_result(const State&)
+
+        :returns: `tagged_list<>()`
+.. class:: no_instance_data
+
+    A helper-class to derive visitors from that do not need extra instance-wide data.
+
+    .. class:: template<typename Config, typename TreeNode> \
+               InstanceData
+
+        .. type:: type = tagged_list<>
+.. class:: no_tree_node_data
+
+    A helper-class to derive visitors from that do not need extra data in each tree node.
+
+    .. class:: template<typename Config, typename TreeNode> \
+               TreeNodeData
+
+        .. type:: type = tagged_list<>
+.. class:: null_visitor : no_instance_data, no_tree_node_data, no_result
+
+    A visitor that does nothing.
+    That is, it provides a default implementation for each event.
+
+.. concept:: template<typename Vis> \
+             Visitor
+
+    The central concept for plugins.
+    When writing new plugins it may be useful to derive from `null_visitor`
+    to start with default-implementations of all elements.
+
+    .. notation::
+
+    .. var:: Vis vis
+    .. var:: State state
+
+        A specialization of `canon_state`.
+
+    .. var:: TreeNode t
+
+        A specialization of `tree_node`.
+
+    .. var:: Perm aut
+
+        A `perm_group::Permutation`.
+
+    .. assoc_types::
+
+    .. class:: template<typename Config, typename TreeNode> \
+               Vis::InstanceData
+
+        :tparam Config: a specialization of `config`.
+        :tparam TreeNode: a specialization of `tree_node`.
+
+        .. type:: type
+
+            An alias for either a `tagged_list` or a `tagged_element`.
+            An object of the this type will be instantiated in each `canon_state`.
+            If non is needed, you can derive from `no_instance_data`.
+
+    .. class:: template<typename Config, typename TreeNode> \
+               Vis::TreeNodeData
+
+        .. type:: type
+
+            An alias for either a `tagged_list` or a `tagged_element`.
+            An object of the this type will be instantiated in each `tree_node`.
+            If non is needed, you can derive from `no_tree_node_data`.
+
+    .. type:: Vis::can_select_target_cell
+
+        An alias for either `std::true_type` or `std::false_type`
+        to denote whether the visitor want to be the target cell selector.
+        If so, the expression `vis.select_target_cell(state, t)` must be valid,
+        and return a non-negative integer strictly less than :math:`n`.
+
+    .. type:: Vis::can_explore_tree
+
+        An alias for either `std::true_type` or `std::false_type`
+        to denote whether the visitor want to provide the tree traversal algorithm.
+        If so, the expression `vis.explore_tree(state)` must be valid.
+
+    .. valid_expr::
+
+    - | Expression: `vis.initialize(state)`
+      | Return type: `void`
+      | Called: before the root node is constructed.
+
+    **Tree Node Methods**
+
+    - | Expression: `vis.extract_result(state)`
+      | Return type: a specialization of either `tagged_list` or `tagged_element`.
+      | Called: when the complete tree has been explored.
+    - | Expression: `tree_create_node_begin(state, t)`
+      | Return type: `bool`
+      | Called: in the beginning of the `tree_node` constructor.
+      | Returning `false` means the tree node should be pruned.
+    - | Expression: `vis.tree_create_node_end(state, t)`
+      | Return type: `bool`
+      | Called: in the end of the `tree_node` constructor.
+      | Returning `false` means the tree node should be pruned.
+    - | Expression: `vis.tree_destroy_node(state, t)`
+      | Return type: `void`
+      | Called: in the beginning of the `tree_node` destructor.
+    - | Expression: `vis.tree_before_descend(state, t)`
+      | Return type: `void`
+      | Called: by tree traversal algorithms before inspecting the list of children.
+      | The method facilitates pruning of children, and may be called at any time
+      | the tree traversal algorithm thinks there may be new pruning information available.
+    - | Expression: `vis.tree_create_child(state, t, element_idx_to_individualise)`
+      | Return type: `void`
+      | Called: by `tree_node.create_child` before a new tree node is created.
+      | See `tree_node.create_child` for the meaning of `element_idx_to_individualise`.
+    - | Expression: `vis.tree_leaf(state, t)`
+      | Return type: `void`
+      | Called: in the beginning of `canon_state::report_leaf`.
+    - | Expression: `vis.tree_prune_node(state, t)`
+      | Return type: `void`
+      | Called: in `tree_node.prune_subtree` before the children are pruned recursively.
+
+    **Canonical Form Methods**
+
+    - | Expression: `vis.canon_new_best(state, t_ptr)`
+      | Return type: `void`
+      | Called: in `canon_state::report_leaf` after a new best leaf has been assigned. A pointer to a previous leaf, if any, is given.
+    - | Expression: `vis.canon_worse(state, t)`
+      | Return type: `void`
+      | Called: in `canon_state::report_leaf` when the candidate node `t` is worse than the current best leaf.
+    - | Expression: `vis.canon_prune(state)`
+      | Return type: `void`
+      | Called: in `canon_state::prune_canon_leaf` if there is a best leaf, before it is unassigned.
+
+    **Automorphism Methods**
+
+    - | Expression: `vis.automorphism_leaf(state, t, aut)`
+      | Return type: `void`
+      | Called: in `canon_state::prune_canon_leaf` when the candidate leaf `t` is as good as the current best leaf.
+      | The given permutation `aut` is the automorphism that maps the current best leaf to `t`.
+    - | Expression: `vis.automorphism_implicit(state, t, aut, tag)`
+      | Return type: `void`
+      | Called: by visitors when they have a permutation `aut` which is an automorphism.
+      | The `tag`, of type `std::size_t`, is a visitor-defined number.
+
+    **Refinement Methods**
+
+    - | Expression: `vis.refine(state, t)`
+      | Return type: `RefinementResult`
+      | Called: by the `canon_state` through the `tree_node` constructor.
+    - | Expression: `vis.refine_cell_split_begin(state, t, refiner_begin, refinee_begin, refinee_end)`
+      | Return type: `void`
+      | Called: by visitors before the cell starting at `refinee_begin` and ending at `refinee_end` is being split.
+      | The partition of `t` must be in a valid state when this method is called.
+      | The `refiner_begin` may be `canon_state::n` or the cell which the calling visitor defines as being responsible for the splits.
+      | After this method call the `vis.refine_new_cell` method may be invoked with numbers in the range `refinee_begin` to `refinee_end`.
+      | A matching call to `vis.refine_cell_split_end` with the same arguments must be made before a new cell can be split.
+      | This method will not be called before an individualization operation.
+    - | Expression: `vis.refine_new_cell(state, t, new_cell, type)`
+      | Return type: `void`
+      | Called: by visitors for each new cell-beginning being created. E.g., for a cell 0 to 10, split into 0 to 2 and 2 to 10, only a call with 2 will be made.
+      | The method may only be called between a matching pair of `vis.refine_cell_split_begin` and `vis.refine_cell_split_end`, and only with cell beginnings in the range specified by those calls.
+      | The partition of `t` must be in a valid state when this method is called, and the cell must have been created at this time.
+        That is, after `vis.refine_cell_split_begin` the partition is fully modified (all splits are made), and then all calls to `vis.refine_new_cell` is made.
+      | The `type` variable of type `std::size_t` is a visitor-defined number to communicate which kind of split it made.
+      | This method will not be called before an individualization operation.
+    - | Expression: `vis.refine_cell_split_end(state, t, refiner_begin, refinee_begin, refinee_end)`
+      | Return type: `bool`
+      | Called: by visitors after the cell starting at `refinee_begin` and ending at `refinee_end` was split.
+      | The partition of `t` must be in a valid state when this method is called.
+      | The call must be after a matching `vis.refine_cell_begin` and must be given the same arguments.
+      | Returning `false` means refinement should be aborted and the tree node pruned.
+      | This method will not be called before an individualization operation.
+    - | Expression: `vis.refine_quotient_edge(state, t, refiner, refinee, count)`
+      | Return type: `bool`
+      | Called: by visitors, probably mostly Weisfeiler-Leman-style visitors.
+      | The partition of `t` must be in a valid state when this method is called.
+
+      .. deprecated:: 0.2
+         This method will be refactored not too far in the future.
+    - | Expression: `vis.refine_refiner_done(state, t, refiner, refiner_end)`
+      | Return type: `bool`
+      | Called: by visitors, probably mostly Weisfeiler-Leman-style visitors.
+      | The partition of `t` must be in a valid state when this method is called.
+
+      .. deprecated:: 0.2
+         This method will be refactored not too far in the future.
+    - | Expression: `vis.refine_abort(state, t)`
+      | Return type: `void`
+      | Called: by visitors and by the `tree_node` constructor when refinement is being aborted.
+      | The partition of `t` must be in a valid state when this method is called.
+
+      .. deprecated:: 0.2
+         This method will be refactored not too far in the future.
+
+    **Node Invariant Methods**
+
+    - | Expression: `vis.invariant_better(state, t)`
+      | Return type: `void`
+      | Called: by `invariant_coordinator::better_invariant` when a visitor reports that it has a better invariant value.

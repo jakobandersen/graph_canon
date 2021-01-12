@@ -1,0 +1,49 @@
+.. _cpp-aut/pruner_base:
+
+**********************************************************
+pruner_base.hpp
+**********************************************************
+
+Full path: ``graph_canon/aut/pruner_base.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: template<typename Iter> aut_range
+
+    An adaptor for pairs of iterators to be exposed as a range.
+
+    .. function:: aut_range(Iter first, Iter last)
+    .. function:: Iter begin() const
+    .. function:: Iter end() const
+
+.. function:: template<typename Iter> auto make_aut_range(Iter first, Iter last)
+
+    :returns: `aut_range<Iter>(first, last)`
+
+
+.. class:: template<typename Derived> \
+           aut_pruner_base
+
+    A base class for implementing visitors for automorphism pruning.
+
+    :tparam Derived: The subclass of this class (that is, the CRTP pattern).
+
+    For
+
+    - a `canon_state` object `state`,
+    - a `tree_node` object `t`,
+    - a permutation `aut` representing an automorphism, and
+    - the object `derived = static_cast<Derived&>(*this)`
+
+    the following expressions must be valid:
+
+    - | Expression: `derived.add_automorphism(state, t, aut)`
+      | Semantics: store the new automorphism `aut`
+    - | Expression: `derived.need_update(state, t)`
+      | Returns: a boolean telling whether the node needs updating.
+      | Notes: is only called on non-pruned, non-leaf nodes.
+    - | Expression: `derived.update(state, t)`
+      | Returns: a possibly empty range of automorphism generators (e.g., an `aut_range`) added to the stabilizer of `t` after updating it.

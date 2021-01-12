@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4.1. dimacs &#8212; GraphCanon 0.5 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4.2. graph-canon" href="graph_canon.html" />
+    <link rel="prev" title="4. Executables" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="graph_canon.html" title="4.2. graph-canon"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="4. Executables"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U"><span class="section-number">4. </span>Executables</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.1. </span><code class="docutils literal notranslate"><span class="pre">dimacs</span></code></a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="dimacs">
+<h1><span class="section-number">4.1. </span><code class="docutils literal notranslate"><span class="pre">dimacs</span></code><a class="headerlink" href="#dimacs" title="Permalink to this headline">¶</a></h1>
+<p>A program for checking the syntax of a graph in DIMACS format
+(see <a class="reference internal" href="../reference/dimacs_graph_io.html#_CPPv4I000EN11graph_canon17read_dimacs_graphEbRNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler" title="graph_canon::read_dimacs_graph"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">read_dimacs_graph()</span></code></a>),
+and optionally print a permuted version of it.</p>
+<dl class="std option">
+<dt id="cmdoption-dimacs-h">
+<span id="cmdoption-dimacs-help"></span><code class="sig-name descname">-h</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--help</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-dimacs-h" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print help message.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-dimacs-f">
+<span id="cmdoption-dimacs-file"></span><code class="sig-name descname">-f</code><code class="sig-prename descclassname"> &lt;file&gt;</code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--file</code><code class="sig-prename descclassname"> &lt;file&gt;</code><a class="headerlink" href="#cmdoption-dimacs-f" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filename with graph to read. Use <code class="docutils literal notranslate"><span class="pre">-</span></code> to read form stdin.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-dimacs-s">
+<span id="cmdoption-dimacs-seed"></span><code class="sig-name descname">-s</code><code class="sig-prename descclassname"> &lt;seed&gt;</code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--seed</code><code class="sig-prename descclassname"> &lt;seed&gt;</code><a class="headerlink" href="#cmdoption-dimacs-s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seed for random number generator. A default seed from <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">std</span><span class="pre">::</span><span class="pre">random_device</span></code> will be used if not specified.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-dimacs-permute">
+<code class="sig-name descname">--permute</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-dimacs-permute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a random permutation of the graph and print it to stdout.</p>
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter"><span class="section-number">4. </span>Executables</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="graph_canon.html"
+                        title="next chapter"><span class="section-number">4.2. </span><code class="docutils literal notranslate"><span class="pre">graph-canon</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/executables/dimacs.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="graph_canon.html" title="4.2. graph-canon"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="4. Executables"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" ><span class="section-number">4. </span>Executables</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.1. </span><code class="docutils literal notranslate"><span class="pre">dimacs</span></code></a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.0+/e314789f4.
+    </div>
+  </body>
+</html>

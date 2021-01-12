@@ -1,0 +1,45 @@
+.. _cpp-invariant/coordinator:
+
+**********************************************************
+coordinator.hpp
+**********************************************************
+
+Full path: ``graph_canon/invariant/coordinator.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: invariant_coordinator
+
+    A visitor for properly coordinating multiple node invariants.
+    That is, ensuring a total order among different providers.
+
+    .. function:: template<typename State> \
+                  static std::size_t init_visitor(State &state)
+
+        Must be called by each node invariant visitor, probably in its `initialize` method.
+
+        :returns: an ID that must be provided in subsequent calls to the coordinator.
+    .. function:: template<typename State, typename TreeNode> \
+                  static bool add_invariant_element(State &state, TreeNode &t, const std::size_t visitor)
+
+        Tell the coordinator that the calling visitor wants to add another trace element.
+        This may fail if another visitor has the current invariant position.
+
+        :returns: `true` if the calling visitor may add a value, `false` if not.
+    .. function:: template<typename State, typename TreeNode> \
+                  static void better_invariant(State &state, TreeNode &t)
+
+        Must be called by a visitor when it has been allowed to add a value,
+        and that value is better than the value the visitor previously had in this position.
+
+        Will invoke the `invariant_better` event and prune the current best leaf.
+    .. function:: template<typename State, typename TreeNode> \
+                  static void worse_invariant(State &state, TreeNode &t)
+
+        Must be called by a visitor when it has been allowed to add a value,
+        but that value is worse than the value the visitor previously had in this position.
+
+        Currently this method does nothing.

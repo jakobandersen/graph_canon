@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5.10. sorting_utils.hpp &#8212; GraphCanon 0.5 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5.11. tagged_list.hpp" href="tagged_list.html" />
+    <link rel="prev" title="5.9. shorthands.hpp" href="shorthands.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tagged_list.html" title="5.11. tagged_list.hpp"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="shorthands.html" title="5.9. shorthands.hpp"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U"><span class="section-number">5. </span>Library Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.10. </span>sorting_utils.hpp</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sorting-utils-hpp">
+<span id="cpp-sorting-utils"></span><h1><span class="section-number">5.10. </span>sorting_utils.hpp<a class="headerlink" href="#sorting-utils-hpp" title="Permalink to this headline">¶</a></h1>
+<p>Full path: <code class="docutils literal notranslate"><span class="pre">graph_canon/sorting_utils.hpp</span></code></p>
+<dl class="cpp function">
+<dt id="_CPPv4I000EN11graph_canon15partition_rangeE4Iter4Iter4Iter4Pred4Swap">
+<span id="_CPPv3I000EN11graph_canon15partition_rangeE4Iter4Iter4Pred4Swap"></span><span id="_CPPv2I000EN11graph_canon15partition_rangeE4Iter4Iter4Pred4Swap"></span>template&lt;typename <code class="sig-name descname">Iter</code>, typename <code class="sig-name descname">Pred</code>, typename <code class="sig-name descname">Swap</code>&gt;<br /><a class="reference internal" href="#_CPPv4I000EN11graph_canon15partition_rangeE4Iter4Iter4Iter4Pred4Swap" title="graph_canon::partition_range::Iter">Iter</a> <code class="sig-name descname">partition_range</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I000EN11graph_canon15partition_rangeE4Iter4Iter4Iter4Pred4Swap" title="graph_canon::partition_range::Iter">Iter</a> <em>first</em>, <a class="reference internal" href="#_CPPv4I000EN11graph_canon15partition_rangeE4Iter4Iter4Iter4Pred4Swap" title="graph_canon::partition_range::Iter">Iter</a> <em>last</em>, <a class="reference internal" href="#_CPPv4I000EN11graph_canon15partition_rangeE4Iter4Iter4Iter4Pred4Swap" title="graph_canon::partition_range::Pred">Pred</a> <em>pred</em>, <a class="reference internal" href="#_CPPv4I000EN11graph_canon15partition_rangeE4Iter4Iter4Iter4Pred4Swap" title="graph_canon::partition_range::Swap">Swap</a> <em>swapper</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I000EN11graph_canon15partition_rangeE4Iter4Iter4Iter4Pred4Swap" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A function template equivalent to <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">std</span><span class="pre">::</span><span class="pre">partition</span></code>,
+except that element swapping is delegated to the given <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I000EN11graph_canon15partition_rangeE4Iter4Iter4Iter4Pred4Swap" title="graph_canon::partition_range::swapper"><span class="pre">swapper</span></a></code>.</p>
+<p>Requires (in addition to the requirements by <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">std</span><span class="pre">::</span><span class="pre">partition</span></code>),
+that for two dereferenceable iterators <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">a</span></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">b</span></code> in the given range,
+the expression <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I000EN11graph_canon15partition_rangeE4Iter4Iter4Iter4Pred4Swap" title="graph_canon::partition_range::swapper"><span class="pre">swapper</span></a><span class="pre">(</span><span class="pre">a</span><span class="pre">,</span> <span class="pre">b</span><span class="pre">)</span></code> swaps the values represented by the iterators.
+For example, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I000EN11graph_canon15partition_rangeE4Iter4Iter4Iter4Pred4Swap" title="graph_canon::partition_range::Swap"><span class="pre">Swap</span></a></code> may be a predicate simply calling <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">std</span><span class="pre">::</span><span class="pre">iter_swap</span></code>.</p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4I0_8SizeTypeEN11graph_canon15counting_sorterE">
+<span id="_CPPv3I0_8SizeTypeEN11graph_canon15counting_sorterE"></span><span id="_CPPv2I0_8SizeTypeEN11graph_canon15counting_sorterE"></span>template&lt;typename <code class="sig-name descname">SizeType</code>, <a class="reference internal" href="#_CPPv4I0_8SizeTypeEN11graph_canon15counting_sorterE" title="graph_canon::counting_sorter::SizeType">SizeType</a> <code class="sig-name descname">Max</code>&gt;<br /><em class="property">class </em><code class="sig-name descname">counting_sorter</code><a class="headerlink" href="#_CPPv4I0_8SizeTypeEN11graph_canon15counting_sorterE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An object for performing counting sort of values in the range 0 to <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0_8SizeTypeEN11graph_canon15counting_sorterE" title="graph_canon::counting_sorter::Max"><span class="pre">Max</span></a></code>.
+Requires <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0_8SizeTypeEN11graph_canon15counting_sorterE" title="graph_canon::counting_sorter::Max"><span class="pre">Max</span></a> <span class="pre">&gt;=</span> <span class="pre">2</span></code>.</p>
+<dl class="cpp function">
+<dt id="_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue">
+<span id="_CPPv3I0000EN11graph_canon15counting_sorterclEK8IteratorK8Iterator7ToValue8Callback8PutValue"></span><span id="_CPPv2I0000EN11graph_canon15counting_sorterclEK8IteratorK8Iterator7ToValue8Callback8PutValue"></span>template&lt;typename <code class="sig-name descname">Iterator</code>, typename <code class="sig-name descname">ToValue</code>, typename <code class="sig-name descname">Callback</code>, typename <code class="sig-name descname">PutValue</code>&gt;<br />void <code class="sig-name descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="graph_canon::counting_sorter::operator()::Iterator">Iterator</a> <em>first</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="graph_canon::counting_sorter::operator()::Iterator">Iterator</a> <em>last</em>, <a class="reference internal" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="graph_canon::counting_sorter::operator()::ToValue">ToValue</a> <em>toValue</em>, <a class="reference internal" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="graph_canon::counting_sorter::operator()::Callback">Callback</a> <em>callback</em>, <a class="reference internal" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="graph_canon::counting_sorter::operator()::PutValue">PutValue</a> <em>putter</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sort the range <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="graph_canon::counting_sorter::operator()::first"><span class="pre">first</span></a></code> to <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="graph_canon::counting_sorter::operator()::last"><span class="pre">last</span></a></code>.</p>
+<p>Requires:</p>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="graph_canon::counting_sorter::operator()::Iterator"><span class="pre">Iterator</span></a></code> must model a <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">RandomAccessIterator</span></code>.</p></li>
+<li><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="graph_canon::counting_sorter::operator()::ToValue"><span class="pre">ToValue</span></a></code>: for a dereferenceable iterator <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">iter</span></code>, the expression <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="graph_canon::counting_sorter::operator()::toValue"><span class="pre">toValue</span></a><span class="pre">(</span><span class="pre">*</span><span class="pre">iter</span><span class="pre">)</span></code>
+must return an integer in the range 0 to <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0_8SizeTypeEN11graph_canon15counting_sorterE" title="graph_canon::counting_sorter::Max"><span class="pre">Max</span></a></code>.</p></li>
+<li><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="graph_canon::counting_sorter::operator()::Callback"><span class="pre">Callback</span></a></code>: for a range of integers <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">ends</span></code> representing the end of each bucket,
+as offsets from <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="graph_canon::counting_sorter::operator()::first"><span class="pre">first</span></a></code>, the expression <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="graph_canon::counting_sorter::operator()::callback"><span class="pre">callback</span></a><span class="pre">(</span><span class="pre">ends</span><span class="pre">)</span></code> must be valid.</p></li>
+<li><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="graph_canon::counting_sorter::operator()::PutValue"><span class="pre">PutValue</span></a></code>: for a dereferenceable iterator <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">iter</span></code> and an element <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">elem</span></code>,
+the expression <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon15counting_sorterclEvK8IteratorK8Iterator7ToValue8Callback8PutValue" title="graph_canon::counting_sorter::operator()::putter"><span class="pre">putter</span></a><span class="pre">(</span><span class="pre">iter</span><span class="pre">,</span> <span class="pre">elem</span><span class="pre">)</span></code> must be valid, and ensure that <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">*</span><span class="pre">iter</span> <span class="pre">==</span> <span class="pre">elem</span></code> becomes true.</p></li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="shorthands.html"
+                        title="previous chapter"><span class="section-number">5.9. </span>shorthands.hpp</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tagged_list.html"
+                        title="next chapter"><span class="section-number">5.11. </span>tagged_list.hpp</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/sorting_utils.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tagged_list.html" title="5.11. tagged_list.hpp"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="shorthands.html" title="5.9. shorthands.hpp"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" ><span class="section-number">5. </span>Library Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.10. </span>sorting_utils.hpp</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.0+/e314789f4.
+    </div>
+  </body>
+</html>

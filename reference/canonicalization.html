@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5.2. canonicalization.hpp &#8212; GraphCanon 0.5 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5.3. compare.hpp" href="compare.html" />
+    <link rel="prev" title="5.1.5. pruner_schreier.hpp" href="aut/pruner_schreier.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="compare.html" title="5.3. compare.hpp"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="aut/pruner_schreier.html" title="5.1.5. pruner_schreier.hpp"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U"><span class="section-number">5. </span>Library Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.2. </span>canonicalization.hpp</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="canonicalization-hpp">
+<span id="cpp-canonicalization"></span><h1><span class="section-number">5.2. </span>canonicalization.hpp<a class="headerlink" href="#canonicalization-hpp" title="Permalink to this headline">¶</a></h1>
+<p>Full path: <code class="docutils literal notranslate"><span class="pre">graph_canon/canonicalization.hpp</span></code></p>
+<dl class="cpp class">
+<dt id="_CPPv4I0_b_b000EN11graph_canon6configE">
+<span id="_CPPv3I0_b_b000EN11graph_canon6configE"></span><span id="_CPPv2I0_b_b000EN11graph_canon6configE"></span>template&lt;typename <code class="sig-name descname">SizeTypeT</code>, bool <code class="sig-name descname">ParallelEdgesV</code>, bool <code class="sig-name descname">LoopsV</code>, typename <code class="sig-name descname">GraphT</code>, typename <code class="sig-name descname">IndexMapT</code>, typename <code class="sig-name descname">EdgeHandlerT</code>&gt;<br /><em class="property">class </em><code class="sig-name descname">config</code><a class="headerlink" href="#_CPPv4I0_b_b000EN11graph_canon6configE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A helper-class for holding type aliases.</p>
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon6config8SizeTypeE">
+<span id="_CPPv3N11graph_canon6config8SizeTypeE"></span><span id="_CPPv2N11graph_canon6config8SizeTypeE"></span><em class="property">using </em><code class="sig-name descname">SizeType</code> = <a class="reference internal" href="#_CPPv4I0_b_b000EN11graph_canon6configE" title="graph_canon::config::SizeTypeT">SizeTypeT</a><a class="headerlink" href="#_CPPv4N11graph_canon6config8SizeTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The integer type used as element type in arrays.</p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N11graph_canon6config13ParallelEdgesE">
+<span id="_CPPv3N11graph_canon6config13ParallelEdgesE"></span><span id="_CPPv2N11graph_canon6config13ParallelEdgesE"></span><span id="graph_canon::config::ParallelEdges__b"></span><em class="property">static</em> <em class="property">constexpr</em> bool <code class="sig-name descname">ParallelEdges</code> = <a class="reference internal" href="#_CPPv4I0_b_b000EN11graph_canon6configE" title="graph_canon::config::ParallelEdgesV">ParallelEdgesV</a><a class="headerlink" href="#_CPPv4N11graph_canon6config13ParallelEdgesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Indicator for whether the graph can have parallel edges.</p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N11graph_canon6config5LoopsE">
+<span id="_CPPv3N11graph_canon6config5LoopsE"></span><span id="_CPPv2N11graph_canon6config5LoopsE"></span><span id="graph_canon::config::Loops__b"></span><em class="property">static</em> <em class="property">constexpr</em> bool <code class="sig-name descname">Loops</code> = <a class="reference internal" href="#_CPPv4I0_b_b000EN11graph_canon6configE" title="graph_canon::config::LoopsV">LoopsV</a><a class="headerlink" href="#_CPPv4N11graph_canon6config5LoopsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Indicator for whether the graph can have loop edge.</p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon6config5GraphE">
+<span id="_CPPv3N11graph_canon6config5GraphE"></span><span id="_CPPv2N11graph_canon6config5GraphE"></span><em class="property">using </em><code class="sig-name descname">Graph</code> = <a class="reference internal" href="#_CPPv4I0_b_b000EN11graph_canon6configE" title="graph_canon::config::GraphT">GraphT</a><a class="headerlink" href="#_CPPv4N11graph_canon6config5GraphE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The graph type given as input.</p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon6config8IndexMapE">
+<span id="_CPPv3N11graph_canon6config8IndexMapE"></span><span id="_CPPv2N11graph_canon6config8IndexMapE"></span><em class="property">using </em><code class="sig-name descname">IndexMap</code> = <a class="reference internal" href="#_CPPv4I0_b_b000EN11graph_canon6configE" title="graph_canon::config::IndexMapT">IndexMapT</a><a class="headerlink" href="#_CPPv4N11graph_canon6config8IndexMapE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The type of <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">boost</span><span class="pre">::</span><span class="pre">ReadablePropertyMap</span></code> that maps vertices to indices.</p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon6config11EdgeHandlerE">
+<span id="_CPPv3N11graph_canon6config11EdgeHandlerE"></span><span id="_CPPv2N11graph_canon6config11EdgeHandlerE"></span><em class="property">using </em><code class="sig-name descname">EdgeHandler</code> = <a class="reference internal" href="#_CPPv4I0_b_b000EN11graph_canon6configE" title="graph_canon::config::EdgeHandlerT">EdgeHandlerT</a><a class="headerlink" href="#_CPPv4N11graph_canon6config11EdgeHandlerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The type of <a class="reference internal" href="edge_handler/edge_handler.html#_CPPv4I0EN11graph_canon11EdgeHandlerE" title="graph_canon::EdgeHandler"><code class="xref cpp cpp-concept docutils literal notranslate"><span class="pre">EdgeHandler</span></code></a> used.</p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon6config9PartitionE">
+<span id="_CPPv3N11graph_canon6config9PartitionE"></span><span id="_CPPv2N11graph_canon6config9PartitionE"></span><em class="property">using </em><code class="sig-name descname">Partition</code> = detail::partition&lt;<a class="reference internal" href="#_CPPv4N11graph_canon6config8SizeTypeE" title="graph_canon::config::SizeType">SizeType</a>&gt;<a class="headerlink" href="#_CPPv4N11graph_canon6config9PartitionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The type of ordered partition used.</p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon6config6VertexE">
+<span id="_CPPv3N11graph_canon6config6VertexE"></span><span id="_CPPv2N11graph_canon6config6VertexE"></span><em class="property">using </em><code class="sig-name descname">Vertex</code> = <em class="property">typename</em> boost::graph_traits&lt;<a class="reference internal" href="#_CPPv4N11graph_canon6config5GraphE" title="graph_canon::config::Graph">Graph</a>&gt;::vertex_descriptor<a class="headerlink" href="#_CPPv4N11graph_canon6config6VertexE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon6config4EdgeE">
+<span id="_CPPv3N11graph_canon6config4EdgeE"></span><span id="_CPPv2N11graph_canon6config4EdgeE"></span><em class="property">using </em><code class="sig-name descname">Edge</code> = <em class="property">typename</em> boost::graph_traits&lt;<a class="reference internal" href="#_CPPv4N11graph_canon6config5GraphE" title="graph_canon::config::Graph">Graph</a>&gt;::edge_descriptor<a class="headerlink" href="#_CPPv4N11graph_canon6config4EdgeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4I00EN11graph_canon11canon_stateE">
+<span id="_CPPv3I00EN11graph_canon11canon_stateE"></span><span id="_CPPv2I00EN11graph_canon11canon_stateE"></span>template&lt;typename <code class="sig-name descname">ConfigT</code>, typename <code class="sig-name descname">VisitorT</code>&gt;<br /><em class="property">class </em><code class="sig-name descname">canon_state</code><a class="headerlink" href="#_CPPv4I00EN11graph_canon11canon_stateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A class template representing he state of a canonicalization run.
+A reference to an object of this class will be passed to almost all functions in plugins.
+Note that the user is not supposed to instantiate an object of this class manually.</p>
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon11canon_state3VisE">
+<span id="_CPPv3N11graph_canon11canon_state3VisE"></span><span id="_CPPv2N11graph_canon11canon_state3VisE"></span><span id="graph_canon::canon_state::Vis"></span><em class="property">type </em><code class="sig-name descname">Vis</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state3VisE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The type of the complete <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="visitor/visitor.html#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor"><span class="pre">Visitor</span></a></code> type used.</p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon11canon_state8SizeTypeE">
+<span id="_CPPv3N11graph_canon11canon_state8SizeTypeE"></span><span id="_CPPv2N11graph_canon11canon_state8SizeTypeE"></span><span id="graph_canon::canon_state::SizeType"></span><em class="property">type </em><code class="sig-name descname">SizeType</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state8SizeTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The integer type used as element type in various arrays.</p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon11canon_state5GraphE">
+<span id="_CPPv3N11graph_canon11canon_state5GraphE"></span><span id="_CPPv2N11graph_canon11canon_state5GraphE"></span><span id="graph_canon::canon_state::Graph"></span><em class="property">type </em><code class="sig-name descname">Graph</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state5GraphE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The type of the input graph.</p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon11canon_state8IndexMapE">
+<span id="_CPPv3N11graph_canon11canon_state8IndexMapE"></span><span id="_CPPv2N11graph_canon11canon_state8IndexMapE"></span><span id="graph_canon::canon_state::IndexMap"></span><em class="property">type </em><code class="sig-name descname">IndexMap</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state8IndexMapE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">ReadablePropertyMap</span></code> given to map vertices to indices.</p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon11canon_state8EHandlerE">
+<span id="_CPPv3N11graph_canon11canon_state8EHandlerE"></span><span id="_CPPv2N11graph_canon11canon_state8EHandlerE"></span><span id="graph_canon::canon_state::EHandler"></span><em class="property">type </em><code class="sig-name descname">EHandler</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state8EHandlerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="edge_handler/edge_handler.html#_CPPv4I0EN11graph_canon11EdgeHandlerE" title="graph_canon::EdgeHandler"><span class="pre">EdgeHandler</span></a></code> type used.</p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N11graph_canon11canon_state13ParallelEdgesE">
+<span id="_CPPv3N11graph_canon11canon_state13ParallelEdgesE"></span><span id="_CPPv2N11graph_canon11canon_state13ParallelEdgesE"></span><span id="graph_canon::canon_state::ParallelEdges__b"></span><em class="property">static</em> <em class="property">constexpr</em> bool <code class="sig-name descname">ParallelEdges</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state13ParallelEdgesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Configuration value for whether the given graph may have parallel edges or not.</p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N11graph_canon11canon_state5LoopsE">
+<span id="_CPPv3N11graph_canon11canon_state5LoopsE"></span><span id="_CPPv2N11graph_canon11canon_state5LoopsE"></span><span id="graph_canon::canon_state::Loops__b"></span><em class="property">static</em> <em class="property">constexpr</em> bool <code class="sig-name descname">Loops</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state5LoopsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Configuration value for whether the given graph may have loop edges or not.</p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon11canon_state9PartitionE">
+<span id="_CPPv3N11graph_canon11canon_state9PartitionE"></span><span id="_CPPv2N11graph_canon11canon_state9PartitionE"></span><span id="graph_canon::canon_state::Partition"></span><em class="property">type </em><code class="sig-name descname">Partition</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state9PartitionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The type of <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">OrderedPartition</span></code> used in the algorithm.</p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon11canon_state6VertexE">
+<span id="_CPPv3N11graph_canon11canon_state6VertexE"></span><span id="_CPPv2N11graph_canon11canon_state6VertexE"></span><em class="property">using </em><code class="sig-name descname">Vertex</code> = <em class="property">typename</em> boost::graph_traits&lt;<a class="reference internal" href="#_CPPv4N11graph_canon11canon_state5GraphE" title="graph_canon::canon_state::Graph">Graph</a>&gt;::vertex_descriptor<a class="headerlink" href="#_CPPv4N11graph_canon11canon_state6VertexE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon11canon_state4EdgeE">
+<span id="_CPPv3N11graph_canon11canon_state4EdgeE"></span><span id="_CPPv2N11graph_canon11canon_state4EdgeE"></span><em class="property">using </em><code class="sig-name descname">Edge</code> = <em class="property">typename</em> boost::graph_traits&lt;<a class="reference internal" href="#_CPPv4N11graph_canon11canon_state5GraphE" title="graph_canon::canon_state::Graph">Graph</a>&gt;::edge_descriptor<a class="headerlink" href="#_CPPv4N11graph_canon11canon_state4EdgeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon11canon_state4PermE">
+<span id="_CPPv3N11graph_canon11canon_state4PermE"></span><span id="_CPPv2N11graph_canon11canon_state4PermE"></span><em class="property">using </em><code class="sig-name descname">Perm</code> = std::vector&lt;<a class="reference internal" href="#_CPPv4N11graph_canon11canon_state8SizeTypeE" title="graph_canon::canon_state::SizeType">SizeType</a>&gt;<a class="headerlink" href="#_CPPv4N11graph_canon11canon_state4PermE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The type of <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">perm_group</span><span class="pre">::</span><span class="pre">Permutation</span></code> returned from the algorithm</p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon11canon_state8TreeNodeE">
+<span id="_CPPv3N11graph_canon11canon_state8TreeNodeE"></span><span id="_CPPv2N11graph_canon11canon_state8TreeNodeE"></span><span id="graph_canon::canon_state::TreeNode"></span><em class="property">type </em><code class="sig-name descname">TreeNode</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state8TreeNodeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The type used for instantiating tree nodes.</p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon11canon_state8OwnerPtrE">
+<span id="_CPPv3N11graph_canon11canon_state8OwnerPtrE"></span><span id="_CPPv2N11graph_canon11canon_state8OwnerPtrE"></span><span id="graph_canon::canon_state::OwnerPtr"></span><em class="property">type </em><code class="sig-name descname">OwnerPtr</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state8OwnerPtrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A smart-pointer type that keeps a tree node alive (e.g., by reference counting).</p>
+</dd></dl>
+
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon11canon_state12InstanceDataE">
+<span id="_CPPv3N11graph_canon11canon_state12InstanceDataE"></span><span id="_CPPv2N11graph_canon11canon_state12InstanceDataE"></span><span id="graph_canon::canon_state::InstanceData"></span><em class="property">type </em><code class="sig-name descname">InstanceData</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state12InstanceDataE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Instance data defined, e.g., by visitors, is all stored in an object of this type</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N11graph_canon11canon_state11report_leafE8OwnerPtr">
+<span id="_CPPv3N11graph_canon11canon_state11report_leafE8OwnerPtr"></span><span id="_CPPv2N11graph_canon11canon_state11report_leafE8OwnerPtr"></span><span id="graph_canon::canon_state::report_leaf__OwnerPtr"></span>void <code class="sig-name descname">report_leaf</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N11graph_canon11canon_state8OwnerPtrE" title="graph_canon::canon_state::OwnerPtr">OwnerPtr</a> <em>node</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state11report_leafE8OwnerPtr" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Submit a tree node as a valid leaf of the search tree.</p>
+<p>Requires that the ordered partition represented by <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon11canon_state11report_leafE8OwnerPtr" title="graph_canon::canon_state::report_leaf::node"><span class="pre">node</span></a></code> is discrete,
+and that <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon11canon_state11report_leafE8OwnerPtr" title="graph_canon::canon_state::report_leaf"><span class="pre">report_leaf</span></a></code> has not been called before with this node.</p>
+<p>Several <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="visitor/visitor.html#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor"><span class="pre">Visitor</span></a></code> methods may be called from this function:</p>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="visitor/visitor.html#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor"><span class="pre">Visitor</span></a><span class="pre">::</span><span class="pre">tree_leaf</span></code>, always called.</p></li>
+<li><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="visitor/visitor.html#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor"><span class="pre">Visitor</span></a><span class="pre">::</span><span class="pre">canon_new_best</span></code>, if this node will be the best candidate leaf afterwards.</p></li>
+<li><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="visitor/visitor.html#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor"><span class="pre">Visitor</span></a><span class="pre">::</span><span class="pre">automorphism_leaf</span></code>, if this node represents a canonical representation,
+equal to the current best candidate.</p></li>
+<li><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="visitor/visitor.html#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor"><span class="pre">Visitor</span></a><span class="pre">::</span><span class="pre">canon_worse</span></code>, if this nodes represents a worse representation than the current best candidate.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N11graph_canon11canon_state16prune_canon_leafEv">
+<span id="_CPPv3N11graph_canon11canon_state16prune_canon_leafEv"></span><span id="_CPPv2N11graph_canon11canon_state16prune_canon_leafEv"></span><span id="graph_canon::canon_state::prune_canon_leaf"></span>void <code class="sig-name descname">prune_canon_leaf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state16prune_canon_leafEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Prune the current best candidate.
+Requires that at least one leaf will be added with <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">repoort_leaf</span></code> later.</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4NK11graph_canon11canon_state14get_canon_leafEv">
+<span id="_CPPv3NK11graph_canon11canon_state14get_canon_leafEv"></span><span id="_CPPv2NK11graph_canon11canon_state14get_canon_leafEv"></span><span id="graph_canon::canon_state::get_canon_leafC"></span><a class="reference internal" href="#_CPPv4N11graph_canon11canon_state8TreeNodeE" title="graph_canon::canon_state::TreeNode">TreeNode</a> *<code class="sig-name descname">get_canon_leaf</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK11graph_canon11canon_state14get_canon_leafEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a pointer to the tree node representing the current best candidate.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N11graph_canon11canon_state1gE">
+<span id="_CPPv3N11graph_canon11canon_state1gE"></span><span id="_CPPv2N11graph_canon11canon_state1gE"></span><span id="graph_canon::canon_state::g__GraphCR"></span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N11graph_canon11canon_state5GraphE" title="graph_canon::canon_state::Graph">Graph</a> &amp;<code class="sig-name descname">g</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state1gE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The input graph.</p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N11graph_canon11canon_state1nE">
+<span id="_CPPv3N11graph_canon11canon_state1nE"></span><span id="_CPPv2N11graph_canon11canon_state1nE"></span><span id="graph_canon::canon_state::n__SizeTypeC"></span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N11graph_canon11canon_state8SizeTypeE" title="graph_canon::canon_state::SizeType">SizeType</a> <code class="sig-name descname">n</code> = num_vertices(<a class="reference internal" href="#_CPPv4N11graph_canon11canon_state1gE" title="graph_canon::canon_state::g">g</a>)<a class="headerlink" href="#_CPPv4N11graph_canon11canon_state1nE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N11graph_canon11canon_state3idxE">
+<span id="_CPPv3N11graph_canon11canon_state3idxE"></span><span id="_CPPv2N11graph_canon11canon_state3idxE"></span><span id="graph_canon::canon_state::idx__IndexMapC"></span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N11graph_canon11canon_state8IndexMapE" title="graph_canon::canon_state::IndexMap">IndexMap</a> <code class="sig-name descname">idx</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state3idxE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The given <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">ReadablePropertyMap</span></code> that maps vertices to indices.</p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N11graph_canon11canon_state4dataE">
+<span id="_CPPv3N11graph_canon11canon_state4dataE"></span><span id="_CPPv2N11graph_canon11canon_state4dataE"></span><span id="graph_canon::canon_state::data__InstanceData"></span><a class="reference internal" href="#_CPPv4N11graph_canon11canon_state12InstanceDataE" title="graph_canon::canon_state::InstanceData">InstanceData</a> <code class="sig-name descname">data</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state4dataE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The aggregated data structure holding all instance data.
+Use <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="tagged_list.html#_CPPv4I0DpEN11graph_canon3getERDaRR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get"><span class="pre">get</span></a><span class="pre">(</span><span class="pre">my_tag</span><span class="pre">(</span><span class="pre">)</span><span class="pre">,</span> <a class="reference internal" href="#_CPPv4N11graph_canon11canon_state4dataE" title="graph_canon::canon_state::data"><span class="pre">data</span></a><span class="pre">)</span></code> to access your data, tagged with some tag <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">my_tag</span></code>.</p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N11graph_canon11canon_state12edge_handlerE">
+<span id="_CPPv3N11graph_canon11canon_state12edge_handlerE"></span><span id="_CPPv2N11graph_canon11canon_state12edge_handlerE"></span><span id="graph_canon::canon_state::edge_handler__EHandlerR"></span><a class="reference internal" href="#_CPPv4N11graph_canon11canon_state8EHandlerE" title="graph_canon::canon_state::EHandler">EHandler</a> &amp;<code class="sig-name descname">edge_handler</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state12edge_handlerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A reference to the <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="edge_handler/edge_handler.html#_CPPv4I0EN11graph_canon11EdgeHandlerE" title="graph_canon::EdgeHandler"><span class="pre">EdgeHandler</span></a></code> used for this run.</p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N11graph_canon11canon_state7visitorE">
+<span id="_CPPv3N11graph_canon11canon_state7visitorE"></span><span id="_CPPv2N11graph_canon11canon_state7visitorE"></span><span id="graph_canon::canon_state::visitor__Vis"></span><a class="reference internal" href="#_CPPv4N11graph_canon11canon_state3VisE" title="graph_canon::canon_state::Vis">Vis</a> <code class="sig-name descname">visitor</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state7visitorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The complete <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="visitor/visitor.html#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor"><span class="pre">Visitor</span></a></code> used.</p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N11graph_canon11canon_state4rootE">
+<span id="_CPPv3N11graph_canon11canon_state4rootE"></span><span id="_CPPv2N11graph_canon11canon_state4rootE"></span><span id="graph_canon::canon_state::root__OwnerPtr"></span><a class="reference internal" href="#_CPPv4N11graph_canon11canon_state8OwnerPtrE" title="graph_canon::canon_state::OwnerPtr">OwnerPtr</a> <code class="sig-name descname">root</code><a class="headerlink" href="#_CPPv4N11graph_canon11canon_state4rootE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A pointer to the root of the search tree.
+Note that this pointer is only set after the root has been fully
+constructed. Thus, in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="visitor/visitor.html#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor"><span class="pre">Visitor</span></a></code> methods, if <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4N11graph_canon11canon_state4rootE" title="graph_canon::canon_state::root"><span class="pre">root</span></a></code> is <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">nullptr</span></code>,
+then you have probably been given a reference to the root as the current tree node.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4I00_b_bEN11graph_canon13canonicalizerE">
+<span id="_CPPv3I00_b_bEN11graph_canon13canonicalizerE"></span><span id="_CPPv2I00_b_bEN11graph_canon13canonicalizerE"></span>template&lt;typename <code class="sig-name descname">SizeType</code>, typename <code class="sig-name descname">EdgeHandlerCreatorT</code>, bool <code class="sig-name descname">ParallelEdges</code>, bool <code class="sig-name descname">Loops</code>&gt;<br /><em class="property">class </em><code class="sig-name descname">canonicalizer</code><a class="headerlink" href="#_CPPv4I00_b_bEN11graph_canon13canonicalizerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A reusable function object for canonicalizing graphs.</p>
+<p>Requires <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I00_b_bEN11graph_canon13canonicalizerE" title="graph_canon::canonicalizer::SizeType"><span class="pre">SizeType</span></a></code> to be an integer type and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I00_b_bEN11graph_canon13canonicalizerE" title="graph_canon::canonicalizer::EdgeHandlerCreatorT"><span class="pre">EdgeHandlerCreatorT</span></a></code> to be an <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="edge_handler/edge_handler.html#_CPPv4I0EN11graph_canon18EdgeHandlerCreatorE" title="graph_canon::EdgeHandlerCreator"><span class="pre">EdgeHandlerCreator</span></a></code>.</p>
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon13canonicalizer11EdgeHandlerE">
+<span id="_CPPv3N11graph_canon13canonicalizer11EdgeHandlerE"></span><span id="_CPPv2N11graph_canon13canonicalizer11EdgeHandlerE"></span><em class="property">using </em><code class="sig-name descname">EdgeHandler</code> = <em class="property">typename</em> <a class="reference internal" href="#_CPPv4I00_b_bEN11graph_canon13canonicalizerE" title="graph_canon::canonicalizer::EdgeHandlerCreatorT">EdgeHandlerCreatorT</a>::template type&lt;<a class="reference internal" href="#_CPPv4I00_b_bEN11graph_canon13canonicalizerE" title="graph_canon::canonicalizer::SizeType">SizeType</a>&gt;<a class="headerlink" href="#_CPPv4N11graph_canon13canonicalizer11EdgeHandlerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N11graph_canon13canonicalizer13canonicalizerE19EdgeHandlerCreatorT">
+<span id="_CPPv3N11graph_canon13canonicalizer13canonicalizerE19EdgeHandlerCreatorT"></span><span id="_CPPv2N11graph_canon13canonicalizer13canonicalizerE19EdgeHandlerCreatorT"></span><span id="graph_canon::canonicalizer::canonicalizer__EdgeHandlerCreatorT"></span><code class="sig-name descname">canonicalizer</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I00_b_bEN11graph_canon13canonicalizerE" title="graph_canon::canonicalizer::EdgeHandlerCreatorT">EdgeHandlerCreatorT</a> <em>edge_handler_creator</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11graph_canon13canonicalizer13canonicalizerE19EdgeHandlerCreatorT" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis">
+<span id="_CPPv3I0000EN11graph_canon13canonicalizerclERK5Graph8IndexMap10VertexLess3Vis"></span><span id="_CPPv2I0000EN11graph_canon13canonicalizerclERK5Graph8IndexMap10VertexLess3Vis"></span>template&lt;typename <code class="sig-name descname">Graph</code>, typename <code class="sig-name descname">IndexMap</code>, typename <code class="sig-name descname">VertexLess</code>, typename <code class="sig-name descname">Vis</code>&gt;<br />auto <code class="sig-name descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis" title="graph_canon::canonicalizer::operator()::Graph">Graph</a> &amp;<em>g</em>, <a class="reference internal" href="#_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis" title="graph_canon::canonicalizer::operator()::IndexMap">IndexMap</a> <em>idx</em>, <a class="reference internal" href="#_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis" title="graph_canon::canonicalizer::operator()::VertexLess">VertexLess</a> <em>vertex_less</em>, <a class="reference internal" href="#_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis" title="graph_canon::canonicalizer::operator()::Vis">Vis</a> <em>visitor</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Compute a permutation that permutes the indices of the vertices of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis" title="graph_canon::canonicalizer::operator()::g"><span class="pre">g</span></a></code> into their canonical indices.</p>
+<p>Requires:</p>
+<ul class="simple">
+<li><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis" title="graph_canon::canonicalizer::operator()::Graph"><span class="pre">Graph</span></a></code> must be a <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">VertexListGraph</span></code>, an <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">EdgeListGraph</span></code>, and a <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">BidirectionalGraph</span></code>.</p></li>
+<li><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis" title="graph_canon::canonicalizer::operator()::IndexMap"><span class="pre">IndexMap</span></a></code> must be a <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">ReadablePropertyMap</span></code> that maps the vertices of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis" title="graph_canon::canonicalizer::operator()::g"><span class="pre">g</span></a></code> into contiguous indices starting from 0.</p></li>
+<li><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis" title="graph_canon::canonicalizer::operator()::VertexLess"><span class="pre">VertexLess</span></a></code> must be a less-than predicate on the vertices of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis" title="graph_canon::canonicalizer::operator()::g"><span class="pre">g</span></a></code> that induces a strict weak ordering.
+The resulting canonical vertex order respects the ordering induced by <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis" title="graph_canon::canonicalizer::operator()::vertex_less"><span class="pre">vertex_less</span></a></code>.</p></li>
+<li><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis" title="graph_canon::canonicalizer::operator()::Vis"><span class="pre">Vis</span></a></code> must be a <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="visitor/visitor.html#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor"><span class="pre">Visitor</span></a></code> type.
+Note that an <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="invariant/coordinator.html#_CPPv4N11graph_canon21invariant_coordinatorE" title="graph_canon::invariant_coordinator"><span class="pre">invariant_coordinator</span></a></code> is automatically prepended to the given visitor.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently the expression <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">vertex</span><span class="pre">(</span><span class="pre">i</span><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis" title="graph_canon::canonicalizer::operator()::g"><span class="pre">g</span></a><span class="pre">)</span></code> for a vertex index <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">i</span></code> is also required to be valid,
+and returning the corresponding vertex descriptor. It must be the inverse of the index map <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0000EN11graph_canon13canonicalizerclEDaRK5Graph8IndexMap10VertexLess3Vis" title="graph_canon::canonicalizer::operator()::idx"><span class="pre">idx</span></a></code>.
+This requirement will be lifted in a future version.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">std</span><span class="pre">::</span><span class="pre">pair</span><span class="pre">&lt;</span><span class="pre">std</span><span class="pre">::</span><span class="pre">vector</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I00_b_bEN11graph_canon13canonicalizerE" title="graph_canon::canonicalizer::SizeType"><span class="pre">SizeType</span></a><span class="pre">&gt;</span><span class="pre">,</span> <span class="pre">Data</span><span class="pre">&gt;</span></code> where <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">first</span></code> is the permutation,
+and <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">second</span></code> is the auxiliary visitor data of an unspecified type <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">Data</span></code>.
+See each visitor for what data they may return and what it is tagged with.
+Use <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="tagged_list.html#_CPPv4I0DpEN11graph_canon3getERDaRR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get"><span class="pre">get</span></a><span class="pre">(</span><span class="pre">the_tag</span><span class="pre">(</span><span class="pre">)</span><span class="pre">,</span> <span class="pre">res</span><span class="pre">.</span><span class="pre">second</span><span class="pre">)</span></code> to access the data tagged with <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">the_tag</span></code> from the return value <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">res</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0_b_b00000EN11graph_canon12canonicalizeEDaRK5Graph8IndexMap10VertexLess19EdgeHandlerCreatorT7Visitor">
+<span id="_CPPv3I0_b_b00000EN11graph_canon12canonicalizeERK5Graph8IndexMap10VertexLess19EdgeHandlerCreatorT7Visitor"></span><span id="_CPPv2I0_b_b00000EN11graph_canon12canonicalizeERK5Graph8IndexMap10VertexLess19EdgeHandlerCreatorT7Visitor"></span>template&lt;typename <code class="sig-name descname">SizeType</code>, bool <code class="sig-name descname">ParallelEdges</code>, bool <code class="sig-name descname">Loops</code>, typename <code class="sig-name descname">Graph</code>, typename <code class="sig-name descname">IndexMap</code>, typename <code class="sig-name descname">VertexLess</code>, typename <code class="sig-name descname">EdgeHandlerCreatorT</code>, typename <code class="sig-name descname">Visitor</code>&gt;<br />auto <code class="sig-name descname">canonicalize</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I0_b_b00000EN11graph_canon12canonicalizeEDaRK5Graph8IndexMap10VertexLess19EdgeHandlerCreatorT7Visitor" title="graph_canon::canonicalize::Graph">Graph</a> &amp;<em>graph</em>, <a class="reference internal" href="#_CPPv4I0_b_b00000EN11graph_canon12canonicalizeEDaRK5Graph8IndexMap10VertexLess19EdgeHandlerCreatorT7Visitor" title="graph_canon::canonicalize::IndexMap">IndexMap</a> <em>idx</em>, <a class="reference internal" href="#_CPPv4I0_b_b00000EN11graph_canon12canonicalizeEDaRK5Graph8IndexMap10VertexLess19EdgeHandlerCreatorT7Visitor" title="graph_canon::canonicalize::VertexLess">VertexLess</a> <em>vertex_less</em>, <a class="reference internal" href="#_CPPv4I0_b_b00000EN11graph_canon12canonicalizeEDaRK5Graph8IndexMap10VertexLess19EdgeHandlerCreatorT7Visitor" title="graph_canon::canonicalize::EdgeHandlerCreatorT">EdgeHandlerCreatorT</a> <em>edge_handler_creator</em>, <a class="reference internal" href="#_CPPv4I0_b_b00000EN11graph_canon12canonicalizeEDaRK5Graph8IndexMap10VertexLess19EdgeHandlerCreatorT7Visitor" title="graph_canon::canonicalize::Visitor">Visitor</a> <em>visitor</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0_b_b00000EN11graph_canon12canonicalizeEDaRK5Graph8IndexMap10VertexLess19EdgeHandlerCreatorT7Visitor" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A shorhand function for canonicalization.
+The <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0_b_b00000EN11graph_canon12canonicalizeEDaRK5Graph8IndexMap10VertexLess19EdgeHandlerCreatorT7Visitor" title="graph_canon::canonicalize::SizeType"><span class="pre">SizeType</span></a></code>, <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0_b_b00000EN11graph_canon12canonicalizeEDaRK5Graph8IndexMap10VertexLess19EdgeHandlerCreatorT7Visitor" title="graph_canon::canonicalize::ParallelEdges"><span class="pre">ParallelEdges</span></a></code>, and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0_b_b00000EN11graph_canon12canonicalizeEDaRK5Graph8IndexMap10VertexLess19EdgeHandlerCreatorT7Visitor" title="graph_canon::canonicalize::Loops"><span class="pre">Loops</span></a></code> must be specified explicitly while remaining template parameters can be deduced.</p>
+<p>See <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I00_b_bEN11graph_canon13canonicalizerE" title="graph_canon::canonicalizer"><span class="pre">canonicalizer</span></a><span class="pre">::</span><code class="sig-prename descclassname"><span class="pre">operator()</span></code></code>.</p>
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="aut/pruner_schreier.html"
+                        title="previous chapter"><span class="section-number">5.1.5. </span>pruner_schreier.hpp</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="compare.html"
+                        title="next chapter"><span class="section-number">5.3. </span>compare.hpp</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/canonicalization.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="compare.html" title="5.3. compare.hpp"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="aut/pruner_schreier.html" title="5.1.5. pruner_schreier.hpp"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" ><span class="section-number">5. </span>Library Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.2. </span>canonicalization.hpp</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.0+/e314789f4.
+    </div>
+  </body>
+</html>

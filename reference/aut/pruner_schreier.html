@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5.1.5. pruner_schreier.hpp &#8212; GraphCanon 0.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.2. canonicalization.hpp" href="../canonicalization.html" />
+    <link rel="prev" title="5.1.4. pruner_basic.hpp" href="pruner_basic.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../canonicalization.html" title="5.2. canonicalization.hpp"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pruner_basic.html" title="5.1.4. pruner_basic.hpp"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" ><span class="section-number">5. </span>Library Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U"><span class="section-number">5.1. </span>aut</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.1.5. </span>pruner_schreier.hpp</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pruner-schreier-hpp">
+<span id="cpp-aut-pruner-schreier"></span><h1><span class="section-number">5.1.5. </span>pruner_schreier.hpp<a class="headerlink" href="#pruner-schreier-hpp" title="Permalink to this headline">¶</a></h1>
+<p>Full path: <code class="docutils literal notranslate"><span class="pre">graph_canon/aut/pruner_schreier.hpp</span></code></p>
+<dl class="cpp class">
+<dt id="_CPPv4N11graph_canon19aut_pruner_schreierE">
+<span id="_CPPv3N11graph_canon19aut_pruner_schreierE"></span><span id="_CPPv2N11graph_canon19aut_pruner_schreierE"></span><span id="graph_canon::aut_pruner_schreier"></span><em class="property">class </em><code class="sig-name descname">aut_pruner_schreier</code> : <a class="reference internal" href="pruner_base.html#_CPPv4I0EN11graph_canon15aut_pruner_baseE" title="graph_canon::aut_pruner_base">aut_pruner_base</a>&lt;<a class="reference internal" href="#_CPPv4N11graph_canon19aut_pruner_schreierE" title="graph_canon::aut_pruner_schreier">aut_pruner_schreier</a>&gt;<a class="headerlink" href="#_CPPv4N11graph_canon19aut_pruner_schreierE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="../visitor/visitor.html#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor"><span class="pre">Visitor</span></a></code> for pruning the search tree based on automorphisms reported by other visitors.
+Stabilizers are fully computed using methods based on the Schreier-Sims algorithm.</p>
+<p>The class is DefaultConstructible.</p>
+<dl class="cpp type">
+<dt id="_CPPv4N11graph_canon19aut_pruner_schreier8result_tE">
+<span id="_CPPv3N11graph_canon19aut_pruner_schreier8result_tE"></span><span id="_CPPv2N11graph_canon19aut_pruner_schreier8result_tE"></span><span id="graph_canon::aut_pruner_schreier::result_t"></span><em class="property">type </em><code class="sig-name descname">result_t</code><a class="headerlink" href="#_CPPv4N11graph_canon19aut_pruner_schreier8result_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The tag type for data returned to the caller after canonicalization.
+The type of the returned object is <code class="xref cpp cpp-type docutils literal notranslate"><span class="pre">std::unique_ptr</span></code> where <code class="docutils literal notranslate"><span class="pre">Group</span></code> is some
+type fulfilling the requirements of the Group concept in PermGroup.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pruner_basic.html"
+                        title="previous chapter"><span class="section-number">5.1.4. </span>pruner_basic.hpp</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../canonicalization.html"
+                        title="next chapter"><span class="section-number">5.2. </span>canonicalization.hpp</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/reference/aut/pruner_schreier.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../canonicalization.html" title="5.2. canonicalization.hpp"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pruner_basic.html" title="5.1.4. pruner_basic.hpp"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" ><span class="section-number">5. </span>Library Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" ><span class="section-number">5.1. </span>aut</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.1.5. </span>pruner_schreier.hpp</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.0+/e314789f4.
+    </div>
+  </body>
+</html>

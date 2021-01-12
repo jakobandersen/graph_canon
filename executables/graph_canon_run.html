@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4.3. graph-canon-run &#8212; GraphCanon 0.5 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4.4. graph-canon-dreadnaut" href="graph_canon_dreadnaut.html" />
+    <link rel="prev" title="4.2. graph-canon" href="graph_canon.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="graph_canon_dreadnaut.html" title="4.4. graph-canon-dreadnaut"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="graph_canon.html" title="4.2. graph-canon"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U"><span class="section-number">4. </span>Executables</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.3. </span><code class="docutils literal notranslate"><span class="pre">graph-canon-run</span></code></a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="graph-canon-run">
+<span id="id1"></span><h1><span class="section-number">4.3. </span><code class="docutils literal notranslate"><span class="pre">graph-canon-run</span></code><a class="headerlink" href="#graph-canon-run" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">graph-canon-run</span></code> program can be used to run a specific graph canonicalistion
+program on a batch of graphs (e.g., downloaded with <a class="reference internal" href="download_graph_collections.html#download-graph-collections"><span class="std std-ref">download-graph-collections</span></a>).</p>
+<div class="section" id="graph-database">
+<h2><span class="section-number">4.3.1. </span>Graph Database<a class="headerlink" href="#graph-database" title="Permalink to this headline">¶</a></h2>
+<p>The program indexes graph instances from a specific folder:</p>
+<dl class="std envvar">
+<dt id="envvar-GRAPH_CANON_DATA_DIR">
+<code class="sig-name descname">GRAPH_CANON_DATA_DIR</code><a class="headerlink" href="#envvar-GRAPH_CANON_DATA_DIR" title="Permalink to this definition">¶</a></dt>
+<dd><p>If this environment variable is defined, it is assumed to be the path to a folder
+containing a graph database.
+If it is not defined the database folder is assumed to be the relative path <code class="docutils literal notranslate"><span class="pre">graphs/</span></code>.</p>
+</dd></dl>
+
+<p>A graph database is simply a folder with a specific structure: the root contains folders representing
+“packages”. For example, <strong class="program">download_graph_collections</strong> program will download graphs from
+<a class="reference external" href="http://pallini.di.uniroma1.it/Graphs.html">http://pallini.di.uniroma1.it/Graphs.html</a> and partition them into the packages
+<code class="docutils literal notranslate"><span class="pre">bliss</span></code>, <code class="docutils literal notranslate"><span class="pre">conauto</span></code>, <code class="docutils literal notranslate"><span class="pre">saucy</span></code>, <code class="docutils literal notranslate"><span class="pre">random</span></code>, and <code class="docutils literal notranslate"><span class="pre">misc</span></code>, corresponding to the different sources
+benchmark graphs.
+Each package subfolder is then assumed to have folder representing “collections” of graphs.
+For example, the <code class="docutils literal notranslate"><span class="pre">bliss</span></code> package will have the collections <code class="docutils literal notranslate"><span class="pre">ag</span></code>, <code class="docutils literal notranslate"><span class="pre">cfi</span></code>, <code class="docutils literal notranslate"><span class="pre">cmz</span></code>, etc.
+The names of collections are assumed to be uniq, even across packages.
+Each collection subfolder finally contains text files with one graph each.
+For example, the file <code class="docutils literal notranslate"><span class="pre">bliss/ag/ag2-2</span></code> would be a file with a graph.</p>
+</div>
+<div class="section" id="listing-mode">
+<h2><span class="section-number">4.3.2. </span>Listing Mode<a class="headerlink" href="#listing-mode" title="Permalink to this headline">¶</a></h2>
+<dl class="std option">
+<dt id="cmdoption-graph-canon-run-list-collections">
+<code class="sig-name descname">--list-collections</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-run-list-collections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the list of available collections of benchmark graphs and then exit.
+Each collection is printed on a separate line as <code class="docutils literal notranslate"><span class="pre">&lt;package&gt;/&lt;collection&gt;</span></code>.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-run-list-instances">
+<code class="sig-name descname">--list-instances</code><code class="sig-prename descclassname"> [package|collection]...</code><a class="headerlink" href="#cmdoption-graph-canon-run-list-instances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the list of instances contained in the given packages or collections.
+Each instances is printed on a separate line as <code class="docutils literal notranslate"><span class="pre">&lt;package&gt;/&lt;collection&gt;/&lt;instance&gt;</span></code>.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-run-get-instance-size">
+<code class="sig-name descname">--get-instance-size</code><code class="sig-prename descclassname"> [package] [collection] [instance]</code><a class="headerlink" href="#cmdoption-graph-canon-run-get-instance-size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the number of vertices in the given instance and then exit.
+This assumes the graph is stored in DIMACS format, with the first line specifying the graph size
+(i.e., the <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">edge</span> <span class="pre">&lt;n&gt;</span> <span class="pre">&lt;m&gt;</span></code> line is the very first).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="execution-mode">
+<h2><span class="section-number">4.3.3. </span>Execution Mode<a class="headerlink" href="#execution-mode" title="Permalink to this headline">¶</a></h2>
+<dl class="std option">
+<dt id="cmdoption-graph-canon-run-args">
+<code class="sig-name descname">--args</code><code class="sig-prename descclassname"> [arg]...</code><a class="headerlink" href="#cmdoption-graph-canon-run-args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Additional arguments passed through to the canonicalization program.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-run-t">
+<span id="cmdoption-graph-canon-run-timeout"></span><code class="sig-name descname">-t</code><code class="sig-prename descclassname"> [seconds]</code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--timeout</code><code class="sig-prename descclassname"> [seconds]</code><a class="headerlink" href="#cmdoption-graph-canon-run-t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time before the canonicalization is killed.
+However, if <a class="reference internal" href="#cmdoption-graph-canon-run-memcheck"><code class="xref std std-option docutils literal notranslate"><span class="pre">--memcheck</span></code></a> or <a class="reference internal" href="#cmdoption-graph-canon-run-debug"><code class="xref std std-option docutils literal notranslate"><span class="pre">--debug</span></code></a> is given, the time limit is not in effect.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-run-e">
+<span id="cmdoption-graph-canon-run-exe"></span><code class="sig-name descname">-e</code><code class="sig-prename descclassname"> [executable]</code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--exe</code><code class="sig-prename descclassname"> [executable]</code><a class="headerlink" href="#cmdoption-graph-canon-run-e" title="Permalink to this definition">¶</a></dt>
+<dd><p>The executable to use for canonicalization.
+It defaults to <code class="docutils literal notranslate"><span class="pre">graph-canon</span></code> (i.e., the <strong class="program">graph_canon</strong> program, as found through normal shell lookup.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-run-memcheck">
+<code class="sig-name descname">--memcheck</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-run-memcheck" title="Permalink to this definition">¶</a></dt>
+<dt id="cmdoption-graph-canon-run-debug">
+<code class="sig-name descname">--debug</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-run-debug" title="Permalink to this definition">¶</a></dt>
+<dt id="cmdoption-graph-canon-run-profile">
+<code class="sig-name descname">--profile</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-run-profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Options passed through to the executable.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-run-arg-task-...">
+<span id="cmdoption-graph-canon-run-arg-task"></span><code class="sig-name descname">[task]...</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-run-arg-task-..." title="Permalink to this definition">¶</a></dt>
+<dd><p>Each positional argument is assumed to be a “task”, which must be the name of either
+a package, a collection, or the path to an instance.
+The executable will in turn be invoked on each instance specified.
+The special meta-task <code class="docutils literal notranslate"><span class="pre">all</span></code> can be used to specify all instances in the graph database.</p>
+<p>Each invocation of the canonicalization executable will be done
+with <code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">&lt;full</span> <span class="pre">path</span> <span class="pre">to</span> <span class="pre">graph</span> <span class="pre">instance&gt;</span></code> for specifying the current input graph-
+Additionally the arguments <code class="docutils literal notranslate"><span class="pre">--id</span> <span class="pre">&quot;GCDResult</span> <span class="pre">&lt;package&gt;</span>&#160;&#160;&#160; <span class="pre">&lt;collection&gt;</span>&#160;&#160;&#160; <span class="pre">&lt;instance&gt;&quot;</span></code>,
+are passed, meant to allow the executable to prefix each data line with this string
+for easier tabulation of results.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4.3. <code class="docutils literal notranslate"><span class="pre">graph-canon-run</span></code></a><ul>
+<li><a class="reference internal" href="#graph-database">4.3.1. Graph Database</a></li>
+<li><a class="reference internal" href="#listing-mode">4.3.2. Listing Mode</a></li>
+<li><a class="reference internal" href="#execution-mode">4.3.3. Execution Mode</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="graph_canon.html"
+                        title="previous chapter"><span class="section-number">4.2. </span><code class="docutils literal notranslate"><span class="pre">graph-canon</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="graph_canon_dreadnaut.html"
+                        title="next chapter"><span class="section-number">4.4. </span><code class="docutils literal notranslate"><span class="pre">graph-canon-dreadnaut</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/executables/graph_canon_run.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="graph_canon_dreadnaut.html" title="4.4. graph-canon-dreadnaut"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="graph_canon.html" title="4.2. graph-canon"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" ><span class="section-number">4. </span>Executables</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.3. </span><code class="docutils literal notranslate"><span class="pre">graph-canon-run</span></code></a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.0+/e314789f4.
+    </div>
+  </body>
+</html>

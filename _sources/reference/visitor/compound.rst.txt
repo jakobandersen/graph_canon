@@ -1,0 +1,27 @@
+.. _cpp-visitor/compound:
+
+**********************************************************
+compound.hpp
+**********************************************************
+
+Full path: ``graph_canon/visitor/compound.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: template<typename ...Visitors> \
+           compound_visitor
+
+    A visitor aggregating a list of given visitors, `Visitors`.
+    Use `make_visitor` to easily create such compound visitors.
+
+.. function:: template<typename ...Visitors> \
+              auto make_visitor(Visitors ...visitors)
+
+    Before creation any given `compound_visitor` is inlined (recursively)
+    such that the resulting `compound_visitor` contains only non-compound visitors.
+
+    :returns: a `compound_visitor` with all visitors contained in the given `visitors` list.
+

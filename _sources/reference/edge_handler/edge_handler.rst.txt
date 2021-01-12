@@ -1,0 +1,66 @@
+.. _cpp-edge_handler/edge_handler:
+
+**********************************************************
+edge_handler.hpp
+**********************************************************
+
+Full path: ``graph_canon/edge_handler/edge_handler.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. concept:: template<typename T> EdgeHandlerCreator
+
+    An edge handler creator is an object that from a given integer type instantiates the actual edge handler object.
+
+    .. notation::
+
+    .. type:: SizeType
+
+        An integer type.
+
+    .. assoc_types::
+
+    .. type:: EdgeHandlerT = typename T::template type<SizeType>
+
+        A type satisfying the `EdgeHandler` concept.
+
+    .. valid_expr::
+
+    `T::make<SizeType>()`: return an object of type `EdgeHandlerT`.
+
+.. concept:: template<typename T> EdgeHandler
+
+    An edge handler is an object that implements procedures related to labels on edges.
+    If no labels are present, the handler creator `edge_handler_all_equal` can be used.
+
+    .. notation::
+
+    .. var:: T edge_handler
+    .. type:: State
+
+        A specialization of `canon_state`.
+
+    .. type:: Edge = typename boost::graph_traits<typename State::Graph>::edge_descriptor
+    .. var:: State state
+    .. var:: Edge e_left
+             Edge e_right
+
+    .. valid_expr::
+
+    - `edge_handler.initialize(state)`. Is executed in the beginning of canonicalization.
+    - `edge_handler.compare(state, e_left, e_right)` must compare the two edges
+      (e.g., their labels) and return an integer representing their order:
+
+      - A negative number: `e_left` is ordered before `e_right`.
+      - Zero: `e_left` and `e_right` are considered equal.
+      - A positive number: `e_left` is ordered after `e_right`.
+
+      The function is at least used when creating ordered graphs in the leaves of the search tree,
+      but may also be used by visitors.
+      Note that the function should not compare the end-points, only auxiliary data.
+
+    .. todo:: List requirements from the WL-1 refiner.
+

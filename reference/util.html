@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5.14. util.hpp &#8212; GraphCanon 0.5 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5.15. visitor" href="visitor/index.html" />
+    <link rel="prev" title="5.13.3. dfs.hpp" href="tree_traversal/dfs.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="visitor/index.html" title="5.15. visitor"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tree_traversal/dfs.html" title="5.13.3. dfs.hpp"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U"><span class="section-number">5. </span>Library Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.14. </span>util.hpp</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="util-hpp">
+<span id="cpp-util"></span><h1><span class="section-number">5.14. </span>util.hpp<a class="headerlink" href="#util-hpp" title="Permalink to this headline">¶</a></h1>
+<p>Full path: <code class="docutils literal notranslate"><span class="pre">graph_canon/util.hpp</span></code></p>
+<dl class="cpp class">
+<dt id="_CPPv4N11graph_canon11always_trueE">
+<span id="_CPPv3N11graph_canon11always_trueE"></span><span id="_CPPv2N11graph_canon11always_trueE"></span><span id="graph_canon::always_true"></span><em class="property">class </em><code class="sig-name descname">always_true</code><a class="headerlink" href="#_CPPv4N11graph_canon11always_trueE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A function object always returning <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<dl class="cpp function">
+<dt id="_CPPv4IDpENK11graph_canon11always_trueclEbDpRR1T">
+<span id="_CPPv3IDpENK11graph_canon11always_trueclEDpRR1T"></span><span id="_CPPv2IDpENK11graph_canon11always_trueclEDpRR1T"></span>template&lt;typename ...<code class="sig-name descname">T</code>&gt;<br />bool <code class="sig-name descname">operator()</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4IDpENK11graph_canon11always_trueclEbDpRR1T" title="graph_canon::always_true::operator()::T">T</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4IDpENK11graph_canon11always_trueclEbDpRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">true</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4N11graph_canon12always_falseE">
+<span id="_CPPv3N11graph_canon12always_falseE"></span><span id="_CPPv2N11graph_canon12always_falseE"></span><span id="graph_canon::always_false"></span><em class="property">class </em><code class="sig-name descname">always_false</code><a class="headerlink" href="#_CPPv4N11graph_canon12always_falseE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A function object always returning <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<dl class="cpp function">
+<dt id="_CPPv4IDpENK11graph_canon12always_falseclEbDpRR1T">
+<span id="_CPPv3IDpENK11graph_canon12always_falseclEDpRR1T"></span><span id="_CPPv2IDpENK11graph_canon12always_falseclEDpRR1T"></span>template&lt;typename ...<code class="sig-name descname">T</code>&gt;<br />bool <code class="sig-name descname">operator()</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4IDpENK11graph_canon12always_falseclEbDpRR1T" title="graph_canon::always_false::operator()::T">T</a>&amp;&amp;... <em>args</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4IDpENK11graph_canon12always_falseclEbDpRR1T" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">false</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4I0EN11graph_canon5rangeE">
+<span id="_CPPv3I0EN11graph_canon5rangeE"></span><span id="_CPPv2I0EN11graph_canon5rangeE"></span>template&lt;typename <code class="sig-name descname">Iter</code>&gt;<br /><em class="property">class </em><code class="sig-name descname">range</code> : std::pair&lt;<a class="reference internal" href="#_CPPv4I0EN11graph_canon5rangeE" title="graph_canon::range::Iter">Iter</a>, <a class="reference internal" href="#_CPPv4I0EN11graph_canon5rangeE" title="graph_canon::range::Iter">Iter</a>&gt;<a class="headerlink" href="#_CPPv4I0EN11graph_canon5rangeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>A class for adapting a pair of iterators into a range, e.g., useful when using Boost.Graph.
+See <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0EN11graph_canon8as_rangeE5rangeI4IterERKNSt4pairI4Iter4IterEE" title="graph_canon::as_range"><span class="pre">as_range</span></a></code>.</p>
+<dl class="cpp function">
+<dt id="_CPPv4I0EN11graph_canon8as_rangeE5rangeI4IterERKNSt4pairI4Iter4IterEE">
+<span id="_CPPv3I0EN11graph_canon8as_rangeERKNSt4pairI4Iter4IterEE"></span><span id="_CPPv2I0EN11graph_canon8as_rangeERKNSt4pairI4Iter4IterEE"></span>template&lt;typename <code class="sig-name descname">Iter</code>&gt;<br /><a class="reference internal" href="#_CPPv4I0EN11graph_canon5rangeE" title="graph_canon::range">range</a>&lt;<a class="reference internal" href="#_CPPv4I0EN11graph_canon8as_rangeE5rangeI4IterERKNSt4pairI4Iter4IterEE" title="graph_canon::as_range::Iter">Iter</a>&gt; <code class="sig-name descname">as_range</code><span class="sig-paren">(</span><em class="property">const</em> std::pair&lt;<a class="reference internal" href="#_CPPv4I0EN11graph_canon8as_rangeE5rangeI4IterERKNSt4pairI4Iter4IterEE" title="graph_canon::as_range::Iter">Iter</a>, <a class="reference internal" href="#_CPPv4I0EN11graph_canon8as_rangeE5rangeI4IterERKNSt4pairI4Iter4IterEE" title="graph_canon::as_range::Iter">Iter</a>&gt; &amp;<em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN11graph_canon8as_rangeE5rangeI4IterERKNSt4pairI4Iter4IterEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">returns</dt>
+<dd class="field-odd"><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0EN11graph_canon5rangeE" title="graph_canon::range"><span class="pre">range</span></a><span class="pre">&lt;</span><span class="pre">Iter</span><span class="pre">&gt;</span><span class="pre">(</span><span class="pre">x</span><span class="pre">)</span></code></p>
+</dd>
+</dl>
+<dl class="cpp class">
+<dt id="_CPPv4I0EN11graph_canon13property_lessE">
+<span id="_CPPv3I0EN11graph_canon13property_lessE"></span><span id="_CPPv2I0EN11graph_canon13property_lessE"></span>template&lt;typename <code class="sig-name descname">Prop</code>&gt;<br /><em class="property">class </em><code class="sig-name descname">property_less</code><a class="headerlink" href="#_CPPv4I0EN11graph_canon13property_lessE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A less-than comparator on a given property map, satisfying the <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">boost</span><span class="pre">::</span><span class="pre">ReadablePropertyMapConcept</span></code>.</p>
+<dl class="cpp function">
+<dt id="_CPPv4N11graph_canon13property_less13property_lessE4Prop">
+<span id="_CPPv3N11graph_canon13property_less13property_lessE4Prop"></span><span id="_CPPv2N11graph_canon13property_less13property_lessE4Prop"></span><span id="graph_canon::property_less::property_less__Prop"></span><code class="sig-name descname">property_less</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN11graph_canon13property_lessE" title="graph_canon::property_less::Prop">Prop</a> <em>prop</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11graph_canon13property_less13property_lessE4Prop" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0ENK11graph_canon13property_lessclEbRK3KeyRK3Key">
+<span id="_CPPv3I0ENK11graph_canon13property_lessclERK3KeyRK3Key"></span><span id="_CPPv2I0ENK11graph_canon13property_lessclERK3KeyRK3Key"></span>template&lt;typename <code class="sig-name descname">Key</code>&gt;<br />bool <code class="sig-name descname">operator()</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I0ENK11graph_canon13property_lessclEbRK3KeyRK3Key" title="graph_canon::property_less::operator()::Key">Key</a> &amp;<em>lhs</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4I0ENK11graph_canon13property_lessclEbRK3KeyRK3Key" title="graph_canon::property_less::operator()::Key">Key</a> &amp;<em>rhs</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK11graph_canon13property_lessclEbRK3KeyRK3Key" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="tagged_list.html#_CPPv4I0DpEN11graph_canon3getERDaRR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get"><span class="pre">get</span></a><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon13property_less4propE" title="graph_canon::property_less::prop"><span class="pre">prop</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0ENK11graph_canon13property_lessclEbRK3KeyRK3Key" title="graph_canon::property_less::operator()::lhs"><span class="pre">lhs</span></a><span class="pre">)</span> <span class="pre">&lt;</span> <a class="reference internal" href="tagged_list.html#_CPPv4I0DpEN11graph_canon3getERDaRR3TagR11tagged_listIDp5ElemsE" title="graph_canon::get"><span class="pre">get</span></a><span class="pre">(</span><a class="reference internal" href="#_CPPv4N11graph_canon13property_less4propE" title="graph_canon::property_less::prop"><span class="pre">prop</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0ENK11graph_canon13property_lessclEbRK3KeyRK3Key" title="graph_canon::property_less::operator()::rhs"><span class="pre">rhs</span></a><span class="pre">)</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp var">
+<dt id="_CPPv4N11graph_canon13property_less4propE">
+<span id="_CPPv3N11graph_canon13property_less4propE"></span><span id="_CPPv2N11graph_canon13property_less4propE"></span><span id="graph_canon::property_less::prop__Prop"></span><a class="reference internal" href="#_CPPv4I0EN11graph_canon13property_lessE" title="graph_canon::property_less::Prop">Prop</a> <code class="sig-name descname">prop</code><a class="headerlink" href="#_CPPv4N11graph_canon13property_less4propE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I0EN11graph_canon18make_property_lessE13property_lessI4PropERR4Prop">
+<span id="_CPPv3I0EN11graph_canon18make_property_lessERR4Prop"></span><span id="_CPPv2I0EN11graph_canon18make_property_lessERR4Prop"></span>template&lt;typename <code class="sig-name descname">Prop</code>&gt;<br /><a class="reference internal" href="#_CPPv4I0EN11graph_canon13property_lessE" title="graph_canon::property_less">property_less</a>&lt;<a class="reference internal" href="#_CPPv4I0EN11graph_canon18make_property_lessE13property_lessI4PropERR4Prop" title="graph_canon::make_property_less::Prop">Prop</a>&gt; <code class="sig-name descname">make_property_less</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN11graph_canon18make_property_lessE13property_lessI4PropERR4Prop" title="graph_canon::make_property_less::Prop">Prop</a> &amp;&amp;<em>prop</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN11graph_canon18make_property_lessE13property_lessI4PropERR4Prop" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I0EN11graph_canon13property_lessE" title="graph_canon::property_less"><span class="pre">property_less</span></a><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I0EN11graph_canon18make_property_lessE13property_lessI4PropERR4Prop" title="graph_canon::make_property_less::Prop"><span class="pre">Prop</span></a><span class="pre">&gt;</span><span class="pre">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">forward</span><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I0EN11graph_canon18make_property_lessE13property_lessI4PropERR4Prop" title="graph_canon::make_property_less::Prop"><span class="pre">Prop</span></a><span class="pre">&gt;</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4I0EN11graph_canon18make_property_lessE13property_lessI4PropERR4Prop" title="graph_canon::make_property_less::prop"><span class="pre">prop</span></a><span class="pre">)</span><span class="pre">)</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I00EN11graph_canon13permute_graphEvRK5GraphR5GraphRKNSt6vectorI8SizeTypeEE">
+<span id="_CPPv3I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE"></span><span id="_CPPv2I00EN11graph_canon13permute_graphERK5GraphR5GraphRKNSt6vectorI8SizeTypeEE"></span>template&lt;typename <code class="sig-name descname">Graph</code>, typename <code class="sig-name descname">SizeType</code>&gt;<br />void <code class="sig-name descname">permute_graph</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4I00EN11graph_canon13permute_graphEvRK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::Graph">Graph</a> &amp;<em>g_in</em>, <a class="reference internal" href="#_CPPv4I00EN11graph_canon13permute_graphEvRK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::Graph">Graph</a> &amp;<em>g_out</em>, <em class="property">const</em> std::vector&lt;<a class="reference internal" href="#_CPPv4I00EN11graph_canon13permute_graphEvRK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::SizeType">SizeType</a>&gt; &amp;<em>permutation</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I00EN11graph_canon13permute_graphEvRK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Add all vertices and edges from <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I00EN11graph_canon13permute_graphEvRK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_in"><span class="pre">g_in</span></a></code> to <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I00EN11graph_canon13permute_graphEvRK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_out"><span class="pre">g_out</span></a></code>,
+but where the order of vertex addition is given by the <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I00EN11graph_canon13permute_graphEvRK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::permutation"><span class="pre">permutation</span></a></code>.
+It must be a permutation of the vertex indices of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I00EN11graph_canon13permute_graphEvRK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_in"><span class="pre">g_in</span></a></code> and is interpreted as a map
+from the indices in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I00EN11graph_canon13permute_graphEvRK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_in"><span class="pre">g_in</span></a></code> to the indices they will get in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="#_CPPv4I00EN11graph_canon13permute_graphEvRK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_out"><span class="pre">g_out</span></a></code> (offset by <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">num_vertices</span><span class="pre">(</span><a class="reference internal" href="#_CPPv4I00EN11graph_canon13permute_graphEvRK5GraphR5GraphRKNSt6vectorI8SizeTypeEE" title="graph_canon::permute_graph::g_out"><span class="pre">g_out</span></a><span class="pre">)</span></code> before the call).</p>
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tree_traversal/dfs.html"
+                        title="previous chapter"><span class="section-number">5.13.3. </span>dfs.hpp</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="visitor/index.html"
+                        title="next chapter"><span class="section-number">5.15. </span>visitor</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/util.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="visitor/index.html" title="5.15. visitor"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tree_traversal/dfs.html" title="5.13.3. dfs.hpp"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" ><span class="section-number">5. </span>Library Reference</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.14. </span>util.hpp</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.0+/e314789f4.
+    </div>
+  </body>
+</html>

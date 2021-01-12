@@ -1,0 +1,43 @@
+.. _cpp-sorting_utils:
+
+**********************************************************
+sorting_utils.hpp
+**********************************************************
+
+Full path: ``graph_canon/sorting_utils.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. function:: template<typename Iter, typename Pred, typename Swap> \
+              Iter partition_range(Iter first, Iter last, Pred pred, Swap swapper)
+
+    A function template equivalent to `std::partition`,
+    except that element swapping is delegated to the given `swapper`.
+
+    Requires (in addition to the requirements by `std::partition`),
+    that for two dereferenceable iterators `a` and `b` in the given range,
+    the expression `swapper(a, b)` swaps the values represented by the iterators.
+    For example, `Swap` may be a predicate simply calling `std::iter_swap`.
+.. class:: template<typename SizeType, SizeType Max> \
+           counting_sorter
+
+    An object for performing counting sort of values in the range 0 to `Max`.
+    Requires `Max >= 2`.
+
+    .. function:: template<typename Iterator, typename ToValue, typename Callback, typename PutValue> \
+                  void operator()(const Iterator first, const Iterator last, ToValue toValue, Callback callback, PutValue putter)
+
+        Sort the range `first` to `last`.
+
+        Requires:
+
+        - `Iterator` must model a `RandomAccessIterator`.
+        - `ToValue`: for a dereferenceable iterator `iter`, the expression `toValue(*iter)`
+          must return an integer in the range 0 to `Max`.
+        - `Callback`: for a range of integers `ends` representing the end of each bucket,
+          as offsets from `first`, the expression `callback(ends)` must be valid.
+        - `PutValue`: for a dereferenceable iterator `iter` and an element `elem`,
+          the expression `putter(iter, elem)` must be valid, and ensure that `*iter == elem` becomes true.

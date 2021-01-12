@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2. Changes &#8212; GraphCanon 0.5 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. Examples" href="examples/index.html" />
+    <link rel="prev" title="1. Installation" href="installation.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="examples/index.html" title="3. Examples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="1. Installation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>Changes</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="changes">
+<h1><span class="section-number">2. </span>Changes<a class="headerlink" href="#changes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v0-5-2020-01-12">
+<h2><span class="section-number">2.1. </span>v0.5 (2020-01-12)<a class="headerlink" href="#v0-5-2020-01-12" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="incompatible-chagnes">
+<h3><span class="section-number">2.1.1. </span>Incompatible Chagnes<a class="headerlink" href="#incompatible-chagnes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Bump Boost requirement to 1.67.</p></li>
+<li><p>Require C++17.</p></li>
+<li><p>Bump PermGroup requirement to 0.5.</p></li>
+</ul>
+</div>
+<div class="section" id="new-features">
+<h3><span class="section-number">2.1.2. </span>New Features<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Added convenience type aliasses <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="reference/ordered_graph.html#_CPPv4I00_bEN11graph_canon13ordered_graphE" title="graph_canon::ordered_graph"><span class="pre">ordered_graph</span></a><span class="pre">::</span><a class="reference internal" href="reference/ordered_graph.html#_CPPv4N11graph_canon13ordered_graph5GraphE" title="graph_canon::ordered_graph::Graph"><span class="pre">Graph</span></a></code> and
+<code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="reference/ordered_graph.html#_CPPv4I00_bEN11graph_canon13ordered_graphE" title="graph_canon::ordered_graph"><span class="pre">ordered_graph</span></a><span class="pre">::</span><a class="reference internal" href="reference/ordered_graph.html#_CPPv4N11graph_canon13ordered_graph8IndexMapE" title="graph_canon::ordered_graph::IndexMap"><span class="pre">IndexMap</span></a></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="bugs-fixed">
+<h3><span class="section-number">2.1.3. </span>Bugs Fixed<a class="headerlink" href="#bugs-fixed" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Fix extranous dereference in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="reference/ordered_graph.html#_CPPv4I00_bEN11graph_canon13ordered_graphE" title="graph_canon::ordered_graph"><span class="pre">ordered_graph</span></a><span class="pre">::</span><a class="reference internal" href="reference/ordered_graph.html#_CPPv4NK11graph_canon13ordered_graph9get_graphEv" title="graph_canon::ordered_graph::get_graph"><span class="pre">get_graph</span></a></code>.
+Thanks to Gregor Kälin.</p></li>
+<li><p>Use <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">idx</span></code> when setting up initial partition.
+Thanks to Gregor Kälin.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">get(idx,</span> <span class="pre">v)</span></code> instead of <code class="docutils literal notranslate"><span class="pre">idx[v]</span></code> consistently everywhere.</p></li>
+<li><p>Add missing concept checks in <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="reference/canonicalization.html#_CPPv4I0_b_b00000EN11graph_canon12canonicalizeEDaRK5Graph8IndexMap10VertexLess19EdgeHandlerCreatorT7Visitor" title="graph_canon::canonicalize"><span class="pre">canonicalize</span></a></code> for the graph type.</p></li>
+<li><p>Add missing inline on <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="reference/shorthands.html#_CPPv4N11graph_canon20make_default_visitorEv" title="graph_canon::make_default_visitor"><span class="pre">make_default_visitor</span></a></code>.
+Thanks to Gregor Kälin.</p></li>
+<li><p>Doc, fix indendation issues.</p></li>
+</ul>
+</div>
+<div class="section" id="other">
+<h3><span class="section-number">2.1.4. </span>Other<a class="headerlink" href="#other" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Update documentation for <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="reference/edge_handler/edge_handler.html#_CPPv4I0EN11graph_canon11EdgeHandlerE" title="graph_canon::EdgeHandler"><span class="pre">EdgeHandler</span></a></code> and <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="reference/canonicalization.html#_CPPv4I0_b_b00000EN11graph_canon12canonicalizeEDaRK5Graph8IndexMap10VertexLess19EdgeHandlerCreatorT7Visitor" title="graph_canon::canonicalize"><span class="pre">canonicalize</span></a></code>.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="v0-4-2019-05-27">
+<h2><span class="section-number">2.2. </span>v0.4 (2019-05-27)<a class="headerlink" href="#v0-4-2019-05-27" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="incompatible-changes">
+<h3><span class="section-number">2.2.1. </span>Incompatible Changes<a class="headerlink" href="#incompatible-changes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Change to CMake as build system.
+See <a class="reference internal" href="installation.html#installation"><span class="std std-ref">Installation</span></a> for how to build the package,
+or use it as a submodule in a nother CMake project.</p></li>
+<li><p>Require version v0.4 PermGroup, though it is available as a Git submodule.</p></li>
+<li><p>Change <a class="reference internal" href="reference/shorthands.html#_CPPv4N11graph_canon20make_default_visitorEv" title="graph_canon::make_default_visitor"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">make_default_visitor()</span></code></a> to include many more visitors,
+to provide a quick way to get a reasonable algorithm configuration.</p></li>
+<li><p>Change the style of search tree depictions from <a class="reference internal" href="reference/visitor/stats.html#_CPPv4N11graph_canon13stats_visitorE" title="graph_canon::stats_visitor"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">stats_visitor</span></code></a>
+to use rounded rectangles as node shapes.</p></li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h3><span class="section-number">2.2.2. </span>New Features<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Add the program <a class="reference internal" href="executables/graph_canon_run.html#graph-canon-run"><span class="std std-ref">graph-canon-run</span></a> for easier invocation
+of canonicalization programs on batches of graphs.</p></li>
+<li><p>Add script for downloading various graph collections:
+<a class="reference internal" href="executables/download_graph_collections.html#download-graph-collections"><span class="std std-ref">download-graph-collections</span></a>.</p></li>
+<li><p>Add the scripts <a class="reference internal" href="executables/graph_canon_dreadnaut.html#graph-canon-dreadnaut"><span class="std std-ref">graph-canon-dreadnaut</span></a> and <a class="reference internal" href="executables/graph_canon_bliss.html#graph-canon-bliss"><span class="std std-ref">graph-canon-bliss</span></a>
+for providing a common interface between the programs in this package,
+Bliss, nauty, and Traces.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">num_edges</span></code> support for <a class="reference internal" href="reference/ordered_graph.html#_CPPv4I00_bEN11graph_canon13ordered_graphE" title="graph_canon::ordered_graph"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">ordered_graph</span></code></a>.</p></li>
+<li><p>Add <a class="reference internal" href="reference/util.html#_CPPv4I0EN11graph_canon8as_rangeE5rangeI4IterERKNSt4pairI4Iter4IterEE" title="graph_canon::as_range"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">as_range()</span></code></a> helper function for converting Boost.Graph
+iterator pairs to ranges.</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h3><span class="section-number">2.2.3. </span>Other<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>#1: Add missing license (GPL).</p></li>
+<li><p>Add and update examples.</p></li>
+<li><p>Lots of documentation improvements.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="v0-3-2018-09-04">
+<h2><span class="section-number">2.3. </span>v0.3 (2018-09-04)<a class="headerlink" href="#v0-3-2018-09-04" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Require version v0.3 PermGroup.</p></li>
+<li><p>Add Schreier-Sims-based automorphism pruning.</p></li>
+<li><p>Documentation polishing.</p></li>
+<li><p>The interface of <code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="reference/aut/pruner_base.html#_CPPv4I0EN11graph_canon15aut_pruner_baseE" title="graph_canon::aut_pruner_base"><span class="pre">aut_pruner_base</span></a></code> has been changed.</p></li>
+<li><p><code class="xref cpp cpp-expr docutils literal notranslate"><a class="reference internal" href="reference/visitor/visitor.html#_CPPv4I0EN11graph_canon7VisitorE" title="graph_canon::Visitor"><span class="pre">Visitor</span></a><span class="pre">::</span><span class="pre">canon_new_best</span></code> has been changed.</p></li>
+<li><p>Running the algorithm on an empty graph now works.</p></li>
+</ul>
+</div>
+<div class="section" id="v0-2-2018-02-05">
+<h2><span class="section-number">2.4. </span>v0.2 (2018-02-05)<a class="headerlink" href="#v0-2-2018-02-05" title="Permalink to this headline">¶</a></h2>
+<p>Second public version.</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2. Changes</a><ul>
+<li><a class="reference internal" href="#v0-5-2020-01-12">2.1. v0.5 (2020-01-12)</a><ul>
+<li><a class="reference internal" href="#incompatible-chagnes">2.1.1. Incompatible Chagnes</a></li>
+<li><a class="reference internal" href="#new-features">2.1.2. New Features</a></li>
+<li><a class="reference internal" href="#bugs-fixed">2.1.3. Bugs Fixed</a></li>
+<li><a class="reference internal" href="#other">2.1.4. Other</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#v0-4-2019-05-27">2.2. v0.4 (2019-05-27)</a><ul>
+<li><a class="reference internal" href="#incompatible-changes">2.2.1. Incompatible Changes</a></li>
+<li><a class="reference internal" href="#id1">2.2.2. New Features</a></li>
+<li><a class="reference internal" href="#id2">2.2.3. Other</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#v0-3-2018-09-04">2.3. v0.3 (2018-09-04)</a></li>
+<li><a class="reference internal" href="#v0-2-2018-02-05">2.4. v0.2 (2018-02-05)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter"><span class="section-number">1. </span>Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="examples/index.html"
+                        title="next chapter"><span class="section-number">3. </span>Examples</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/changes.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="examples/index.html" title="3. Examples"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="1. Installation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>Changes</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.0+/e314789f4.
+    </div>
+  </body>
+</html>

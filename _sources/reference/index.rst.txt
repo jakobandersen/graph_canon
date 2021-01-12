@@ -1,0 +1,21 @@
+Library Reference
+=================
+
+.. toctree::
+    :maxdepth: 2
+
+    aut/index
+    canonicalization
+    compare
+    dimacs_graph_io
+    edge_handler/index
+    invariant/index
+    ordered_graph
+    refine/index
+    shorthands
+    sorting_utils
+    tagged_list
+    target_cell/index
+    tree_traversal/index
+    util
+    visitor/index

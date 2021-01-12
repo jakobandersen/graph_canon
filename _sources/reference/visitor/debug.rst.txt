@@ -1,0 +1,25 @@
+.. _cpp-visitor/debug:
+
+**********************************************************
+debug.hpp
+**********************************************************
+
+Full path: ``graph_canon/visitor/debug.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: debug_visitor
+
+    A visitor for getting debug information.
+
+    .. function:: debug_visitor(bool tree, bool canon, bool aut, bool refine, bool compressed, std::ostream *log = nullptr)
+
+        :param tree: print tree-related debug messages.
+        :param canon: print debug messages related to the current best leaf.
+        :param aut: print automorphism-related debug messages.
+        :param refine: print refinement-related debug messages.
+        :param compressed: when printing ordered partitions, print only the compressed view.
+        :param log: print a JSON version of certain log messages to this stream.

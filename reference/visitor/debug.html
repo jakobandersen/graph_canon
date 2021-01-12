@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5.15.2. debug.hpp &#8212; GraphCanon 0.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.15.3. stats.hpp" href="stats.html" />
+    <link rel="prev" title="5.15.1. compound.hpp" href="compound.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="stats.html" title="5.15.3. stats.hpp"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="compound.html" title="5.15.1. compound.hpp"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" ><span class="section-number">5. </span>Library Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U"><span class="section-number">5.15. </span>visitor</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.15.2. </span>debug.hpp</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="debug-hpp">
+<span id="cpp-visitor-debug"></span><h1><span class="section-number">5.15.2. </span>debug.hpp<a class="headerlink" href="#debug-hpp" title="Permalink to this headline">¶</a></h1>
+<p>Full path: <code class="docutils literal notranslate"><span class="pre">graph_canon/visitor/debug.hpp</span></code></p>
+<dl class="cpp class">
+<dt id="_CPPv4N11graph_canon13debug_visitorE">
+<span id="_CPPv3N11graph_canon13debug_visitorE"></span><span id="_CPPv2N11graph_canon13debug_visitorE"></span><span id="graph_canon::debug_visitor"></span><em class="property">class </em><code class="sig-name descname">debug_visitor</code><a class="headerlink" href="#_CPPv4N11graph_canon13debug_visitorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A visitor for getting debug information.</p>
+<dl class="cpp function">
+<dt id="_CPPv4N11graph_canon13debug_visitor13debug_visitorEbbbbbPNSt7ostreamE">
+<span id="_CPPv3N11graph_canon13debug_visitor13debug_visitorEbbbbbPNSt7ostreamE"></span><span id="_CPPv2N11graph_canon13debug_visitor13debug_visitorEbbbbbPNSt7ostreamE"></span><span id="graph_canon::debug_visitor::debug_visitor__b.b.b.b.b.osP"></span><code class="sig-name descname">debug_visitor</code><span class="sig-paren">(</span>bool <em>tree</em>, bool <em>canon</em>, bool <em>aut</em>, bool <em>refine</em>, bool <em>compressed</em>, std::ostream *<em>log</em> = nullptr<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N11graph_canon13debug_visitor13debug_visitorEbbbbbPNSt7ostreamE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tree</strong> – print tree-related debug messages.</p></li>
+<li><p><strong>canon</strong> – print debug messages related to the current best leaf.</p></li>
+<li><p><strong>aut</strong> – print automorphism-related debug messages.</p></li>
+<li><p><strong>refine</strong> – print refinement-related debug messages.</p></li>
+<li><p><strong>compressed</strong> – when printing ordered partitions, print only the compressed view.</p></li>
+<li><p><strong>log</strong> – print a JSON version of certain log messages to this stream.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="compound.html"
+                        title="previous chapter"><span class="section-number">5.15.1. </span>compound.hpp</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="stats.html"
+                        title="next chapter"><span class="section-number">5.15.3. </span>stats.hpp</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/reference/visitor/debug.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="stats.html" title="5.15.3. stats.hpp"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="compound.html" title="5.15.1. compound.hpp"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" ><span class="section-number">5. </span>Library Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" ><span class="section-number">5.15. </span>visitor</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5.15.2. </span>debug.hpp</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.0+/e314789f4.
+    </div>
+  </body>
+</html>

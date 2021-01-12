@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4.2. graph-canon &#8212; GraphCanon 0.5 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4.3. graph-canon-run" href="graph_canon_run.html" />
+    <link rel="prev" title="4.1. dimacs" href="dimacs.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="graph_canon_run.html" title="4.3. graph-canon-run"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dimacs.html" title="4.1. dimacs"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U"><span class="section-number">4. </span>Executables</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.2. </span><code class="docutils literal notranslate"><span class="pre">graph-canon</span></code></a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="graph-canon">
+<span id="id1"></span><h1><span class="section-number">4.2. </span><code class="docutils literal notranslate"><span class="pre">graph-canon</span></code><a class="headerlink" href="#graph-canon" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">graph_canon</span></code> program performs canonicalization of (a permutation of) a given input graph.
+It contains many different configurations of the graph canonicalization algorithm that can be selected through switches.
+The program additional has two distinct modes:</p>
+<dl class="std option">
+<dt id="cmdoption-graph-canon-mode">
+<code class="sig-name descname">--mode</code><code class="sig-prename descclassname"> &lt;mode&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-mode" title="Permalink to this definition">¶</a></dt>
+<dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">test</span></code> (default): All canonicalization results are compared for equality. Allows for outputting additional information from the algorithm execution.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">benchmark</span></code>: Minimal overhead mode, with no result checks and limited information gathering.</p></li>
+</ul>
+</dd></dl>
+
+<p>The program really consists of many executables (all on the form <code class="docutils literal notranslate"><span class="pre">graph-canon-*</span></code>), each with different algorithm configurations.
+The main executable, <code class="docutils literal notranslate"><span class="pre">graph-canon</span></code>, is a wrapper script that invokes the correct executable depending on the given arguments.
+This wrapper script is a Python program, which supports <a class="reference external" href="https://pypi.python.org/pypi/argcomplete">argcomplete</a>.</p>
+<div class="section" id="general-options">
+<h2><span class="section-number">4.2.1. </span>General Options<a class="headerlink" href="#general-options" title="Permalink to this headline">¶</a></h2>
+<dl class="std option">
+<dt id="cmdoption-graph-canon-h">
+<span id="cmdoption-graph-canon-help"></span><code class="sig-name descname">-h</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--help</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-h" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print help message. Note, part of the message changes depending on which <a class="reference internal" href="#cmdoption-graph-canon-mode"><code class="xref std std-option docutils literal notranslate"><span class="pre">--mode</span></code></a> has been given.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-id">
+<code class="sig-name descname">--id</code><code class="sig-prename descclassname"> &lt;string&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The id to print in the beginning of every output line. It defaults to either ‘default’, ‘stdin’, or the filename given with <a class="reference internal" href="#cmdoption-graph-canon-f"><code class="xref std std-option docutils literal notranslate"><span class="pre">-f</span></code></a>.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-postId">
+<span id="cmdoption-graph-canon-postid"></span><code class="sig-name descname">--postId</code><code class="sig-prename descclassname"> &lt;string&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-postId" title="Permalink to this definition">¶</a></dt>
+<dd><p>The id to print in the end of every data output line. It defaults to the empty string.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-postHeader">
+<span id="cmdoption-graph-canon-postheader"></span><code class="sig-name descname">--postHeader</code><code class="sig-prename descclassname"> &lt;string&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-postHeader" title="Permalink to this definition">¶</a></dt>
+<dd><p>The id to print in the end of every header output line. It defaults to the empty string.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-s">
+<span id="cmdoption-graph-canon-seed"></span><code class="sig-name descname">-s</code><code class="sig-prename descclassname"> &lt;seed&gt;</code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--seed</code><code class="sig-prename descclassname"> &lt;seed&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seed for random number generator. The default value is <code class="xref cpp cpp-expr docutils literal notranslate"><span class="pre">static_cast</span><span class="pre">&lt;</span><span class="pre">std</span><span class="pre">::</span><span class="pre">size_t</span><span class="pre">&gt;</span><span class="pre">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">time</span><span class="pre">(</span><span class="pre">0</span><span class="pre">)</span><span class="pre">)</span></code>.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-p">
+<span id="cmdoption-graph-canon-permutations"></span><code class="sig-name descname">-p</code><code class="sig-prename descclassname"> &lt;num&gt;</code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--permutations</code><code class="sig-prename descclassname"> &lt;num&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of random permutations to try. For test mode an additional run is performed in the beginning with the original vertex order.
+Default is 5.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="graph-loading-options">
+<h2><span class="section-number">4.2.2. </span>Graph Loading Options<a class="headerlink" href="#graph-loading-options" title="Permalink to this headline">¶</a></h2>
+<dl class="std option">
+<dt id="cmdoption-graph-canon-f">
+<span id="cmdoption-graph-canon-dimacs"></span><code class="sig-name descname">-f</code><code class="sig-prename descclassname"> &lt;filename&gt;</code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--dimacs</code><code class="sig-prename descclassname"> &lt;filname&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-f" title="Permalink to this definition">¶</a></dt>
+<dd><p>File with graph in DIMACS format (see <a class="reference internal" href="../reference/dimacs_graph_io.html#_CPPv4I000EN11graph_canon17read_dimacs_graphEbRNSt7istreamER5GraphRNSt7ostreamE15ParallelHandler11LoopHandler" title="graph_canon::read_dimacs_graph"><code class="xref cpp cpp-func docutils literal notranslate"><span class="pre">read_dimacs_graph()</span></code></a>). Use ‘-‘ to read from stdin.
+If not used, a default graph is used.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-vertex-labels">
+<code class="sig-name descname">--vertex-labels</code><code class="sig-prename descclassname"> &lt;mode&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-vertex-labels" title="Permalink to this definition">¶</a></dt>
+<dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">none</span></code> (default): vertices are unlabelled.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uniform</span></code>: vertices are labelled with a uniformly random number in the range 0 to <a class="reference internal" href="#cmdoption-graph-canon-vertex-label-max"><code class="xref std std-option docutils literal notranslate"><span class="pre">--vertex-label-max</span></code></a> (excluding).</p></li>
+</ul>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-vertex-label-max">
+<code class="sig-name descname">--vertex-label-max</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-vertex-label-max" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#cmdoption-graph-canon-vertex-labels"><code class="xref std std-option docutils literal notranslate"><span class="pre">--vertex-labels</span></code></a>.  Default is 5.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-edge-labels">
+<code class="sig-name descname">--edge-labels</code><code class="sig-prename descclassname"> &lt;mode&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-edge-labels" title="Permalink to this definition">¶</a></dt>
+<dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">none</span></code> (default): edges are unlabelled.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uniform</span></code>: edges are labelled with a uniformly random number in the range 0 to <a class="reference internal" href="#cmdoption-graph-canon-edge-label-max"><code class="xref std std-option docutils literal notranslate"><span class="pre">--edge-label-max</span></code></a> (excluding).</p></li>
+</ul>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-edge-label-max">
+<code class="sig-name descname">--edge-label-max</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-edge-label-max" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#cmdoption-graph-canon-edge-labels"><code class="xref std std-option docutils literal notranslate"><span class="pre">--edge-labels</span></code></a>. Default is 5.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-d">
+<span id="cmdoption-graph-canon-directed"></span><code class="sig-name descname">-d</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--directed</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpret the graph as a directed graph.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-parallel-edges">
+<code class="sig-name descname">--parallel-edges</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-parallel-edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow parallel edges, otherwise they are ignored.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-loops">
+<code class="sig-name descname">--loops</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-loops" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow loop edges, otherwise they are ignored.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="algorithm-configuration-options">
+<h2><span class="section-number">4.2.3. </span>Algorithm Configuration Options<a class="headerlink" href="#algorithm-configuration-options" title="Permalink to this headline">¶</a></h2>
+<dl class="std option">
+<dt id="cmdoption-graph-canon-ftarget-cell">
+<code class="sig-name descname">--ftarget-cell</code><code class="sig-prename descclassname"> &lt;alg&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-ftarget-cell" title="Permalink to this definition">¶</a></dt>
+<dd><p>The algorithm for selecting target cells:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code>: select the first non-trivial cell.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fl</span></code>: select the first of the largest cell.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">flm</span></code> (default):  select the first of the largest cell of those with maximum non-uniformly joined degree.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-ftree-traversal">
+<code class="sig-name descname">--ftree-traversal</code><code class="sig-prename descclassname"> &lt;alg&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-ftree-traversal" title="Permalink to this definition">¶</a></dt>
+<dd><p>The algorithm for exploring the search tree:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dfs</span></code>: depth-first traversal.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bfs-exp</span></code> (default): breadth-first traversal with 1 experimental path per tree vertex.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bfs-exp-m</span></code>: breadth-first traversal with 1 experimental path per tree vertex, limited by memory specified by <a class="reference internal" href="#cmdoption-graph-canon-m"><code class="xref std std-option docutils literal notranslate"><span class="pre">-m</span></code></a>.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-m">
+<span id="cmdoption-graph-canon-memory"></span><code class="sig-name descname">-m</code><code class="sig-prename descclassname"> &lt;MB&gt;</code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--memory</code><code class="sig-prename descclassname"> &lt;MB&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-m" title="Permalink to this definition">¶</a></dt>
+<dd><p>Memory limit (in MB) before the tree traversal <code class="docutils literal notranslate"><span class="pre">bfs-exp-m</span></code> switches to DFS mode.
+Default is 4 GB.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-frefine">
+<code class="sig-name descname">--frefine</code><code class="sig-prename descclassname"> &lt;alg&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-frefine" title="Permalink to this definition">¶</a></dt>
+<dd><p>The degree-based refinement function to use:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">WL-1</span></code> (default): Weisfeiler-Leman algorithm, with 1 dimension.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-faut-pruner">
+<code class="sig-name descname">--faut-pruner</code><code class="sig-prename descclassname"> &lt;alg&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-faut-pruner" title="Permalink to this definition">¶</a></dt>
+<dd><p>The automorphism pruning algorithm to use:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">none</span></code>: Do not prune using automorphisms.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">basic</span></code> (default): Prune using the subset of generators that fix the necessary elements.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">schreier</span></code>: Prune using fully calculated stabilizers.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-faut-implicit">
+<span id="cmdoption-graph-canon-fno-aut-implicit"></span><code class="sig-name descname">--faut-implicit</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--fno-aut-implicit</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-faut-implicit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable or disable the implicit automorphisms visitor. Enabled as default.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-fpartial-leaf">
+<span id="cmdoption-graph-canon-fno-partial-leaf"></span><code class="sig-name descname">--fpartial-leaf</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--fno-partial-leaf</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-fpartial-leaf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable or disable the partial leaf certificate visitor. Enabled as default.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-ftrace">
+<span id="cmdoption-graph-canon-fno-trace"></span><code class="sig-name descname">--ftrace</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--fno-trace</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-ftrace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable or disable the trace visitor. Enabled as default.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-fquotient">
+<span id="cmdoption-graph-canon-fno-quotient"></span><code class="sig-name descname">--fquotient</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--fno-quotient</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-fquotient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable or disable the quotient graph visitor. Enabled as default.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-fdegree-1">
+<span id="cmdoption-graph-canon-fno-degree-1"></span><code class="sig-name descname">--fdegree-1</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--fno-degree-1</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-fdegree-1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable or disable the visitor for fast handling of degree-1 vertices. Enabled as default.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="program-execution-options">
+<h2><span class="section-number">4.2.4. </span>Program Execution Options<a class="headerlink" href="#program-execution-options" title="Permalink to this headline">¶</a></h2>
+<dl class="std option">
+<dt id="cmdoption-graph-canon-memcheck">
+<code class="sig-name descname">--memcheck</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-memcheck" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the program through Valgrind.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-debug">
+<code class="sig-name descname">--debug</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the program through GDB (or if <a class="reference internal" href="#cmdoption-graph-canon-memcheck"><code class="xref std std-option docutils literal notranslate"><span class="pre">--memcheck</span></code></a> then with vgdb in Valgrind).</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-profile">
+<code class="sig-name descname">--profile</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the program through Valgrind with callgrind.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="options-specific-for-benchmark-mode">
+<h2><span class="section-number">4.2.5. </span>Options Specific for Benchmark Mode<a class="headerlink" href="#options-specific-for-benchmark-mode" title="Permalink to this headline">¶</a></h2>
+<p>The program perform several rounds of canonicalization,
+all on randomly permuted versions of the input graph.</p>
+<dl class="std option">
+<dt id="cmdoption-graph-canon-t">
+<span id="cmdoption-graph-canon-time"></span><code class="sig-name descname">-t</code><code class="sig-prename descclassname"> &lt;s&gt;</code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--time</code><code class="sig-prename descclassname"> &lt;s&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time limit (in seconds). This is only checked after each round finishes.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="options-specific-for-test-mode">
+<h2><span class="section-number">4.2.6. </span>Options Specific for Test Mode<a class="headerlink" href="#options-specific-for-test-mode" title="Permalink to this headline">¶</a></h2>
+<p>The program perform several rounds of canonicalization.
+First on the input graph, and then on randomly permuted versions of that graph.
+As default the options are applied to the first round, on the input graph.</p>
+<dl class="std option">
+<dt id="cmdoption-graph-canon-last">
+<code class="sig-name descname">--last</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply debug and output options to the last permuted graph instead of the input graph.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-graph-dot">
+<code class="sig-name descname">--graph-dot</code><code class="sig-prename descclassname"> &lt;filename&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-graph-dot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print graph in dot format, with the original and canonical indices to this file.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-tree-dot">
+<code class="sig-name descname">--tree-dot</code><code class="sig-prename descclassname"> &lt;filename&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-tree-dot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the search tree from a canonicalization run.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-json">
+<code class="sig-name descname">--json</code><code class="sig-prename descclassname"> &lt;filename&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print log data as JSON to a file, suitable for the GraphCanon Visualizer.
+The output is not affected by the <code class="docutils literal notranslate"><span class="pre">--g*</span></code> options.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-g">
+<span id="cmdoption-graph-canon-gall"></span><code class="sig-name descname">-g</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--gall</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-g" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print all debug information.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-gtree">
+<code class="sig-name descname">--gtree</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-gtree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print debug information related to tree traversal.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-gcanon">
+<code class="sig-name descname">--gcanon</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-gcanon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print debug information related to selecting a canonical leaf in the tree.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-gaut">
+<code class="sig-name descname">--gaut</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-gaut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print debug information related to automorphism discovery.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-grefine">
+<code class="sig-name descname">--grefine</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-grefine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print debug information related to the refinement procedure.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-gcompressed">
+<code class="sig-name descname">--gcompressed</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-gcompressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print debug information in a shorter format.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-stats">
+<code class="sig-name descname">--stats</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print statistics from one canonicalization run.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4.2. <code class="docutils literal notranslate"><span class="pre">graph-canon</span></code></a><ul>
+<li><a class="reference internal" href="#general-options">4.2.1. General Options</a></li>
+<li><a class="reference internal" href="#graph-loading-options">4.2.2. Graph Loading Options</a></li>
+<li><a class="reference internal" href="#algorithm-configuration-options">4.2.3. Algorithm Configuration Options</a></li>
+<li><a class="reference internal" href="#program-execution-options">4.2.4. Program Execution Options</a></li>
+<li><a class="reference internal" href="#options-specific-for-benchmark-mode">4.2.5. Options Specific for Benchmark Mode</a></li>
+<li><a class="reference internal" href="#options-specific-for-test-mode">4.2.6. Options Specific for Test Mode</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="dimacs.html"
+                        title="previous chapter"><span class="section-number">4.1. </span><code class="docutils literal notranslate"><span class="pre">dimacs</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="graph_canon_run.html"
+                        title="next chapter"><span class="section-number">4.3. </span><code class="docutils literal notranslate"><span class="pre">graph-canon-run</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/executables/graph_canon.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="graph_canon_run.html" title="4.3. graph-canon-run"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dimacs.html" title="4.1. dimacs"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" ><span class="section-number">4. </span>Executables</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.2. </span><code class="docutils literal notranslate"><span class="pre">graph-canon</span></code></a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.0+/e314789f4.
+    </div>
+  </body>
+</html>

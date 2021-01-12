@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4.4. graph-canon-dreadnaut &#8212; GraphCanon 0.5 documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4.5. graph-canon-bliss" href="graph_canon_bliss.html" />
+    <link rel="prev" title="4.3. graph-canon-run" href="graph_canon_run.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="graph_canon_bliss.html" title="4.5. graph-canon-bliss"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="graph_canon_run.html" title="4.3. graph-canon-run"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U"><span class="section-number">4. </span>Executables</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.4. </span><code class="docutils literal notranslate"><span class="pre">graph-canon-dreadnaut</span></code></a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="graph-canon-dreadnaut">
+<span id="id1"></span><h1><span class="section-number">4.4. </span><code class="docutils literal notranslate"><span class="pre">graph-canon-dreadnaut</span></code><a class="headerlink" href="#graph-canon-dreadnaut" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">graph-canon-dreadnaut</span></code> wrapper script is simply a facade for an installed
+<code class="docutils literal notranslate"><span class="pre">dreadnaut</span></code> instance from the <a class="reference external" href="http://pallini.di.uniroma1.it/">nauty/Traces</a> package,
+to provide a common interface with <strong class="program">graph-canon</strong>.</p>
+<p>The script invokes <code class="docutils literal notranslate"><span class="pre">dreadnaut</span></code> and pipes commands into it.
+The specified input file must be in DIMACS format and the script will translate it into Dreadnaut
+format and pipe it into the program.</p>
+<dl class="std option">
+<dt id="cmdoption-graph-canon-dreadnaut-h">
+<code class="sig-name descname">-h</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-h" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the help message for the wrapper script, and then exit.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-dreadnaut-f">
+<code class="sig-name descname">-f</code><code class="sig-prename descclassname"> &lt;file&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-f" title="Permalink to this definition">¶</a></dt>
+<dd><p>The input file, which should be in DIMACS format.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-dreadnaut-id">
+<code class="sig-name descname">--id</code><code class="sig-prename descclassname"> &lt;string&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string to prepend to status lines.
+The output of <code class="docutils literal notranslate"><span class="pre">dreadnaut</span></code> is printed by the wrapper script, but is also parsed
+and when the tree node count and total time has been printed, an extra
+status line is printed with the given string prepended.
+This should provide a common tabulation scheme of results from different programs.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-dreadnaut-mode">
+<code class="sig-name descname">--mode</code><code class="sig-prename descclassname"> &lt;mode&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select the algorithm to use, among <code class="docutils literal notranslate"><span class="pre">An</span></code> (nauty dense), <code class="docutils literal notranslate"><span class="pre">As</span></code> (nauty sparse), and <code class="docutils literal notranslate"><span class="pre">At</span></code> (Traces).
+The default is Traces.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-dreadnaut-p">
+<span id="cmdoption-graph-canon-dreadnaut-permutations"></span><code class="sig-name descname">-p</code><code class="sig-prename descclassname"> &lt;int&gt;</code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--permutations</code><code class="sig-prename descclassname"> &lt;int&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-p" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of randomized permutations of the input graph to canonicalize (default: 100).
+This is achieved by piping the commands <code class="docutils literal notranslate"><span class="pre">jcx</span></code> into <code class="docutils literal notranslate"><span class="pre">dreadnaut</span></code> this amount of times.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-graph-canon-dreadnaut-memcheck">
+<code class="sig-name descname">--memcheck</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-memcheck" title="Permalink to this definition">¶</a></dt>
+<dt id="cmdoption-graph-canon-dreadnaut-vgArgs">
+<span id="cmdoption-graph-canon-dreadnaut-vgargs"></span><code class="sig-name descname">--vgArgs</code><code class="sig-prename descclassname"> &lt;arg&gt;</code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-vgArgs" title="Permalink to this definition">¶</a></dt>
+<dt id="cmdoption-graph-canon-dreadnaut-debug">
+<code class="sig-name descname">--debug</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-graph-canon-dreadnaut-debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ignored options, present for compatibility with other programs.</p>
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="graph_canon_run.html"
+                        title="previous chapter"><span class="section-number">4.3. </span><code class="docutils literal notranslate"><span class="pre">graph-canon-run</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="graph_canon_bliss.html"
+                        title="next chapter"><span class="section-number">4.5. </span><code class="docutils literal notranslate"><span class="pre">graph-canon-bliss</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/executables/graph_canon_dreadnaut.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="graph_canon_bliss.html" title="4.5. graph-canon-bliss"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="graph_canon_run.html" title="4.3. graph-canon-run"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GraphCanon 0.5 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" ><span class="section-number">4. </span>Executables</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4.4. </span><code class="docutils literal notranslate"><span class="pre">graph-canon-dreadnaut</span></code></a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Jakob Lykke Andersen.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.0+/e314789f4.
+    </div>
+  </body>
+</html>

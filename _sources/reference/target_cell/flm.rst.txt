@@ -1,0 +1,20 @@
+.. _cpp-target_cell/flm:
+
+**********************************************************
+flm.hpp
+**********************************************************
+
+Full path: ``graph_canon/target_cell/flm.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: target_cell_flm
+
+    Visitor for selecting the first largest non-singleton cell,
+    among those with a maximum number of non-uniformly joined neighbour cells.
+
+    The class is DefaultConstructible.
+

@@ -1,0 +1,48 @@
+.. cpp:namespace:: graph_canon
+
+.. _graph_canon_dreadnaut:
+
+``graph-canon-dreadnaut``
+########################################################################
+
+.. program:: graph-canon-dreadnaut
+
+The ``graph-canon-dreadnaut`` wrapper script is simply a facade for an installed
+``dreadnaut`` instance from the `nauty/Traces <http://pallini.di.uniroma1.it/>`__ package,
+to provide a common interface with :program:`graph-canon`.
+
+The script invokes ``dreadnaut`` and pipes commands into it.
+The specified input file must be in DIMACS format and the script will translate it into Dreadnaut
+format and pipe it into the program.
+
+.. option:: -h
+
+ Show the help message for the wrapper script, and then exit.
+
+.. option:: -f <file>
+
+ The input file, which should be in DIMACS format.
+
+.. option:: --id <string>
+
+ A string to prepend to status lines.
+ The output of ``dreadnaut`` is printed by the wrapper script, but is also parsed
+ and when the tree node count and total time has been printed, an extra
+ status line is printed with the given string prepended.
+ This should provide a common tabulation scheme of results from different programs.
+
+.. option:: --mode <mode>
+
+ Select the algorithm to use, among ``An`` (nauty dense), ``As`` (nauty sparse), and ``At`` (Traces).
+ The default is Traces.
+
+.. option:: -p <int>, --permutations <int>
+
+ The number of randomized permutations of the input graph to canonicalize (default: 100).
+ This is achieved by piping the commands ``jcx`` into ``dreadnaut`` this amount of times.
+
+.. option:: --memcheck
+            --vgArgs <arg>
+            --debug
+
+ Ignored options, present for compatibility with other programs.

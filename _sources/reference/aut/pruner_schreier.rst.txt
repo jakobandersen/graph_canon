@@ -1,0 +1,25 @@
+.. _cpp-aut/pruner_schreier:
+
+**********************************************************
+pruner_schreier.hpp
+**********************************************************
+
+Full path: ``graph_canon/aut/pruner_schreier.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: aut_pruner_schreier : aut_pruner_base<aut_pruner_schreier>
+
+    A `Visitor` for pruning the search tree based on automorphisms reported by other visitors.
+    Stabilizers are fully computed using methods based on the Schreier-Sims algorithm.
+
+    The class is DefaultConstructible.
+
+    .. type:: result_t
+
+        The tag type for data returned to the caller after canonicalization.
+        The type of the returned object is :cpp:type:`std::unique_ptr<Group>` where ``Group`` is some
+        type fulfilling the requirements of the Group concept in PermGroup.

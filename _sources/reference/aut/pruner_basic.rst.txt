@@ -1,0 +1,25 @@
+.. _cpp-aut/pruner_basic:
+
+**********************************************************
+pruner_basic.hpp
+**********************************************************
+
+Full path: ``graph_canon/aut/pruner_basic.hpp``
+
+.. default-domain:: cpp
+.. default-role:: cpp:expr
+
+.. cpp:namespace:: graph_canon
+
+.. class:: aut_pruner_basic : aut_pruner_base<aut_pruner_basic>
+
+    A `Visitor` for pruning the search tree based on automorphisms reported by other visitors.
+    Stabilizers are computed conservatively by plain filtering of the generators.
+
+    The class is DefaultConstructible.
+
+    .. type:: result_t
+
+        The tag type for data returned to the caller after canonicalization.
+        The type of the returned object is :cpp:type:`std::unique_ptr<Group>` where ``Group`` is some
+        type fulfilling the requirements of the Group concept in PermGroup.
