@@ -4,6 +4,16 @@
 Changes
 #######
 
+develop
+=======
+
+Incompatible Chagnes
+--------------------
+
+- Change the PermGroup submodule from a relative path to
+  the Github repository.
+
+
 v0.5 (2020-01-12)
 =================
 
