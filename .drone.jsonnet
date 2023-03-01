@@ -59,7 +59,7 @@ local Pipeline(withCoverage, compiler, boost) = {
 [
 	Pipeline(boost == "1_74_0" && compiler == "g++-9", compiler, boost)
 	for compiler in [
-		"g++-8", "g++-9", "g++-10", "g++-12",
+		"g++-8", "g++-9", "g++-10", "g++-11",
 		"clang++-8", "clang++-9",
 		"clang++-10", "clang++-11", "clang++-12",
 	]
