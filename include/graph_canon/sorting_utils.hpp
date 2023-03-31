@@ -1,8 +1,6 @@
 #ifndef GRAPH_CANON_SORTING_UTILS_HPP
 #define GRAPH_CANON_SORTING_UTILS_HPP
 
-#include <boost/function_output_iterator.hpp>
-
 #include <array>
 #include <numeric>
 
