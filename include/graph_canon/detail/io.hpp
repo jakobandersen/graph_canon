@@ -63,7 +63,6 @@ std::ostream &printTreeNodeName(std::ostream &s, const TreeNode &node) {
 	std::stack<const TreeNode*> to_write;
 	for(const TreeNode *n = &node; n->get_parent(); n = n->get_parent()) to_write.push(n);
 	if(!to_write.empty()) {
-		to_write.top();
 		bool first = true;
 		while(!to_write.empty()) {
 			const TreeNode *n = to_write.top();

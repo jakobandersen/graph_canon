@@ -55,6 +55,12 @@ struct tagged_list_matches {
 // rst:		:returns: a reference to the value of a tagged element in `t`, tagged with type `Tag`.
 // rst:			For example: `get(MyTag(), myTaggedList)`.
 
+// see https://www.spinics.net/lists/fedora-devel/msg312638.html
+#pragma GCC diagnostic push
+#if __GNUC__ == 13
+#pragma GCC diagnostic ignored "-Wdangling-reference"
+#endif
+
 template<typename Tag, typename ...Elems>
 auto &get(Tag&&, tagged_list<Elems...> &t) {
 	using matches = typename detail::tagged_list_matches<Tag, Elems...>::type;
@@ -80,6 +86,8 @@ const auto &get(Tag&&, const tagged_list<Elems...> &t) {
 	using elem = meta::front<matches>;
 	return get<elem>(t.elems).value;
 }
+
+#pragma GCC diagnostic pop
 
 // Concat
 // -----------------------------------------------------------------------------

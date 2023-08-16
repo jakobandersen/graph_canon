@@ -25,8 +25,8 @@ struct stats_visitor : null_visitor {
 	};
 
 	struct Node {
-		std::size_t level = -1;
-		std::size_t id = -1, parentId = -1;
+		std::size_t level;
+		std::size_t id, parentId = -1;
 		std::string data, parentData;
 		bool has_been_canon = false, refine_abort = false, pruned = false, worse = false, canon_pruned = false;
 	};
