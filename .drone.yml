@@ -1,2899 +1,4400 @@
 ---
-kind: pipeline
-name: g++-8, Boost 1_76_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0
-  - make
-  environment:
-    CXX: g++-8
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-9, Boost 1_76_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-9",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-8, Boost 1_77_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0
-  - make
-  environment:
-    CXX: g++-8
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-9, Boost 1_77_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-9",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-8, Boost 1_78_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0
-  - make
-  environment:
-    CXX: g++-8
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-9, Boost 1_78_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-9",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-8, Boost 1_79_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0
-  - make
-  environment:
-    CXX: g++-8
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-9, Boost 1_79_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-9",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-8, Boost 1_80_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0
-  - make
-  environment:
-    CXX: g++-8
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-9, Boost 1_80_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-9",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-8, Boost 1_81_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0
-  - make
-  environment:
-    CXX: g++-8
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-9, Boost 1_81_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-9",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-8, Boost 1_82_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0
-  - make
-  environment:
-    CXX: g++-8
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-9, Boost 1_82_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-9",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-9, Boost 1_76_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0
-  - make
-  environment:
-    CXX: g++-9
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-9, Boost 1_83_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_83_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-9",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-9, Boost 1_77_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0
-  - make
-  environment:
-    CXX: g++-9
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-10, Boost 1_76_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-10",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-9, Boost 1_78_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0
-  - make
-  environment:
-    CXX: g++-9
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-10, Boost 1_77_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-10",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-9, Boost 1_79_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0
-  - make
-  environment:
-    CXX: g++-9
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-10, Boost 1_78_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-10",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-9, Boost 1_80_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0
-  - make
-  environment:
-    CXX: g++-9
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-10, Boost 1_79_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-10",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-9, Boost 1_81_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0
-  - make
-  environment:
-    CXX: g++-9
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-10, Boost 1_80_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-10",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-9, Boost 1_82_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0
-  - make
-  environment:
-    CXX: g++-9
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-10, Boost 1_81_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-10",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-10, Boost 1_76_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0
-  - make
-  environment:
-    CXX: g++-10
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-10, Boost 1_82_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-10",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-10, Boost 1_77_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0
-  - make
-  environment:
-    CXX: g++-10
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-10, Boost 1_83_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_83_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-10",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-10, Boost 1_78_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0
-  - make
-  environment:
-    CXX: g++-10
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-11, Boost 1_76_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-10, Boost 1_79_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0
-  - make
-  environment:
-    CXX: g++-10
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-11, Boost 1_77_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-10, Boost 1_80_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0
-  - make
-  environment:
-    CXX: g++-10
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-11, Boost 1_78_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-10, Boost 1_81_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0
-  - make
-  environment:
-    CXX: g++-10
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-11, Boost 1_79_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-10, Boost 1_82_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0
-  - make
-  environment:
-    CXX: g++-10
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-11, Boost 1_80_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-11, Boost 1_76_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0
-  - make
-  environment:
-    CXX: g++-11
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-11, Boost 1_81_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-11, Boost 1_77_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0
-  - make
-  environment:
-    CXX: g++-11
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-11, Boost 1_82_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-11, Boost 1_78_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0
-  - make
-  environment:
-    CXX: g++-11
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-11, Boost 1_83_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_83_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-11, Boost 1_79_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0
-  - make
-  environment:
-    CXX: g++-11
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-12, Boost 1_76_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-11, Boost 1_80_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0
-  - make
-  environment:
-    CXX: g++-11
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-12, Boost 1_77_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-11, Boost 1_81_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0
-  - make
-  environment:
-    CXX: g++-11
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-12, Boost 1_78_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: g++-11, Boost 1_82_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0
-  - make
-  environment:
-    CXX: g++-11
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-12, Boost 1_79_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-8, Boost 1_76_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0
-  - make
-  environment:
-    CXX: clang++-8
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-12, Boost 1_80_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-8, Boost 1_77_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0
-  - make
-  environment:
-    CXX: clang++-8
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-12, Boost 1_81_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-8, Boost 1_78_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0
-  - make
-  environment:
-    CXX: clang++-8
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-12, Boost 1_82_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-8, Boost 1_79_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0
-  - make
-  environment:
-    CXX: clang++-8
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-12, Boost 1_83_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_83_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-8, Boost 1_80_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0
-  - make
-  environment:
-    CXX: clang++-8
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-13, Boost 1_76_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-8, Boost 1_81_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0
-  - make
-  environment:
-    CXX: clang++-8
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-13, Boost 1_77_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-8, Boost 1_82_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0
-  - make
-  environment:
-    CXX: clang++-8
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-13, Boost 1_78_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-9, Boost 1_76_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0
-  - make
-  environment:
-    CXX: clang++-9
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-13, Boost 1_79_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-9, Boost 1_77_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0
-  - make
-  environment:
-    CXX: clang++-9
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-13, Boost 1_80_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-9, Boost 1_78_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0
-  - make
-  environment:
-    CXX: clang++-9
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-13, Boost 1_81_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-9, Boost 1_79_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0
-  - make
-  environment:
-    CXX: clang++-9
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-13, Boost 1_82_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-9, Boost 1_80_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0
-  - make
-  environment:
-    CXX: clang++-9
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "g++-13, Boost 1_83_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_83_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "g++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-9, Boost 1_81_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0
-  - make
-  environment:
-    CXX: clang++-9
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-11, Boost 1_76_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-9, Boost 1_82_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0
-  - make
-  environment:
-    CXX: clang++-9
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-11, Boost 1_77_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-10, Boost 1_76_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0
-  - make
-  environment:
-    CXX: clang++-10
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-11, Boost 1_78_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-10, Boost 1_77_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0
-  - make
-  environment:
-    CXX: clang++-10
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-11, Boost 1_79_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-10, Boost 1_78_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0
-  - make
-  environment:
-    CXX: clang++-10
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-11, Boost 1_80_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-10, Boost 1_79_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0
-  - make
-  environment:
-    CXX: clang++-10
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-11, Boost 1_81_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-10, Boost 1_80_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0
-  - make
-  environment:
-    CXX: clang++-10
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-11, Boost 1_82_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-10, Boost 1_81_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0
-  - make
-  environment:
-    CXX: clang++-10
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-11, Boost 1_83_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_83_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-11",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-10, Boost 1_82_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0
-  - make
-  environment:
-    CXX: clang++-10
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-12, Boost 1_76_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-11, Boost 1_76_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0
-  - make
-  environment:
-    CXX: clang++-11
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-12, Boost 1_77_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-11, Boost 1_77_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0
-  - make
-  environment:
-    CXX: clang++-11
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-12, Boost 1_78_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-11, Boost 1_78_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0
-  - make
-  environment:
-    CXX: clang++-11
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-12, Boost 1_79_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-11, Boost 1_79_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0
-  - make
-  environment:
-    CXX: clang++-11
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-12, Boost 1_80_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-11, Boost 1_80_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0
-  - make
-  environment:
-    CXX: clang++-11
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-12, Boost 1_81_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-11, Boost 1_81_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0
-  - make
-  environment:
-    CXX: clang++-11
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-12, Boost 1_82_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-11, Boost 1_82_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0
-  - make
-  environment:
-    CXX: clang++-11
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-12, Boost 1_83_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_83_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-12",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-12, Boost 1_76_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0
-  - make
-  environment:
-    CXX: clang++-12
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-13, Boost 1_76_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-12, Boost 1_77_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0
-  - make
-  environment:
-    CXX: clang++-12
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-13, Boost 1_77_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-12, Boost 1_78_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0
-  - make
-  environment:
-    CXX: clang++-12
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-13, Boost 1_78_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-12, Boost 1_79_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0
-  - make
-  environment:
-    CXX: clang++-12
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-13, Boost 1_79_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-12, Boost 1_80_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0
-  - make
-  environment:
-    CXX: clang++-12
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-13, Boost 1_80_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-12, Boost 1_81_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0
-  - make
-  environment:
-    CXX: clang++-12
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
+{
+   "kind": "pipeline",
+   "name": "clang++-13, Boost 1_81_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
 ---
-kind: pipeline
-name: clang++-12, Boost 1_82_0
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: bootstrap
-  image: localhost:5000/jla/base
-  commands:
-  - git fetch --tags
-  - git submodule update --init --recursive
-  - ./bootstrap.sh
-
-- name: build
-  image: localhost:5000/jla/base
-  commands:
-  - mkdir build
-  - cd build
-  - cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0
-  - make
-  environment:
-    CXX: clang++-12
-    CXXFLAGS: -Werror
-
-- name: install
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-
-- name: build-test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make tests
-
-- name: test
-  image: localhost:5000/jla/base
-  commands:
-  - cd build
-  - make install
-  - ctest --output-on-failure
-
-...
+{
+   "kind": "pipeline",
+   "name": "clang++-13, Boost 1_82_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-13, Boost 1_83_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_83_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-13",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-14, Boost 1_76_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-14",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-14, Boost 1_77_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-14",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-14, Boost 1_78_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-14",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-14, Boost 1_79_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-14",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-14, Boost 1_80_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-14",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-14, Boost 1_81_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-14",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-14, Boost 1_82_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-14",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-14, Boost 1_83_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_83_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-14",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-15, Boost 1_76_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_76_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-15",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-15, Boost 1_77_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_77_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-15",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-15, Boost 1_78_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_78_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-15",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-15, Boost 1_79_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_79_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-15",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-15, Boost 1_80_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_80_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-15",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-15, Boost 1_81_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_81_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-15",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-15, Boost 1_82_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_82_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-15",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
+---
+{
+   "kind": "pipeline",
+   "name": "clang++-15, Boost 1_83_0",
+   "steps": [
+      {
+         "commands": [
+            "git fetch --tags",
+            "git submodule update --init --recursive",
+            "./bootstrap.sh"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "bootstrap"
+      },
+      {
+         "commands": [
+            "mkdir build",
+            "cd build",
+            "cmake ../ -DBUILD_BIN_BENCHMARK=on -DBUILD_BIN_ALL_ALG=on -DBUILD_EXAMPLES=on -DBUILD_TESTING=on -DBUILD_TESTING_SANITIZERS=off -DBOOST_ROOT=/opt/boost/1_83_0",
+            "make"
+         ],
+         "environment": {
+            "CXX": "clang++-15",
+            "CXXFLAGS": "-Werror"
+         },
+         "image": "localhost:5000/jla/base",
+         "name": "build"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "install"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make tests"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "build-test"
+      },
+      {
+         "commands": [
+            "cd build",
+            "make install",
+            "ctest --output-on-failure"
+         ],
+         "image": "localhost:5000/jla/base",
+         "name": "test"
+      }
+   ]
+}
