@@ -10,23 +10,9 @@
 #include <random>
 #include <vector>
 
-template <typename Generator>
-struct random_functor {
-
-	random_functor(Generator &g) : g(g) { }
-
-	std::size_t operator()(std::size_t n) {
-		std::uniform_int_distribution<std::size_t> distrib(0, n - 1);
-		return distrib(g);
-	}
-private:
-	Generator &g;
-};
-
 template<typename Gen, typename T>
 std::vector<T> make_random_permutation(Gen &gen, std::vector<T> seq) {
-	random_functor<Gen> rand_fun(gen);
-	std::random_shuffle(seq.begin(), seq.end(), rand_fun);
+	std::shuffle(seq.begin(), seq.end(), gen);
 	return seq;
 }
 
