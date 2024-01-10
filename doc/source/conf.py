@@ -13,7 +13,7 @@ extensions = [#'sphinx.ext.intersphinx',
 cpp_index_common_prefix = ["graph_canon::"] 
 templates_path = ['_templates']
 project = u'GraphCanon'
-copyright = u'2023, Jakob Lykke Andersen'
+copyright = u'2024, Jakob Lykke Andersen'
 author = u'Jakob Lykke Andersen'
 
 with open("../../VERSION") as f:
