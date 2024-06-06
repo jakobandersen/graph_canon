@@ -57,7 +57,7 @@ struct tagged_list_matches {
 
 // see https://www.spinics.net/lists/fedora-devel/msg312638.html
 #pragma GCC diagnostic push
-#if __GNUC__ == 13
+#if __GNUC__ >= 13
 #pragma GCC diagnostic ignored "-Wdangling-reference"
 #endif
 
