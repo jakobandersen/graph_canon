@@ -1,6 +1,11 @@
 default:
   image: jla/base
 
+variables:
+  GIT_DEPTH: 200
+  GIT_FETCH_EXTRA_FLAGS: --prune --tags
+  GIT_SUBMODULE_STRATEGY: recursive
+
 
 .bootstrap-and-configure:
   variables:
@@ -9,8 +14,6 @@ default:
     BOOST_VERSION: "BOOST_VERSION-is-unspecified"
     CMAKE_ARG: ""
   before_script:
-  - git fetch --tags
-  - git submodule update --init --recursive
   - ./bootstrap.sh
   - mkdir build
   - cd build
