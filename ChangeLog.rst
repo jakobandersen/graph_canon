@@ -12,6 +12,7 @@ Incompatible Chagnes
 
 - Change the PermGroup submodule from a relative path to
   the Github repository.
+- Require Boost >= 1.70 to gain CMake support in Boost.
 
 
 v0.5 (2020-01-12)

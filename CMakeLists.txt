@@ -62,7 +62,10 @@ set(graph_canon_config_find_files "")
 
 # Boost
 # -------------------------------------------------------------------------
-set(v 1.67.0)
+if(POLICY CMP0167)
+    cmake_policy(SET CMP0167 NEW)
+endif()
+set(v 1.70.0)
 if(BUILD_BIN)
     find_package(Boost ${v} REQUIRED COMPONENTS program_options)
 else()
