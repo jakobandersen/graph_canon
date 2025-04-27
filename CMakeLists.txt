@@ -75,8 +75,10 @@ if(BUILD_TESTING)
     find_package(Boost ${v} REQUIRED COMPONENTS unit_test_framework)
 endif()
 message(STATUS "(Boost include dir is ${Boost_INCLUDE_DIRS})")
-string(APPEND graph_canon_config_dependencies "set(BOOST_FOUND 0)\n") # TODO: remove when CMake 3.15 is required https://gitlab.kitware.com/cmake/cmake/issues/18590
+string(APPEND graph_canon_config_dependencies "set(Boost_FOUND 0)\n") # TODO: remove when CMake 3.15 is required https://gitlab.kitware.com/cmake/cmake/issues/18590
+string(APPEND graph_canon_config_dependencies "cmake_policy(PUSH)\nif(POLICY CMP0167)\n\tcmake_policy(SET CMP0167 NEW)\nendif()\n")
 string(APPEND graph_canon_config_dependencies "find_dependency(Boost ${v})\n")
+string(APPEND graph_canon_config_dependencies "cmake_policy(POP)\n")
 
 
 # PermGroup
